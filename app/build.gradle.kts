@@ -1,40 +1,41 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
+    // Application Specific Plugins
+    id(BuildPlugins.androidApplication)
+    id(BuildPlugins.kotlinAndroid)
+    id(BuildPlugins.kotlinKapt)
+    id(BuildPlugins.kotlinAndroidExtensions)
+
+    // Internal Script plugins
+    id(ScriptPlugins.compilation)
+    id(ScriptPlugins.infrastructure)
 }
 
 android {
-    compileSdkVersion(30)
-    buildToolsVersion("30.0.3")
+    compileSdkVersion(AndroidSDK.compile)
+    buildToolsVersion(AndroidSDK.buildToolsVersion)
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
-        minSdkVersion(19)
-        targetSdkVersion(30)
-        versionCode = 1
-        versionName = "1.0"
+        minSdkVersion(AndroidSDK.min)
+        targetSdkVersion(AndroidSDK.target)
+
+        applicationId = AndroidClient.appId
+        versionCode = AndroidClient.versionCode
+        versionName = AndroidClient.versionName
     }
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles("proguard-rules.pro")
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 }
 
 dependencies {
-    val kotlin_version = "1.3.72"
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation("androidx.core:core-ktx:1.2.0")
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("com.google.android.material:material:1.1.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation(Libraries.kotlinStdLib)
+    implementation(Libraries.ktxCore)
+    implementation(Libraries.appCompat)
+    implementation(Libraries.material)
+    implementation(Libraries.constraintLayout)
 }
