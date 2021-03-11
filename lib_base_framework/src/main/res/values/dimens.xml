@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="nav_header_vertical_spacing_medium">8dp</dimen>
+    <dimen name="nav_header_vertical_spacing_large">16dp</dimen>
+    <dimen name="nav_header_inner_spacing_horizontal">24dp</dimen>
+    <dimen name="nav_header_inner_spacing_vertical">18dp</dimen>
+    <dimen name="home_nav_header_avatar_size">48dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="app_consistent_text_vertical_spacing">2dp</dimen>
+    <dimen name="app_consistent_text_horizontal_spacing_small">6dp</dimen>
+    <dimen name="app_consistent_text_horizontal_spacing_medium">12dp</dimen>
+
+    <dimen name="feed_avatar_size">48dp</dimen>
+    <dimen name="feed_spacing_vertical">10dp</dimen>
+    <dimen name="feed_spacing_horizontal">10dp</dimen>
+    <dimen name="feed_content_spacing_vertical">8dp</dimen>
+    <dimen name="feed_text_drawable_padding">6dp</dimen>
+
+    <dimen name="interest_group_width">80dp</dimen>
+    <dimen name="interest_group_image_size">60dp</dimen>
+    <dimen name="interest_group_spacing_vertical">6dp</dimen>
+    <dimen name="interest_group_spacing_horizontal">6dp</dimen>
+
+    <dimen name="spacing_xlarge">48dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_micro">4dp</dimen>
+</resources>

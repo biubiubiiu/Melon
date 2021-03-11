@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    
+    <group
+        android:id="@+id/home_nav_drawer_group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/home_nav_drawer_nav_to_profile"
+            android:icon="@drawable/ic_round_person_24"
+            android:title="@string/home_nav_drawer_menu_home" />
+        <item
+            android:id="@+id/home_nav_drawer_nav_to_collections"
+            android:icon="@drawable/ic_round_bookmark_24"
+            android:title="@string/home_nav_drawer_menu_gallery" />
+    </group>
+
+    <group
+        android:id="@+id/home_nav_drawer_group2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/home_nav_drawer_nav_to_settings"
+            android:icon="@drawable/ic_round_settings_24"
+            android:title="@string/home_nav_drawer_menu_settings" />
+    </group>
+</menu>

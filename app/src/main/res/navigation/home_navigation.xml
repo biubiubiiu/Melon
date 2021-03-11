@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation"
+    app:startDestination="@id/home_gallery_fragment">
+
+    <fragment
+        android:id="@+id/home_gallery_fragment"
+        android:name="app.melon.home.discovery.DiscoveryFragment"
+        android:label="@string/home_bottom_menu_gallery"
+        tools:layout="@layout/fragment_discovery" />
+
+    <fragment
+        android:id="@+id/home_nearby_fragment"
+        android:name="app.melon.home.nearby.NearbyFragment"
+        android:label="@string/home_bottom_menu_nearby"
+        tools:layout="@layout/fragment_nearby" />
+
+</navigation>

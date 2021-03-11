@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Melon.TextAppearance.Tab" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="Melon.TextAppearance.Head" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Melon.TextAppearance.Subhead" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Melon.TextAppearance.Title" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Melon.TextAppearance.Info" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Melon.TextAppearance.Content" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+</resources>

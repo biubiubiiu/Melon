@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgPrimary"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/spacing_large"
+    tools:ignore="UseCompoundDrawables">
+
+    <TextView
+        android:id="@+id/empty_view_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/TextPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="这里空空如也——暂时" />
+
+    <TextView
+        android:id="@+id/empty_view_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/TextSecondary"
+        android:textSize="16sp"
+        tools:text="当有人在一条推文中提及你时，你就能在这里看到。" />
+
+</LinearLayout>

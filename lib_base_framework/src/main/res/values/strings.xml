@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Melon</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+
+    <string name="home_nav_header_desc">Navigation header</string>
+    <string name="home_toolbar_nav_button_desc">Open Drawer</string>
+
+    <string name="home_nav_drawer_menu_home">Home</string>
+    <string name="home_nav_drawer_menu_gallery">Gallery</string>
+    <string name="home_nav_drawer_menu_settings">Settings</string>
+
+    <string name="home_tab_recommend">For You</string>
+    <string name="home_tab_following">Follow</string>
+    <string name="home_tab_nearby">Nearby</string>
+
+    <string name="home_bottom_menu_gallery">Gallery</string>
+    <string name="home_bottom_menu_nearby">Nearby</string>
+
+    <string name="app_common_following">Following</string>
+    <string name="app_common_follower">Followers</string>
+    <string name="app_common_search">Search</string>
+
+    <string name="app_common_avatar_desc">Avatar</string>
+    <string name="app_common_more_operation_desc">More operation</string>
+    <string name="app_common_search_desc">Search</string>
+    <string name="app_common_interest_group_desc">Interest Group</string>
+
+    <string name="app_common_refresh_error_hint">Something went wrong</string>
+    <string name="app_common_retry_hint">TRY AGAIN</string>
+
+    <string name="Oops">Oops</string>
+
+    <string name="empty_list_title">List is empty</string>
+    <string name="empty_list_subtitile">Some hint</string>
+</resources>

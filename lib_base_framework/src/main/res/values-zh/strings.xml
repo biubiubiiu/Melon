@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="empty_list_title">这里空空如也——暂时。</string>
+    <string name="empty_list_subtitile">当有人在一条推文中提及你时，你就能在这里看到。</string>
+</resources>

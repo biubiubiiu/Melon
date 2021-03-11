@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_gallery_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_round_home_24"
+        android:iconTint="?attr/colorControlNormal"
+        android:title="@string/home_bottom_menu_gallery" />
+    <item
+        android:id="@+id/home_nearby_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_round_place_24"
+        android:iconTint="?attr/colorControlNormal"
+        android:title="@string/home_bottom_menu_nearby" />
+</menu>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:gravity="start|center_vertical"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/home_nav_header_avatar"
+        android:layout_width="@dimen/home_nav_header_avatar_size"
+        android:layout_height="@dimen/home_nav_header_avatar_size"
+        android:layout_marginHorizontal="@dimen/nav_header_inner_spacing_horizontal"
+        android:layout_marginTop="@dimen/nav_header_inner_spacing_vertical"
+        android:contentDescription="@string/home_nav_header_desc"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/home_nav_header_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/nav_header_inner_spacing_horizontal"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing_medium"
+        android:text="@string/nav_header_title"
+        android:textAppearance="@style/Melon.TextAppearance.Head" />
+
+    <TextView
+        android:id="@+id/home_nav_header_user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/nav_header_inner_spacing_horizontal"
+        android:layout_marginTop="@dimen/app_consistent_text_vertical_spacing"
+        android:text="@string/nav_header_subtitle"
+        android:textAppearance="@style/Melon.TextAppearance.Subhead" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/nav_header_inner_spacing_horizontal"
+        android:layout_marginVertical="@dimen/nav_header_vertical_spacing_large"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/home_nav_header_following_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="122"
+            android:textColor="@color/TextPrimary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="@dimen/app_consistent_text_horizontal_spacing_small"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:text="@string/app_common_following"
+            android:textColor="@color/TextSecondary"
+            android:textSize="15sp" />
+
+        <Space
+            android:layout_width="@dimen/app_consistent_text_horizontal_spacing_medium"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/home_nav_header_follower_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textColor="@color/TextPrimary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="@dimen/app_consistent_text_horizontal_spacing_small"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_common_follower"
+            android:textColor="@color/TextSecondary"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <include layout="@layout/common_ui_divider" />
+</LinearLayout>

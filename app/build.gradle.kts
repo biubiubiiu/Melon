@@ -2,8 +2,8 @@ plugins {
     // Application Specific Plugins
     id(BuildPlugins.androidApplication)
     id(BuildPlugins.kotlinAndroid)
-    id(BuildPlugins.kotlinKapt)
     id(BuildPlugins.kotlinAndroidExtensions)
+    id(BuildPlugins.kotlinKapt)
 
     // Internal Script plugins
     id(ScriptPlugins.compilation)
@@ -17,10 +17,15 @@ android {
     defaultConfig {
         minSdkVersion(AndroidSDK.min)
         targetSdkVersion(AndroidSDK.target)
+        multiDexEnabled = true
 
         applicationId = AndroidClient.appId
         versionCode = AndroidClient.versionCode
         versionName = AndroidClient.versionName
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -30,12 +35,41 @@ android {
             proguardFiles("proguard-rules.pro")
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+    generateStubs = true
 }
 
 dependencies {
-    implementation(Libraries.kotlinStdLib)
-    implementation(Libraries.ktxCore)
-    implementation(Libraries.appCompat)
-    implementation(Libraries.material)
+    implementation(project(Modules.baseFramework))
+    implementation(project(Modules.dataAndroid))
+    implementation(project(Modules.base))
+    implementation(project(Modules.domain))
+    implementation(project(Modules.recommend))
+    implementation(project(Modules.follow))
+
+    implementation(Libraries.multiDex)
+
     implementation(Libraries.constraintLayout)
+    implementation(Libraries.navigationFragment)
+    implementation(Libraries.navigationUI)
+    implementation(Libraries.navigationFragmentKtx)
+    implementation(Libraries.navigationUIKtx)
+    implementation(Libraries.lifecycleLivedataKtx)
+    implementation(Libraries.lifecycleViewModelKtx)
+    implementation(Libraries.paging3)
+    implementation(Libraries.roomKtx)
+
+    kapt(Libraries.daggerCompiler)
+    kapt(Libraries.daggerProcessor)
+
+    kapt(Libraries.epoxyCompiler)
+    kapt(Libraries.roomCompiler)
 }
