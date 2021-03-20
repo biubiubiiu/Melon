@@ -23,8 +23,8 @@ data class Feed(
     @SerializedName("school") @ColumnInfo(name = "school") val school: String = "",
     @SerializedName("post_time") @ColumnInfo(name = "post_time") val postTime: Long = 0L,
     @SerializedName("content") @ColumnInfo(name = "content") val content: String = "",
-    @SerializedName("comment") @ColumnInfo(name = "comment") val comment: Long = 0L,
-    @SerializedName("favor") @ColumnInfo(name = "favor") val favor: Long = 0L,
+    @SerializedName("comment") @ColumnInfo(name = "comment") val replyCount: Long = 0L,
+    @SerializedName("favor") @ColumnInfo(name = "favor") val favouriteCount: Long = 0L,
     @ColumnInfo(name = "feed_type") override val type: String = ""
 ) : FeedEntity {
     @Ignore

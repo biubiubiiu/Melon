@@ -53,8 +53,8 @@ abstract class FollowingFeedItem : EpoxyModelWithHolder<FollowingFeedItem.Holder
             userSchoolView.text = item.school
             postTimeView.text = item.postTime.toString()
             contentView.text = item.content
-            commentView.text = item.comment.toString()
-            favoriteView.text = item.favor.toString()
+            commentView.text = item.replyCount.toString()
+            favoriteView.text = item.favouriteCount.toString()
         }
     }
 
