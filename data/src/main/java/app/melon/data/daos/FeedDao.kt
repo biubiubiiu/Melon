@@ -28,6 +28,9 @@ abstract class FeedDao : EntityDao<Feed>() {
     @Query("SELECT * FROM feeds WHERE feed_id = :id")
     abstract suspend fun getFeedWithFeedId(id: String): Feed?
 
+    @Query("DELETE FROM feeds WHERE feed_type = :type")
+    abstract suspend fun deleteFeedByType(type: String)
+
     suspend fun getIdOrSavePlaceholder(item: Feed): Long {
         val localItem = getFeedWithFeedId(id = item.feedId)
         return if (localItem != null) {

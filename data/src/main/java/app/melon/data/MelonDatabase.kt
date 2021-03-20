@@ -8,4 +8,6 @@ interface MelonDatabase {
     fun feedDao(): FeedDao
     fun recommendedDao(): RecommendedDao
     fun followingDao(): FollowingDao
+
+    suspend fun <R> runWithTransaction(block: suspend () -> R): R
 }

@@ -7,7 +7,9 @@ import androidx.lifecycle.lifecycleScope
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BaseMvRxEpoxyFragment
 import app.melon.base.utils.showToast
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class RecommendFragment : BaseMvRxEpoxyFragment() {
@@ -16,6 +18,17 @@ class RecommendFragment : BaseMvRxEpoxyFragment() {
 
     override val controller by lazy(LazyThreadSafetyMode.NONE) {
         RecommendPageController(requireContext())
+    }
+
+    private var fetchJob: Job? = null
+
+    private fun refresh() {
+        fetchJob?.cancel()
+        fetchJob = lifecycleScope.launch {
+            viewModel.refresh(timestamp = 1000000).collectLatest {
+                controller.submitData(it)
+            }
+        }
     }
 
     private val pageIndex by lazy(LazyThreadSafetyMode.NONE) { arguments?.getInt(FIELD_PAGE, -1) }
@@ -49,13 +62,8 @@ class RecommendFragment : BaseMvRxEpoxyFragment() {
                 context?.showToast("click more")
             }
         }
-
         Log.d("raymond", "recommend view created")
-        lifecycleScope.launchWhenCreated {
-            viewModel.pagingData.collectLatest {
-                controller.submitData(it)
-            }
-        }
+        refresh()
     }
 
     override fun invalidate() {

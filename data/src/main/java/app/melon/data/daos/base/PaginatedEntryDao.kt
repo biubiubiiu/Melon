@@ -2,6 +2,7 @@ package app.melon.data.daos.base
 
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import androidx.room.Transaction
 import app.melon.data.PaginatedEntry
 import app.melon.data.resultentities.EntryWithFeed

@@ -22,6 +22,13 @@ interface FeedApiService : ApiService {
         @Query("page_size") pageSize: Int
     ): Call<List<Feed>>
 
+    @GET("home_nearby")
+    fun fetchNearbyList(
+        @Query("timestamp") time: Long,
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Call<List<Feed>>
+
     @GET("feed/detail/{id}")
     fun getFeedDetail(
         @Path("id") id: String

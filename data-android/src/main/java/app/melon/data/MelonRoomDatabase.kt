@@ -2,9 +2,10 @@ package app.melon.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.withTransaction
 import app.melon.data.entities.Feed
 import app.melon.data.entities.FollowingFeedEntry
-import app.melon.data.entities.RecommendFeedEntry
+import app.melon.data.entities.RecommendedFeedEntry
 
 /**
  * source: https://github.com/chrisbanes/tivi
@@ -12,10 +13,12 @@ import app.melon.data.entities.RecommendFeedEntry
 @Database(
     entities = [
         Feed::class,
-        RecommendFeedEntry::class,
+        RecommendedFeedEntry::class,
         FollowingFeedEntry::class
     ],
-    version = 2,
+    version = 4,
     exportSchema = false
 )
-abstract class MelonRoomDatabase : RoomDatabase(), MelonDatabase
+abstract class MelonRoomDatabase : RoomDatabase(), MelonDatabase {
+    override suspend fun <R> runWithTransaction(block: suspend () -> R): R = withTransaction(block)
+}

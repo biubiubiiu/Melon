@@ -12,7 +12,8 @@ internal abstract class HomeBuilder {
         modules = [
             DiscoverBuilder::class,
             RecommendBuilder::class,
-            FollowingBuilder::class
+            FollowingBuilder::class,
+            NearbyBuilder::class
         ]
     )
     internal abstract fun homeActivity(): MainActivity

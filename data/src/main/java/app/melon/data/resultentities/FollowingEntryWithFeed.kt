@@ -11,7 +11,7 @@ class FollowingEntryWithFeed : EntryWithFeed<FollowingFeedEntry> {
     @Embedded
     override lateinit var entry: FollowingFeedEntry
 
-    @Relation(parentColumn = "feed_id", entityColumn = "id")
+    @Relation(parentColumn = "feed_id", entityColumn = "feed_id")
     override var relations: List<Feed> = emptyList()
 
     override fun equals(other: Any?): Boolean = when {

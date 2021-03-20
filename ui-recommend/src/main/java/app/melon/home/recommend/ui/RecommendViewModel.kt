@@ -1,30 +1,19 @@
 package app.melon.home.recommend.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagingConfig
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import app.melon.data.resultentities.RecommendedEntryWithFeed
-import app.melon.domain.observers.ObservePagedRecommendedFeeds
+import app.melon.home.recommend.RecommendFeedRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RecommendViewModel @Inject constructor(
-    private val pagingInteractor: ObservePagedRecommendedFeeds
+    private val repository: RecommendFeedRepository
 ) : ViewModel() {
 
-    init {
-        pagingInteractor(ObservePagedRecommendedFeeds.Params(PAGING_CONFIG))
-    }
-
-    val pagingData: Flow<PagingData<RecommendedEntryWithFeed>>
-        get() = pagingInteractor.observe()
-
-    companion object {
-        val PAGING_CONFIG = PagingConfig(
-            pageSize = 10,
-            initialLoadSize = 20,
-            prefetchDistance = 3,
-            enablePlaceholders = false
-        )
+    fun refresh(timestamp: Long): Flow<PagingData<RecommendedEntryWithFeed>> {
+        return repository.fetchData(timestamp).cachedIn(viewModelScope)
     }
 }

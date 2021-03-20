@@ -3,7 +3,6 @@ package app.melon.di
 import app.melon.MelonApplication
 import app.melon.data.di.DatabaseModule
 import app.melon.data.di.RemoteServiceModule
-import app.melon.data.di.RepoModule
 import app.melon.home.di.HomeBuilder
 import dagger.BindsInstance
 import dagger.Component
@@ -18,7 +17,6 @@ import javax.inject.Singleton
         AppModule::class,
         DatabaseModule::class,
         RemoteServiceModule::class,
-        RepoModule::class,
         HomeBuilder::class
     ]
 )

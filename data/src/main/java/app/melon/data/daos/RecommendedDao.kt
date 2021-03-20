@@ -3,18 +3,16 @@ package app.melon.data.daos
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import app.melon.data.daos.base.PaginatedEntryDao
-import app.melon.data.entities.RecommendFeedEntry
+import app.melon.data.entities.RecommendedFeedEntry
 import app.melon.data.resultentities.RecommendedEntryWithFeed
-import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract class RecommendedDao : PaginatedEntryDao<RecommendFeedEntry, RecommendedEntryWithFeed>() {
+abstract class RecommendedDao : PaginatedEntryDao<RecommendedFeedEntry, RecommendedEntryWithFeed>() {
 
-    @Query("SELECT * FROM recommended_feeds WHERE page = :page ORDER BY page_order")
-    abstract fun entriesObservable(page: Int): Flow<List<RecommendFeedEntry>>
-
-    @Query("SELECT * FROM recommended_feeds ORDER BY page ASC, id ASC")
+    @Transaction
+    @Query("SELECT * FROM recommended_feeds ORDER BY page ASC, page_order ASC")
     abstract fun feedDataSource(): PagingSource<Int, RecommendedEntryWithFeed>
 
     @Query("DELETE FROM recommended_feeds WHERE page = :page")

@@ -1,13 +1,14 @@
 package app.melon.home.following.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BaseMvRxEpoxyFragment
 import app.melon.base.utils.showToast
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FollowFragment : BaseMvRxEpoxyFragment() {
@@ -16,6 +17,17 @@ class FollowFragment : BaseMvRxEpoxyFragment() {
 
     override val controller by lazy(LazyThreadSafetyMode.NONE) {
         FollowPageController(requireContext())
+    }
+
+    private var fetchJob: Job? = null
+
+    private fun refresh() {
+        fetchJob?.cancel()
+        fetchJob = lifecycleScope.launch {
+            viewModel.refresh(timestamp = 1000000).collectLatest {
+                controller.submitData(it)
+            }
+        }
     }
 
     private val pageIndex by lazy(LazyThreadSafetyMode.NONE) { arguments?.getInt(FIELD_PAGE, -1) }
@@ -50,12 +62,7 @@ class FollowFragment : BaseMvRxEpoxyFragment() {
             }
         }
 
-        lifecycleScope.launchWhenCreated {
-            viewModel.pagingData.collectLatest {
-                Log.d("raymond", "submit data")
-                controller.submitData(it)
-            }
-        }
+        refresh()
     }
 
     override fun invalidate() {

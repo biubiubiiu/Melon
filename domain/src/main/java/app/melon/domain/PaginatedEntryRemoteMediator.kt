@@ -1,6 +1,5 @@
 package app.melon.domain
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -15,9 +14,8 @@ import app.melon.data.resultentities.EntryWithFeed
  * source: https://github.com/chrisbanes/tivi
  */
 @OptIn(ExperimentalPagingApi::class)
-internal class PaginatedEntryRemoteMediator<LI, ET>(
-    private val fetchAndStoreData: suspend (page: Int) -> Boolean
-) : RemoteMediator<Int, LI>() where ET : PaginatedEntry, LI : EntryWithFeed<ET> {
+abstract class PaginatedEntryRemoteMediator<LI, ET> :
+    RemoteMediator<Int, LI>() where ET : PaginatedEntry, LI : EntryWithFeed<ET> {
 
     companion object {
         const val DEFAULT_STARTING_PAGE_INDEX = 0
@@ -36,10 +34,12 @@ internal class PaginatedEntryRemoteMediator<LI, ET>(
             }
         }
         return try {
-            val endOfPaginationReached = fetchAndStoreData(page)
+            val endOfPaginationReached = fetchAndStoreData(loadType, page, state.config.pageSize)
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (t: Throwable) {
             MediatorResult.Error(t)
         }
     }
+
+    abstract val fetchAndStoreData: suspend (LoadType, Int, Int) -> Boolean
 }

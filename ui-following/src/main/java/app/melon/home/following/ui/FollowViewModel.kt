@@ -1,30 +1,19 @@
 package app.melon.home.following.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagingConfig
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import app.melon.data.resultentities.FollowingEntryWithFeed
-import app.melon.domain.observers.ObservePagedFollowingFeeds
+import app.melon.home.following.FollowFeedRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class FollowViewModel @Inject constructor(
-    private val pagingInteractor: ObservePagedFollowingFeeds
+    private val repository: FollowFeedRepository
 ) : ViewModel() {
 
-    init {
-        pagingInteractor(ObservePagedFollowingFeeds.Params(PAGING_CONFIG, forceRefresh = true))
-    }
-
-    val pagingData: Flow<PagingData<FollowingEntryWithFeed>>
-        get() = pagingInteractor.observe()
-
-    companion object {
-        val PAGING_CONFIG = PagingConfig(
-            pageSize = 10,
-            initialLoadSize = 20,
-            prefetchDistance = 8,
-            enablePlaceholders = false
-        )
+    fun refresh(timestamp: Long): Flow<PagingData<FollowingEntryWithFeed>> {
+        return repository.fetchData(timestamp).cachedIn(viewModelScope)
     }
 }
