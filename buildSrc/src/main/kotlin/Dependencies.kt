@@ -70,6 +70,7 @@ object Libraries {
         const val store = "4.0.0"
         const val dagger = "2.28"
         const val fragment = "1.3.0-beta02"
+        const val swipeRefresh = "1.1.0"
     }
 
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Kotlin.standardLibrary}"
@@ -78,6 +79,7 @@ object Libraries {
     const val material = "com.google.android.material:material:${Versions.material}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
+    const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefresh}"
 
     const val multiDex = "androidx.multidex:multidex:${Versions.multiDex}"
 

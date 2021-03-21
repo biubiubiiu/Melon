@@ -43,6 +43,7 @@ dependencies {
     api(Libraries.appCompat)
     api(Libraries.recyclerView)
     api(Libraries.material)
+    api(Libraries.swipeRefreshLayout)
 
     api(Libraries.roomRuntime)
     api(Libraries.daggerAndroidSupport)

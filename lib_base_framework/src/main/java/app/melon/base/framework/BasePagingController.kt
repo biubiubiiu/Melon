@@ -47,6 +47,10 @@ abstract class BasePagingController<T : EntryWithFeed<*>>(
             requestModelBuild()
         }
 
+    val isRefreshing get() = loadState?.refresh is LoadState.Loading
+    val isLoadingMore get() = loadState?.append is LoadState.Loading
+    val isRefreshError get() = loadState?.refresh is LoadState.Error
+
     protected open var loadMoreView: EpoxyModel<*>? = LoadMoreView_().apply { id(LoadMoreView::class.java.simpleName) }
     protected open var refreshingView: EpoxyModel<*>? = RefreshView_().apply { id(RefreshView::class.java.simpleName) }
     protected open var errorView: EpoxyModel<*>? = ErrorView_().apply { id(ErrorView::class.java.simpleName) }
@@ -59,13 +63,10 @@ abstract class BasePagingController<T : EntryWithFeed<*>>(
     override fun addModels(models: List<EpoxyModel<*>>) {
         addExtraModels()
         super.addModels(models)
-        loadMoreView?.addIf(loadState?.append is LoadState.Loading && models.isNotEmpty(), this)
-        refreshingView?.addIf(loadState?.refresh is LoadState.Loading, this)
-        emptyView?.addIf(loadState?.refresh is LoadState.NotLoading && models.isEmpty(), this)
-        errorView?.addIf(loadState?.refresh is LoadState.Error, this)
-        (loadState?.refresh as? LoadState.Error)?.run {
-            throw error
-        }
+        loadMoreView?.addIf(isLoadingMore && models.isNotEmpty(), this)
+        refreshingView?.addIf(isRefreshing && models.isEmpty(), this)
+        emptyView?.addIf(!isRefreshing && models.isEmpty(), this)
+        errorView?.addIf(isRefreshError && models.isEmpty(), this)
         // if timeout, it throws [java.net.SocketTimeoutException]
     }
 
