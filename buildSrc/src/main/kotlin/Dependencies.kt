@@ -103,6 +103,12 @@ object Libraries {
 
     }
 
+    object Transition {
+        private const val version = "1.4.0"
+        const val transition = "androidx.transition:transition:$version"
+        const val ktx = "androidx.transition:transition-ktx:$version"
+    }
+
     object Coil {
         private const val version = "1.1.1"
         const val coil = "io.coil-kt:coil:$version"

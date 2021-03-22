@@ -43,6 +43,8 @@ dependencies {
     api(Libraries.AndroidX.AppCompat.appCompat)
     api(Libraries.RecyclerView.recyclerView)
     api(Libraries.Material.material)
+    api(Libraries.Transition.transition)
+    api(Libraries.Transition.ktx)
     api(Libraries.SwipeRefreshLayout.swipeRefreshLayout)
 
     api(Libraries.Room.runtime)

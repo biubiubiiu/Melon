@@ -2,7 +2,7 @@ package app.melon.home.recommend.ui
 
 import android.content.Context
 import app.melon.base.R
-import app.melon.base.framework.BasePagingController
+import app.melon.base.framework.BaseFeedPagingController
 import app.melon.base.uikit.list.carouselHeader
 import app.melon.base.uikit.list.vertSpaceMicro
 import app.melon.base.uikit.list.vertSpaceSmall
@@ -18,7 +18,7 @@ import com.airbnb.epoxy.group
 
 class RecommendPageController(
     context: Context
-) : BasePagingController<RecommendedEntryWithFeed>(context) {
+) : BaseFeedPagingController<RecommendedEntryWithFeed>(context) {
 
     var callbacks: Actions? by observable(null, ::requestModelBuild)
 

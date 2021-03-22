@@ -1,6 +1,7 @@
 package app.melon.data.di
 
 import app.melon.data.services.FeedApiService
+import app.melon.data.services.UserApiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -13,12 +14,15 @@ import javax.inject.Singleton
 class RemoteServiceModule {
     @Provides
     fun provideFeedService(retrofit: Retrofit) = retrofit.create(FeedApiService::class.java)
+
+    @Provides
+    fun provideUserService(retrofit: Retrofit) = retrofit.create(UserApiService::class.java)
 }
 
 @Module
 class NetworkModule {
 
-    private val ADDRESS = "10.19.129.201"
+    private val ADDRESS = "10.16.83.198"
     private val PORT = "3000"
     private val API_HOST = "$ADDRESS:$PORT"
     private val BASE_URL = "http://$API_HOST/"

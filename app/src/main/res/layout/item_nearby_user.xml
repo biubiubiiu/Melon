@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/spacing_small"
+    android:paddingVertical="@dimen/spacing_conventional">
+
+    <ImageView
+        android:id="@+id/nearby_user_avatar"
+        android:layout_width="@dimen/nearby_avatar_size"
+        android:layout_height="@dimen/nearby_avatar_size"
+        android:contentDescription="@string/app_common_avatar_desc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nearby_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_toEndOf="@id/nearby_user_avatar"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/Melon.TextAppearance.Title"
+        app:layout_constraintEnd_toStartOf="@id/nearby_user_school"
+        app:layout_constraintStart_toEndOf="@id/nearby_user_avatar"
+        app:layout_constraintTop_toTopOf="@id/nearby_user_avatar"
+        tools:text="Valar Morghulis" />
+
+    <app.melon.base.uikit.TagView
+        android:id="@+id/nearby_user_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_micro"
+        app:layout_constraintBottom_toTopOf="@id/nearby_user_description"
+        app:layout_constraintStart_toStartOf="@id/nearby_username"
+        app:layout_constraintTop_toBottomOf="@id/nearby_username" />
+
+    <TextView
+        android:id="@+id/nearby_user_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_micro"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        app:layout_constraintEnd_toStartOf="@id/nearby_user_distance"
+        app:layout_constraintStart_toStartOf="@id/nearby_username"
+        app:layout_constraintTop_toBottomOf="@id/nearby_user_tag"
+        tools:text="Chaos is a ladder." />
+
+    <TextView
+        android:id="@+id/nearby_user_school"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        app:layout_constraintBottom_toBottomOf="@id/nearby_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nearby_username"
+        tools:text="University of California" />
+
+    <TextView
+        android:id="@+id/nearby_user_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        app:layout_constraintBottom_toBottomOf="@id/nearby_user_tag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nearby_user_tag"
+        tools:text="1.2km" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

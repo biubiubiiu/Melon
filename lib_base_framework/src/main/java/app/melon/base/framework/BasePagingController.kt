@@ -22,13 +22,13 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 
 
 @OptIn(ObsoleteCoroutinesApi::class)
-abstract class BasePagingController<T : EntryWithFeed<*>>(
+abstract class BasePagingController<T : Any>(
     protected val context: Context
 ) : PagingDataEpoxyController<T>(
     modelBuildingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler(),
     diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler(),
     itemDiffCallback = object : DiffUtil.ItemCallback<T>() {
-        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = oldItem.entry.feedId == newItem.entry.feedId
+        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem

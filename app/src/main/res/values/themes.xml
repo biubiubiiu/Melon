@@ -21,6 +21,8 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/bgPrimary</item>
         <!--        <item name="android:windowTranslucentStatus">true</item>-->
+
+        <item name="android:listDivider">@color/divider</item>
     </style>
 
 </resources>

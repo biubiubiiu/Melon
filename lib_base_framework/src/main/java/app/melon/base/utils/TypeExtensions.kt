@@ -78,6 +78,8 @@ fun Float.lerp(other: Float, amount: Float): Float = this + amount * (other - th
 
 fun Float.sqrt() = Math.sqrt(this.toDouble()).toFloat()
 
+fun Boolean.reverse() = !this
+
 fun View.getText(@StringRes res: Int) = this.resources.getText(res)
 operator fun Boolean.inc() = !this
 

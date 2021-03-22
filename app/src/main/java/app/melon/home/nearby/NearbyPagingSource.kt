@@ -2,41 +2,38 @@ package app.melon.home.nearby
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import app.melon.data.entities.Feed
-import app.melon.data.services.FeedApiService
+import app.melon.data.entities.User
+import app.melon.data.services.UserApiService
 import app.melon.extensions.executeWithRetry
 import app.melon.extensions.toResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
-import java.io.IOException
 
 class NearbyPagingSource constructor(
-    private val service: FeedApiService
-) : PagingSource<Int, Feed>() {
-    override fun getRefreshKey(state: PagingState<Int, Feed>): Int? = null
+    private val service: UserApiService,
+    private val pageSize: Int
+) : PagingSource<Int, User>() {
+    override fun getRefreshKey(state: PagingState<Int, User>): Int? = null
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Feed> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
         val position = params.key ?: 0
         return try {
             val response = withContext(Dispatchers.IO) {
-                service.fetchNearbyList(100000, position, params.loadSize).executeWithRetry().toResult()
+                service.nearbyUser(1f, 1f, position, params.loadSize).executeWithRetry().toResult()
             }
-            val repos = response.get() ?: emptyList()
-            val nextKey = if (repos.isEmpty()) {
+            val users = response.get() ?: emptyList()
+            val nextKey = if (users.isEmpty()) {
                 null
             } else {
-                position + (params.loadSize / 10)
+                position + (params.loadSize / pageSize)
             }
             LoadResult.Page(
-                data = repos,
+                data = users,
                 prevKey = if (position == 0) null else position - 1,
                 nextKey = nextKey
             )
-        } catch (exception: IOException) {
-            LoadResult.Error(exception)
-        } catch (exception: HttpException) {
-            LoadResult.Error(exception)
+        } catch (throwable: Throwable) {
+            LoadResult.Error(throwable)
         }
     }
 }
