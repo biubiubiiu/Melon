@@ -22,7 +22,7 @@ class RecommendRemoteMediator(
         val apiResponse = withContext(Dispatchers.IO) {
             service.fetchRecommendList(timestamp, page, pageSize).executeWithRetry().toResult()
         }
-        val items = apiResponse.getOrThrow()
+        val items = apiResponse.getOrThrow().map { it.copy(type = FeedType.RecommendFeed) }
         val entries = items.mapIndexed { index, feed ->
             RecommendedFeedEntry(feedId = feed.feedId, page = page, pageOrder = index)
         }

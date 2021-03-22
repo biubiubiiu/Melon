@@ -5,12 +5,11 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Transaction
 import androidx.room.Update
-import app.melon.data.entities.MelonEntity
 
 /**
  * source: https://github.com/chrisbanes/tivi
  */
-abstract class EntityDao<in E : MelonEntity> {
+abstract class BaseDao<in E> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(entity: E): Long

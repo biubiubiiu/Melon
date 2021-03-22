@@ -22,7 +22,7 @@ class FollowRemoteMediator(
         val apiResponse = withContext(Dispatchers.IO) {
             service.fetchFollowingList(timestamp, page, pageSize).executeWithRetry().toResult()
         }
-        val items = apiResponse.getOrThrow()
+        val items = apiResponse.getOrThrow().map { it.copy(type = FeedType.FollowingFeed) }
         val entries = items.mapIndexed { index, feed ->
             FollowingFeedEntry(feedId = feed.feedId, page = page, pageOrder = index)
         }

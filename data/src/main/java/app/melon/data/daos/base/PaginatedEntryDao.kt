@@ -2,8 +2,6 @@ package app.melon.data.daos.base
 
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Transaction
 import app.melon.data.PaginatedEntry
 import app.melon.data.resultentities.EntryWithFeed
 
@@ -23,10 +21,4 @@ abstract class PaginatedEntryDao<EC : PaginatedEntry, LI : EntryWithFeed<EC>> : 
 
     abstract suspend fun deletePage(page: Int)
     abstract suspend fun getLastPage(): Int?
-
-    @Transaction
-    open suspend fun updatePage(page: Int, entities: List<EC>) {
-        deletePage(page)
-        insertAll(entities)
-    }
 }
