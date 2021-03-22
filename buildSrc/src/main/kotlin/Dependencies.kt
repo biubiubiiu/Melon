@@ -20,7 +20,6 @@ object BuildPlugins {
     object Versions {
         const val buildToolsVersion = "4.1.2"
         const val gradleVersion = "6.5.0"
-        const val butterKnifeVersion = "10.2.3"
     }
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.buildToolsVersion}"
@@ -49,95 +48,130 @@ object Modules {
 }
 
 object Libraries {
-    private object Versions {
-        const val ktx = "1.2.0"
-        const val appCompat = "1.1.0"
-        const val material = "1.3.0"
-        const val constraintLayout = "2.0.4"
-        const val recyclerView = "1.1.0"
-        const val multiDex = "2.0.1"
-        const val navigation = "2.2.2"
-        const val lifecycle = "2.3.0"
-        const val coil = "1.1.1"
-        const val epoxy = "4.4.2"
-        const val mavericks = "2.1.0"
-        const val paging = "3.0.0-alpha13"
-        const val room = "2.3.0-alpha04"
-        const val gson = "2.8.6"
-        const val okHttp = "4.9.0"
-        const val retrofit = "2.9.0"
-        const val coroutine = "1.3.9"
-        const val store = "4.0.0"
-        const val dagger = "2.28"
-        const val fragment = "1.3.0-beta02"
-        const val swipeRefresh = "1.1.0"
-    }
 
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Kotlin.standardLibrary}"
-    const val ktxCore = "androidx.core:core-ktx:${Versions.ktx}"
-    const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
-    const val material = "com.google.android.material:material:${Versions.material}"
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
-    const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
-    const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefresh}"
 
-    const val multiDex = "androidx.multidex:multidex:${Versions.multiDex}"
+    object AndroidX {
+        object Core {
+            private const val version = "1.2.0"
+            const val ktx = "androidx.core:core-ktx:$version"
+        }
 
-    // Jetpack Navigation
-    const val navigationFragment = "androidx.navigation:navigation-fragment:${Versions.navigation}"
-    const val navigationUI = "androidx.navigation:navigation-ui:${Versions.navigation}"
-    const val navigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
-    const val navigationUIKtx = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
+        object AppCompat {
+            private const val version = "1.2.0"
+            const val appCompat = "androidx.appcompat:appcompat:$version"
+        }
+    }
 
-    // Lifecycle
-    const val lifecycleLivedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
-    const val lifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+    object RecyclerView {
+        private const val version = "1.1.0"
+        const val recyclerView = "androidx.recyclerview:recyclerview:$version"
+    }
 
-    // Coil
-    const val coil = "io.coil-kt:coil:${Versions.coil}"
+    object SwipeRefreshLayout {
+        private const val version = "1.1.0"
+        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:$version"
+    }
 
-    // Epoxy
-    const val epoxyRuntime = "com.airbnb.android:epoxy:${Versions.epoxy}"
-    const val epoxyCompiler = "com.airbnb.android:epoxy-processor:${Versions.epoxy}"
-    const val epoxyPaging = "com.airbnb.android:epoxy-paging3:${Versions.epoxy}"
+    object ConstraintLayout {
+        private const val version = "2.0.4"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout:$version"
+    }
 
-    // Mavericks
-    const val mavericks = "com.airbnb.android:mavericks:${Versions.mavericks}"
+    object Material {
+        private const val version = "1.3.0"
+        const val material = "com.google.android.material:material:$version"
+    }
 
-    // Paging3
-    const val paging3Common = "androidx.paging:paging-common:${Versions.paging}"
-    const val paging3 = "androidx.paging:paging-runtime:${Versions.paging}"
+    object MultiDex {
+        private const val version = "2.0.1"
+        const val multiDex = "androidx.multidex:multidex:$version"
+    }
 
-    // Room
-    const val roomCommon = "androidx.room:room-common:${Versions.room}"
-    const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
-    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
-    const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
+    object Navigation {
+        private const val version = "2.2.2"
+        const val fragment = "androidx.navigation:navigation-fragment:$version"
+        const val ui = "androidx.navigation:navigation-ui:$version"
+        const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$version"
+        const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
+    }
 
-    // Gson
-    const val gson = "com.google.code.gson:gson:${Versions.gson}"
+    object Lifecycle {
+        private const val version = "2.3.0"
+        const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
+        const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
 
-    // okHttp
-    const val okHttp = "com.squareup.okhttp3:okhttp:${Versions.okHttp}"
+    }
 
-    // Retrofit
-    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    const val gsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    object Coil {
+        private const val version = "1.1.1"
+        const val coil = "io.coil-kt:coil:$version"
+    }
 
-    // Coroutines
-    const val coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine}"
+    object Epoxy {
+        private const val version = "4.4.2"
+        const val runtime = "com.airbnb.android:epoxy:$version"
+        const val compiler = "com.airbnb.android:epoxy-processor:$version"
+        const val paging = "com.airbnb.android:epoxy-paging3:$version"
+    }
 
-    // Store
-    const val store = "com.dropbox.mobile.store:store4:${Versions.store}"
+    object Mavericks {
+        private const val version = "2.1.0"
+        const val mavericks = "com.airbnb.android:mavericks:$version"
+    }
 
-    // Dagger
-    const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
-    const val daggerAndroid = "com.google.dagger:dagger-android:${Versions.dagger}"
-    const val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
-    const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-    const val daggerProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
+    object Paging3 {
+        private const val version = "3.0.0-alpha13"
+        const val common = "androidx.paging:paging-common:$version"
+        const val runtime = "androidx.paging:paging-runtime:$version"
+    }
 
-    // Fragment
-    const val fragment = "androidx.fragment:fragment:${Versions.fragment}"
-    const val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.fragment}"
+    object Room {
+        private const val version = "2.3.0-alpha04"
+        const val common = "androidx.room:room-common:$version"
+        const val runtime = "androidx.room:room-runtime:$version"
+        const val compiler = "androidx.room:room-compiler:$version"
+        const val ktx = "androidx.room:room-ktx:$version"
+    }
+
+    object Gson {
+        private const val version = "2.8.6"
+        const val gson = "com.google.code.gson:gson:$version"
+    }
+
+    object OkHttp {
+        private const val version = "4.9.0"
+        const val okHttp = "com.squareup.okhttp3:okhttp:$version"
+    }
+
+    object Retrofit {
+        private const val version = "2.9.0"
+        const val retrofit = "com.squareup.retrofit2:retrofit:$version"
+        const val gsonConverter = "com.squareup.retrofit2:converter-gson:$version"
+    }
+
+    object Coroutine {
+        private const val version = "1.3.9"
+        const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+    }
+
+    object Store {
+        private const val version = "4.0.0"
+        const val store = "com.dropbox.mobile.store:store4:$version"
+    }
+
+    object Dagger {
+        private const val version = "2.28"
+        const val dagger = "com.google.dagger:dagger:$version"
+        const val android = "com.google.dagger:dagger-android:$version"
+        const val androidSupport = "com.google.dagger:dagger-android-support:$version"
+        const val compiler = "com.google.dagger:dagger-compiler:$version"
+        const val processor = "com.google.dagger:dagger-android-processor:$version"
+    }
+
+    object Fragment {
+        private const val version = "1.3.0-beta02"
+        const val fragment = "androidx.fragment:fragment:$version"
+        const val ktx = "androidx.fragment:fragment-ktx:$version"
+    }
 }

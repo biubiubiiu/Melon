@@ -35,10 +35,10 @@ kapt {
 dependencies {
     implementation(project(Modules.data))
 
-    implementation(Libraries.roomRuntime)
-    implementation(Libraries.roomKtx)
-    kapt(Libraries.roomCompiler)
-    kapt(Libraries.daggerCompiler)
+    implementation(Libraries.Room.runtime)
+    implementation(Libraries.Room.ktx)
+    kapt(Libraries.Room.compiler)
+    kapt(Libraries.Dagger.compiler)
 
-    implementation(Libraries.paging3)
+    implementation(Libraries.Paging3.runtime)
 }

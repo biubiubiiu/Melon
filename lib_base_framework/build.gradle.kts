@@ -39,22 +39,22 @@ kapt {
 dependencies {
     api(project(Modules.data))
 
-    api(Libraries.ktxCore)
-    api(Libraries.appCompat)
-    api(Libraries.recyclerView)
-    api(Libraries.material)
-    api(Libraries.swipeRefreshLayout)
+    api(Libraries.AndroidX.Core.ktx)
+    api(Libraries.AndroidX.AppCompat.appCompat)
+    api(Libraries.RecyclerView.recyclerView)
+    api(Libraries.Material.material)
+    api(Libraries.SwipeRefreshLayout.swipeRefreshLayout)
 
-    api(Libraries.roomRuntime)
-    api(Libraries.daggerAndroidSupport)
+    api(Libraries.Room.runtime)
+    api(Libraries.Dagger.androidSupport)
 
-    api(Libraries.mavericks)
-    api(Libraries.epoxyRuntime)
-    api(Libraries.epoxyPaging)
+    api(Libraries.Mavericks.mavericks)
+    api(Libraries.Epoxy.runtime)
+    api(Libraries.Epoxy.paging)
 
-    api(Libraries.coil)
+    api(Libraries.Coil.coil)
 
-    api(Libraries.okHttp)
+    api(Libraries.OkHttp.okHttp)
 
-    kapt(Libraries.epoxyCompiler)
+    kapt(Libraries.Epoxy.compiler)
 }

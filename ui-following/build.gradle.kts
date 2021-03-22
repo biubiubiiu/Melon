@@ -41,11 +41,11 @@ dependencies {
     implementation(project(Modules.baseFramework))
     implementation(project(Modules.dataAndroid))
 
-    implementation(Libraries.fragment)
-    implementation(Libraries.fragmentKtx)
-    implementation(Libraries.mavericks)
+    implementation(Libraries.Fragment.fragment)
+    implementation(Libraries.Fragment.ktx)
+    implementation(Libraries.Mavericks.mavericks)
 
-    kapt(Libraries.epoxyCompiler)
-    kapt(Libraries.daggerCompiler)
-    kapt(Libraries.daggerProcessor)
+    kapt(Libraries.Epoxy.compiler)
+    kapt(Libraries.Dagger.compiler)
+    kapt(Libraries.Dagger.processor)
 }

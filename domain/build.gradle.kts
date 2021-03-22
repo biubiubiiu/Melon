@@ -36,8 +36,8 @@ dependencies {
     api(project(Modules.data))
     implementation(project(Modules.dataAndroid))
 
-    kapt(Libraries.daggerCompiler)
+    kapt(Libraries.Dagger.compiler)
 
-    api(Libraries.paging3Common)
-    implementation(Libraries.paging3)
+    api(Libraries.Paging3.common)
+    implementation(Libraries.Paging3.runtime)
 }

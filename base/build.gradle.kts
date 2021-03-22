@@ -4,8 +4,8 @@ plugins {
 
 dependencies {
     api(Libraries.kotlinStdLib)
-    api(Libraries.coroutineCore)
-    api(Libraries.retrofit)
-    api(Libraries.dagger)
-    api(Libraries.daggerAndroid)
+    api(Libraries.Coroutine.core)
+    api(Libraries.Retrofit.retrofit)
+    api(Libraries.Dagger.dagger)
+    api(Libraries.Dagger.android)
 }

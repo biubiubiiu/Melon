@@ -11,13 +11,12 @@ kapt {
 dependencies {
     api(project(Modules.base))
 
-    api(Libraries.kotlinStdLib)
-    api(Libraries.roomCommon)
-    api(Libraries.gson)
-    api(Libraries.gsonConverter)
-    api(Libraries.paging3Common)
-    api(Libraries.retrofit)
-    api(Libraries.store)
+    api(Libraries.Room.common)
+    api(Libraries.Gson.gson)
+    api(Libraries.Retrofit.gsonConverter)
+    api(Libraries.Retrofit.retrofit)
+    api(Libraries.Paging3.common)
+    api(Libraries.Store.store)
 
-    kapt(Libraries.daggerCompiler)
+    kapt(Libraries.Dagger.compiler)
 }
