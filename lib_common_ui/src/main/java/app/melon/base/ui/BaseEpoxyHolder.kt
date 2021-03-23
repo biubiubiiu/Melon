@@ -1,4 +1,4 @@
-package app.melon.base.framework
+package app.melon.base.ui
 
 import android.view.View
 import androidx.annotation.CallSuper

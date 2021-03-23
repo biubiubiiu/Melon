@@ -4,6 +4,7 @@ plugins {
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinAndroidExtensions)
     id(BuildPlugins.kotlinKapt)
+    id(BuildPlugins.WMRouter)
 
     // Internal Script plugins
     id(ScriptPlugins.compilation)
@@ -54,6 +55,7 @@ dependencies {
     implementation(project(Modules.domain))
     implementation(project(Modules.recommend))
     implementation(project(Modules.follow))
+    implementation(project(Modules.user))
 
     implementation(Libraries.MultiDex.multiDex)
 

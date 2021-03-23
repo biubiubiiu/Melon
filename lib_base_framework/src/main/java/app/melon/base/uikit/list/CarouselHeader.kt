@@ -2,7 +2,7 @@ package app.melon.base.uikit.list
 
 import android.widget.TextView
 import app.melon.base.R
-import app.melon.base.framework.BaseEpoxyHolder
+import app.melon.base.ui.BaseEpoxyHolder
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -25,7 +25,7 @@ abstract class CarouselHeader : EpoxyModelWithHolder<CarouselHeader.Holder>() {
         }
     }
 
-    class Holder : BaseEpoxyHolder() {
+    class Holder : app.melon.base.ui.BaseEpoxyHolder() {
         val titleView by bind<TextView>(R.id.header_title)
         val trailingView by bind<TextView>(R.id.header_trailing)
     }

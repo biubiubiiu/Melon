@@ -1,4 +1,4 @@
-package app.melon.base;
+package app.melon.base.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import app.melon.R;
 
 /**
  * Inspired by https://sriramramani.wordpress.com/2015/05/06/custom-viewgroups/

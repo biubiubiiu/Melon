@@ -2,7 +2,7 @@ package app.melon.home.recommend.groups
 
 import android.widget.ImageView
 import android.widget.TextView
-import app.melon.base.framework.BaseEpoxyHolder
+import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.data.entities.InterestGroup
 import app.melon.home.recommend.R
 import coil.load

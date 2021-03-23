@@ -49,8 +49,14 @@ class TagView @JvmOverloads constructor(
     }
 
     @SuppressLint("SetTextI18n")
-    fun bind(user: User) {
+    fun bind(
+        user: User,
+        showGender: Boolean = true,
+        showAge: Boolean = true,
+        showZodiacSign: Boolean = true
+    ) {
         val prefix = when {
+            !showGender -> ""
             user.isMale -> PREFIX_MALE
             user.isFemale -> PREFIX_FEMALE
             user.isHybrid -> PREFIX_HYBRID
@@ -58,7 +64,11 @@ class TagView @JvmOverloads constructor(
             user.isGenderless -> PREFIX_GENDERLESS
             else -> ""
         }
-        text = "$prefix${user.age}"
+        val age = when {
+            !showAge -> ""
+            else -> user.age.toString()
+        }
+        text = "$prefix$age"
         background = GradientDrawable().apply {
             setColor(
                 when {

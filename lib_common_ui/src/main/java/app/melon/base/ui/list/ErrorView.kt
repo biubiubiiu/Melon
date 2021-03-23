@@ -1,7 +1,7 @@
-package app.melon.base.uikit.list
+package app.melon.base.ui.list
 
 import android.view.View
-import app.melon.base.R
+import app.melon.base.ui.R
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.EpoxyModelClass
 

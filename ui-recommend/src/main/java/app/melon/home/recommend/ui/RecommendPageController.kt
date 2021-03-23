@@ -3,9 +3,9 @@ package app.melon.home.recommend.ui
 import android.content.Context
 import app.melon.base.R
 import app.melon.base.framework.BaseFeedPagingController
+import app.melon.base.ui.list.vertSpaceMicro
+import app.melon.base.ui.list.vertSpaceSmall
 import app.melon.base.uikit.list.carouselHeader
-import app.melon.base.uikit.list.vertSpaceMicro
-import app.melon.base.uikit.list.vertSpaceSmall
 import app.melon.data.entities.InterestGroup
 import app.melon.data.resultentities.RecommendedEntryWithFeed
 import app.melon.extensions.observable

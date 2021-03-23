@@ -1,8 +1,8 @@
-package app.melon.base.uikit.list
+package app.melon.base.ui.list
 
 import android.widget.TextView
-import app.melon.base.R
-import app.melon.base.framework.BaseEpoxyHolder
+import app.melon.base.ui.BaseEpoxyHolder
+import app.melon.base.ui.R
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder

@@ -30,6 +30,7 @@ object BuildPlugins {
     const val kotlinAndroid = "kotlin-android"
     const val kotlinKapt = "kotlin-kapt"
     const val kotlinAndroidExtensions = "kotlin-android-extensions"
+    const val WMRouter = "WMRouter"
 }
 
 object ScriptPlugins {
@@ -45,6 +46,8 @@ object Modules {
     const val domain = ":domain"
     const val recommend = ":ui-recommend"
     const val follow = ":ui-following"
+    const val user = ":module_user"
+    const val commonUi = ":lib_common_ui"
 }
 
 object Libraries {
@@ -101,6 +104,13 @@ object Libraries {
         const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
         const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
 
+    }
+
+    object Router {
+        private const val version = "1.2.0"
+        const val runtime = "com.sankuai.waimai.router:router:$version"
+        const val compiler = "com.sankuai.waimai.router:compiler:$version"
+        const val plugin = "com.sankuai.waimai.router:plugin:$version"
     }
 
     object Transition {

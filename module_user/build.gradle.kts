@@ -1,5 +1,4 @@
 plugins {
-    // Library Specific Plugins
     id(BuildPlugins.androidLibrary)
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinKapt)
@@ -37,21 +36,16 @@ kapt {
 }
 
 dependencies {
-    api(project(Modules.data))
-    api(project(Modules.commonUi))
+    implementation(project(Modules.base))
+    implementation(project(Modules.domain))
+    implementation(project(Modules.baseFramework))
+    implementation(project(Modules.dataAndroid))
 
-    api(Libraries.AndroidX.AppCompat.appCompat)
-
-    api(Libraries.Router.runtime)
-
-    api(Libraries.Room.runtime)
-    api(Libraries.Dagger.androidSupport)
-
-    api(Libraries.Mavericks.mavericks)
-
-    api(Libraries.Epoxy.paging)
-
-    api(Libraries.OkHttp.okHttp)
+    implementation(Libraries.Fragment.fragment)
+    implementation(Libraries.Fragment.ktx)
+    implementation(Libraries.Mavericks.mavericks)
 
     kapt(Libraries.Epoxy.compiler)
+    kapt(Libraries.Dagger.compiler)
+    kapt(Libraries.Dagger.processor)
 }

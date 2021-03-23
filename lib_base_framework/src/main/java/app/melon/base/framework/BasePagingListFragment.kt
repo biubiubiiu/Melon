@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.paging.LoadState
 import app.melon.base.databinding.FragmentEpoxyListBinding
-import app.melon.data.resultentities.EntryWithFeed
 
 abstract class BasePagingListFragment : BaseMvRxEpoxyFragment() {
 
