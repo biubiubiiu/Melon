@@ -2,13 +2,13 @@ package app.melon.home.recommend.ui
 
 import android.content.Context
 import app.melon.base.R
-import app.melon.base.framework.BaseFeedPagingController
+import app.melon.base.framework.BasePagingController
 import app.melon.base.ui.list.vertSpaceMicro
 import app.melon.base.ui.list.vertSpaceSmall
 import app.melon.base.uikit.list.carouselHeader
 import app.melon.data.entities.InterestGroup
 import app.melon.data.resultentities.RecommendedEntryWithFeed
-import app.melon.extensions.observable
+import app.melon.feed.FeedControllerDelegate
 import app.melon.home.recommend.groups.GroupCarouselController4Test
 import app.melon.home.recommend.groups.GroupItem_
 import app.melon.home.recommend.groups.groupCarousel
@@ -18,16 +18,21 @@ import com.airbnb.epoxy.group
 
 class RecommendPageController(
     context: Context
-) : BaseFeedPagingController<RecommendedEntryWithFeed>(context) {
+) : BasePagingController<RecommendedEntryWithFeed>(context) {
 
-    var callbacks: Actions? by observable(null, ::requestModelBuild)
+    private val delegate = FeedControllerDelegate(context)
+
+    override fun buildItemModel(currentPosition: Int, item: RecommendedEntryWithFeed?): EpoxyModel<*> =
+        delegate.buildFeedItem(
+            feedProvider = { item!!.feed },
+            idProvider = { "recommend_feed${item!!.entry.feedId}" }
+        )
 
     override fun addExtraModels() {
         val carouselController = GroupCarouselController4Test()
-        val testData = (0L..10L).map {
+        val modelsInCarousel = (0L..10L).map {
             InterestGroup(it, "", "", 0, "")
-        }
-        val modelsInCarousel = testData.map {
+        }.map {
             GroupItem_()
                 .id("interest group ${it.id}")
                 .showPicUrl("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3478126314,1020520393&fm=26&gp=0.jpg")
@@ -57,30 +62,5 @@ class RecommendPageController(
                 id("group carousel bottom spacer")
             }
         }
-    }
-
-
-    override fun buildItemModel(currentPosition: Int, item: RecommendedEntryWithFeed?): EpoxyModel<*> =
-        RecommendFeedItem_()
-            .id("feed ${item!!.entry.id}")
-            .item(item.feed)
-            .holderClickListener { callbacks?.onHolderClick() }
-            .avatarClickListener { callbacks?.onAvatarClick() }
-            .shareClickListener { callbacks?.onShareClick() }
-            .commentClickListener { callbacks?.onCommentClick() }
-            .favorClickListener { callbacks?.onFavorClick() }
-            .moreClickListener { callbacks?.onMoreClick() }
-
-    fun clear() {
-        callbacks = null
-    }
-
-    interface Actions {
-        fun onHolderClick()
-        fun onAvatarClick()
-        fun onShareClick()
-        fun onCommentClick()
-        fun onFavorClick()
-        fun onMoreClick()
     }
 }

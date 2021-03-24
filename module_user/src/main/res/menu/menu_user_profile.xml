@@ -4,7 +4,7 @@
     tools:context="app.melon.user.UserProfileActivity">
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/action_search"
         android:contentDescription="@string/app_common_more_operation_desc"
         android:icon="@drawable/ic_round_more_vert_24"
         android:title="@string/app_common_more_operation_desc"

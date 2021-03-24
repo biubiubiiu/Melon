@@ -19,6 +19,7 @@ data class Feed(
     @SerializedName("avatar_url") @ColumnInfo(name = "avatar_url") val avatarUrl: String = "",
     @SerializedName("username") @ColumnInfo(name = "username") val username: String = "",
     @SerializedName("user_id") @ColumnInfo(name = "user_id") val userId: String = "",
+    @SerializedName("poster_id") @ColumnInfo(name = "poster_id") val postId: String = "",
     @SerializedName("school") @ColumnInfo(name = "school") val school: String = "",
     @SerializedName("post_time") @ColumnInfo(name = "post_time") val postTime: Long = 0L,
     @SerializedName("content") @ColumnInfo(name = "content") val content: String = "",

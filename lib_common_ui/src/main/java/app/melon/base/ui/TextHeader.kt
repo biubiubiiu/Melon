@@ -4,10 +4,13 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.Px
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.ViewCompat
+import com.airbnb.epoxy.CallbackProp
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 
@@ -33,6 +36,20 @@ class TextHeader @JvmOverloads constructor(
     @ModelProp
     fun background(@DrawableRes bgResource: Int = R.color.bgPrimary) {
         setBackgroundResource(bgResource)
+    }
+
+    @JvmOverloads
+    @CallbackProp
+    fun onClickListener(listener: ((View) -> Unit)? = null) {
+        setOnClickListener { listener?.invoke(this) }
+    }
+
+    @JvmOverloads
+    @ModelProp
+    fun transitionName(transitionName: String = "") {
+        if (transitionName.isNotEmpty()) {
+            ViewCompat.setTransitionName(this, transitionName)
+        }
     }
 
     @ModelProp

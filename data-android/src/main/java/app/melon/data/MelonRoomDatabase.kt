@@ -16,7 +16,7 @@ import app.melon.data.entities.RecommendedFeedEntry
         RecommendedFeedEntry::class,
         FollowingFeedEntry::class
     ],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 abstract class MelonRoomDatabase : RoomDatabase(), MelonDatabase {

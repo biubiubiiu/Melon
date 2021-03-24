@@ -1,4 +1,5 @@
 <resources>
-
     <string name="user_profile_photos">Photos</string>
+    <string name="user_profile_posts">Posts</string>
+    <string name="user_profile_show_more">Show more</string>
 </resources>

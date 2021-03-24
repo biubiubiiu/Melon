@@ -1,7 +1,8 @@
-package app.melon.user.data
+package app.melon.user.interactor
 
 import app.melon.data.entities.User
 import app.melon.domain.SuspendingWorkInteractor
+import app.melon.user.data.UserProfileRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

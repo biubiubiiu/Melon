@@ -3,14 +3,16 @@ package app.melon.user
 import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ObservableLoadingCounter
 import app.melon.base.framework.ReduxViewModel
-import app.melon.user.data.UpdateUserDetail
+import app.melon.user.interactor.UpdateFirstPageUserFeeds
+import app.melon.user.interactor.UpdateUserDetail
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UserProfileViewModel @Inject constructor(
-    private val updateUserDetail: UpdateUserDetail
+    private val updateUserDetail: UpdateUserDetail,
+    private val updateFirstPageUserFeeds: UpdateFirstPageUserFeeds
 ) : ReduxViewModel<UserProfileViewState>(
     initialState = UserProfileViewState()
 ) {
@@ -26,11 +28,15 @@ class UserProfileViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is UserProfileAction.EnterUserProfile -> fetchUserDetail(action.uid)
+                    is UserProfileAction.FetchFirstPageUserFeeds -> fetchUserFeedsFirstPage(action.uid)
                 }
             }
         }
         viewModelScope.launch {
             updateUserDetail.observe().collectAndSetState { copy(user = it) }
+        }
+        viewModelScope.launch {
+            updateFirstPageUserFeeds.observe().collectAndSetState { copy(feeds = it) }
         }
     }
 
@@ -45,9 +51,26 @@ class UserProfileViewModel @Inject constructor(
         }
     }
 
+    private fun fetchUserFeedsFirstPage(uid: String) {
+        viewModelScope.launch {
+            val job = launch {
+                loadingState.addLoader()
+                updateFirstPageUserFeeds(UpdateFirstPageUserFeeds.Params(uid))
+            }
+            job.invokeOnCompletion { loadingState.removeLoader() }
+            job.join()
+        }
+    }
+
     fun getUserDetail(uid: String) {
         viewModelScope.launch {
             pendingActions.emit(UserProfileAction.EnterUserProfile(uid))
+        }
+    }
+
+    fun getUserFeedsFirstPage(uid: String) {
+        viewModelScope.launch {
+            pendingActions.emit(UserProfileAction.FetchFirstPageUserFeeds(uid))
         }
     }
 }

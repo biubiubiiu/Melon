@@ -2,6 +2,7 @@ package app.melon.base.ui
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -75,6 +76,7 @@ class NinePhotoView @JvmOverloads constructor(
     }
 
     private fun getImageView(urls: List<String>, position: Int): View {
+        val start = System.currentTimeMillis()
         val url = urls[position]
         return ShapeableImageView(context).apply {
             shapeAppearanceModel = ShapeAppearanceModel.builder()
@@ -85,6 +87,9 @@ class NinePhotoView @JvmOverloads constructor(
             load(url) {
                 placeholder(R.drawable.image_placeholder)
             }
+        }.also {
+            val end = System.currentTimeMillis()
+            Log.d("raymond", "create ${position}th image takes ${end - start}}")
         }
     }
 

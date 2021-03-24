@@ -10,12 +10,6 @@
     <dimen name="app_consistent_text_horizontal_spacing_small">6dp</dimen>
     <dimen name="app_consistent_text_horizontal_spacing_medium">12dp</dimen>
 
-    <dimen name="feed_avatar_size">48dp</dimen>
-    <dimen name="feed_spacing_vertical">10dp</dimen>
-    <dimen name="feed_spacing_horizontal">10dp</dimen>
-    <dimen name="feed_content_spacing_vertical">8dp</dimen>
-    <dimen name="feed_text_drawable_padding">6dp</dimen>
-
     <dimen name="nearby_avatar_size">48dp</dimen>
 
     <dimen name="interest_group_width">80dp</dimen>

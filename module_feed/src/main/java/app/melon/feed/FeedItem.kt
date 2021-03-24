@@ -1,4 +1,4 @@
-package app.melon.home.following.ui
+package app.melon.feed
 
 import android.view.ViewGroup
 import android.view.ViewStub
@@ -6,7 +6,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.data.entities.Feed
-import app.melon.home.following.R
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
@@ -14,7 +13,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 
 @EpoxyModelClass
-abstract class FollowingFeedItem : EpoxyModelWithHolder<FollowingFeedItem.Holder>() {
+abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
 
     @EpoxyAttribute lateinit var holderClickListener: () -> Unit
     @EpoxyAttribute lateinit var avatarClickListener: () -> Unit
@@ -22,10 +21,11 @@ abstract class FollowingFeedItem : EpoxyModelWithHolder<FollowingFeedItem.Holder
     @EpoxyAttribute lateinit var commentClickListener: () -> Unit
     @EpoxyAttribute lateinit var favorClickListener: () -> Unit
     @EpoxyAttribute lateinit var moreClickListener: () -> Unit
+    @EpoxyAttribute lateinit var photoClickListener: (List<String>, Int) -> Unit
 
     @EpoxyAttribute lateinit var item: Feed
 
-    override fun getDefaultLayout(): Int = R.layout.item_follow_feed
+    override fun getDefaultLayout(): Int = R.layout.item_feed
 
     override fun bind(holder: Holder) {
         setupContent(holder)

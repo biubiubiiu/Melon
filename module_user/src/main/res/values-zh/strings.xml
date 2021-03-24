@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="user_profile_photos">照片墙</string>
+    <string name="user_profile_posts">新鲜事</string>
+    <string name="user_profile_show_more">显示更多动态</string>
 </resources>

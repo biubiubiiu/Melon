@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/lib_base_framework" />
             <option value="$PROJECT_DIR$/lib_common_ui" />
+            <option value="$PROJECT_DIR$/module_feed" />
             <option value="$PROJECT_DIR$/module_user" />
             <option value="$PROJECT_DIR$/ui-following" />
             <option value="$PROJECT_DIR$/ui-recommend" />

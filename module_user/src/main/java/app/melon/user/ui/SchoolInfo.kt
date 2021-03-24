@@ -21,11 +21,11 @@ abstract class SchoolInfo : EpoxyModelWithHolder<SchoolInfo.Holder>() {
 
     override fun bind(holder: Holder) {
         with(holder) {
-            hometownView.text = user.hometown.ifBlank { defaultText }
-            schoolView.text = user.school.ifBlank { defaultText }
-            collegeView.text = user.college.ifBlank { defaultText }
-            majorView.text = user.major.ifBlank { defaultText }
-            degreeView.text = user.degree.ifBlank { defaultText }
+            hometownView.text = user.hometown.orEmpty().ifBlank { defaultText }
+            schoolView.text = user.school.orEmpty().ifBlank { defaultText }
+            collegeView.text = user.college.orEmpty().ifBlank { defaultText }
+            majorView.text = user.major.orEmpty().ifBlank { defaultText }
+            degreeView.text = user.degree.orEmpty().ifBlank { defaultText }
         }
     }
 

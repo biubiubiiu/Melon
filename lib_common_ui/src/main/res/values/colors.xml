@@ -15,6 +15,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
 
+    <color name="colorPrimary">#B71A43</color>
     <color name="TextPrimary">#FF262626</color>
     <color name="TextSecondary">#FF999999</color>
     <color name="bgPrimary">#FFFFFF</color>

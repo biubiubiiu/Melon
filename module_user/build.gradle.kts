@@ -40,6 +40,7 @@ dependencies {
     implementation(project(Modules.domain))
     implementation(project(Modules.baseFramework))
     implementation(project(Modules.dataAndroid))
+    implementation(project(Modules.feed))
 
     implementation(Libraries.Fragment.fragment)
     implementation(Libraries.Fragment.ktx)

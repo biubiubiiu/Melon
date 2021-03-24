@@ -36,43 +36,12 @@ class RecommendFragment : BasePagingListFragment() {
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
         super.onViewCreated(binding, savedInstanceState)
         binding.recyclerView.setItemSpacingDp(8)
-
-        controller.callbacks = object : RecommendPageController.Actions {
-            override fun onHolderClick() {
-                context?.showToast("click holder")
-            }
-
-            override fun onAvatarClick() {
-                context?.showToast("click avatar")
-            }
-
-            override fun onShareClick() {
-                context?.showToast("click share")
-            }
-
-            override fun onCommentClick() {
-                context?.showToast("click comment")
-            }
-
-            override fun onFavorClick() {
-                context?.showToast("click favor")
-            }
-
-            override fun onMoreClick() {
-                context?.showToast("click more")
-            }
-        }
         Log.d("raymond", "recommend view created")
         refresh()
     }
 
     override fun invalidate() {
         // no-op
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        controller.clear()
     }
 
     companion object {

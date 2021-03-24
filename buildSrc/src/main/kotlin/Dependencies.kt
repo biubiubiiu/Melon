@@ -48,6 +48,7 @@ object Modules {
     const val follow = ":ui-following"
     const val user = ":module_user"
     const val commonUi = ":lib_common_ui"
+    const val feed = ":module_feed"
 }
 
 object Libraries {

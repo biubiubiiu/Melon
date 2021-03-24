@@ -34,7 +34,7 @@ abstract class NearbyUserItem : EpoxyModelWithHolder<NearbyUserItem.Holder>() {
             usernameView.text = user.username
             userTagView.bind(user, style = TagView.TagStyle.Info())
             userDescriptionView.text = user.description
-            schoolView.text = user.school
+            schoolView.text = user.school.orEmpty()
             distance.text = "1km" // TODO import location module
         }
     }
