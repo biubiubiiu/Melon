@@ -28,11 +28,27 @@ class TagView @JvmOverloads constructor(
         private val BG_COLOR_FEMALE = "#FDB3C4".toColorInt()
         private val BG_COLOR_OTHER = "#000000".toColorInt()
 
+        private val BG_DISTANCE = "#888888".toColorInt()
+
         private const val PREFIX_MALE = "♂"
         private const val PREFIX_FEMALE = "♀"
         private const val PREFIX_HYBRID = "×"
         private const val PREFIX_TRANSGENDER = "⚦"
         private const val PREFIX_GENDERLESS = "⚪"
+
+        private const val PREFIX_DISTANCE = "📍"
+    }
+
+    sealed class TagStyle {
+        data class Info(
+            val showGender: Boolean = true,
+            val showAge: Boolean = true,
+            val showZodiacSign: Boolean = true
+        ) : TagStyle()
+
+        data class Distance(
+            val distance: Float
+        ) : TagStyle()
     }
 
     init {
@@ -48,13 +64,18 @@ class TagView @JvmOverloads constructor(
         gravity = Gravity.CENTER
     }
 
-    @SuppressLint("SetTextI18n")
     fun bind(
         user: User,
-        showGender: Boolean = true,
-        showAge: Boolean = true,
-        showZodiacSign: Boolean = true
+        style: TagStyle
     ) {
+        when (style) {
+            is TagStyle.Info -> renderInfoStyle(user, style.showGender, style.showAge)
+            is TagStyle.Distance -> renderDistanceStyle(user, style.distance)
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun renderInfoStyle(user: User, showGender: Boolean, showAge: Boolean) {
         val prefix = when {
             !showGender -> ""
             user.isMale -> PREFIX_MALE
@@ -79,5 +100,19 @@ class TagView @JvmOverloads constructor(
             )
             cornerRadius = 30f
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun renderDistanceStyle(user: User, distance: Float) {
+        val prefix = PREFIX_DISTANCE
+        text = "$prefix ${processDistance(distance)}"
+        background = GradientDrawable().apply {
+            setColor(BG_DISTANCE)
+            cornerRadius = 30f
+        }
+    }
+
+    private fun processDistance(distance: Float): String {
+        return "${distance}km"
     }
 }

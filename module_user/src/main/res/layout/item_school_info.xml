@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_conventional">
+
+        <TextView
+            style="@style/SchoolInfo_Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/app_common_hometown" />
+
+        <TextView
+            android:id="@+id/user_profile_hometown"
+            style="@style/School_Trailing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+
+    </FrameLayout>
+
+
+    <include layout="@layout/common_ui_divider" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_conventional">
+
+        <TextView
+            style="@style/SchoolInfo_Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/app_common_school" />
+
+        <TextView
+            android:id="@+id/user_profile_school"
+
+            style="@style/School_Trailing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+
+    </FrameLayout>
+
+    <include layout="@layout/common_ui_divider" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_conventional">
+
+        <TextView
+            style="@style/SchoolInfo_Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/app_common_college" />
+
+        <TextView
+            android:id="@+id/user_profile_college"
+
+            style="@style/School_Trailing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+
+    </FrameLayout>
+
+    <include layout="@layout/common_ui_divider" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_conventional">
+
+        <TextView
+            style="@style/SchoolInfo_Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/app_common_major" />
+
+        <TextView
+            android:id="@+id/user_profile_major"
+
+            style="@style/School_Trailing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+
+    </FrameLayout>
+
+    <include layout="@layout/common_ui_divider" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_conventional">
+
+        <TextView
+            style="@style/SchoolInfo_Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/app_common_degree" />
+
+        <TextView
+            android:id="@+id/user_profile_degree"
+            style="@style/School_Trailing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+
+    </FrameLayout>
+
+    <include layout="@layout/common_ui_divider" />
+
+</LinearLayout>

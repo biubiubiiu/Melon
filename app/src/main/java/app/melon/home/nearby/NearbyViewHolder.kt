@@ -29,7 +29,7 @@ class NearbyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 transformations(CircleCropTransformation())
             }
             usernameView.text = user.username
-            userTagView.bind(user)
+            userTagView.bind(user, style = TagView.TagStyle.Info())
             userDescriptionView.text = user.description
             schoolView.text = user.school
             distance.text = "1km" // TODO import location module

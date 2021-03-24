@@ -19,3 +19,8 @@ abstract class VertSpaceSmall : EpoxyModel<View>() {
 abstract class VertSpaceNormal : EpoxyModel<View>() {
     override fun getDefaultLayout() = R.layout.view_vert_spacer_normal
 }
+
+@EpoxyModelClass
+abstract class VertSpaceConventional : EpoxyModel<View>() {
+    override fun getDefaultLayout() = R.layout.view_vert_spacer_conventional
+}

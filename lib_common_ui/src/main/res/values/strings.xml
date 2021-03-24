@@ -22,6 +22,12 @@
     <string name="app_common_following">Following</string>
     <string name="app_common_follower">Followers</string>
     <string name="app_common_search">Search</string>
+    <string name="app_common_hometown">Hometown</string>
+    <string name="app_common_school">School</string>
+    <string name="app_common_college">College</string>
+    <string name="app_common_degree">Degree</string>
+    <string name="app_common_major">Major</string>
+    <string name="app_common_not_set">Not set</string>
 
     <string name="app_common_avatar_desc">Avatar</string>
     <string name="app_common_more_operation_desc">More operation</string>

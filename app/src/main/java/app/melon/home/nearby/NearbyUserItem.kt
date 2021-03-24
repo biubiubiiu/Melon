@@ -32,7 +32,7 @@ abstract class NearbyUserItem : EpoxyModelWithHolder<NearbyUserItem.Holder>() {
                 transformations(CircleCropTransformation())
             }
             usernameView.text = user.username
-            userTagView.bind(user)
+            userTagView.bind(user, style = TagView.TagStyle.Info())
             userDescriptionView.text = user.description
             schoolView.text = user.school
             distance.text = "1km" // TODO import location module

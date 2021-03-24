@@ -2,9 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="app.melon.user.UserProfileActivity">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/search"
+        android:contentDescription="@string/app_common_more_operation_desc"
+        android:icon="@drawable/ic_round_more_vert_24"
+        android:title="@string/app_common_more_operation_desc"
+        app:showAsAction="always" />
+
 </menu>

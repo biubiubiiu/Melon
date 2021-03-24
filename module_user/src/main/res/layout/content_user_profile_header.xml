@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/user_profile_background"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/sadface" />
+
+    <Space
+        android:id="@+id/user_profile_guideline_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_background" />
+
+    <ImageView
+        android:id="@+id/user_profile_avatar"
+        android:layout_width="@dimen/user_profile_avatar_size"
+        android:layout_height="@dimen/user_profile_avatar_size"
+        android:contentDescription="@string/app_common_avatar_desc"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/user_profile_guideline_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/user_profile_guideline_horizontal"
+        tools:src="@color/black" />
+
+    <TextView
+        android:id="@+id/uesr_profile_followers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textAppearance="@style/Melon.TextAppearance.Title"
+        app:layout_constraintEnd_toStartOf="@id/user_profile_avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_guideline_horizontal"
+        tools:text="24.3k" />
+
+    <TextView
+        android:id="@+id/user_profile_following"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textAppearance="@style/Melon.TextAppearance.Title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/user_profile_avatar"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_guideline_horizontal"
+        tools:text="24.3k" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_micro"
+        android:text="@string/app_common_follower"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        app:layout_constraintEnd_toStartOf="@id/user_profile_avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/uesr_profile_followers" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_micro"
+        android:text="@string/app_common_following"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/user_profile_avatar"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_following" />
+
+    <TextView
+        android:id="@+id/user_profile_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:textAppearance="@style/Melon.TextAppearance.Head"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_avatar"
+        tools:text="Humphrey Appleby" />
+
+    <app.melon.base.uikit.TagView
+        android:id="@+id/user_profile_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_micro"
+        app:layout_constraintEnd_toStartOf="@id/user_profile_distance_tag"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_username" />
+
+    <app.melon.base.uikit.TagView
+        android:id="@+id/user_profile_distance_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_micro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/user_profile_tag"
+        app:layout_constraintTop_toTopOf="@id/user_profile_tag" />
+
+    <TextView
+        android:id="@+id/user_profile_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_tag"
+        tools:text="This is only a test" />
+
+    <include
+        layout="@layout/common_ui_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_description" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

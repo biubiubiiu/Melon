@@ -1,10 +1,8 @@
 package app.melon.base.framework
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.DiffUtil
 import app.melon.base.R
 import app.melon.base.ui.list.EmptyView
 import app.melon.base.ui.list.EmptyView_
@@ -25,13 +23,7 @@ abstract class BasePagingController<T : Any>(
     protected val context: Context
 ) : PagingDataEpoxyController<T>(
     modelBuildingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler(),
-    diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler(),
-    itemDiffCallback = object : DiffUtil.ItemCallback<T>() {
-        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
-
-        @SuppressLint("DiffUtilEquals")
-        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
-    }
+    diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler()
 ) {
 
     init {

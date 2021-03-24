@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="app_common_following">关注</string>
+    <string name="app_common_follower">粉丝</string>
+    <string name="app_common_search">搜索</string>
+    <string name="app_common_hometown">家乡</string>
+    <string name="app_common_school">学校</string>
+    <string name="app_common_college">学院</string>
+    <string name="app_common_degree">年级</string>
+    <string name="app_common_major">专业</string>
+    <string name="app_common_not_set">未设置</string>
+
+    <string name="app_common_avatar_desc">头像</string>
+    <string name="app_common_more_operation_desc">更多</string>
+    <string name="app_common_search_desc">搜索</string>
+    <string name="app_common_interest_group_desc">兴趣小组</string>
+
+    <string name="app_common_refresh_error_hint">出错了</string>
+    <string name="app_common_retry_hint">重试</string>
+
     <string name="empty_list_title">这里空空如也——暂时。</string>
     <string name="empty_list_subtitile">当有人在一条推文中提及你时，你就能在这里看到。</string>
 </resources>
