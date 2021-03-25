@@ -2,11 +2,11 @@ package app.melon.base.ui
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.core.view.updateMargins
 import coil.load
 import com.airbnb.epoxy.AfterPropsSet
 import com.airbnb.epoxy.CallbackProp
@@ -42,13 +42,12 @@ class NinePhotoView @JvmOverloads constructor(
         @CallbackProp set
 
     @ModelProp
-    fun padding(paddings: IntArray) {
-        when (paddings.size) {
-            1 -> setPadding(paddings[0], paddings[0], paddings[0], paddings[0])
-            2 -> setPadding(paddings[0], paddings[1], paddings[0], paddings[1])
-            4 -> setPadding(paddings[0], paddings[1], paddings[2], paddings[3])
-            else -> throw IllegalArgumentException("paddings should be of size 1, 2 or 4")
-        }
+    fun marginHorizontal(size: Int) {
+        (layoutParams as MarginLayoutParams).updateMargins(
+            left = size,
+            right = size
+        )
+        requestLayout()
     }
 
     @JvmOverloads
@@ -76,7 +75,6 @@ class NinePhotoView @JvmOverloads constructor(
     }
 
     private fun getImageView(urls: List<String>, position: Int): View {
-        val start = System.currentTimeMillis()
         val url = urls[position]
         return ShapeableImageView(context).apply {
             shapeAppearanceModel = ShapeAppearanceModel.builder()
@@ -85,11 +83,9 @@ class NinePhotoView @JvmOverloads constructor(
             scaleType = ImageView.ScaleType.CENTER_CROP
             setOnClickListener { onClickListener?.invoke(urls, position) }
             load(url) {
+                allowHardware(false)
                 placeholder(R.drawable.image_placeholder)
             }
-        }.also {
-            val end = System.currentTimeMillis()
-            Log.d("raymond", "create ${position}th image takes ${end - start}}")
         }
     }
 
@@ -97,10 +93,7 @@ class NinePhotoView @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val layoutWidth = MeasureSpec.getSize(widthMeasureSpec) - paddingLeft - paddingRight
         if (itemCount > 0) {
-            itemSize = when (itemCount) {
-                1 -> layoutWidth * 2 / 3
-                else -> (layoutWidth - itemPadding * (MAX_COL - 1)) / MAX_COL
-            }
+            itemSize = (layoutWidth - itemPadding * (MAX_COL - 1)) / MAX_COL
             measureChildren(
                 MeasureSpec.makeMeasureSpec(itemSize, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(itemSize, MeasureSpec.EXACTLY)

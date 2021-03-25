@@ -60,7 +60,7 @@ class UserProfileController(
                 id("profile_photos")
                 itemPadding(4.dpInt)
                 background(R.color.bgPrimary)
-                padding(intArrayOf(12.dpInt, 0))
+                marginHorizontal(12.dpInt)
                 onClickListener { urls, index -> context.showToast("Click item $index, urls size: ${urls.size}") }
                 cornerRadius(24f)
                 urls(urls)
