@@ -1,4 +1,4 @@
-package app.melon.base.utils
+package app.melon.util
 
 import android.content.Context
 

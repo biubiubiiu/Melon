@@ -2,7 +2,7 @@ package app.melon
 
 import android.content.Context
 import androidx.multidex.MultiDex
-import app.melon.base.utils.AppHelper
+import app.melon.util.AppHelper
 import app.melon.di.DaggerAppComponent
 import com.airbnb.mvrx.Mavericks
 import com.sankuai.waimai.router.Router

@@ -36,7 +36,8 @@ dependencies {
     implementation(project(Modules.data))
 
     implementation(Libraries.Room.runtime)
-    implementation(Libraries.Room.ktx)
+    api(Libraries.Room.ktx)
+
     kapt(Libraries.Room.compiler)
     kapt(Libraries.Dagger.compiler)
 

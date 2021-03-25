@@ -1,7 +1,7 @@
 package app.melon.feed
 
 import android.content.Context
-import app.melon.base.utils.showToast
+import app.melon.util.extensions.showToast
 import app.melon.data.entities.Feed
 import com.airbnb.epoxy.EpoxyModel
 import com.sankuai.waimai.router.common.DefaultUriRequest

@@ -1,4 +1,4 @@
-package app.melon.utils
+package app.melon.util.delegates
 
 import android.os.Handler
 import android.os.Looper
@@ -19,7 +19,8 @@ import kotlin.reflect.KProperty
  * private val binding: FHomeWorkoutDetailsBinding by viewBinding()
  * with your binding class and access it as you normally would.
  */
-inline fun <reified T : ViewBinding> Fragment.viewBinding() = FragmentViewBindingDelegate(T::class.java, this)
+inline fun <reified T : ViewBinding> Fragment.viewBinding() =
+    FragmentViewBindingDelegate(T::class.java, this)
 
 class FragmentViewBindingDelegate<T : ViewBinding>(
     bindingClass: Class<T>,

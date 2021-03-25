@@ -13,6 +13,7 @@ import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
+import app.melon.util.AppHelper
 import java.lang.ref.WeakReference
 
 val Float.dp: Float

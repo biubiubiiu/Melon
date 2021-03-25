@@ -9,7 +9,7 @@ import app.melon.base.ui.ninePhotoView
 import app.melon.base.ui.textHeader
 import app.melon.base.utils.dpInt
 import app.melon.base.utils.getResourceColor
-import app.melon.base.utils.showToast
+import app.melon.util.extensions.showToast
 import app.melon.base.utils.sp
 import app.melon.data.entities.Feed
 import app.melon.data.entities.User

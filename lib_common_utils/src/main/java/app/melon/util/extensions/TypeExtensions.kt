@@ -1,31 +1,25 @@
-package app.melon.base.utils
+package app.melon.util.extensions
 
+//import com.google.android.material.snackbar.Snackbar
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.net.ConnectivityManager
 import android.net.Uri
 import android.util.Log
-import androidx.annotation.DrawableRes
-import androidx.annotation.LayoutRes
-import androidx.annotation.StringRes
-//import com.google.android.material.snackbar.Snackbar
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.ColorInt
-import androidx.core.content.getSystemService
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
-
-private const val TAG = "TypeExtensions"
+import androidx.fragment.app.Fragment
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 
 fun Fragment.startActivity(cls: Class<*>) {
     startActivity(Intent(context, cls))
@@ -51,11 +45,6 @@ fun TextView.setDrawableLeft(@DrawableRes drawableRes: Int, activity: Activity) 
 //fun View.showSnackbarLong(message: String) =
 //    Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
 
-fun Context.showToast(@StringRes message: Int) =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
-fun Context.showToast(message: String) =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
 fun View.setVisibleIf(condition: Boolean) {
     visibility = if (condition) View.VISIBLE else View.GONE
@@ -82,10 +71,6 @@ fun Boolean.reverse() = !this
 
 fun View.getText(@StringRes res: Int) = this.resources.getText(res)
 operator fun Boolean.inc() = !this
-
-fun Context.hasPermission(permission: String): Boolean {
-    return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
-}
 
 //fun Vibrator.vibrateCompat(millis: Long) {
 //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -118,15 +103,7 @@ fun String?.toColorIntSafe(): Int {
             else -> bgColor
         }.toColorInt()
     } catch (e: IllegalArgumentException) {
-        Log.w(TAG, "Unable to parse $bgColor.")
+        Log.w("Melon", "Unable to parse $bgColor.")
         Color.WHITE
     }
 }
-
-fun Context.hideKeyboard() {
-    val inputMethodManager = getSystemService<InputMethodManager>()!!
-    inputMethodManager.hideSoftInputFromWindow((this as Activity).currentFocus?.windowToken, 0)
-}
-
-val Context.connectivityManager: ConnectivityManager
-    get() = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

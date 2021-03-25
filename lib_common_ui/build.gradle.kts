@@ -39,7 +39,9 @@ kapt {
 dependencies {
     implementation(Libraries.kotlinStdLib)
 
-    api(Libraries.AndroidX.Core.ktx)
+    compileOnly(Libraries.AndroidX.Core.ktx)
+
+    api(Libraries.ConstraintLayout.constraintLayout)
     api(Libraries.RecyclerView.recyclerView)
     api(Libraries.Material.material)
     api(Libraries.Transition.transition)

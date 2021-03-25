@@ -1,4 +1,4 @@
-package app.melon.utils
+package app.melon.util.delegates
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -13,7 +13,8 @@ import kotlin.reflect.KProperty
  * private val binding: HomeWorkoutDetailsActivityBinding by viewBinding()
  * with your binding class and access it as you normally would.
  */
-inline fun <reified T : ViewBinding> Activity.viewBinding() = ActivityViewBindingDelegate(T::class.java, this)
+inline fun <reified T : ViewBinding> Activity.viewBinding() =
+    ActivityViewBindingDelegate(T::class.java, this)
 
 class ActivityViewBindingDelegate<T : ViewBinding>(
     private val bindingClass: Class<T>,

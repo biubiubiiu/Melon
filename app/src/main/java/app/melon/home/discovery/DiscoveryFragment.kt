@@ -10,7 +10,7 @@ import app.melon.base.lazyload.LazyFragmentPagerAdapter
 import app.melon.databinding.FragmentDiscoveryBinding
 import app.melon.home.following.ui.FollowFragment
 import app.melon.home.recommend.ui.RecommendFragment
-import app.melon.utils.viewBinding
+import app.melon.util.delegates.viewBinding
 import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
 import com.google.android.material.tabs.TabLayout

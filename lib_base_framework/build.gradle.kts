@@ -46,8 +46,6 @@ dependencies {
     api(Libraries.Router.runtime)
 
     api(Libraries.Room.runtime)
-    api(Libraries.Dagger.android)
-    api(Libraries.Dagger.androidSupport)
 
     api(Libraries.Mavericks.mavericks)
 

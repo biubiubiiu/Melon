@@ -4,12 +4,9 @@ import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import app.melon.base.databinding.FragmentEpoxyListBinding
-import app.melon.base.framework.BasePagingController
 import app.melon.base.framework.BasePagingListFragment
 import app.melon.data.entities.User
-import com.sankuai.waimai.router.Router
 import com.sankuai.waimai.router.common.DefaultUriRequest
-import com.sankuai.waimai.router.core.UriRequest
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject

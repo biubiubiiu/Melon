@@ -4,9 +4,7 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import app.melon.base.databinding.FragmentEpoxyListBinding
-import app.melon.base.framework.BaseMvRxEpoxyFragment
 import app.melon.base.framework.BasePagingListFragment
-import app.melon.base.utils.showToast
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

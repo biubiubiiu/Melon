@@ -14,7 +14,7 @@
 //import androidx.transition.TransitionManager
 //import app.melon.R
 //import app.melon.base.framework.FragmentWithBinding
-//import app.melon.base.utils.reverse
+//import app.melon.util.extensions.reverse
 //import app.melon.databinding.FragmentNearbyBinding
 //import com.google.android.material.transition.MaterialFadeThrough
 //import com.google.android.material.transition.MaterialSharedAxis
