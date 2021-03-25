@@ -1,4 +1,4 @@
-package app.melon.user
+package app.melon.user.ui.detail
 
 import app.melon.data.entities.Feed
 import app.melon.data.entities.User

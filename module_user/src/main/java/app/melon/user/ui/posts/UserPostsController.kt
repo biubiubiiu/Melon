@@ -1,4 +1,4 @@
-package app.melon.user
+package app.melon.user.ui.posts
 
 import android.content.Context
 import app.melon.base.framework.BasePagingController

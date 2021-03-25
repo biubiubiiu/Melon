@@ -1,4 +1,4 @@
-package app.melon.user
+package app.melon.user.ui.detail
 
 import android.graphics.Color
 import android.os.Bundle
@@ -9,9 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import app.melon.base.uikit.TagView
+import app.melon.base.utils.extensions.viewModelProviderFactoryOf
 import app.melon.base.utils.getColorCompat
+import app.melon.user.R
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyRecyclerView
@@ -22,9 +25,16 @@ import javax.inject.Inject
 
 class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
 
-    private val uid by lazy { requireArguments().getString(ARG_USER_ID, "") }
+    @Inject internal lateinit var viewModelFactory: UserProfileViewModel.Factory
 
-    @Inject lateinit var viewModel: UserProfileViewModel
+    private val viewModel: UserProfileViewModel by viewModels {
+        viewModelProviderFactoryOf {
+            val args = requireArguments()
+            viewModelFactory.create(
+                id = args.getString(KEY_USER_ID) ?: throw IllegalArgumentException("Missing user id parameter")
+            )
+        }
+    }
 
     private val controller by lazy(LazyThreadSafetyMode.NONE) {
         UserProfileController(
@@ -42,13 +52,8 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
     private lateinit var toolbar: Toolbar
     private lateinit var collapsingToolbarLayout: CollapsingToolbarLayout
     private lateinit var appBarLayout: AppBarLayout
-
     private lateinit var recyclerView: EpoxyRecyclerView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fetchData()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -116,11 +121,6 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
         recyclerView = view.findViewById(R.id.user_profile_list)
     }
 
-    private fun fetchData() {
-        viewModel.getUserDetail(uid)
-        viewModel.getUserFeedsFirstPage(uid)
-    }
-
     fun configureShowMorePosts(
         listener: (View) -> Unit
     ) {
@@ -128,10 +128,10 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
     }
 
     companion object {
-        private const val ARG_USER_ID = "arg_user_id"
+        private const val KEY_USER_ID = "arg_user_id"
         fun newInstance(uid: String): UserProfileFragment =
             UserProfileFragment().apply {
-                arguments = bundleOf(ARG_USER_ID to uid)
+                arguments = bundleOf(KEY_USER_ID to uid)
             }
     }
 }

@@ -1,4 +1,4 @@
-package app.melon.user
+package app.melon.user.ui
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,9 @@ import android.view.animation.LinearInterpolator
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import app.melon.user.R
+import app.melon.user.ui.detail.UserProfileFragment
+import app.melon.user.ui.posts.UserPostsFragment
 import app.melon.util.OnBackPressedHandler
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.Hold
@@ -52,11 +55,15 @@ class UserProfileContainerFragment : DaggerFragment(R.layout.fragment_user_profi
     }
 
     private fun showPostsFragment(sharedElement: View) {
-        val fragment = UserPostsFragment.newInstance(uid, END_FRAGMENT_TRANSITION_NAME)
+        val fragment = UserPostsFragment.newInstance(uid,
+            END_FRAGMENT_TRANSITION_NAME
+        )
         configureTransitions(fragment)
 
         childFragmentManager.commit {
-            addSharedElement(sharedElement, END_FRAGMENT_TRANSITION_NAME)
+            addSharedElement(sharedElement,
+                END_FRAGMENT_TRANSITION_NAME
+            )
             replace(R.id.fragment_container, fragment)
             addToBackStack("UserFeedsFragment")
         }

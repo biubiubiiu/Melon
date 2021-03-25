@@ -1,21 +1,22 @@
-package app.melon.user
+package app.melon.user.ui.detail
 
 import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ObservableLoadingCounter
 import app.melon.base.framework.ReduxViewModel
 import app.melon.user.interactor.UpdateFirstPageUserFeeds
 import app.melon.user.interactor.UpdateUserDetail
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class UserProfileViewModel @Inject constructor(
+class UserProfileViewModel @AssistedInject constructor(
+    @Assisted private val initialState: UserProfileViewState,
     private val updateUserDetail: UpdateUserDetail,
     private val updateFirstPageUserFeeds: UpdateFirstPageUserFeeds
-) : ReduxViewModel<UserProfileViewState>(
-    initialState = UserProfileViewState()
-) {
+) : ReduxViewModel<UserProfileViewState>(initialState) {
 
     private val loadingState = ObservableLoadingCounter()
     private val pendingActions = MutableSharedFlow<UserProfileAction>()
@@ -27,8 +28,7 @@ class UserProfileViewModel @Inject constructor(
         viewModelScope.launch {
             pendingActions.collect { action ->
                 when (action) {
-                    is UserProfileAction.EnterUserProfile -> fetchUserDetail(action.uid)
-                    is UserProfileAction.FetchFirstPageUserFeeds -> fetchUserFeedsFirstPage(action.uid)
+                    // TODO add more actions here
                 }
             }
         }
@@ -37,6 +37,10 @@ class UserProfileViewModel @Inject constructor(
         }
         viewModelScope.launch {
             updateFirstPageUserFeeds.observe().collectAndSetState { copy(feeds = it) }
+        }
+        selectSubscribe(UserProfileViewState::uid) {
+            fetchUserDetail(it)
+            fetchUserFeedsFirstPage(it)
         }
     }
 
@@ -62,15 +66,15 @@ class UserProfileViewModel @Inject constructor(
         }
     }
 
-    fun getUserDetail(uid: String) {
-        viewModelScope.launch {
-            pendingActions.emit(UserProfileAction.EnterUserProfile(uid))
-        }
+    @AssistedFactory
+    interface Factory {
+        fun create(initialState: UserProfileViewState): UserProfileViewModel
     }
+}
 
-    fun getUserFeedsFirstPage(uid: String) {
-        viewModelScope.launch {
-            pendingActions.emit(UserProfileAction.FetchFirstPageUserFeeds(uid))
-        }
-    }
+internal fun UserProfileViewModel.Factory.create(
+    id: String
+): UserProfileViewModel {
+    val initialState = UserProfileViewState(uid = id)
+    return create(initialState)
 }

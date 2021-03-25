@@ -1,4 +1,4 @@
-package app.melon.user
+package app.melon.user.ui.detail
 
 import android.content.Context
 import android.view.View
@@ -14,7 +14,8 @@ import app.melon.base.utils.sp
 import app.melon.data.entities.Feed
 import app.melon.data.entities.User
 import app.melon.feed.FeedControllerDelegate
-import app.melon.user.ui.schoolInfo
+import app.melon.user.R
+import app.melon.user.ui.widget.schoolInfo
 import com.airbnb.epoxy.Typed3EpoxyController
 import com.airbnb.epoxy.group
 

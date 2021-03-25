@@ -1,4 +1,4 @@
-package app.melon.user.ui
+package app.melon.user.ui.widget
 
 import android.content.Context
 import android.widget.TextView

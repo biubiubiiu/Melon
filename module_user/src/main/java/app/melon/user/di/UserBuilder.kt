@@ -1,9 +1,9 @@
 package app.melon.user.di
 
-import app.melon.user.UserPostsFragment
+import app.melon.user.ui.posts.UserPostsFragment
 import app.melon.user.UserProfileActivity
-import app.melon.user.UserProfileContainerFragment
-import app.melon.user.UserProfileFragment
+import app.melon.user.ui.UserProfileContainerFragment
+import app.melon.user.ui.detail.UserProfileFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
