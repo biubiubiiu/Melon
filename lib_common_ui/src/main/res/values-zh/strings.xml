@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_common_following">关注</string>
-    <string name="app_common_follower">粉丝</string>
+    <string name="home_nav_drawer_menu_profile">个人资料</string>
+    <string name="home_nav_drawer_menu_events">活动</string>
+    <string name="home_nav_drawer_menu_bookmarks">书签</string>
+    <string name="home_nav_drawer_menu_messages">消息</string>
+    <string name="home_nav_drawer_menu_settings">设置</string>
+
+    <string name="app_common_following">正在关注</string>
+    <string name="app_common_follower">关注者</string>
     <string name="app_common_search">搜索</string>
     <string name="app_common_hometown">家乡</string>
     <string name="app_common_school">学校</string>

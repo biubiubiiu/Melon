@@ -2,18 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    
+
     <group
         android:id="@+id/home_nav_drawer_group1"
         android:checkableBehavior="single">
         <item
             android:id="@+id/home_nav_drawer_nav_to_profile"
-            android:icon="@drawable/ic_round_person_24"
-            android:title="@string/home_nav_drawer_menu_home" />
+            android:icon="@drawable/ic_round_person_outline_24"
+            android:title="@string/home_nav_drawer_menu_profile" />
+        <item
+            android:id="@+id/home_nav_drawer_nav_to_events"
+            android:icon="@drawable/ic_round_star_outline_24"
+            android:title="@string/home_nav_drawer_menu_events" />
         <item
             android:id="@+id/home_nav_drawer_nav_to_collections"
-            android:icon="@drawable/ic_round_bookmark_24"
-            android:title="@string/home_nav_drawer_menu_gallery" />
+            android:icon="@drawable/ic_round_bookmark_border_24"
+            android:title="@string/home_nav_drawer_menu_bookmarks" />
+        <item
+            android:id="@+id/home_nav_drawer_nav_to_messages"
+            android:icon="@drawable/ic_round_chat_bubble_outline_24"
+            android:title="@string/home_nav_drawer_menu_messages" />
     </group>
 
     <group

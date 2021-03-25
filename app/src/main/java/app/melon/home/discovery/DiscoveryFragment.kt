@@ -22,8 +22,8 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_discovery), Mavericks
     private val binding: FragmentDiscoveryBinding by viewBinding()
     private val viewModel: DiscoveryViewModel by fragmentViewModel()
 
-    private val viewPager get() = binding.homeGalleryViewpager
-    private val tabLayout get() = binding.homeGalleryTabLayout
+    private val viewPager get() = binding.homeFeedsViewpager
+    private val tabLayout get() = binding.homeFeedsTabLayout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

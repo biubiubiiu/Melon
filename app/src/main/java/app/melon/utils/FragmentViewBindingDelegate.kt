@@ -6,8 +6,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.Observer
 import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.observe
 import androidx.viewbinding.ViewBinding
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
@@ -31,7 +31,7 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
     private val bindMethod = bindingClass.getMethod("bind", View::class.java)
 
     init {
-        fragment.viewLifecycleOwnerLiveData.observe(fragment) { viewLifecycleOwner ->
+        fragment.viewLifecycleOwnerLiveData.observe(fragment, Observer { viewLifecycleOwner ->
             viewLifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
                 @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
                 fun onDestroy() {
@@ -41,7 +41,7 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
                     clearBindingHandler.post { binding = null }
                 }
             })
-        }
+        })
     }
 
     @Suppress("UNCHECKED_CAST")

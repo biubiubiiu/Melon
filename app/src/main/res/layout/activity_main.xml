@@ -20,5 +20,5 @@
         android:layout_gravity="start"
         android:background="@color/bgSecondary"
         app:headerLayout="@layout/home_nav_drawer_header"
-        app:menu="@menu/home_drawer_menu" />
+        app:menu="@menu/home_menu_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>
