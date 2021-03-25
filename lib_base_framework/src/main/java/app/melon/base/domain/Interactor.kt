@@ -1,11 +1,11 @@
-package app.melon.domain
+package app.melon.base.domain
 
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import app.melon.base.InvokeError
-import app.melon.base.InvokeStarted
-import app.melon.base.InvokeStatus
-import app.melon.base.InvokeSuccess
+import app.melon.util.base.InvokeError
+import app.melon.util.base.InvokeStarted
+import app.melon.util.base.InvokeStatus
+import app.melon.util.base.InvokeSuccess
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow

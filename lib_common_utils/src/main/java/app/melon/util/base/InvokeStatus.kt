@@ -1,4 +1,4 @@
-package app.melon.base
+package app.melon.util.base
 
 /**
  * source: https://github.com/chrisbanes/tivi

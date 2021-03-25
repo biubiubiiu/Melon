@@ -1,4 +1,4 @@
-package app.melon.util
+package app.melon.util.coroutine
 
 import kotlinx.coroutines.CoroutineDispatcher
 

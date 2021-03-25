@@ -40,14 +40,13 @@ object ScriptPlugins {
 
 object Modules {
     const val baseFramework = ":lib_base_framework"
-    const val base = ":base"
     const val data = ":data"
     const val dataAndroid = ":data-android"
-    const val domain = ":domain"
     const val recommend = ":ui-recommend"
     const val follow = ":ui-following"
     const val user = ":module_user"
     const val commonUi = ":lib_common_ui"
+    const val commonUtils = ":lib_common_utils"
     const val feed = ":module_feed"
 }
 
@@ -102,9 +101,9 @@ object Libraries {
 
     object Lifecycle {
         private const val version = "2.3.0"
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel:$version"
         const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
         const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
-
     }
 
     object Router {

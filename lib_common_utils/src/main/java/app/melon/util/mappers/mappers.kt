@@ -1,6 +1,4 @@
-package app.melon.data.mappers
-
-import app.melon.data.entities.Feed
+package app.melon.util.mappers
 
 /**
  * source: https://github.com/chrisbanes/tivi
@@ -35,8 +33,4 @@ fun <F, T1, T2> pairMapperOf(
 
 fun <F, T> Mapper<F, T>.toLambda(): suspend (F) -> T {
     return { map(it) }
-}
-
-val IDENTITY_FEED_MAPPER = object : Mapper<Feed, Feed> {
-    override suspend fun map(from: Feed): Feed = from
 }

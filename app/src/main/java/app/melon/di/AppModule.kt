@@ -2,7 +2,7 @@ package app.melon.di
 
 import android.content.Context
 import app.melon.MelonApplication
-import app.melon.util.AppCoroutineDispatchers
+import app.melon.util.coroutine.AppCoroutineDispatchers
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers

@@ -9,14 +9,13 @@ kapt {
 }
 
 dependencies {
-    api(project(Modules.base))
-
     api(Libraries.Room.common)
     api(Libraries.Gson.gson)
     api(Libraries.Retrofit.gsonConverter)
     api(Libraries.Retrofit.retrofit)
     api(Libraries.Paging3.common)
     api(Libraries.Store.store)
+    api(Libraries.Dagger.dagger)
 
     kapt(Libraries.Dagger.compiler)
 }

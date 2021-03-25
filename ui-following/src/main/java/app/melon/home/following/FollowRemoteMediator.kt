@@ -6,9 +6,9 @@ import app.melon.data.constants.FeedType
 import app.melon.data.entities.FollowingFeedEntry
 import app.melon.data.resultentities.FollowingEntryWithFeed
 import app.melon.data.services.FeedApiService
-import app.melon.domain.PaginatedEntryRemoteMediator
-import app.melon.extensions.executeWithRetry
-import app.melon.extensions.toResult
+import app.melon.base.domain.PaginatedEntryRemoteMediator
+import app.melon.util.extensions.executeWithRetry
+import app.melon.util.extensions.toResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

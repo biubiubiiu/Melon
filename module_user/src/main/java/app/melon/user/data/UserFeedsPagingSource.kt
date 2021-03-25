@@ -4,8 +4,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import app.melon.data.entities.Feed
 import app.melon.data.services.UserApiService
-import app.melon.extensions.executeWithRetry
-import app.melon.extensions.toResult
+import app.melon.util.extensions.executeWithRetry
+import app.melon.util.extensions.toResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

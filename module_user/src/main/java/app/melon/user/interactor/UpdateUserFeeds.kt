@@ -3,7 +3,7 @@ package app.melon.user.interactor
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.melon.data.entities.Feed
-import app.melon.domain.PagingInteractor
+import app.melon.base.domain.PagingInteractor
 import app.melon.user.data.UserProfileRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

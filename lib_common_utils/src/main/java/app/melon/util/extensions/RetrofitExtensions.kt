@@ -1,12 +1,12 @@
-package app.melon.extensions
+package app.melon.util.extensions
 
-import app.melon.base.ErrorResult
-import app.melon.base.Result
-import app.melon.base.Success
+import app.melon.util.base.ErrorResult
+import app.melon.util.base.Success
 import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.HttpException
 import retrofit2.Response
+import app.melon.util.base.Result
 import java.io.IOException
 
 

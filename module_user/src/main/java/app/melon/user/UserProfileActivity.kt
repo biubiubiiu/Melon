@@ -6,7 +6,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import app.melon.user.ui.UserProfileContainerFragment
-import app.melon.util.OnBackPressedHandler
+import app.melon.util.event.OnBackPressedHandler
 import com.sankuai.waimai.router.annotation.RouterUri
 import dagger.android.support.DaggerAppCompatActivity
 

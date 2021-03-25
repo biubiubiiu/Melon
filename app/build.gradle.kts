@@ -51,8 +51,6 @@ kapt {
 dependencies {
     implementation(project(Modules.baseFramework))
     implementation(project(Modules.dataAndroid))
-    implementation(project(Modules.base))
-    implementation(project(Modules.domain))
     implementation(project(Modules.recommend))
     implementation(project(Modules.follow))
     implementation(project(Modules.user))
@@ -64,8 +62,6 @@ dependencies {
     implementation(Libraries.Navigation.ui)
     implementation(Libraries.Navigation.fragmentKtx)
     implementation(Libraries.Navigation.uiKtx)
-    implementation(Libraries.Lifecycle.liveDataKtx)
-    implementation(Libraries.Lifecycle.viewModelKtx)
     implementation(Libraries.Paging3.runtime)
     implementation(Libraries.Room.ktx)
 

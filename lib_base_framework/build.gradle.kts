@@ -39,12 +39,14 @@ kapt {
 dependencies {
     api(project(Modules.data))
     api(project(Modules.commonUi))
+    api(project(Modules.commonUtils))
 
     api(Libraries.AndroidX.AppCompat.appCompat)
 
     api(Libraries.Router.runtime)
 
     api(Libraries.Room.runtime)
+    api(Libraries.Dagger.android)
     api(Libraries.Dagger.androidSupport)
 
     api(Libraries.Mavericks.mavericks)

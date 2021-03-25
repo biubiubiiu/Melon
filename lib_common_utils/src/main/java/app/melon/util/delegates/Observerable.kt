@@ -1,4 +1,4 @@
-package app.melon.extensions
+package app.melon.util.delegates
 
 import kotlin.properties.ObservableProperty
 import kotlin.properties.ReadWriteProperty

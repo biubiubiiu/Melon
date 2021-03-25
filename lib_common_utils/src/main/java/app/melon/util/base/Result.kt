@@ -1,4 +1,4 @@
-package app.melon.base
+package app.melon.util.base
 
 sealed class Result<T> {
     open fun get(): T? = null

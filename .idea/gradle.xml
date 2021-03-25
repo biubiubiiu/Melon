@@ -13,13 +13,12 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Melon" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data-android" />
-            <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/lib_base_framework" />
             <option value="$PROJECT_DIR$/lib_common_ui" />
+            <option value="$PROJECT_DIR$/lib_common_utils" />
             <option value="$PROJECT_DIR$/module_feed" />
             <option value="$PROJECT_DIR$/module_user" />
             <option value="$PROJECT_DIR$/ui-following" />

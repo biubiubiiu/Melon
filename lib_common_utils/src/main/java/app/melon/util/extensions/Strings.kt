@@ -1,4 +1,4 @@
-package app.melon.base.utils.extensions
+package app.melon.util.extensions
 
 inline fun String.ifNotBlank(block: (String) -> Unit) {
     if (this.isNotBlank()) {

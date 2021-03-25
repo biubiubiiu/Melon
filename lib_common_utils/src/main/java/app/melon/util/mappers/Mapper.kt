@@ -1,4 +1,4 @@
-package app.melon.data.mappers
+package app.melon.util.mappers
 
 
 /**

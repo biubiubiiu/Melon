@@ -9,13 +9,14 @@ import androidx.fragment.app.commit
 import app.melon.user.R
 import app.melon.user.ui.detail.UserProfileFragment
 import app.melon.user.ui.posts.UserPostsFragment
-import app.melon.util.OnBackPressedHandler
+import app.melon.util.event.OnBackPressedHandler
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.android.support.DaggerFragment
 
-class UserProfileContainerFragment : DaggerFragment(R.layout.fragment_user_profile_container), OnBackPressedHandler {
+class UserProfileContainerFragment : DaggerFragment(R.layout.fragment_user_profile_container),
+    OnBackPressedHandler {
 
     private val uid by lazy { requireArguments().getString(ARG_USER_ID, "") }
 

@@ -1,6 +1,6 @@
 package app.melon.base.framework
 
-import app.melon.base.InvokeStatus
+import app.melon.util.base.InvokeStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect

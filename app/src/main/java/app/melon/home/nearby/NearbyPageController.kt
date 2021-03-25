@@ -3,7 +3,7 @@ package app.melon.home.nearby
 import android.content.Context
 import app.melon.base.framework.BasePagingController
 import app.melon.data.entities.User
-import app.melon.extensions.observable
+import app.melon.util.delegates.observable
 import com.airbnb.epoxy.EpoxyModel
 
 class NearbyPageController(

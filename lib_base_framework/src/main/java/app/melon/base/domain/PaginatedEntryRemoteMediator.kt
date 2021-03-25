@@ -1,4 +1,4 @@
-package app.melon.domain
+package app.melon.base.domain
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType

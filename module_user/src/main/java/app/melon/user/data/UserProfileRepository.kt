@@ -6,8 +6,8 @@ import androidx.paging.PagingData
 import app.melon.data.entities.Feed
 import app.melon.data.entities.User
 import app.melon.data.services.UserApiService
-import app.melon.extensions.executeWithRetry
-import app.melon.extensions.toResult
+import app.melon.util.extensions.executeWithRetry
+import app.melon.util.extensions.toResult
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
