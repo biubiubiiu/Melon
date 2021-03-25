@@ -1,6 +1,7 @@
 package app.melon.di
 
 import app.melon.MelonApplication
+import app.melon.base.scope.ApplicationScope
 import app.melon.data.di.DatabaseModule
 import app.melon.data.di.RemoteServiceModule
 import app.melon.home.di.HomeBuilder
@@ -11,7 +12,12 @@ import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
+
+/**
+ * The application's root component
+ */
 @Singleton
+@ApplicationScope
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
