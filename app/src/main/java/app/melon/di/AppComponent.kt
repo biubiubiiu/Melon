@@ -1,11 +1,13 @@
 package app.melon.di
 
 import app.melon.MelonApplication
+import app.melon.account.di.AccountModule
 import app.melon.base.scope.ApplicationScope
 import app.melon.data.di.DatabaseModule
 import app.melon.data.di.RemoteServiceModule
 import app.melon.home.di.HomeBuilder
 import app.melon.user.di.UserBuilder
+import app.melon.user.di.UserModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -25,7 +27,8 @@ import javax.inject.Singleton
         DatabaseModule::class,
         RemoteServiceModule::class,
         HomeBuilder::class,
-        UserBuilder::class
+        UserModule::class,
+        AccountModule::class
     ]
 )
 interface AppComponent : AndroidInjector<MelonApplication> {

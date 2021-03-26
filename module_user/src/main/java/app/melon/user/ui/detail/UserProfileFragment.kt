@@ -26,6 +26,7 @@ import javax.inject.Inject
 class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
 
     @Inject internal lateinit var viewModelFactory: UserProfileViewModel.Factory
+    @Inject internal lateinit var controllerFactory: UserProfileController.Factory
 
     private val viewModel: UserProfileViewModel by viewModels {
         viewModelProviderFactoryOf {
@@ -37,7 +38,7 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
     }
 
     private val controller by lazy(LazyThreadSafetyMode.NONE) {
-        UserProfileController(
+        controllerFactory.create(
             context = requireContext(),
             action = object : UserProfileController.Action {
                 override fun onShowMoreButtonClick(view: View) {

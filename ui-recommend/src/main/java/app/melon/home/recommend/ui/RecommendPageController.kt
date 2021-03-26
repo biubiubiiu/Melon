@@ -14,13 +14,19 @@ import app.melon.home.recommend.groups.GroupItem_
 import app.melon.home.recommend.groups.groupCarousel
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.group
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import javax.inject.Inject
 
 
-class RecommendPageController(
-    context: Context
+class RecommendPageController @AssistedInject constructor(
+    @Assisted context: Context
 ) : BasePagingController<RecommendedEntryWithFeed>(context) {
 
-    private val delegate = FeedControllerDelegate(context)
+    @Inject internal lateinit var controllerFactory: FeedControllerDelegate.Factory
+
+    private val delegate get() = controllerFactory.create(context)
 
     override fun buildItemModel(currentPosition: Int, item: RecommendedEntryWithFeed?): EpoxyModel<*> =
         delegate.buildFeedItem(
@@ -62,5 +68,10 @@ class RecommendPageController(
                 id("group carousel bottom spacer")
             }
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(context: Context): RecommendPageController
     }
 }

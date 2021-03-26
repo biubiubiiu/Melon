@@ -1,13 +1,17 @@
 package app.melon.feed
 
 import android.content.Context
-import app.melon.util.extensions.showToast
 import app.melon.data.entities.Feed
+import app.melon.user.api.IUserService
+import app.melon.util.extensions.showToast
 import com.airbnb.epoxy.EpoxyModel
-import com.sankuai.waimai.router.common.DefaultUriRequest
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 
-class FeedControllerDelegate(
-    private val context: Context
+class FeedControllerDelegate @AssistedInject constructor(
+    @Assisted private val context: Context,
+    private val userService: IUserService
 ) : FeedActions {
 
     fun buildFeedItem(
@@ -32,9 +36,7 @@ class FeedControllerDelegate(
     }
 
     override fun onAvatarClick(uid: String) {
-        DefaultUriRequest(context, "/user_profile")
-            .putExtra("USER_PROFILE_UID", uid)
-            .start()
+        userService.navigateToUserProfile(context, uid)
     }
 
     override fun onShareClick() {
@@ -55,5 +57,10 @@ class FeedControllerDelegate(
 
     override fun onPhotoClick(urls: List<String>, position: Int) {
         context.showToast("Click item $position, urls size: ${urls.size}")
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(context: Context): FeedControllerDelegate
     }
 }

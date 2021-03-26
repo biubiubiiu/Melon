@@ -40,6 +40,8 @@ dependencies {
     implementation(project(Modules.dataAndroid))
     implementation(project(Modules.feed))
 
+    compileOnly(project(Modules.userApi))
+
     implementation(Libraries.Fragment.fragment)
     implementation(Libraries.Fragment.ktx)
     implementation(Libraries.Mavericks.mavericks)

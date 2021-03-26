@@ -13,11 +13,11 @@ import javax.inject.Inject
 
 class RecommendFragment : BasePagingListFragment() {
 
-    @Inject lateinit var viewModel: RecommendViewModel
+    @Inject internal lateinit var viewModel: RecommendViewModel
 
-    override val controller by lazy(LazyThreadSafetyMode.NONE) {
-        RecommendPageController(requireContext())
-    }
+    @Inject internal lateinit var controllerFactory: RecommendPageController.Factory
+
+    override val controller get() = controllerFactory.create(requireContext())
 
     private var fetchJob: Job? = null
 

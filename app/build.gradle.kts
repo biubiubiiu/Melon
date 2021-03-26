@@ -54,6 +54,11 @@ dependencies {
     implementation(project(Modules.recommend))
     implementation(project(Modules.follow))
     implementation(project(Modules.user))
+    implementation(project(Modules.account))
+    implementation(project(Modules.profile))
+
+    compileOnly(project(Modules.accountApi))
+    compileOnly(project(Modules.userApi))
 
     implementation(Libraries.MultiDex.multiDex)
 

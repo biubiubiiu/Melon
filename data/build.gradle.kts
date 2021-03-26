@@ -14,7 +14,6 @@ dependencies {
     api(Libraries.Retrofit.gsonConverter)
     api(Libraries.Retrofit.retrofit)
     api(Libraries.Paging3.common)
-    api(Libraries.Store.store)
     api(Libraries.Dagger.dagger)
 
     kapt(Libraries.Dagger.compiler)

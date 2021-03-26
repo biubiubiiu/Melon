@@ -44,10 +44,17 @@ object Modules {
     const val dataAndroid = ":data-android"
     const val recommend = ":ui-recommend"
     const val follow = ":ui-following"
+
     const val user = ":module_user"
+    const val userApi = ":module_user_api"
+
     const val commonUi = ":lib_common_ui"
     const val commonUtils = ":lib_common_utils"
     const val feed = ":module_feed"
+    const val profile = ":module_profile"
+
+    const val accountApi = ":module_account_api"
+    const val account = ":module_account"
 }
 
 object Libraries {
@@ -169,11 +176,6 @@ object Libraries {
     object Coroutine {
         private const val version = "1.3.9"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
-    }
-
-    object Store {
-        private const val version = "4.0.0"
-        const val store = "com.dropbox.mobile.store:store4:$version"
     }
 
     object Dagger {

@@ -22,6 +22,7 @@ class UserPostsFragment : DaggerFragment(R.layout.fragment_user_posts) {
     private val transitionName by lazy { requireArguments().getString(KEY_TRANSITION_NAME, "") }
 
     @Inject internal lateinit var viewModelFactory: UserPostsViewModel.Factory
+    @Inject internal lateinit var controllerFactory: UserPostsController.Factory
 
     private val viewModel: UserPostsViewModel by viewModels {
         viewModelProviderFactoryOf {
@@ -32,9 +33,7 @@ class UserPostsFragment : DaggerFragment(R.layout.fragment_user_posts) {
         }
     }
 
-    private val controller: UserPostsController by lazy(LazyThreadSafetyMode.NONE) {
-        UserPostsController(requireContext())
-    }
+    private val controller: UserPostsController get() = controllerFactory.create(requireContext())
 
     private lateinit var toolbar: Toolbar
 

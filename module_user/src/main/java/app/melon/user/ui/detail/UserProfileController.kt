@@ -18,13 +18,19 @@ import app.melon.user.R
 import app.melon.user.ui.widget.schoolInfo
 import com.airbnb.epoxy.Typed3EpoxyController
 import com.airbnb.epoxy.group
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import javax.inject.Inject
 
-class UserProfileController(
-    private val context: Context,
-    private val action: Action
+class UserProfileController @AssistedInject constructor(
+    @Assisted private val context: Context,
+    @Assisted private val action: Action
 ) : Typed3EpoxyController<User, List<Feed>, Boolean>() {
 
-    private val delegate = FeedControllerDelegate(context)
+    @Inject internal lateinit var factory: FeedControllerDelegate.Factory
+
+    private val delegate get() = factory.create(context)
 
     override fun buildModels(user: User?, feeds: List<Feed>?, refreshing: Boolean) {
         if (refreshing) {
@@ -121,5 +127,10 @@ class UserProfileController(
 
     interface Action {
         fun onShowMoreButtonClick(view: View)
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(context: Context, action: Action): UserProfileController
     }
 }

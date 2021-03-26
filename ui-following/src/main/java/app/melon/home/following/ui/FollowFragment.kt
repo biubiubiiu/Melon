@@ -14,9 +14,9 @@ class FollowFragment : BasePagingListFragment() {
 
     @Inject lateinit var viewModel: FollowViewModel
 
-    override val controller by lazy(LazyThreadSafetyMode.NONE) {
-        FollowPageController(requireContext())
-    }
+    @Inject lateinit var controllerFactory: FollowPageController.Factory
+
+    override val controller get() = controllerFactory.create(requireContext())
 
     private var fetchJob: Job? = null
 

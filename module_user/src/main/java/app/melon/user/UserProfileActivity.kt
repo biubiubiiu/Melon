@@ -1,5 +1,7 @@
 package app.melon.user
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -7,16 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import app.melon.user.ui.UserProfileContainerFragment
 import app.melon.util.event.OnBackPressedHandler
-import com.sankuai.waimai.router.annotation.RouterUri
 import dagger.android.support.DaggerAppCompatActivity
 
 
-@RouterUri(path = ["/user_profile"])
 class UserProfileActivity : DaggerAppCompatActivity() {
-
-    companion object {
-        private val USER_PROFILE_FRAGMENT_CONTAINER_ID = R.id.container
-    }
 
     private val uid: String by lazy(LazyThreadSafetyMode.NONE) { intent.getStringExtra("USER_PROFILE_UID") ?: "" }
 
@@ -61,5 +57,17 @@ class UserProfileActivity : DaggerAppCompatActivity() {
 
     private fun handleFragmentOnBackPressed(): Boolean {
         return (currentFragment as? OnBackPressedHandler)?.onBackPressed() ?: false
+    }
+
+    companion object {
+        private val USER_PROFILE_FRAGMENT_CONTAINER_ID = R.id.container
+        private const val KEY_USER_ID = "KEY_USER_ID"
+
+        fun start(context: Context, uid: String) {
+            val intent = Intent(context, UserProfileActivity::class.java).apply {
+                putExtra(KEY_USER_ID, uid)
+            }
+            context.startActivity(intent)
+        }
     }
 }

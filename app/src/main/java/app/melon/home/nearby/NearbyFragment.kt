@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BasePagingListFragment
 import app.melon.data.entities.User
-import com.sankuai.waimai.router.common.DefaultUriRequest
+import app.melon.user.api.IUserService
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,14 +15,14 @@ class NearbyFragment : BasePagingListFragment() {
 
     @Inject lateinit var nearbyViewModel: NearbyViewModel
 
+    @Inject lateinit var userService: IUserService
+
     override val controller by lazy(LazyThreadSafetyMode.NONE) {
         NearbyPageController(requireContext()).apply {
             callbacks = object : NearbyPageController.Actions {
                 override fun onHolderClick(user: User?) {
                     val uid = user?.id ?: return
-                    DefaultUriRequest(requireContext(), "/user_profile")
-                        .putExtra("USER_PROFILE_UID", uid)
-                        .start()
+                    userService.navigateToUserProfile(requireContext(), uid)
                 }
             }
         }
