@@ -21,16 +21,16 @@ import com.airbnb.epoxy.group
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import javax.inject.Inject
 
 class UserProfileController @AssistedInject constructor(
     @Assisted private val context: Context,
-    @Assisted private val action: Action
+    @Assisted private val action: Action,
+    private val factory: FeedControllerDelegate.Factory
 ) : Typed3EpoxyController<User, List<Feed>, Boolean>() {
 
-    @Inject internal lateinit var factory: FeedControllerDelegate.Factory
-
-    private val delegate get() = factory.create(context)
+    private val delegate by lazy {
+        factory.create(context)
+    }
 
     override fun buildModels(user: User?, feeds: List<Feed>?, refreshing: Boolean) {
         if (refreshing) {

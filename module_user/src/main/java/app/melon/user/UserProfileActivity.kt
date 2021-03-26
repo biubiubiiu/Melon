@@ -14,7 +14,7 @@ import dagger.android.support.DaggerAppCompatActivity
 
 class UserProfileActivity : DaggerAppCompatActivity() {
 
-    private val uid: String by lazy(LazyThreadSafetyMode.NONE) { intent.getStringExtra("USER_PROFILE_UID") ?: "" }
+    private val uid: String by lazy(LazyThreadSafetyMode.NONE) { intent.getStringExtra(KEY_USER_ID) ?: "" }
 
     private val currentFragment: Fragment?
         get() = supportFragmentManager.findFragmentById(USER_PROFILE_FRAGMENT_CONTAINER_ID)

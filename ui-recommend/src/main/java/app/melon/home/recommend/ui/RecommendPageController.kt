@@ -17,16 +17,16 @@ import com.airbnb.epoxy.group
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import javax.inject.Inject
 
 
 class RecommendPageController @AssistedInject constructor(
-    @Assisted context: Context
+    @Assisted context: Context,
+    private val factory: FeedControllerDelegate.Factory
 ) : BasePagingController<RecommendedEntryWithFeed>(context) {
 
-    @Inject internal lateinit var controllerFactory: FeedControllerDelegate.Factory
-
-    private val delegate get() = controllerFactory.create(context)
+    private val delegate by lazy {
+        factory.create(context)
+    }
 
     override fun buildItemModel(currentPosition: Int, item: RecommendedEntryWithFeed?): EpoxyModel<*> =
         delegate.buildFeedItem(

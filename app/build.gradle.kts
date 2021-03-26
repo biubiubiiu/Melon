@@ -4,7 +4,6 @@ plugins {
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinAndroidExtensions)
     id(BuildPlugins.kotlinKapt)
-    id(BuildPlugins.WMRouter)
 
     // Internal Script plugins
     id(ScriptPlugins.compilation)
@@ -56,6 +55,7 @@ dependencies {
     implementation(project(Modules.user))
     implementation(project(Modules.account))
     implementation(project(Modules.profile))
+    implementation(project(Modules.feed))
 
     compileOnly(project(Modules.accountApi))
     compileOnly(project(Modules.userApi))

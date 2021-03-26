@@ -5,8 +5,8 @@ import app.melon.account.di.AccountModule
 import app.melon.base.scope.ApplicationScope
 import app.melon.data.di.DatabaseModule
 import app.melon.data.di.RemoteServiceModule
+import app.melon.feed.di.FeedBuilder
 import app.melon.home.di.HomeBuilder
-import app.melon.user.di.UserBuilder
 import app.melon.user.di.UserModule
 import dagger.BindsInstance
 import dagger.Component
@@ -28,7 +28,8 @@ import javax.inject.Singleton
         RemoteServiceModule::class,
         HomeBuilder::class,
         UserModule::class,
-        AccountModule::class
+        AccountModule::class,
+        FeedBuilder::class
     ]
 )
 interface AppComponent : AndroidInjector<MelonApplication> {

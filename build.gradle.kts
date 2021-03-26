@@ -7,7 +7,6 @@ buildscript {
     dependencies {
         classpath(BuildPlugins.androidGradlePlugin)
         classpath(BuildPlugins.kotlinGradlePlugin)
-        classpath(Libraries.Router.plugin)
     }
 }
 

@@ -16,7 +16,9 @@ class FollowFragment : BasePagingListFragment() {
 
     @Inject lateinit var controllerFactory: FollowPageController.Factory
 
-    override val controller get() = controllerFactory.create(requireContext())
+    override val controller by lazy {
+        controllerFactory.create(requireContext())
+    }
 
     private var fetchJob: Job? = null
 

@@ -43,8 +43,6 @@ dependencies {
 
     api(Libraries.AndroidX.AppCompat.appCompat)
 
-    api(Libraries.Router.runtime)
-
     api(Libraries.Room.runtime)
 
     api(Libraries.Mavericks.mavericks)

@@ -8,15 +8,15 @@ import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import javax.inject.Inject
 
 class UserPostsController @AssistedInject constructor(
-    @Assisted context: Context
+    @Assisted context: Context,
+    private val factory: FeedControllerDelegate.Factory
 ) : BasePagingController<Feed>(context) {
 
-    @Inject internal lateinit var factory: FeedControllerDelegate.Factory
-
-    private val delegate get() = factory.create(context)
+    private val delegate by lazy {
+        factory.create(context)
+    }
 
     override fun buildItemModel(currentPosition: Int, item: Feed?): EpoxyModel<*> =
         delegate.buildFeedItem(

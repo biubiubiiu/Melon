@@ -33,7 +33,9 @@ class UserPostsFragment : DaggerFragment(R.layout.fragment_user_posts) {
         }
     }
 
-    private val controller: UserPostsController get() = controllerFactory.create(requireContext())
+    private val controller: UserPostsController by lazy {
+        controllerFactory.create(requireContext())
+    }
 
     private lateinit var toolbar: Toolbar
 

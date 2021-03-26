@@ -55,6 +55,4 @@ dependencies {
     kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)
     kapt(Libraries.Dagger.processor)
-
-    kapt(Libraries.Router.compiler)
 }

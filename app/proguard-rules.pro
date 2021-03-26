@@ -42,6 +42,3 @@
 
 # https://stackoverflow.com/questions/33547643/how-to-use-kotlin-with-proguard
 -dontwarn kotlin.**
-
-# 使用了RouterService注解的实现类，需要避免Proguard把构造方法、方法等成员移除(shrink)或混淆(obfuscate)，导致无法反射调用。实现类的类名可以混淆。
--keepclassmembers @com.sankuai.waimai.router.annotation.RouterService class * { *; }

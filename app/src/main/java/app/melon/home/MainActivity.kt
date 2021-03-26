@@ -8,10 +8,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import app.melon.R
-import app.melon.profile.ProfileConstants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import com.sankuai.waimai.router.Router
 import dagger.android.support.DaggerAppCompatActivity
 
 
@@ -42,7 +40,8 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
         }
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.home_nav_drawer_nav_to_profile -> Router.startUri(this, ProfileConstants.PROFILE_PAGE)
+                R.id.home_nav_drawer_nav_to_profile -> {
+                }
                 else -> {
                 } // TODO
             }
