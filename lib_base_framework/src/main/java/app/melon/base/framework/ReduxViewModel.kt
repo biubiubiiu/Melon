@@ -51,8 +51,9 @@ abstract class ReduxViewModel<S> constructor(initialState: S) : ViewModel() {
         }
     }
 
-    private fun <A> selectSubscribe(prop1: KProperty1<S, A>): Flow<A> {
-        return state.map { prop1.get(it) }.distinctUntilChanged()
+    protected fun <A> selectSubscribe(prop1: KProperty1<S, A>): Flow<A> {
+//        return state.map { prop1.get(it) }.distinctUntilChanged()
+        return state.map { prop1.get(it) }
     }
 
     protected suspend fun setState(reducer: S.() -> S) {

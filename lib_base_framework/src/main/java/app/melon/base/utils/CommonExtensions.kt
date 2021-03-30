@@ -71,6 +71,10 @@ fun Any.isAnyOf(vararg args: Any): Boolean {
     return args.any { it == this }
 }
 
+fun Any.equalsAll(vararg args: Any): Boolean {
+    return args.all { it == this }
+}
+
 fun getResourceString(@StringRes id: Int, vararg formatArgs: Any?): String {
     return AppHelper.applicationContext.getString(id, *formatArgs)
 }

@@ -2,6 +2,7 @@ package app.melon.di
 
 import app.melon.MelonApplication
 import app.melon.account.di.AccountModule
+import app.melon.account.di.StorageModule
 import app.melon.base.scope.ApplicationScope
 import app.melon.data.di.DatabaseModule
 import app.melon.data.di.RemoteServiceModule
@@ -29,7 +30,9 @@ import javax.inject.Singleton
         HomeBuilder::class,
         UserModule::class,
         AccountModule::class,
-        FeedBuilder::class
+        FeedBuilder::class,
+        StorageModule::class,
+        AppSubComponents::class
     ]
 )
 interface AppComponent : AndroidInjector<MelonApplication> {

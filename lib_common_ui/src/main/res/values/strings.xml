@@ -13,6 +13,8 @@
     <string name="home_nav_drawer_menu_bookmarks">Bookmarks</string>
     <string name="home_nav_drawer_menu_messages">Messages</string>
     <string name="home_nav_drawer_menu_settings">Settings</string>
+    <string name="home_nav_drawer_menu_registration">Create a new account</string>
+    <string name="home_nav_drawer_menu_login">Add an existing account</string>
 
     <string name="home_tab_recommend">For You</string>
     <string name="home_tab_following">Follow</string>
@@ -35,6 +37,7 @@
     <string name="app_common_more_operation_desc">More operation</string>
     <string name="app_common_search_desc">Search</string>
     <string name="app_common_interest_group_desc">Interest Group</string>
+    <string name="app_common_go_back">Back</string>
 
     <string name="app_common_refresh_error_hint">Something went wrong</string>
     <string name="app_common_retry_hint">TRY AGAIN</string>

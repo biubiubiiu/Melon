@@ -7,6 +7,8 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorAccent">#C41442</item>
         <item name="colorSwitchThumbNormal">#440717</item>
+        <item name="colorButtonNormal">#50C41442</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>

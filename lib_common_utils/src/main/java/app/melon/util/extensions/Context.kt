@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.AttrRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
@@ -27,3 +29,10 @@ fun Context.showToast(message: String) =
 
 val Context.connectivityManager: ConnectivityManager
     get() = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+fun Context.resolveTheme(@AttrRes attributeResId: Int): Int {
+    val typedValue = TypedValue()
+    return if (this.theme.resolveAttribute(attributeResId, typedValue, true)) {
+        typedValue.data
+    } else 0
+}

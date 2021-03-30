@@ -1,10 +1,14 @@
 package app.melon.account
 
 import android.content.Context
+import android.content.Intent
 import app.melon.account.api.IAccountService.Observer
 import app.melon.account.api.IAccountService
+import app.melon.account.login.LoginActivity
+import app.melon.account.signup.SignUpStepFormActivity
+import javax.inject.Inject
 
-class FakeAccountService : IAccountService {
+class FakeAccountService @Inject constructor() : IAccountService {
 
     private var mIsLogin = false
     private val mObservers: MutableList<Observer> = ArrayList()
@@ -14,7 +18,11 @@ class FakeAccountService : IAccountService {
     }
 
     override fun startLogin(context: Context) {
-        // ...
+        context.startActivity(Intent(context, LoginActivity::class.java))
+    }
+
+    override fun startRegister(context: Context) {
+        context.startActivity(Intent(context, SignUpStepFormActivity::class.java))
     }
 
     override val isLogin: Boolean

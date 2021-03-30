@@ -18,5 +18,5 @@ internal abstract class HomeBuilder {
             NearbyBuilder::class
         ]
     )
-    internal abstract fun homeActivity(): MainActivity
+    internal abstract fun injectHomeActivity(): MainActivity
 }

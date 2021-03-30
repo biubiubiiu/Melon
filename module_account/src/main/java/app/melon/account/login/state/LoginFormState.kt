@@ -1,4 +1,4 @@
-package app.melon.account.ui.login
+package app.melon.account.login.state
 
 /**
  * Data validation state of the login form.

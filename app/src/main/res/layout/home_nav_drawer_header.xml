@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_header_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
@@ -16,14 +18,32 @@
         android:contentDescription="@string/home_nav_header_desc"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
-    <TextView
-        android:id="@+id/home_nav_header_username"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/nav_header_inner_spacing_horizontal"
         android:layout_marginTop="@dimen/nav_header_vertical_spacing_medium"
-        android:text="@string/nav_header_title"
-        android:textAppearance="@style/Melon.TextAppearance.Head" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <TextView
+            android:id="@+id/home_nav_header_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/nav_header_title"
+            android:textAppearance="@style/Melon.TextAppearance.Head" />
+
+        <ImageView
+            android:id="@+id/home_nav_expand_more_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_common_more_operation_desc"
+            app:srcCompat="@drawable/ic_round_expand_more_24"
+            app:tint="@color/colorPrimary" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/home_nav_header_user_id"

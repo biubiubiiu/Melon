@@ -8,6 +8,8 @@ interface IAccountService {
 
     fun startLogin(context: Context)
 
+    fun startRegister(context: Context)
+
     fun registerObserver(observer: Observer)
 
     fun unregisterObserver(observer: Observer)

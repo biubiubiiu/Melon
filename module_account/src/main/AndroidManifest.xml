@@ -3,9 +3,9 @@
     package="app.melon.account">
 
     <application>
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".signup.SignUpStepFormActivity" />
+        <activity android:name=".signup.SignUpReviewStepActivity" />
     </application>
 
 </manifest>

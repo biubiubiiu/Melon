@@ -6,6 +6,8 @@
     <string name="home_nav_drawer_menu_bookmarks">书签</string>
     <string name="home_nav_drawer_menu_messages">消息</string>
     <string name="home_nav_drawer_menu_settings">设置</string>
+    <string name="home_nav_drawer_menu_registration">创建新账号</string>
+    <string name="home_nav_drawer_menu_login">添加已有账号</string>
 
     <string name="app_common_following">正在关注</string>
     <string name="app_common_follower">关注者</string>
@@ -21,6 +23,7 @@
     <string name="app_common_more_operation_desc">更多</string>
     <string name="app_common_search_desc">搜索</string>
     <string name="app_common_interest_group_desc">兴趣小组</string>
+    <string name="app_common_go_back">返回上一级</string>
 
     <string name="app_common_refresh_error_hint">出错了</string>
     <string name="app_common_retry_hint">重试</string>

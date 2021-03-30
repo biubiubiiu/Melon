@@ -1,11 +1,49 @@
 <resources>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
+
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string name="account_login_melon">Log in to Melon</string>
+    <string name="account_prompt_email_phone_or_username">Phone Number, email address, or Username</string>
+    <string name="account_prompt_password">Password</string>
+    <string name="account_prompt_forgot_password">Forgot password?</string>
+    <string name="account_prompt_logging_in">Logging in</string>
+    <string name="account_action_sign_in">Sign in</string>
+    <string name="account_action_sign_up">Sign up</string>
+
+    <string name="account_login_failed_email_password_not_matched">The email and password you entered did not match our records. Please double-check and try again</string>
+    <string name="account_login_failed_phone_password_not_matched">The phone and password you entered did not match our records. Please double-check and try again</string>
+    <string name="account_login_failed_username_password_not_matched">The username and password you entered did not match our records. Please double-check and try again</string>
+
+    <string name="account_prompt_create_account">Create your account</string>
+
+    <string name="account_hint_username">Username</string>
+    <string name="account_hint_password">Password</string>
+    <string name="account_hint_email_or_phone">Email or phone</string>
+    <string name="account_hint_email">Email</string>
+    <string name="account_hint_phone">Phone</string>
+    <string name="account_hint_birth_date">Birth date</string>
+
+    <string name="account_prompt_next_step">Next</string>
+    <string name="account_prompt_user_email_instead">Use email instead</string>
+    <string name="account_prompt_user_phone_instead">Use phone instead</string>
+    <string name="account_prompt_sign_up_hint">By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use. Others will be able to find you by email or phone number when provided·Privacy Options</string>
+
+    <string name="account_error_hint_blank_username">What\'s your name?</string>
+    <string name="account_error_hint_username_over_long">Must be 30 characters or fewer</string>
+    <string name="account_error_hint_invalid_phone">Please enter a valid phone</string>
+    <string name="account_error_hint_invalid_email">Please enter a valid email</string>
+    <string name="account_error_hint_invalid_password">Your password should containers at least 2 of numbers, letters and special characters, and should be of length 6–16</string>
+
+    <string name="account_error_hint_user_already_registered">User has already been registered</string>
+    <string name="account_error_hint_unauthorized">HTTP 401 Unauthorized</string>
+    <string name="account_error_hint_forbidden">HTTP 403 Forbidden</string>
+    <string name="account_error_hint_not_found">HTTP 404 Service Not Found</string>
+    <string name="account_error_hint_unknown_error">Unknown Error</string>
+
+    <string name="account_sign_up_desc">Sign up</string>
+    <string name="account_sign_up">Sign up</string>
 </resources>
