@@ -1,4 +1,4 @@
-package app.melon.home.recommend.groups
+package app.melon.group
 
 import android.content.Context
 import com.airbnb.epoxy.Carousel
@@ -20,13 +20,12 @@ class GroupCarousel(context: Context) : Carousel(context) {
 
     @ModelProp(ModelProp.Option.DoNotHash)
     fun setEpoxyController(controller: EpoxyController) {
-//        setControllerAndBuildModels(controller) // TODO open this line
+        setController(controller)
     }
 
     // you need to override this to prevent NPE of Carousel.setModels()
     @ModelProp
     override fun setModels(models: List<EpoxyModel<*>>) {
-        // remove super method because we use PagedController for models build.
-        super.setModels(models)
+        // remove super method because we use Custom Controller for models build.
     }
 }

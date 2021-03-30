@@ -56,6 +56,7 @@ dependencies {
     implementation(project(Modules.account))
     implementation(project(Modules.profile))
     implementation(project(Modules.feed))
+    implementation(project(Modules.group))
 
     compileOnly(project(Modules.accountApi))
     compileOnly(project(Modules.userApi))

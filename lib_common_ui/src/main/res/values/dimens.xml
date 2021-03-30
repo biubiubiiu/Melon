@@ -12,11 +12,6 @@
 
     <dimen name="nearby_avatar_size">48dp</dimen>
 
-    <dimen name="interest_group_width">80dp</dimen>
-    <dimen name="interest_group_image_size">60dp</dimen>
-    <dimen name="interest_group_spacing_vertical">6dp</dimen>
-    <dimen name="interest_group_spacing_horizontal">6dp</dimen>
-
     <dimen name="spacing_xlarge">48dp</dimen>
     <dimen name="spacing_large">24dp</dimen>
     <dimen name="spacing_normal">16dp</dimen>

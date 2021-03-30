@@ -39,6 +39,7 @@ dependencies {
     implementation(project(Modules.baseFramework))
     implementation(project(Modules.dataAndroid))
     implementation(project(Modules.feed))
+    implementation(project(Modules.group))
 
     implementation(Libraries.Fragment.fragment)
     implementation(Libraries.Fragment.ktx)

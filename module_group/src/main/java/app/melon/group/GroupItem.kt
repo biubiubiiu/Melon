@@ -1,10 +1,10 @@
-package app.melon.home.recommend.groups
+package app.melon.group
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.data.entities.InterestGroup
-import app.melon.home.recommend.R
 import coil.load
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -17,12 +17,17 @@ abstract class GroupItem : EpoxyModelWithHolder<GroupItem.Holder>() {
 
     @EpoxyAttribute lateinit var showPicUrl: String
     @EpoxyAttribute lateinit var groupName: String
+    @EpoxyAttribute @DrawableRes var showPicId: Int? = null
 
     override fun getDefaultLayout(): Int = R.layout.item_interest_group
 
     override fun bind(holder: Holder) {
         with(holder) {
-            showPic.load(showPicUrl)
+            if (showPicId != null) {
+                showPic.load(showPicId!!)
+            } else {
+                showPic.load(showPicUrl)
+            }
             groupNameView.text = groupName
         }
     }

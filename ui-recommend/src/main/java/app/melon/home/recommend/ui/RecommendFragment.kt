@@ -18,7 +18,10 @@ class RecommendFragment : BasePagingListFragment() {
     @Inject internal lateinit var controllerFactory: RecommendPageController.Factory
 
     override val controller by lazy {
-        controllerFactory.create(requireContext())
+        controllerFactory.create(
+            context = requireContext(),
+            scope = lifecycleScope
+        )
     }
 
     private var fetchJob: Job? = null

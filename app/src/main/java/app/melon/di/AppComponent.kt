@@ -7,6 +7,7 @@ import app.melon.base.scope.ApplicationScope
 import app.melon.data.di.DatabaseModule
 import app.melon.data.di.RemoteServiceModule
 import app.melon.feed.di.FeedBuilder
+import app.melon.group.di.GroupBuilder
 import app.melon.home.di.HomeBuilder
 import app.melon.user.di.UserModule
 import dagger.BindsInstance
@@ -31,6 +32,7 @@ import javax.inject.Singleton
         UserModule::class,
         AccountModule::class,
         FeedBuilder::class,
+        GroupBuilder::class,
         StorageModule::class,
         AppSubComponents::class
     ]
