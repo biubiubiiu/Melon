@@ -18,7 +18,6 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".home.MainActivity"
-            android:label="@string/title_activity_main"
             android:theme="@style/Theme.Melon">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
