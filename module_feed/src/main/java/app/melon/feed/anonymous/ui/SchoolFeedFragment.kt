@@ -2,12 +2,13 @@ package app.melon.feed.anonymous.ui
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.flatMap
 import androidx.paging.map
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BasePagingListFragment
 import app.melon.feed.anonymous.AnonymousFeedViewModel
+import app.melon.feed.anonymous.ViewModelFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -15,7 +16,9 @@ import javax.inject.Inject
 
 class SchoolFeedFragment : BasePagingListFragment() {
 
-    @Inject internal lateinit var viewModel: AnonymousFeedViewModel
+    @Inject internal lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel by viewModels<AnonymousFeedViewModel>(::requireParentFragment) { viewModelFactory }
+
     @Inject internal lateinit var controllerFactory: FeedPageController.Factory
 
     override val controller by lazy {

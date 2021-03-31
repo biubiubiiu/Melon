@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import app.melon.base.ui.databinding.FragmentCommonTabsBinding
 import app.melon.base.ui.lazyload.LazyFragmentPagerAdapter
 import app.melon.feed.R
@@ -19,7 +20,8 @@ class AnonymousFeedFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
     private val binding: FragmentCommonTabsBinding by viewBinding()
 
-    @Inject internal lateinit var viewModel: AnonymousFeedViewModel
+    @Inject internal lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel by viewModels<AnonymousFeedViewModel> { viewModelFactory }
 
     private val viewPager get() = binding.viewpager
     private val tabLayout get() = binding.tabLayout
