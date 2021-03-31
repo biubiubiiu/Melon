@@ -118,7 +118,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/feed_tag_container"
-        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_conventional"
         android:orientation="horizontal">
 
         <TextView
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/app_common_more_operation_desc"
-            android:paddingHorizontal="@dimen/spacing_micro"
+            android:paddingHorizontal="@dimen/spacing_small"
             app:srcCompat="@drawable/ic_round_more_vert_16" />
 
     </LinearLayout>

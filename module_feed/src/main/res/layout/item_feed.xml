@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/bgPrimary"
-    android:paddingHorizontal="@dimen/feed_spacing_horizontal"
-    android:paddingVertical="@dimen/feed_spacing_vertical">
+    android:paddingHorizontal="@dimen/spacing_conventional"
+    android:paddingVertical="@dimen/spacing_conventional">
 
     <ImageView
         android:id="@+id/feed_user_avatar"
@@ -20,7 +20,7 @@
         android:id="@+id/feed_title_content_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/feed_spacing_horizontal"
+        android:layout_marginStart="@dimen/spacing_conventional"
         android:layout_toEndOf="@id/feed_user_avatar">
 
         <TextView
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/feed_title_content_container"
-        android:layout_marginStart="@dimen/feed_spacing_horizontal"
+        android:layout_alignStart="@id/feed_title_content_container"
         android:layout_toEndOf="@id/feed_user_avatar"
         android:textAppearance="@style/Melon.TextAppearance.Info"
         tools:text="Kings Landing" />
@@ -68,30 +68,44 @@
         android:id="@+id/feed_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/feed_user_avatar"
-        android:layout_marginTop="@dimen/feed_content_spacing_vertical"
+        android:layout_below="@id/feed_user_school"
+        android:layout_alignStart="@id/feed_title_content_container"
+        android:layout_marginTop="@dimen/spacing_small"
         android:ellipsize="end"
         android:maxLines="5"
         android:textAppearance="@style/Melon.TextAppearance.Content"
         tools:text="A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text." />
 
+    <app.melon.base.ui.ShapedFourPhotoView
+        android:id="@+id/feed_photos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_content"
+        android:layout_alignStart="@id/feed_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/feed_tag_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/feed_content"
-        android:layout_marginTop="@dimen/feed_content_spacing_vertical"
+        android:layout_below="@id/feed_photos"
+        android:layout_alignStart="@id/feed_content"
         android:orientation="horizontal">
 
-        <ViewStub
-            android:id="@+id/feed_location_tag_stub"
+        <app.melon.base.uikit.TagView
+            android:id="@+id/feed_location_tag"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:visibility="gone" />
 
-        <ViewStub
-            android:id="@+id/feed_type_tag_stub"
+        <app.melon.base.uikit.TagView
+            android:id="@+id/feed_type_tag"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -99,7 +113,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/feed_tag_container"
-        android:layout_marginTop="@dimen/feed_content_spacing_vertical"
+        android:layout_alignStart="@id/feed_content"
+        android:layout_marginTop="@dimen/spacing_conventional"
         android:orientation="horizontal">
 
         <TextView
@@ -128,7 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/app_common_more_operation_desc"
-            android:paddingHorizontal="4dp"
+            android:paddingHorizontal="@dimen/spacing_small"
             app:srcCompat="@drawable/ic_round_more_vert_16" />
 
     </LinearLayout>

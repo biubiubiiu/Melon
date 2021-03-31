@@ -67,7 +67,7 @@ class UserProfileController @AssistedInject constructor(
                 id("profile_photos")
                 itemPadding(4.dpInt)
                 background(R.color.bgPrimary)
-                marginHorizontal(12.dpInt)
+                paddingHorizontal(12.dpInt)
                 onClickListener { urls, index -> context.showToast("Click item $index, urls size: ${urls.size}") }
                 cornerRadius(24f)
                 urls(urls)

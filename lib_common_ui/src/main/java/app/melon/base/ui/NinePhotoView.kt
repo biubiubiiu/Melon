@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.core.view.updateMargins
+import androidx.core.view.updatePadding
 import coil.load
 import com.airbnb.epoxy.AfterPropsSet
 import com.airbnb.epoxy.CallbackProp
@@ -24,9 +25,9 @@ class NinePhotoView @JvmOverloads constructor(
 ) : ViewGroup(context, attrs, defStyleAttr) {
 
     companion object {
-        private const val MAX_ITEM: Int = 9
         private const val MAX_ROW: Int = 3
         private const val MAX_COL: Int = 3
+        private const val MAX_ITEM: Int = MAX_ROW * MAX_COL
     }
 
     var urls: List<String> = emptyList()
@@ -43,12 +44,10 @@ class NinePhotoView @JvmOverloads constructor(
 
     @JvmOverloads
     @ModelProp
-    fun marginHorizontal(size: Int = 0) {
-        (layoutParams as MarginLayoutParams).updateMargins(
-            left = size,
-            right = size
+    fun paddingHorizontal(size: Int = 0) {
+        updatePadding(
+            left = size, right = size, top = 0, bottom = 0
         )
-        requestLayout()
     }
 
     @JvmOverloads
@@ -92,9 +91,10 @@ class NinePhotoView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val layoutWidth = MeasureSpec.getSize(widthMeasureSpec) - paddingLeft - paddingRight
         if (itemCount > 0) {
-            itemSize = (layoutWidth - itemPadding * (MAX_COL - 1)) / MAX_COL
+            val layoutWidth = MeasureSpec.getSize(widthMeasureSpec) - paddingLeft - paddingRight
+            val photoAreaWidth = layoutWidth - paddingLeft - paddingRight
+            itemSize = (photoAreaWidth - itemPadding * (MAX_COL - 1)) / MAX_COL
             measureChildren(
                 MeasureSpec.makeMeasureSpec(itemSize, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(itemSize, MeasureSpec.EXACTLY)
@@ -112,8 +112,8 @@ class NinePhotoView @JvmOverloads constructor(
             val top = (itemSize + itemPadding) * actual_row + paddingTop
             val right = left + itemSize
             val bottom = top + itemSize
-            val childrenView = getChildAt(i)
-            childrenView.layout(left, top, right, bottom)
+            val childView = getChildAt(i)
+            childView.layout(left, top, right, bottom)
         }
     }
 }

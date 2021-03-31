@@ -1,12 +1,12 @@
 package app.melon.feed.ui
 
 import android.view.ViewGroup
-import android.view.ViewStub
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.NinePhotoView
+import app.melon.base.uikit.TagView
 import app.melon.data.entities.Feed
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt
@@ -71,20 +71,20 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
     }
 
     class Holder : BaseEpoxyHolder() {
-        val containerView by bind<ViewGroup>(R.id.feed_container)
-        val avatarView by bind<ImageView>(R.id.feed_user_avatar)
-        val usernameView by bind<TextView>(R.id.feed_username)
-        val userIdView by bind<TextView>(R.id.feed_user_id)
-        val userSchoolView by bind<TextView>(R.id.feed_user_school)
-        val postTimeView by bind<TextView>(R.id.feed_post_time)
-        val titleView by bind<TextView>(R.id.feed_title)
-        val contentView by bind<TextView>(R.id.feed_content)
-        val photoView by bind<NinePhotoView>(R.id.feed_photos)
-        val locationTagStub by bind<ViewStub>(R.id.feed_location_tag_stub)
-        val typeTagStub by bind<ViewStub>(R.id.feed_type_tag_stub)
-        val shareView by bind<TextView>(R.id.feed_share)
-        val commentView by bind<TextView>(R.id.feed_comment)
-        val favoriteView by bind<TextView>(R.id.feed_favorite)
-        val moreOperationView by bind<ImageView>(R.id.feed_more)
+        internal val containerView: ViewGroup by bind(R.id.feed_container)
+        internal val avatarView: ImageView by bind(R.id.feed_user_avatar)
+        internal val usernameView: TextView by bind(R.id.feed_username)
+        internal val userIdView: TextView by bind(R.id.feed_user_id)
+        internal val userSchoolView: TextView by bind(R.id.feed_user_school)
+        internal val postTimeView: TextView by bind(R.id.feed_post_time)
+        internal val titleView: TextView by bind(R.id.feed_title)
+        internal val contentView: TextView by bind(R.id.feed_content)
+        internal val photoView: NinePhotoView by bind(R.id.feed_photos)
+        internal val locationTag: TagView by bind(R.id.feed_location_tag)
+        internal val typeTag: TagView by bind(R.id.feed_type_tag)
+        internal val shareView: TextView by bind(R.id.feed_share)
+        internal val commentView: TextView by bind(R.id.feed_comment)
+        internal val favoriteView: TextView by bind(R.id.feed_favorite)
+        internal val moreOperationView: ImageView by bind(R.id.feed_more)
     }
 }
