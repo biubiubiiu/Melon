@@ -40,10 +40,12 @@
     <string name="app_common_interest_group_desc">Interest Group</string>
     <string name="app_common_go_back">Back</string>
 
-    <string name="app_common_refresh_error_hint">Something went wrong</string>
+    <string name="app_common_error_hint">Something went wrong</string>
     <string name="app_common_retry_hint">TRY AGAIN</string>
+    <string name="app_common_error_timeout_hint">Connection Timeout</string>
+    <string name="app_common_error_unknown_hint">Unknown Error</string>
 
-    <string name="Oops">Oops</string>
+    <string name="app_common_sorry">Sorry</string>
 
     <string name="empty_list_title">List is empty</string>
     <string name="empty_list_subtitile">Some hint</string>

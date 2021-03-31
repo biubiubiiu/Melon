@@ -25,8 +25,12 @@
     <string name="app_common_interest_group_desc">兴趣小组</string>
     <string name="app_common_go_back">返回上一级</string>
 
-    <string name="app_common_refresh_error_hint">出错了</string>
+    <string name="app_common_error_hint">出错了</string>
     <string name="app_common_retry_hint">重试</string>
+    <string name="app_common_error_timeout_hint">网络连接超时</string>
+    <string name="app_common_error_unknown_hint">未知错误</string>
+
+    <string name="app_common_sorry">抱歉</string>
 
     <string name="empty_list_title">这里空空如也——暂时。</string>
     <string name="empty_list_subtitile">当有人在一条推文中提及你时，你就能在这里看到。</string>

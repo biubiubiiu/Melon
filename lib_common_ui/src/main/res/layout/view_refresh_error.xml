@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgPrimary"
@@ -17,27 +18,29 @@
         android:src="@drawable/sadface" />
 
     <TextView
+        android:id="@+id/error_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
-        android:text="@string/Oops"
         android:textColor="@color/TextPrimary"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:text="@string/app_common_sorry" />
 
     <TextView
+        android:id="@+id/error_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="6dp"
         android:gravity="center_horizontal"
-        android:text="@string/app_common_refresh_error_hint"
         android:textColor="@color/TextSecondary"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:text="@string/app_common_error_hint" />
 
     <TextView
-        android:id="@+id/ev_retry"
+        android:id="@+id/error_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
