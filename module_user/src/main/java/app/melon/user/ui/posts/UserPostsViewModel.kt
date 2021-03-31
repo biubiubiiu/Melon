@@ -14,7 +14,7 @@ class UserPostsViewModel @AssistedInject constructor(
     val pagingData = updateUserFeeds.observe()
 
     init {
-        selectSubscribe(UserFeedsViewState::uid) {
+        selectSubscribeDistinct(UserFeedsViewState::uid) {
             updateUserFeeds(UpdateUserFeeds.Params(it))
         }
     }

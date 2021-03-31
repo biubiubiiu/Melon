@@ -22,6 +22,27 @@ interface FeedApiService : ApiService {
         @Query("page_size") pageSize: Int
     ): Call<List<Feed>>
 
+    @GET("feed/anonymous/school/list")
+    fun anonymousSchoolFeeds(
+        @Query("timestamp") time: Long,
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Call<List<Feed>>
+
+    @GET("feed/anonymous/explore/list")
+    fun anonymousExploreFeeds(
+        @Query("timestamp") time: Long,
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Call<List<Feed>>
+
+    @GET("feed/anonymous/trending/list")
+    fun anonymousTrendingFeeds(
+        @Query("timestamp") time: Long,
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Call<List<Feed>>
+
     @GET("feed/detail/{id}")
     fun getFeedDetail(
         @Path("id") id: String

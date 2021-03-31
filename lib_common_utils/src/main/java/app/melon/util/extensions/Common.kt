@@ -1,4 +1,4 @@
-package app.melon.base.utils
+package app.melon.util.extensions
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -80,7 +80,7 @@ fun getResourceString(@StringRes id: Int, vararg formatArgs: Any?): String {
 }
 
 fun getResourceColor(@ColorRes id: Int): Int {
-    return AppHelper.applicationContext.resources.getColor(id)
+    return AppHelper.applicationContext.getColorCompat(id)
 }
 
 fun getResourceQuantityString(@PluralsRes id: Int, quantity: Int, vararg formatArgs: Any): String {

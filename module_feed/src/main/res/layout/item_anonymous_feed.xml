@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/feed_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bgPrimary"
+    android:paddingHorizontal="@dimen/spacing_conventional"
+    android:paddingVertical="@dimen/spacing_conventional">
+
+    <ImageView
+        android:id="@+id/feed_user_avatar"
+        android:layout_width="@dimen/feed_avatar_size"
+        android:layout_height="@dimen/feed_avatar_size"
+        android:contentDescription="@string/app_common_avatar_desc"
+        tools:src="#808080" />
+
+    <RelativeLayout
+        android:id="@+id/feed_title_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_toEndOf="@id/feed_user_avatar">
+
+        <TextView
+            android:id="@+id/feed_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Melon.TextAppearance.Title"
+            tools:text="Sandor Clegane" />
+
+        <TextView
+            android:id="@+id/feed_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/spacing_micro"
+            android:layout_toStartOf="@id/feed_post_time"
+            android:layout_toEndOf="@id/feed_username"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/Melon.TextAppearance.Info"
+            tools:text="\@Sandor_Clegane" />
+
+        <TextView
+            android:id="@+id/feed_post_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:textAppearance="@style/Melon.TextAppearance.Info"
+            tools:text="20/12/19" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/feed_user_school"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_title_content_container"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_toEndOf="@id/feed_user_avatar"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        tools:text="Kings Landing" />
+
+    <TextView
+        android:id="@+id/feed_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_user_avatar"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textAppearance="@style/Melon.TextAppearance.Title"
+        tools:text="This is a Title" />
+
+    <TextView
+        android:id="@+id/feed_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_title"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textAppearance="@style/Melon.TextAppearance.Content"
+        tools:text="A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text." />
+
+    <app.melon.base.ui.NinePhotoView
+        android:id="@+id/feed_photos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/feed_tag_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_photos"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal">
+
+        <ViewStub
+            android:id="@+id/feed_location_tag_stub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ViewStub
+            android:id="@+id/feed_type_tag_stub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_tag_container"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/feed_share"
+            style="@style/feed_bottom_operations"
+            android:text=""
+            app:drawableStartCompat="@drawable/ic_round_share_16" />
+
+        <TextView
+            android:id="@+id/feed_comment"
+            style="@style/feed_bottom_operations"
+            android:textAppearance="@style/Melon.TextAppearance.Info"
+            app:drawableStartCompat="@drawable/ic_round_comment_16"
+            tools:text="123" />
+
+        <TextView
+            android:id="@+id/feed_favorite"
+            style="@style/feed_bottom_operations"
+            android:textAppearance="@style/Melon.TextAppearance.Info"
+            app:drawableStartCompat="@drawable/ic_round_favorite_border_16"
+            tools:text="123" />
+
+        <ImageView
+            android:id="@+id/feed_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/app_common_more_operation_desc"
+            android:paddingHorizontal="@dimen/spacing_micro"
+            app:srcCompat="@drawable/ic_round_more_vert_16" />
+
+    </LinearLayout>
+
+</RelativeLayout>

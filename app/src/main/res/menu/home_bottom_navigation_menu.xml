@@ -12,4 +12,10 @@
         android:icon="@drawable/ic_round_place_24"
         android:iconTint="?attr/colorControlNormal"
         android:title="@string/home_bottom_menu_nearby" />
+    <item
+        android:id="@+id/home_anonymous_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_round_explore_24"
+        android:iconTint="?attr/colorControlNormal"
+        android:title="@string/home_bottom_menu_anonymous" />
 </menu>

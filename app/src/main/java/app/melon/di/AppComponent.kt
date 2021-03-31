@@ -3,10 +3,10 @@ package app.melon.di
 import app.melon.MelonApplication
 import app.melon.account.di.AccountModule
 import app.melon.account.di.StorageModule
+import app.melon.base.di.RemoteServiceModule
 import app.melon.base.scope.ApplicationScope
 import app.melon.data.di.DatabaseModule
-import app.melon.data.di.RemoteServiceModule
-import app.melon.feed.di.FeedBuilder
+import app.melon.feed.di.FeedModule
 import app.melon.group.di.GroupBuilder
 import app.melon.home.di.HomeBuilder
 import app.melon.user.di.UserModule
@@ -31,7 +31,7 @@ import javax.inject.Singleton
         HomeBuilder::class,
         UserModule::class,
         AccountModule::class,
-        FeedBuilder::class,
+        FeedModule::class,
         GroupBuilder::class,
         StorageModule::class,
         AppSubComponents::class

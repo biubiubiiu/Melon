@@ -14,8 +14,9 @@ import app.melon.data.resultentities.EntryWithFeed
  * source: https://github.com/chrisbanes/tivi
  */
 @OptIn(ExperimentalPagingApi::class)
-abstract class PaginatedEntryRemoteMediator<LI, ET> :
-    RemoteMediator<Int, LI>() where ET : PaginatedEntry, LI : EntryWithFeed<ET> {
+open class PaginatedEntryRemoteMediator<LI, ET>(
+    private val fetchAndStoreData: suspend (LoadType, Int, Int) -> Boolean
+) : RemoteMediator<Int, LI>() where ET : PaginatedEntry, LI : EntryWithFeed<ET> {
 
     companion object {
         const val DEFAULT_STARTING_PAGE_INDEX = 0
@@ -40,6 +41,4 @@ abstract class PaginatedEntryRemoteMediator<LI, ET> :
             MediatorResult.Error(t)
         }
     }
-
-    abstract val fetchAndStoreData: suspend (LoadType, Int, Int) -> Boolean
 }

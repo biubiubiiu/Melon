@@ -41,8 +41,9 @@ class NinePhotoView @JvmOverloads constructor(
     var onClickListener: ((List<String>, Int) -> Unit)? = null
         @CallbackProp set
 
+    @JvmOverloads
     @ModelProp
-    fun marginHorizontal(size: Int) {
+    fun marginHorizontal(size: Int = 0) {
         (layoutParams as MarginLayoutParams).updateMargins(
             left = size,
             right = size

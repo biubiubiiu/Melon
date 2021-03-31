@@ -49,7 +49,10 @@ dependencies {
 
     api(Libraries.Epoxy.paging)
 
+    api(Libraries.Retrofit.gsonConverter)
+    api(Libraries.Retrofit.retrofit)
     api(Libraries.OkHttp.okHttp)
 
     kapt(Libraries.Epoxy.compiler)
+    kapt(Libraries.Dagger.compiler)
 }

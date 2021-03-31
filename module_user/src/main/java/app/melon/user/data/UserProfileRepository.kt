@@ -1,5 +1,6 @@
 package app.melon.user.data
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -16,6 +17,7 @@ class UserProfileRepository @Inject constructor(
 ) {
 
     suspend fun getUserDetail(uid: String): User {
+        Log.d("raymond", "getUserDetail: $uid")
         return service.userDetail(uid).executeWithRetry().toResult().getOrThrow()
     }
 

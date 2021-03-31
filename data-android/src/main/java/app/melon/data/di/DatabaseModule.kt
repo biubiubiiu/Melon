@@ -40,6 +40,15 @@ class DatabaseDaoModule {
 
     @Provides
     fun provideFollowingDao(db: MelonDatabase) = db.followingDao()
+
+    @Provides
+    fun provideSchoolFeedsDao(db: MelonDatabase) = db.ANSchoolDao()
+
+    @Provides
+    fun provideExploreFeedsDao(db: MelonDatabase) = db.ANExploreDao()
+
+    @Provides
+    fun provideTrendingFeedsDao(db: MelonDatabase) = db.ANTrendingDao()
 }
 
 @Module

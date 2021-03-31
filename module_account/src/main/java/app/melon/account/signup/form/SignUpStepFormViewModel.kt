@@ -1,6 +1,5 @@
 package app.melon.account.signup.form
 
-import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import app.melon.account.R

@@ -1,4 +1,4 @@
-package app.melon.base.utils.extensions
+package app.melon.util.extensions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

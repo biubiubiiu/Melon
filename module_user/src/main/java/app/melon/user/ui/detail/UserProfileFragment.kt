@@ -12,8 +12,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import app.melon.base.uikit.TagView
-import app.melon.base.utils.extensions.viewModelProviderFactoryOf
-import app.melon.base.utils.getColorCompat
+import app.melon.util.extensions.viewModelProviderFactoryOf
+import app.melon.util.extensions.getColorCompat
 import app.melon.user.R
 import coil.load
 import coil.transform.CircleCropTransformation

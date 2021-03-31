@@ -16,9 +16,8 @@ class RecommendRemoteMediator(
     private val timestamp: Long,
     private val service: FeedApiService,
     private val database: MelonDatabase
-) : PaginatedEntryRemoteMediator<RecommendedEntryWithFeed, RecommendedFeedEntry>() {
-
-    override val fetchAndStoreData: suspend (LoadType, Int, Int) -> Boolean = { loadType, page, pageSize ->
+) : PaginatedEntryRemoteMediator<RecommendedEntryWithFeed, RecommendedFeedEntry>(
+    fetchAndStoreData = { loadType, page, pageSize ->
         val apiResponse = withContext(Dispatchers.IO) {
             service.fetchRecommendList(timestamp, page, pageSize).executeWithRetry().toResult()
         }
@@ -36,4 +35,4 @@ class RecommendRemoteMediator(
         }
         items.isNullOrEmpty()
     }
-}
+)

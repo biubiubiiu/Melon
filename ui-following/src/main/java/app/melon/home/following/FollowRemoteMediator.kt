@@ -16,9 +16,8 @@ class FollowRemoteMediator(
     private val timestamp: Long,
     private val service: FeedApiService,
     private val database: MelonDatabase
-) : PaginatedEntryRemoteMediator<FollowingEntryWithFeed, FollowingFeedEntry>() {
-
-    override val fetchAndStoreData: suspend (LoadType, Int, Int) -> Boolean = { loadType, page, pageSize ->
+) : PaginatedEntryRemoteMediator<FollowingEntryWithFeed, FollowingFeedEntry>(
+    fetchAndStoreData = { loadType, page, pageSize ->
         val apiResponse = withContext(Dispatchers.IO) {
             service.fetchFollowingList(timestamp, page, pageSize).executeWithRetry().toResult()
         }
@@ -36,4 +35,4 @@ class FollowRemoteMediator(
         }
         items.isNullOrEmpty()
     }
-}
+)

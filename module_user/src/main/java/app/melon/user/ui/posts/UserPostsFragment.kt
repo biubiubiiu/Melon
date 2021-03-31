@@ -10,7 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import app.melon.util.extensions.ifNotEmpty
-import app.melon.base.utils.extensions.viewModelProviderFactoryOf
+import app.melon.util.extensions.viewModelProviderFactoryOf
 import app.melon.user.R
 import com.airbnb.epoxy.EpoxyRecyclerView
 import dagger.android.support.DaggerFragment

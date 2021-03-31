@@ -7,10 +7,10 @@ import app.melon.base.ui.list.refreshView
 import app.melon.base.ui.list.vertSpaceSmall
 import app.melon.base.ui.ninePhotoView
 import app.melon.base.ui.textHeader
-import app.melon.base.utils.dpInt
-import app.melon.base.utils.getResourceColor
+import app.melon.util.extensions.dpInt
+import app.melon.util.extensions.getResourceColor
 import app.melon.util.extensions.showToast
-import app.melon.base.utils.sp
+import app.melon.util.extensions.sp
 import app.melon.data.entities.Feed
 import app.melon.data.entities.User
 import app.melon.feed.FeedControllerDelegate

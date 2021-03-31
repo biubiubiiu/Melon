@@ -2,6 +2,8 @@ package app.melon.feed
 
 import android.content.Context
 import app.melon.data.entities.Feed
+import app.melon.feed.ui.AnonymousFeedItem_
+import app.melon.feed.ui.FeedItem_
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
 import com.airbnb.epoxy.EpoxyModel
@@ -28,7 +30,21 @@ class FeedControllerDelegate @AssistedInject constructor(
             .commentClickListener { this.onCommentClick() }
             .favorClickListener { this.onFavorClick() }
             .moreClickListener { this.onMoreClick() }
-            .photoClickListener { urls, position -> this.onPhotoClick(urls, position) }
+    }
+
+    fun buildAnonymousFeedItem(
+        feedProvider: () -> Feed,
+        idProvider: () -> String = { "feed_${feedProvider.invoke().feedId}" }
+    ): EpoxyModel<*> {
+        val feed = feedProvider.invoke()
+        return AnonymousFeedItem_()
+            .id(idProvider.invoke())
+            .item(feed)
+            .holderClickListener { this.onHolderClick() }
+            .shareClickListener { this.onShareClick() }
+            .commentClickListener { this.onCommentClick() }
+            .favorClickListener { this.onFavorClick() }
+            .moreClickListener { this.onMoreClick() }
     }
 
     override fun onHolderClick() {
@@ -53,10 +69,6 @@ class FeedControllerDelegate @AssistedInject constructor(
 
     override fun onMoreClick() {
         context.showToast("click more")
-    }
-
-    override fun onPhotoClick(urls: List<String>, position: Int) {
-        context.showToast("Click item $position, urls size: ${urls.size}")
     }
 
     @AssistedFactory

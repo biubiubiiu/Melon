@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feed_school">本校</string>
+    <string name="feed_explore">广场</string>
+    <string name="feed_trending">热门</string>
+</resources>

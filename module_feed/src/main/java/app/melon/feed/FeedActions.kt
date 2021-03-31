@@ -7,5 +7,4 @@ interface FeedActions {
     fun onCommentClick()
     fun onFavorClick()
     fun onMoreClick()
-    fun onPhotoClick(urls: List<String>, position: Int)
 }

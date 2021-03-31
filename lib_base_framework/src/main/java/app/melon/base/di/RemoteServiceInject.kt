@@ -1,4 +1,4 @@
-package app.melon.data.di
+package app.melon.base.di
 
 import app.melon.data.services.FeedApiService
 import app.melon.data.services.UserApiService
@@ -22,7 +22,7 @@ class RemoteServiceModule {
 @Module
 class NetworkModule {
 
-    private val ADDRESS = "10.16.83.198"
+    private val ADDRESS = "10.16.83.36"
     private val PORT = "3000"
     private val API_HOST = "$ADDRESS:$PORT"
     private val BASE_URL = "http://$API_HOST/"

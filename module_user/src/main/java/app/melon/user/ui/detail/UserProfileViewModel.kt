@@ -1,5 +1,6 @@
 package app.melon.user.ui.detail
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ObservableLoadingCounter
 import app.melon.base.framework.ReduxViewModel
@@ -38,13 +39,14 @@ class UserProfileViewModel @AssistedInject constructor(
         viewModelScope.launch {
             updateFirstPageUserFeeds.observe().collectAndSetState { copy(feeds = it) }
         }
-        selectSubscribe(UserProfileViewState::uid) {
+        selectSubscribeDistinct(UserProfileViewState::uid) {
             fetchUserDetail(it)
             fetchUserFeedsFirstPage(it)
         }
     }
 
     private fun fetchUserDetail(uid: String) {
+        Log.d("raymond", "call fetch detail")
         viewModelScope.launch {
             val job = launch {
                 loadingState.addLoader()

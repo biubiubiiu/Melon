@@ -22,6 +22,8 @@ data class Feed(
     @SerializedName("poster_id") @ColumnInfo(name = "poster_id") val postId: String = "",
     @SerializedName("school") @ColumnInfo(name = "school") val school: String = "",
     @SerializedName("post_time") @ColumnInfo(name = "post_time") val postTime: Long = 0L,
+    @SerializedName("photo_list") @ColumnInfo(name = "photo_list") val photos: List<String> = emptyList(),
+    @SerializedName("title") @ColumnInfo(name = "title") val title: String = "",
     @SerializedName("content") @ColumnInfo(name = "content") val content: String = "",
     @SerializedName("comment") @ColumnInfo(name = "comment") val replyCount: Long = 0L,
     @SerializedName("favor") @ColumnInfo(name = "favor") val favouriteCount: Long = 0L,

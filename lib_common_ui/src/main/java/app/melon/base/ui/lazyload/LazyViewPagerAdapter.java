@@ -1,4 +1,4 @@
-package app.melon.base.lazyload;
+package app.melon.base.ui.lazyload;
 
 import android.annotation.SuppressLint;
 import android.view.View;
