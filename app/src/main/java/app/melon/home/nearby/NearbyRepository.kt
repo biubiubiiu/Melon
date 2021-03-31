@@ -3,10 +3,8 @@ package app.melon.home.nearby
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import app.melon.data.entities.Feed
 import app.melon.data.entities.User
-import app.melon.data.services.FeedApiService
-import app.melon.data.services.UserApiService
+import app.melon.user.data.UserApiService
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

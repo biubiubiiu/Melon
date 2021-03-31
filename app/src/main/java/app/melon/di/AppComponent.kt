@@ -3,7 +3,7 @@ package app.melon.di
 import app.melon.MelonApplication
 import app.melon.account.di.AccountModule
 import app.melon.account.di.StorageModule
-import app.melon.base.di.RemoteServiceModule
+import app.melon.base.di.NetworkModule
 import app.melon.base.scope.ApplicationScope
 import app.melon.data.di.DatabaseModule
 import app.melon.feed.di.FeedModule
@@ -27,7 +27,7 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         AppModule::class,
         DatabaseModule::class,
-        RemoteServiceModule::class,
+        NetworkModule::class,
         HomeBuilder::class,
         UserModule::class,
         AccountModule::class,

@@ -13,7 +13,6 @@ dependencies {
     api(Libraries.Gson.gson)
     api(Libraries.Paging3.common)
     api(Libraries.Dagger.dagger)
-    compileOnly(Libraries.Retrofit.retrofit)
 
     kapt(Libraries.Dagger.compiler)
 }

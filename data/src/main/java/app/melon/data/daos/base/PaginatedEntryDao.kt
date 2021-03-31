@@ -2,7 +2,7 @@ package app.melon.data.daos.base
 
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import app.melon.data.PaginatedEntry
+import app.melon.data.entities.PaginatedEntry
 import app.melon.data.resultentities.EntryWithFeed
 
 /**

@@ -1,6 +1,6 @@
 package app.melon.data.resultentities
 
-import app.melon.data.Entry
+import app.melon.data.entities.Entry
 import app.melon.data.entities.Feed
 import java.util.Objects
 

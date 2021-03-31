@@ -1,7 +1,8 @@
-package app.melon.data.services
+package app.melon.user.data
 
 import app.melon.data.entities.Feed
 import app.melon.data.entities.User
+import app.melon.data.services.ApiService
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

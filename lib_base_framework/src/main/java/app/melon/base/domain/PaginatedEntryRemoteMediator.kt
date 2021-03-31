@@ -4,7 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import app.melon.data.PaginatedEntry
+import app.melon.data.entities.PaginatedEntry
 import app.melon.data.resultentities.EntryWithFeed
 
 /**

@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import app.melon.data.FeedEntry
 import app.melon.data.constants.FeedType
 
 @Entity(

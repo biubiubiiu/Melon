@@ -5,7 +5,7 @@ import app.melon.data.MelonDatabase
 import app.melon.data.constants.FeedType
 import app.melon.data.entities.FollowingFeedEntry
 import app.melon.data.resultentities.FollowingEntryWithFeed
-import app.melon.data.services.FeedApiService
+import app.melon.feed.data.FeedApiService
 import app.melon.base.domain.PaginatedEntryRemoteMediator
 import app.melon.util.extensions.executeWithRetry
 import app.melon.util.extensions.toResult

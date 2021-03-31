@@ -1,6 +1,4 @@
-package app.melon.data
-
-import app.melon.data.entities.MelonEntity
+package app.melon.data.entities
 
 /**
  * source: https://github.com/chrisbanes/tivi

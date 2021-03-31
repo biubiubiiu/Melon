@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import app.melon.data.MelonDatabase
 import app.melon.data.daos.FollowingDao
 import app.melon.data.resultentities.FollowingEntryWithFeed
-import app.melon.data.services.FeedApiService
+import app.melon.feed.data.FeedApiService
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

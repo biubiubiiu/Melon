@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/feed_user_avatar"
-        android:layout_width="@dimen/feed_avatar_size"
-        android:layout_height="@dimen/feed_avatar_size"
+        android:layout_width="@dimen/feed_anonymous_avatar_size"
+        android:layout_height="@dimen/feed_anonymous_avatar_size"
         android:contentDescription="@string/app_common_avatar_desc"
         tools:src="#808080" />
 

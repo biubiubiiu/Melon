@@ -3,7 +3,7 @@ package app.melon.home.nearby
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import app.melon.data.entities.User
-import app.melon.data.services.UserApiService
+import app.melon.user.data.UserApiService
 import app.melon.util.extensions.executeWithRetry
 import app.melon.util.extensions.toResult
 import kotlinx.coroutines.Dispatchers

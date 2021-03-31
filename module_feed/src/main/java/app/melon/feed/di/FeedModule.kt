@@ -5,8 +5,11 @@ import app.melon.feed.anonymous.AnonymousFeedFragment
 import app.melon.feed.anonymous.ui.ExploreFeedFragment
 import app.melon.feed.anonymous.ui.SchoolFeedFragment
 import app.melon.feed.anonymous.ui.TrendingFeedFragment
+import app.melon.feed.data.FeedApiService
 import dagger.Module
+import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import retrofit2.Retrofit
 
 @Module(
     includes = [
@@ -45,6 +48,6 @@ abstract class FeedBuilder {
 @Module
 internal class RemoteServiceModule {
 
-//    @Provides
-//    fun provideFeedService(retrofit: Retrofit) = retrofit.create(FeedApiService::class.java)
+    @Provides
+    fun provideFeedService(retrofit: Retrofit) = retrofit.create(FeedApiService::class.java)
 }

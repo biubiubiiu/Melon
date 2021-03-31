@@ -1,7 +1,5 @@
 package app.melon.base.di
 
-import app.melon.data.services.FeedApiService
-import app.melon.data.services.UserApiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -10,14 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-@Module(includes = [NetworkModule::class])
-class RemoteServiceModule {
-    @Provides
-    fun provideFeedService(retrofit: Retrofit) = retrofit.create(FeedApiService::class.java)
-
-    @Provides
-    fun provideUserService(retrofit: Retrofit) = retrofit.create(UserApiService::class.java)
-}
 
 @Module
 class NetworkModule {

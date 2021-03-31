@@ -14,7 +14,6 @@ import app.melon.data.entities.ANTrendingFeedEntry
 import app.melon.data.resultentities.ANExploreEntryWithFeed
 import app.melon.data.resultentities.ANSchoolEntryWithFeed
 import app.melon.data.resultentities.ANTrendingEntryWithFeed
-import app.melon.data.services.FeedApiService
 import app.melon.util.extensions.executeWithRetry
 import app.melon.util.extensions.toResult
 import kotlinx.coroutines.Dispatchers

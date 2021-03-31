@@ -1,6 +1,6 @@
 package app.melon.data.daos.base
 
-import app.melon.data.Entry
+import app.melon.data.entities.Entry
 import app.melon.data.resultentities.EntryWithFeed
 
 /**
