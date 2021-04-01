@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
-import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
 import coil.load
 import com.airbnb.epoxy.AfterPropsSet
@@ -39,8 +38,14 @@ class NinePhotoView @JvmOverloads constructor(
     var cornerRadius: Float = 0f
         @ModelProp set
 
+    var whRatio: Float = 1f
+        @ModelProp set
+
     var onClickListener: ((List<String>, Int) -> Unit)? = null
         @CallbackProp set
+
+    @DrawableRes var placeholder: Int? = null
+        @ModelProp set
 
     @JvmOverloads
     @ModelProp
@@ -59,59 +64,71 @@ class NinePhotoView @JvmOverloads constructor(
     @AfterPropsSet
     fun loadImage() {
         removeAllViews()
-        for (i in 0 until itemCount) {
+        for (i in 0 until displayItemCount) {
             addView(getImageView(urls, i))
         }
     }
 
-    private val itemCount get() = urls.size
-    private val row get() = min(MAX_ROW, (itemCount + 2) / 3)
-    private val col get() = if (itemCount == 4) 2 else min(3, itemCount)
+    private val enablePlaceHolder get() = placeholder != null
 
-    private var itemSize = 0
+    private val displayItemCount get() = if (enablePlaceHolder) MAX_ITEM else min(urls.size, MAX_ITEM)
+    private val row get() = if (enablePlaceHolder) MAX_ROW else min(MAX_ROW, (displayItemCount + 2) / 3)
+    private val col
+        get() = when {
+            enablePlaceHolder -> MAX_COL
+            displayItemCount == 4 -> 2
+            else -> min(3, displayItemCount)
+        }
+
+    private var itemWidth = 0
+    private var itemHeight = 0
 
     private fun getPosition(index: Int): Pair<Int, Int> {
         return Pair(index / col, index % col)
     }
 
     private fun getImageView(urls: List<String>, position: Int): View {
-        val url = urls[position]
+        val url = urls.getOrNull(position)
         return ShapeableImageView(context).apply {
             shapeAppearanceModel = ShapeAppearanceModel.builder()
                 .setAllCornerSizes(cornerRadius)
                 .build()
             scaleType = ImageView.ScaleType.CENTER_CROP
             setOnClickListener { onClickListener?.invoke(urls, position) }
-            load(url) {
-                allowHardware(false)
-                placeholder(R.drawable.image_placeholder)
+            if (url != null) {
+                load(url) {
+                    allowHardware(false)
+                    placeholder(R.drawable.image_placeholder)
+                }
+            } else {
+                load(placeholder!!)
             }
         }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        if (itemCount > 0) {
-            val layoutWidth = MeasureSpec.getSize(widthMeasureSpec) - paddingLeft - paddingRight
+        if (displayItemCount > 0) {
+            val layoutWidth = MeasureSpec.getSize(widthMeasureSpec)
             val photoAreaWidth = layoutWidth - paddingLeft - paddingRight
-            itemSize = (photoAreaWidth - itemPadding * (MAX_COL - 1)) / MAX_COL
+            itemWidth = (photoAreaWidth - itemPadding * (MAX_COL - 1)) / MAX_COL
+            itemHeight = (itemWidth / whRatio).toInt()
             measureChildren(
-                MeasureSpec.makeMeasureSpec(itemSize, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(itemSize, MeasureSpec.EXACTLY)
+                MeasureSpec.makeMeasureSpec(itemWidth, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(itemHeight, MeasureSpec.EXACTLY)
             )
-            val layoutHeight = itemSize * row + itemPadding * (row - 1) + paddingTop + paddingBottom
+            val layoutHeight = itemHeight * row + itemPadding * (row - 1) + paddingTop + paddingBottom
             setMeasuredDimension(layoutWidth, layoutHeight)
         }
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        val childCount: Int = min(MAX_ITEM, itemCount)
         for (i in 0 until childCount) {
             val (actual_row, actual_col) = getPosition(i)
-            val left = (itemSize + itemPadding) * actual_col + paddingLeft
-            val top = (itemSize + itemPadding) * actual_row + paddingTop
-            val right = left + itemSize
-            val bottom = top + itemSize
+            val left = (itemWidth + itemPadding) * actual_col + paddingLeft
+            val top = (itemHeight + itemPadding) * actual_row + paddingTop
+            val right = left + itemWidth
+            val bottom = top + itemHeight
             val childView = getChildAt(i)
             childView.layout(left, top, right, bottom)
         }

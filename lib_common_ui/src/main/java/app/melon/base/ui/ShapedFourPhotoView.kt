@@ -62,12 +62,12 @@ class ShapedFourPhotoView @JvmOverloads constructor(
     fun loadImage() {
         initAreaMap()
         removeAllViews()
-        for (i in 0 until min(MAX_ITEM, itemCount)) {
+        for (i in 0 until displayItemCount) {
             addView(getView(urls, i))
         }
     }
 
-    private val itemCount get() = urls.size
+    private val displayItemCount get() = min(urls.size, MAX_ITEM)
     private val row get() = MAX_ROW
     private val col get() = MAX_COL
 
@@ -75,7 +75,7 @@ class ShapedFourPhotoView @JvmOverloads constructor(
     private var smallestItemHeight = 0
 
     private fun getPosition(index: Int): Pair<Int, Int> {
-        if (itemCount == 3) {
+        if (displayItemCount == 3) {
             val row = if (index == 2) 1 else 0
             val col = if (index == 0) 0 else 1
             return Pair(row, col)
@@ -84,7 +84,7 @@ class ShapedFourPhotoView @JvmOverloads constructor(
     }
 
     private fun getSpan(index: Int): Pair<Int, Int> {
-        return when (itemCount) {
+        return when (displayItemCount) {
             1 -> Pair(2, 2)
             2 -> Pair(2, 1)
             3 -> if (index == 0) Pair(2, 1) else Pair(1, 1)
@@ -93,7 +93,7 @@ class ShapedFourPhotoView @JvmOverloads constructor(
     }
 
     private fun initAreaMap() {
-        for (i in 0 until min(MAX_ITEM, itemCount)) {
+        for (i in 0 until displayItemCount) {
             val (start_row, start_col) = getPosition(i)
             val (span_row, span_col) = getSpan(i)
             for (r in start_row until start_row + span_row) {
@@ -126,7 +126,7 @@ class ShapedFourPhotoView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        if (itemCount > 0) {
+        if (displayItemCount > 0) {
             val layoutWidth = MeasureSpec.getSize(widthMeasureSpec)
             val photoAreaWidth = layoutWidth - paddingLeft - paddingRight
             val photoAreaHeight = (photoAreaWidth / whRatio).toInt()
@@ -147,7 +147,6 @@ class ShapedFourPhotoView @JvmOverloads constructor(
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        val childCount: Int = min(MAX_ITEM, itemCount)
         for (i in 0 until childCount) {
             val (actual_row, actual_col) = getPosition(i)
             val (span_row, span_col) = getSpan(i)
