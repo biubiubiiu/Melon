@@ -11,6 +11,7 @@ import app.melon.data.constants.FeedType
 import app.melon.data.entities.ANExploreFeedEntry
 import app.melon.data.entities.ANSchoolFeedEntry
 import app.melon.data.entities.ANTrendingFeedEntry
+import app.melon.data.entities.Feed
 import app.melon.data.resultentities.ANExploreEntryWithFeed
 import app.melon.data.resultentities.ANSchoolEntryWithFeed
 import app.melon.data.resultentities.ANTrendingEntryWithFeed
@@ -28,6 +29,15 @@ class FeedRepository @Inject constructor(
     private val service: FeedApiService,
     private val database: MelonDatabase
 ) {
+
+    fun getFeedsByUserId(uid: String, timestamp: Long): Flow<PagingData<Feed>> {
+        return Pager(
+            config = PAGING_CONFIG,
+            pagingSourceFactory = {
+                FeedPagingSource(service, PAGING_CONFIG.pageSize)
+            }
+        ).flow
+    }
 
     fun getAnonymousSchoolFeed(timestamp: Long): Flow<PagingData<ANSchoolEntryWithFeed>> {
         return Pager(

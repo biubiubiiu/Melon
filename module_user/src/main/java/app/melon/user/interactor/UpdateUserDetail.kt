@@ -2,13 +2,13 @@ package app.melon.user.interactor
 
 import app.melon.data.entities.User
 import app.melon.base.domain.SuspendingWorkInteractor
-import app.melon.user.data.UserProfileRepository
+import app.melon.user.data.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UpdateUserDetail @Inject constructor(
-    private val repository: UserProfileRepository
+    private val repository: UserRepository
 ) : SuspendingWorkInteractor<UpdateUserDetail.Params, User>() {
 
     override suspend fun doWork(params: Params): User {

@@ -2,4 +2,9 @@
     <string name="user_profile_photos">Photos</string>
     <string name="user_profile_posts">Posts</string>
     <string name="user_profile_show_more">Show more</string>
+
+    <string name="my_profile_anonymous_posts">Anonymous Posts</string>
+    <string name="my_profile_posts">Posts</string>
+    <string name="my_profile_favors">Favors</string>
+    <string name="edit_my_profile">Edit My Profile</string>
 </resources>

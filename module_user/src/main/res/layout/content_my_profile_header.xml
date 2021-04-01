@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bgPrimary"
+    android:paddingBottom="@dimen/spacing_large">
+
+    <ImageView
+        android:id="@+id/profile_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_profile_background_height"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/profile_avatar"
+        android:layout_width="@dimen/my_profile_avatar_size"
+        android:layout_height="@dimen/my_profile_avatar_size"
+        android:layout_below="@id/profile_background"
+        android:layout_marginHorizontal="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/my_profile_avatar_size_half_negative"
+        android:contentDescription="@string/app_common_avatar_desc"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/profile_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_avatar"
+        android:layout_alignParentStart="true"
+        android:layout_marginHorizontal="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textAppearance="@style/Melon.TextAppearance.Head"
+        tools:text="Sandor Clegane" />
+
+    <TextView
+        android:id="@+id/profile_user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_username"
+        android:layout_alignStart="@id/profile_username"
+        android:layout_marginTop="@dimen/spacing_nano"
+        android:textAppearance="@style/Melon.TextAppearance.Subhead"
+        android:textColor="@color/TextSecondary"
+        tools:text="\@Sandor Clegane" />
+
+    <TextView
+        android:id="@+id/profile_school_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_user_id"
+        android:layout_alignStart="@id/profile_username"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textColor="@color/TextSecondary"
+        android:textSize="15sp"
+        tools:text="Cambridge University" />
+
+    <TextView
+        android:id="@+id/edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_background"
+        android:layout_alignParentEnd="true"
+        android:layout_marginHorizontal="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:background="@drawable/edit_profile_round_rect_border"
+        android:paddingHorizontal="@dimen/spacing_normal"
+        android:paddingVertical="@dimen/spacing_small"
+        android:text="@string/edit_my_profile"
+        android:textColor="@color/TextSecondary"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_following"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_school_info"
+        android:layout_alignStart="@id/profile_username"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:text="108" />
+
+    <TextView
+        android:id="@+id/tv_following_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_following"
+        android:layout_marginStart="@dimen/spacing_micro"
+        android:layout_toEndOf="@id/tv_following"
+        android:text="@string/app_common_following"
+        android:textColor="@color/TextSecondary"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_followers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_user_id"
+        android:layout_alignTop="@id/tv_following"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_toEndOf="@id/tv_following_label"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:text="13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_user_id"
+        android:layout_alignTop="@id/tv_following"
+        android:layout_marginStart="@dimen/spacing_micro"
+        android:layout_toEndOf="@id/tv_followers"
+        android:text="@string/app_common_follower"
+        android:textColor="@color/TextSecondary"
+        android:textSize="15sp" />
+
+</RelativeLayout>

@@ -2,8 +2,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.melon.profile">
 
-    <application>
-        <activity android:name=".ProfileActivity"></activity>
-    </application>
 
 </manifest>

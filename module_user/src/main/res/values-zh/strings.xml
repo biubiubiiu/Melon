@@ -3,4 +3,9 @@
     <string name="user_profile_photos">照片墙</string>
     <string name="user_profile_posts">新鲜事</string>
     <string name="user_profile_show_more">显示更多动态</string>
+
+    <string name="my_profile_anonymous_posts">黑板墙</string>
+    <string name="my_profile_posts">动态</string>
+    <string name="my_profile_favors">喜欢</string>
+    <string name="edit_my_profile">编辑个人资料</string>
 </resources>

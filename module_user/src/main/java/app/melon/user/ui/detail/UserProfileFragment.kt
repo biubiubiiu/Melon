@@ -78,11 +78,9 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
                     toolbar.background.alpha = 0
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    toolbar.background.alpha = 1
                     toolbar.setTitleTextColor(appBarLayout.context.getColorCompat(R.color.TextPrimary))
                     isShow = true
                 } else if (isShow) {
-                    toolbar.background.alpha = 0
                     toolbar.setTitleTextColor(Color.TRANSPARENT)
                     isShow = false
                 }

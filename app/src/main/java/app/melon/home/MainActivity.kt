@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import app.melon.MainViewModel
 import app.melon.R
 import app.melon.account.api.IAccountService
+import app.melon.user.api.IUserService
 import app.melon.util.extensions.reverse
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -28,6 +29,7 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
     @Inject internal lateinit var viewModel: MainViewModel
 
     @Inject internal lateinit var accountService: IAccountService
+    @Inject internal lateinit var userService: IUserService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +80,7 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
             when (menuItem.itemId) {
                 R.id.home_nav_drawer_nav_to_login -> accountService.startLogin(this)
                 R.id.home_nav_drawer_nav_to_registration -> accountService.startRegister(this)
+                R.id.home_nav_drawer_nav_to_profile -> userService.navigateToMyProfile(this)
                 else -> {
                 } // TODO
             }

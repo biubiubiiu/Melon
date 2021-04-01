@@ -10,7 +10,7 @@ import app.melon.util.extensions.toResult
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class UserProfileRepository @Inject constructor(
+class UserRepository @Inject constructor(
     private val service: UserApiService
 ) {
 

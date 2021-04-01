@@ -4,4 +4,8 @@
 
     <dimen name="user_profile_avatar_size">100dp</dimen>
     <dimen name="user_profile_avatar_size_half_negative">-50dp</dimen>
+
+    <dimen name="my_profile_background_height">210dp</dimen>
+    <dimen name="my_profile_avatar_size">80dp</dimen>
+    <dimen name="my_profile_avatar_size_half_negative">-40dp</dimen>
 </resources>

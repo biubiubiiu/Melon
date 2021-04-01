@@ -9,4 +9,8 @@ class UserService : IUserService {
         // TODO add business logic here
         UserProfileActivity.start(context, uid)
     }
+
+    override fun navigateToMyProfile(context: Context) {
+        ProfileActivity.start(context)
+    }
 }
