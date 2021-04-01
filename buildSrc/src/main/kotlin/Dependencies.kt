@@ -51,7 +51,6 @@ object Modules {
     const val commonUtils = ":lib_common_utils"
     const val feed = ":module_feed"
     const val group = ":module_group"
-    const val profile = ":module_profile"
 
     const val accountApi = ":module_account_api"
     const val account = ":module_account"

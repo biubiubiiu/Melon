@@ -23,7 +23,6 @@
             <option value="$PROJECT_DIR$/module_account_api" />
             <option value="$PROJECT_DIR$/module_feed" />
             <option value="$PROJECT_DIR$/module_group" />
-            <option value="$PROJECT_DIR$/module_profile" />
             <option value="$PROJECT_DIR$/module_user" />
             <option value="$PROJECT_DIR$/module_user_api" />
             <option value="$PROJECT_DIR$/ui-following" />

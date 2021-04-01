@@ -54,7 +54,6 @@ dependencies {
     implementation(project(Modules.follow))
     implementation(project(Modules.user))
     implementation(project(Modules.account))
-    implementation(project(Modules.profile))
     implementation(project(Modules.feed))
     implementation(project(Modules.group))
 
