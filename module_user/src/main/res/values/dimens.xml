@@ -7,5 +7,7 @@
 
     <dimen name="my_profile_background_height">210dp</dimen>
     <dimen name="my_profile_avatar_size">80dp</dimen>
+    <dimen name="my_profile_avatar_size_half">40dp</dimen>
     <dimen name="my_profile_avatar_size_half_negative">-40dp</dimen>
+    <dimen name="my_profile_avatar_border_width">3dp</dimen>
 </resources>

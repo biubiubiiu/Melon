@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <stroke
+        android:width="@dimen/my_profile_avatar_border_width"
+        android:color="@color/bgPrimary" />
+    <corners android:radius="@dimen/my_profile_avatar_size_half" />
+    <solid android:color="@color/transparent" />
+</shape>
