@@ -13,7 +13,9 @@ abstract class BasePagingListFragment : BaseMvRxEpoxyFragment() {
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
         super.onViewCreated(binding, savedInstanceState)
         controller.addLoadStateListener {
-            binding.swipeRefreshLayout.isRefreshing = it.refresh is LoadState.Loading
+            binding.swipeRefreshLayout.post {
+                binding.swipeRefreshLayout.isRefreshing = it.refresh is LoadState.Loading
+            }
         }
         binding.swipeRefreshLayout.setOnRefreshListener {
             controller.takeIf { !it.isRefreshing }?.refresh()
