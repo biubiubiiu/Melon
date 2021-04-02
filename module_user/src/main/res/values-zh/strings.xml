@@ -8,4 +8,8 @@
     <string name="my_profile_posts">动态</string>
     <string name="my_profile_favors">喜欢</string>
     <string name="edit_my_profile">编辑个人资料</string>
+    <string name="edit">编辑</string>
+
+    <string name="take_from_camera">拍摄照片</string>
+    <string name="select_from_album">选择已有照片</string>
 </resources>

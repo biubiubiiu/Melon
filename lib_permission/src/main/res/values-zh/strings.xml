@@ -1,0 +1,14 @@
+<resources>
+    <string name="permission_continue">继续</string>
+    <string name="permission_not_yet">暂时不用</string>
+    <string name="permission_view_app_info">查看应用信息</string>
+    <string name="permission_not_now">暂时不用</string>
+    <string name="permission_go_back">离开</string>
+
+    <string name="request_read_stroage_title">要添加媒体，我们需要使用你的相册</string>
+    <string name="request_camera_title">拍摄照片和视频</string>
+    <string name="request_camera_subtitle">允许Melon访问你的相机、媒体和麦克风以使用</string>
+
+    <string name="request_fail_title">你好像已经关闭了该功能的使用权限。</string>
+    <string name="request_fail_subtitle">AGE许可可以在设置>应用>Melon>许可下启用</string>
+</resources>

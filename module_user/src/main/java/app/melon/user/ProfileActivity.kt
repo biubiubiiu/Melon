@@ -36,25 +36,10 @@ class ProfileActivity : DaggerAppCompatActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
+        initData()
         setupToolbar()
         setupAnimation()
-
-        viewModel.user.observe(this, Observer {
-            with(headerBinding) {
-                profileBackground.load(it.backgroundUrl)
-                profileAvatar.load(it.avatarUrl) {
-                    transformations(CircleCropTransformation())
-                }
-                profileUsername.text = it.username
-                profileUserId.text = "TODO"
-                profileSchoolInfo.text = it.school
-                tvFollowers.text = it.followerCount.toString()
-                tvFollowing.text = it.followingCount.toString()
-            }
-            with(binding) {
-                toolbar.title = it.username
-            }
-        })
+        setupAvatar()
     }
 
     private fun setupToolbar() {
@@ -99,6 +84,31 @@ class ProfileActivity : DaggerAppCompatActivity() {
                     binding.toolbar.setTitleTextColor(Color.TRANSPARENT)
                     isShow = false
                 }
+            }
+        })
+    }
+
+    private fun setupAvatar() {
+        headerBinding.profileAvatar.setOnClickListener {
+            ProfileImageActivity.start(this, viewModel.user.value!!.avatarUrl, true)
+        }
+    }
+
+    private fun initData() {
+        viewModel.user.observe(this, Observer {
+            with(headerBinding) {
+                profileBackground.load(it.backgroundUrl)
+                profileAvatar.load(it.avatarUrl) {
+                    transformations(CircleCropTransformation())
+                }
+                profileUsername.text = it.username
+                profileUserId.text = "TODO"
+                profileSchoolInfo.text = it.school
+                tvFollowers.text = it.followerCount.toString()
+                tvFollowing.text = it.followingCount.toString()
+            }
+            with(binding) {
+                toolbar.title = it.username
             }
         })
     }

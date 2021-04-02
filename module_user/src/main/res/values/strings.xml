@@ -7,4 +7,8 @@
     <string name="my_profile_posts">Posts</string>
     <string name="my_profile_favors">Favors</string>
     <string name="edit_my_profile">Edit My Profile</string>
+    <string name="edit">Edit</string>
+
+    <string name="take_from_camera">TODO</string>
+    <string name="select_from_album">TODO</string>
 </resources>

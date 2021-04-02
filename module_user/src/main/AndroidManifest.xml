@@ -5,6 +5,7 @@
     <application>
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileImageActivity" />
     </application>
 
 </manifest>

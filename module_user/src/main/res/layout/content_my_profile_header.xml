@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bgPrimary"
+    android:background="@color/bgSecondary"
     android:paddingBottom="@dimen/spacing_large">
 
     <ImageView
@@ -79,7 +79,7 @@
         android:layout_below="@+id/profile_school_info"
         android:layout_alignStart="@id/profile_username"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:textColor="#000000"
+        android:textColor="@color/TextPrimary"
         android:textSize="15sp"
         android:textStyle="bold"
         tools:text="108" />
@@ -103,7 +103,7 @@
         android:layout_alignTop="@id/tv_following"
         android:layout_marginStart="@dimen/spacing_normal"
         android:layout_toEndOf="@id/tv_following_label"
-        android:textColor="#000000"
+        android:textColor="@color/TextPrimary"
         android:textSize="15sp"
         android:textStyle="bold"
         tools:text="13" />

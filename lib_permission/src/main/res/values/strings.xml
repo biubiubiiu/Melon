@@ -1,0 +1,14 @@
+<resources>
+    <string name="permission_continue">TODO</string>
+    <string name="permission_not_yet">TODO</string>
+    <string name="permission_view_app_info">TODO</string>
+    <string name="permission_not_now">TODO</string>
+    <string name="permission_go_back">Go back</string>
+
+    <string name="request_read_stroage_title">TODO</string>
+    <string name="request_camera_title">TODO</string>
+    <string name="request_camera_subtitle">TODO</string>
+
+    <string name="request_fail_title">TODO</string>
+    <string name="request_fail_subtitle">TODO</string>
+</resources>

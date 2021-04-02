@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/lib_base_framework" />
             <option value="$PROJECT_DIR$/lib_common_ui" />
             <option value="$PROJECT_DIR$/lib_common_utils" />
+            <option value="$PROJECT_DIR$/lib_permission" />
             <option value="$PROJECT_DIR$/module_account" />
             <option value="$PROJECT_DIR$/module_account_api" />
             <option value="$PROJECT_DIR$/module_feed" />

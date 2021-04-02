@@ -16,6 +16,10 @@ fun Context.hasPermission(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
 
+fun Context.hasPermissions(vararg permissions: String): Boolean {
+    return permissions.firstOrNull { !hasPermission(it) } == null
+}
+
 fun Context.hideKeyboard() {
     val inputMethodManager = getSystemService<InputMethodManager>()!!
     inputMethodManager.hideSoftInputFromWindow((this as Activity).currentFocus?.windowToken, 0)
