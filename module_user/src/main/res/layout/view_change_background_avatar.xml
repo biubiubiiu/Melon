@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_profile_background_height"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/my_profile_avatar_size"
+        android:layout_height="@dimen/my_profile_avatar_size"
+        android:layout_below="@id/background"
+        android:layout_marginHorizontal="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/my_profile_avatar_size_half_negative"
+        android:background="@drawable/bg_profile_avatar_border"
+        android:contentDescription="@string/app_common_avatar_desc"
+        android:padding="@dimen/my_profile_avatar_border_width"
+        android:scaleType="centerCrop" />
+
+</RelativeLayout>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/spacing_conventional"
+    app:cardBackgroundColor="@color/bgPrimary"
+    app:cardCornerRadius="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/EditProfile_Title"
+            android:text="@string/basic_info" />
+
+        <include layout="@layout/common_ui_divider" />
+
+        <LinearLayout style="@style/Edit_Profile_Container">
+
+            <TextView
+                style="@style/EditProfile_Label"
+                android:text="@string/app_common_username" />
+
+            <EditText
+                android:id="@+id/username_input"
+                style="@style/EditProfile_Input_With_Label"
+                android:enabled="false"
+                android:inputType="text"
+                tools:text="Test" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/Edit_Profile_Container">
+
+            <TextView
+                style="@style/EditProfile_Label"
+                android:text="@string/birth_date" />
+
+            <EditText
+                android:id="@+id/birthdate_input"
+                style="@style/EditProfile_Input_With_Label"
+                android:enabled="false"
+                android:inputType="text"
+                tools:text="Test" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/Edit_Profile_Container">
+
+            <TextView
+                style="@style/EditProfile_Label"
+                android:text="@string/app_common_school" />
+
+            <EditText
+                android:id="@+id/school_input"
+                style="@style/EditProfile_Input_With_Label"
+                android:enabled="false"
+                android:inputType="text"
+                tools:text="Test" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/Edit_Profile_Container">
+
+            <TextView
+                style="@style/EditProfile_Label"
+                android:text="@string/app_common_hometown" />
+
+            <EditText
+                android:id="@+id/hometown_input"
+                style="@style/EditProfile_Input_With_Label"
+                android:inputType="text"
+                tools:text="Test" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/Edit_Profile_Container">
+
+            <TextView
+                style="@style/EditProfile_Label"
+                android:text="@string/app_common_college" />
+
+            <EditText
+                android:id="@+id/college_input"
+                style="@style/EditProfile_Input_With_Label"
+                android:inputType="text"
+                tools:text="Test" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/Edit_Profile_Container">
+
+            <TextView
+                style="@style/EditProfile_Label"
+                android:text="@string/app_common_major" />
+
+            <EditText
+                android:id="@+id/major_input"
+                style="@style/EditProfile_Input_With_Label"
+                android:inputType="text"
+                tools:text="Test" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/Edit_Profile_Container">
+
+            <TextView
+                style="@style/EditProfile_Label"
+                android:text="@string/app_common_degree" />
+
+            <EditText
+                android:id="@+id/degree_input"
+                style="@style/EditProfile_Input_With_Label"
+                android:inputType="text"
+                tools:text="Test" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

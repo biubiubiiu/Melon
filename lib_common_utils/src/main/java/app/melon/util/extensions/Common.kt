@@ -83,6 +83,10 @@ fun getResourceColor(@ColorRes id: Int): Int {
     return AppHelper.applicationContext.getColorCompat(id)
 }
 
+fun getResourceDrawable(@DrawableRes id: Int): Drawable? {
+    return AppHelper.applicationContext.getDrawableCompat(id)
+}
+
 fun getResourceQuantityString(@PluralsRes id: Int, quantity: Int, vararg formatArgs: Any): String {
     return AppHelper.applicationContext.resources.getQuantityString(id, quantity, *formatArgs)
 }

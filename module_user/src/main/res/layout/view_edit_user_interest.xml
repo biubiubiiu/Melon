@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/spacing_conventional"
+    app:cardBackgroundColor="@color/bgPrimary"
+    app:cardCornerRadius="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/EditProfile_Title"
+            android:text="@string/user_interest" />
+
+        <TextView
+            android:id="@+id/user_interest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:paddingVertical="@dimen/spacing_small" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

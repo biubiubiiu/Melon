@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,17 +7,17 @@
     android:paddingBottom="@dimen/spacing_large">
 
     <ImageView
-        android:id="@+id/profile_background"
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/my_profile_background_height"
         android:importantForAccessibility="no"
         android:scaleType="centerCrop" />
 
     <ImageView
-        android:id="@+id/profile_avatar"
+        android:id="@+id/avatar"
         android:layout_width="@dimen/my_profile_avatar_size"
         android:layout_height="@dimen/my_profile_avatar_size"
-        android:layout_below="@id/profile_background"
+        android:layout_below="@id/background"
         android:layout_marginHorizontal="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/my_profile_avatar_size_half_negative"
         android:background="@drawable/bg_profile_avatar_border"
@@ -30,7 +29,7 @@
         android:id="@+id/profile_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_avatar"
+        android:layout_below="@+id/avatar"
         android:layout_alignParentStart="true"
         android:layout_marginHorizontal="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_small"
@@ -63,7 +62,7 @@
         android:id="@+id/edit_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profile_background"
+        android:layout_below="@id/background"
         android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_normal"

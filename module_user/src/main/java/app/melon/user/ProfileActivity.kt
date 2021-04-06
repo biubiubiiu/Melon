@@ -39,7 +39,7 @@ class ProfileActivity : DaggerAppCompatActivity() {
         initData()
         setupToolbar()
         setupAnimation()
-        setupAvatar()
+        setupListener()
     }
 
     private fun setupToolbar() {
@@ -57,12 +57,12 @@ class ProfileActivity : DaggerAppCompatActivity() {
         val triggerEdge = backgroundHeight - actionBarHeight
 
         val avatarSize = resources.getDimensionPixelSize(R.dimen.my_profile_avatar_size)
-        headerBinding.profileAvatar.pivotX = 0f
-        headerBinding.profileAvatar.pivotY = avatarSize.toFloat()
+        headerBinding.avatar.pivotX = 0f
+        headerBinding.avatar.pivotY = avatarSize.toFloat()
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             val ratio = min((verticalOffset * -1f) / triggerEdge, 1f)
-            headerBinding.profileAvatar.scaleX = 1 - 0.5f * ratio
-            headerBinding.profileAvatar.scaleY = 1 - 0.5f * ratio
+            headerBinding.avatar.scaleX = 1 - 0.5f * ratio
+            headerBinding.avatar.scaleY = 1 - 0.5f * ratio
         })
 
         binding.appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
@@ -88,17 +88,20 @@ class ProfileActivity : DaggerAppCompatActivity() {
         })
     }
 
-    private fun setupAvatar() {
-        headerBinding.profileAvatar.setOnClickListener {
+    private fun setupListener() {
+        headerBinding.avatar.setOnClickListener {
             ProfileImageActivity.start(this, viewModel.user.value!!.avatarUrl, true)
+        }
+        headerBinding.editProfile.setOnClickListener {
+            EditProfileActivity.start(this)
         }
     }
 
     private fun initData() {
         viewModel.user.observe(this, Observer {
             with(headerBinding) {
-                profileBackground.load(it.backgroundUrl)
-                profileAvatar.load(it.avatarUrl) {
+                background.load(it.backgroundUrl)
+                avatar.load(it.avatarUrl) {
                     transformations(CircleCropTransformation())
                 }
                 profileUsername.text = it.username

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/spacing_conventional"
+    app:cardBackgroundColor="@color/bgPrimary"
+    app:cardCornerRadius="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/EditProfile_Title"
+            android:text="@string/describe_yourself" />
+
+        <include layout="@layout/common_ui_divider" />
+
+        <EditText
+            android:id="@+id/bio_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:gravity="top|start"
+            android:imeOptions="actionNone"
+            android:inputType="textMultiLine"
+            android:minLines="6"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

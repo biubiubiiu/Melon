@@ -27,17 +27,20 @@
     <string name="app_common_follower">Followers</string>
     <string name="app_common_search">Search</string>
     <string name="app_common_hometown">Hometown</string>
+    <string name="app_common_username">Username</string>
     <string name="app_common_school">School</string>
     <string name="app_common_college">College</string>
     <string name="app_common_degree">Degree</string>
     <string name="app_common_major">Major</string>
     <string name="app_common_not_set">Not set</string>
+    <string name="app_common_go_back">Back</string>
+    <string name="app_common_save">Save</string>
 
     <string name="app_common_avatar_desc">Avatar</string>
     <string name="app_common_more_operation_desc">More operation</string>
     <string name="app_common_search_desc">Search</string>
     <string name="app_common_interest_group_desc">Interest Group</string>
-    <string name="app_common_go_back">Back</string>
+    <string name="app_common_save_desc">Save</string>
 
     <string name="app_common_error_hint">Something went wrong</string>
     <string name="app_common_retry_hint">TRY AGAIN</string>

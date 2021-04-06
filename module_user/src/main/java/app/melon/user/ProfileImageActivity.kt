@@ -1,37 +1,22 @@
 package app.melon.user
 
-import android.Manifest
-import android.app.Activity
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.MenuItem
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import app.melon.permission.PermissionDenial
-import app.melon.permission.PermissionRequestActivity
-import app.melon.permission.PermissionList
-import app.melon.permission.ReadStorage
-import app.melon.permission.UseCamera
 import app.melon.user.databinding.ActivityProfileImageBinding
-import app.melon.user.ui.image.EditOptionsDialogFragment
+import app.melon.user.edit.EditHelper
 import app.melon.util.extensions.getColorCompat
-import app.melon.util.extensions.hasPermission
-import app.melon.util.extensions.hasPermissions
 import app.melon.util.extensions.showToast
 import coil.load
 import coil.size.OriginalSize
 import coil.size.Precision
-import java.text.SimpleDateFormat
-import java.util.*
 
-class ProfileImageActivity : AppCompatActivity(R.layout.activity_profile_image), EditOptionsDialogFragment.Listener {
+class ProfileImageActivity : AppCompatActivity(R.layout.activity_profile_image) {
 
     private var _binding: ActivityProfileImageBinding? = null
     private val binding get() = _binding!!
@@ -39,68 +24,11 @@ class ProfileImageActivity : AppCompatActivity(R.layout.activity_profile_image),
     private val url: String get() = requireNotNull(intent.getStringExtra(KEY_URL))
     private val isMyProfile: Boolean get() = requireNotNull(intent.getBooleanExtra(KEY_MY_PROFILE, false))
 
-    private var pendingProcessCameraImageUri: Uri? = null
-    private val takeImageFromCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) { result: Boolean ->
-        binding.edit.text = result.toString()
-        if (!result) {
-            val resolver = applicationContext.contentResolver
-            val url = pendingProcessCameraImageUri ?: return@registerForActivityResult
-            resolver.delete(url, null)
-        }
-    }
-
-    private val selectImageFromAlbum = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        binding.edit.text = uri.toString()
-    }
-
-    private val showReadStorageRational = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        when (it.resultCode) {
-            Activity.RESULT_OK -> {
-                requestReadStoragePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-            }
-            Activity.RESULT_CANCELED -> {
-                // No-op
-            }
-        }
-    }
-
-    private val showUseCameraRational = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        when (it.resultCode) {
-            Activity.RESULT_OK -> {
-                requestCameraPermission.launch(PermissionList.permissionsForCamera)
-            }
-            Activity.RESULT_CANCELED -> {
-                // No-op
-            }
-        }
-    }
-
-    private val requestReadStoragePermission =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                openAlbum()
-            } else {
-                val intent = PermissionRequestActivity.prepareIntent(
-                    this,
-                    PermissionDenial(listOf(Manifest.permission.READ_EXTERNAL_STORAGE))
-                )
-                startActivity(intent)
-            }
-        }
-
-    private val requestCameraPermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result: Map<String, Boolean> ->
-            val isAllGranted = !result.values.contains(element = false)
-            if (isAllGranted) {
-                openCamera()
-            } else {
-                val intent = PermissionRequestActivity.prepareIntent(
-                    this,
-                    PermissionDenial(result.filterValues { !it }.keys.toList())
-                )
-                startActivity(intent)
-            }
-        }
+    private val editHelper = EditHelper(
+        this,
+        onReceiveTakePictureResult = { binding.edit.text = it.toString() },
+        onReceiveUriFromAlbum = { binding.edit.text = it.toString() }
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,48 +94,7 @@ class ProfileImageActivity : AppCompatActivity(R.layout.activity_profile_image),
 
     private fun setupEditButton() {
         binding.edit.isVisible = isMyProfile
-        binding.edit.setOnClickListener { showEditOptions() }
-    }
-
-    private fun showEditOptions() {
-        val fragment = EditOptionsDialogFragment().also { it.setListener(this) }
-        fragment.show(supportFragmentManager, "options")
-    }
-
-    override fun onSelectOptionCamera() {
-        openCamera()
-    }
-
-    override fun onSelectOptionAlbum() {
-        openAlbum()
-    }
-
-    private fun openCamera() {
-        if (hasPermissions(*PermissionList.permissionsForCamera)) {
-            val currentDateTime = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(Date())
-            val filename = "Melon_${currentDateTime}.jpg"
-            val resolver = applicationContext.contentResolver
-            val imageCollection = MediaStore.Images.Media.getContentUri(
-                MediaStore.VOLUME_EXTERNAL_PRIMARY
-            )
-            val newSongDetails = ContentValues().apply {
-                put(MediaStore.Images.Media.DISPLAY_NAME, filename)
-            }
-            pendingProcessCameraImageUri = resolver.insert(imageCollection, newSongDetails)
-            takeImageFromCamera.launch(pendingProcessCameraImageUri)
-        } else {
-            val intent = PermissionRequestActivity.prepareIntent(this, UseCamera)
-            showUseCameraRational.launch(intent)
-        }
-    }
-
-    private fun openAlbum() {
-        if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            selectImageFromAlbum.launch("image/*")
-        } else {
-            val intent = PermissionRequestActivity.prepareIntent(this, ReadStorage)
-            showReadStorageRational.launch(intent)
-        }
+        binding.edit.setOnClickListener { editHelper.showEditOptions() }
     }
 
     companion object {

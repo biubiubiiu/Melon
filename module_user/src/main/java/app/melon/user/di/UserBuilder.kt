@@ -2,6 +2,7 @@ package app.melon.user.di
 
 import app.melon.base.scope.ActivityScope
 import app.melon.base.scope.FragmentScope
+import app.melon.user.EditProfileActivity
 import app.melon.user.ProfileActivity
 import app.melon.user.ui.posts.UserPostsFragment
 import app.melon.user.UserProfileActivity
@@ -24,6 +25,10 @@ abstract class UserBuilder {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun injectMyProfileActivity(): ProfileActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun injectEditProfileActivity(): EditProfileActivity
 
     @FragmentScope
     @ContributesAndroidInjector

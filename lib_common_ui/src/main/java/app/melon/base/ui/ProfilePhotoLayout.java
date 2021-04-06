@@ -29,7 +29,7 @@ public class ProfilePhotoLayout extends ViewGroup {
         super(context, attrs, defStyleAttr);
 
         LayoutInflater.from(context).inflate(R.layout.layout_profile, this, true);
-        mProfileImage = findViewById(R.id.profile_avatar);
+        mProfileImage = findViewById(R.id.avatar);
         mAuthorText = findViewById(R.id.profile_username);
         mMessageText = findViewById(R.id.profile_school);
         mPostTimeText = findViewById(R.id.profile_post_time);

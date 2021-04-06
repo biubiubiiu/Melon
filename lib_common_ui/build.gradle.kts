@@ -47,10 +47,9 @@ dependencies {
     api(Libraries.Transition.transition)
     api(Libraries.Transition.ktx)
     api(Libraries.SwipeRefreshLayout.swipeRefreshLayout)
-
-    api(Libraries.Epoxy.runtime)
-
+    api(Libraries.ImageViewer.imageViewer)
     api(Libraries.Coil.coil)
 
+    api(Libraries.Epoxy.runtime)
     kapt(Libraries.Epoxy.compiler)
 }
