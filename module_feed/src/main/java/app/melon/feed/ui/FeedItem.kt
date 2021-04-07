@@ -1,21 +1,24 @@
 package app.melon.feed.ui
 
+import android.content.Context
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
+import app.melon.base.ui.ImageViewerOverlay
 import app.melon.base.ui.ShapedFourPhotoView
 import app.melon.base.uikit.TagView
 import app.melon.data.entities.Feed
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt
-import app.melon.util.extensions.showToast
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
+import com.stfalcon.imageviewer.StfalconImageViewer
+import com.stfalcon.imageviewer.loader.ImageLoader
 
 @EpoxyModelClass
 abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
@@ -26,8 +29,11 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
     @EpoxyAttribute lateinit var commentClickListener: () -> Unit
     @EpoxyAttribute lateinit var favorClickListener: () -> Unit
     @EpoxyAttribute lateinit var moreClickListener: () -> Unit
+    @EpoxyAttribute lateinit var saveImageListener: (String) -> Unit
 
     @EpoxyAttribute lateinit var item: Feed
+
+    private var overlayView: ImageViewerOverlay? = null
 
     override fun getDefaultLayout(): Int = R.layout.item_feed
 
@@ -66,9 +72,33 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
                 cornerRadius = 32f
                 urls = item.photos
                 photoView.loadImage()
-                onClickListener = { urls, index -> context.showToast("Click item $index, urls size: ${urls.size}") }
+                onClickListener = { urls, index, view ->
+                    val loader = ImageLoader<String> { imageView, url -> imageView.load(url) }
+                    StfalconImageViewer.Builder<String>(context, urls, loader)
+                        .withStartPosition(index)
+                        .withTransitionFrom(view)
+                        .withHiddenStatusBar(false)
+                        .withOverlayView(setupOverlayView(view.context, urls[index]))
+                        .withImageChangeListener { position ->
+                            overlayView?.update(urls[position])
+                        }
+                        .withDismissListener { overlayView = null }
+                        .withBackgroundColorResource(R.color.bgSecondary)
+                        .show()
+                }
             }
         }
+    }
+
+    private fun setupOverlayView(context: Context, url: String): ImageViewerOverlay {
+        if (overlayView == null) {
+            overlayView = ImageViewerOverlay(context).apply {
+                update(url)
+
+                onSaveClick = { saveImageListener(it) }
+            }
+        }
+        return overlayView!!
     }
 
     class Holder : BaseEpoxyHolder() {

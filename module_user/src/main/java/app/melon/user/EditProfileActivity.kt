@@ -7,7 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import app.melon.user.databinding.ActivityEditProfileBinding
-import app.melon.user.edit.EditHelper
+import app.melon.permission.helper.EditHelper
 import app.melon.user.ui.edit.EditProfileController
 import app.melon.user.ui.edit.EditProfileViewModel
 import app.melon.util.extensions.setTitleColor

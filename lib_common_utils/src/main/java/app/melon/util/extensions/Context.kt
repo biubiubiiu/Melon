@@ -2,6 +2,7 @@ package app.melon.util.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.util.TypedValue
@@ -9,8 +10,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+
 
 fun Context.hasPermission(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
@@ -39,4 +42,18 @@ fun Context.resolveTheme(@AttrRes attributeResId: Int): Int {
     return if (this.theme.resolveAttribute(attributeResId, typedValue, true)) {
         typedValue.data
     } else 0
+}
+
+val Context.activityContext: AppCompatActivity?
+    get() = getActivity(this)
+
+fun getActivity(context: Context): AppCompatActivity? {
+    if (context is ContextWrapper) {
+        return if (context is AppCompatActivity) {
+            context
+        } else {
+            getActivity(context.baseContext)
+        }
+    }
+    return null
 }

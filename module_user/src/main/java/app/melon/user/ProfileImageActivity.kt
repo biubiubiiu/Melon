@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import app.melon.user.databinding.ActivityProfileImageBinding
-import app.melon.user.edit.EditHelper
+import app.melon.permission.helper.EditHelper
 import app.melon.util.extensions.getColorCompat
 import app.melon.util.extensions.showToast
 import coil.load

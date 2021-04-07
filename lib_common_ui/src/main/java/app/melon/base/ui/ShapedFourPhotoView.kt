@@ -38,7 +38,7 @@ class ShapedFourPhotoView @JvmOverloads constructor(
     var cornerRadius: Float = 0f
         @ModelProp set
 
-    var onClickListener: ((List<String>, Int) -> Unit)? = null
+    var onClickListener: ((List<String>, Int, ImageView) -> Unit)? = null
         @CallbackProp set
 
     var whRatio: Float = 1.74f
@@ -116,7 +116,7 @@ class ShapedFourPhotoView @JvmOverloads constructor(
                 .setBottomRightCornerSize(if (areaMap[MAX_ROW - 1][MAX_COL - 1] == position) cornerRadius else 0f)
                 .build()
             scaleType = ImageView.ScaleType.CENTER_CROP
-            setOnClickListener { onClickListener?.invoke(urls, position) }
+            setOnClickListener { onClickListener?.invoke(urls, position, this) }
             load(url) {
                 allowHardware(false)
                 placeholder(R.drawable.image_placeholder)

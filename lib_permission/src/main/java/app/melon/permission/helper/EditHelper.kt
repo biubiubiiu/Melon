@@ -1,4 +1,4 @@
-package app.melon.user.edit
+package app.melon.permission.helper
 
 import android.Manifest
 import android.app.Activity
@@ -12,7 +12,6 @@ import app.melon.permission.PermissionList
 import app.melon.permission.PermissionRequestActivity
 import app.melon.permission.ReadStorage
 import app.melon.permission.UseCamera
-import app.melon.user.ui.image.EditOptionsDialogFragment
 import app.melon.util.AppHelper
 import app.melon.util.extensions.hasPermission
 import app.melon.util.extensions.hasPermissions
@@ -119,10 +118,10 @@ class EditHelper(
             val imageCollection = MediaStore.Images.Media.getContentUri(
                 MediaStore.VOLUME_EXTERNAL_PRIMARY
             )
-            val newSongDetails = ContentValues().apply {
+            val newImageDetails = ContentValues().apply {
                 put(MediaStore.Images.Media.DISPLAY_NAME, filename)
             }
-            pendingProcessCameraImageUri = resolver.insert(imageCollection, newSongDetails)
+            pendingProcessCameraImageUri = resolver.insert(imageCollection, newImageDetails)
             takeImageFromCamera.launch(pendingProcessCameraImageUri)
         } else {
             val intent = PermissionRequestActivity.prepareIntent(this, UseCamera)

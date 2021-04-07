@@ -47,7 +47,7 @@ class OverlayTransformation constructor(
                 width,
                 height,
                 Bitmap.Config.ARGB_8888
-            ) // Single color bitmap will be created of 1x1 pixel
+            )
         } else {
             Bitmap.createBitmap(
                 drawable.intrinsicWidth,

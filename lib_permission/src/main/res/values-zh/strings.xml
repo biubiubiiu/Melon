@@ -11,4 +11,7 @@
 
     <string name="request_fail_title">你好像已经关闭了该功能的使用权限。</string>
     <string name="request_fail_subtitle">AGE许可可以在设置>应用>Melon>许可下启用</string>
+
+    <string name="take_from_camera">拍摄照片</string>
+    <string name="select_from_album">选择已有照片</string>
 </resources>

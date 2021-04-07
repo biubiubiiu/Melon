@@ -10,4 +10,6 @@ object PermissionList {
     } else {
         arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
+
+    val permissionsForSave = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 }

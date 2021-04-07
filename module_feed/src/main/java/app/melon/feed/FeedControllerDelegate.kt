@@ -4,7 +4,9 @@ import android.content.Context
 import app.melon.data.entities.Feed
 import app.melon.feed.ui.AnonymousFeedItem_
 import app.melon.feed.ui.FeedItem_
+import app.melon.permission.helper.SaveHelper
 import app.melon.user.api.IUserService
+import app.melon.util.extensions.activityContext
 import app.melon.util.extensions.showToast
 import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
@@ -15,6 +17,8 @@ class FeedControllerDelegate @AssistedInject constructor(
     @Assisted private val context: Context,
     private val userService: IUserService
 ) : FeedActions {
+
+    private val saveHelper by lazy { SaveHelper(context.activityContext!!) }
 
     fun buildFeedItem(
         feedProvider: () -> Feed,
@@ -30,6 +34,7 @@ class FeedControllerDelegate @AssistedInject constructor(
             .commentClickListener { this.onCommentClick() }
             .favorClickListener { this.onFavorClick() }
             .moreClickListener { this.onMoreClick() }
+            .saveImageListener { this.onSaveImage(it) }
     }
 
     fun buildAnonymousFeedItem(
@@ -69,6 +74,10 @@ class FeedControllerDelegate @AssistedInject constructor(
 
     override fun onMoreClick() {
         context.showToast("click more")
+    }
+
+    override fun onSaveImage(url: String) {
+        saveHelper.saveImage(url)
     }
 
     @AssistedFactory

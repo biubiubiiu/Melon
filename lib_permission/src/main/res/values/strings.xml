@@ -11,4 +11,7 @@
 
     <string name="request_fail_title">TODO</string>
     <string name="request_fail_subtitle">TODO</string>
+
+    <string name="take_from_camera">TODO</string>
+    <string name="select_from_album">TODO</string>
 </resources>
