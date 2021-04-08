@@ -23,12 +23,12 @@ import com.stfalcon.imageviewer.loader.ImageLoader
 @EpoxyModelClass
 abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
 
-    @EpoxyAttribute lateinit var holderClickListener: () -> Unit
-    @EpoxyAttribute lateinit var avatarClickListener: () -> Unit
-    @EpoxyAttribute lateinit var shareClickListener: () -> Unit
-    @EpoxyAttribute lateinit var commentClickListener: () -> Unit
-    @EpoxyAttribute lateinit var favorClickListener: () -> Unit
-    @EpoxyAttribute lateinit var moreClickListener: () -> Unit
+    @EpoxyAttribute lateinit var holderClickListener: (Feed) -> Unit
+    @EpoxyAttribute lateinit var avatarClickListener: (String) -> Unit
+    @EpoxyAttribute lateinit var shareClickListener: (Feed) -> Unit
+    @EpoxyAttribute lateinit var commentClickListener: (Feed) -> Unit
+    @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
+    @EpoxyAttribute lateinit var moreClickListener: (Feed) -> Unit
     @EpoxyAttribute lateinit var saveImageListener: (String) -> Unit
 
     @EpoxyAttribute lateinit var item: Feed
@@ -44,12 +44,12 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
 
     private fun setupListeners(holder: Holder) {
         with(holder) {
-            containerView.setOnClickListener { holderClickListener.invoke() }
-            avatarView.setOnClickListener { avatarClickListener.invoke() }
-            shareView.setOnClickListener { shareClickListener.invoke() }
-            commentView.setOnClickListener { commentClickListener.invoke() }
-            favoriteView.setOnClickListener { favorClickListener.invoke() }
-            moreOperationView.setOnClickListener { moreClickListener.invoke() }
+            containerView.setOnClickListener { holderClickListener.invoke(item) }
+            avatarView.setOnClickListener { avatarClickListener.invoke(item.userId) }
+            shareView.setOnClickListener { shareClickListener.invoke(item) }
+            commentView.setOnClickListener { commentClickListener.invoke(item) }
+            favoriteView.setOnClickListener { favorClickListener.invoke(item.feedId) }
+            moreOperationView.setOnClickListener { moreClickListener.invoke(item) }
         }
     }
 

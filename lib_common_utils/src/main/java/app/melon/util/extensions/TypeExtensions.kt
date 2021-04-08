@@ -38,8 +38,9 @@ fun TextView.setDrawableLeft(@DrawableRes drawableRes: Int, activity: Activity) 
 //    Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
 
 
-fun View.setVisibleIf(condition: Boolean) {
+fun View.setVisibleIf(condition: Boolean): Boolean {
     visibility = if (condition) View.VISIBLE else View.GONE
+    return condition
 }
 
 fun View.onThrottledClick(

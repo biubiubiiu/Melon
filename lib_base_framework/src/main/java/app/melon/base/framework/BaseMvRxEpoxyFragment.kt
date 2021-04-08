@@ -6,11 +6,22 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import com.airbnb.epoxy.EpoxyController
+import com.airbnb.epoxy.Typed2EpoxyController
+import com.airbnb.epoxy.Typed3EpoxyController
+import com.airbnb.epoxy.Typed4EpoxyController
+import com.airbnb.epoxy.TypedEpoxyController
 import com.airbnb.mvrx.MavericksView
+
 
 abstract class BaseMvRxEpoxyFragment : FragmentWithBinding<FragmentEpoxyListBinding>(), MavericksView {
 
     abstract val controller: EpoxyController
+
+    private val allowModelBuildRequests
+        get() = controller !is TypedEpoxyController<*> &&
+                controller !is Typed2EpoxyController<*, *> &&
+                controller !is Typed3EpoxyController<*, *, *> &&
+                controller !is Typed4EpoxyController<*, *, *, *>
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -20,10 +31,16 @@ abstract class BaseMvRxEpoxyFragment : FragmentWithBinding<FragmentEpoxyListBind
 
     @CallSuper
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
-        binding.recyclerView.setControllerAndBuildModels(controller)
+        if (allowModelBuildRequests) {
+            binding.recyclerView.setControllerAndBuildModels(controller)
+        } else {
+            binding.recyclerView.setController(controller)
+        }
     }
 
     protected fun rebuildModel() {
-        binding.recyclerView.requestModelBuild()
+        if (allowModelBuildRequests) {
+            binding.recyclerView.requestModelBuild()
+        }
     }
 }

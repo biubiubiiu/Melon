@@ -2,4 +2,6 @@
 <resources>
     <dimen name="feed_avatar_size">48dp</dimen>
     <dimen name="feed_anonymous_avatar_size">36dp</dimen>
+
+    <dimen name="comment_avatar_size">42dp</dimen>
 </resources>

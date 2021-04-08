@@ -15,11 +15,15 @@ import app.melon.data.entities.Feed
 import app.melon.data.resultentities.ANExploreEntryWithFeed
 import app.melon.data.resultentities.ANSchoolEntryWithFeed
 import app.melon.data.resultentities.ANTrendingEntryWithFeed
+import app.melon.util.base.ErrorResult
+import app.melon.util.base.Result
+import app.melon.util.base.Success
 import app.melon.util.extensions.executeWithRetry
 import app.melon.util.extensions.toResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,13 +34,14 @@ class FeedRepository @Inject constructor(
     private val database: MelonDatabase
 ) {
 
-    fun getFeedsByUserId(uid: String, timestamp: Long): Flow<PagingData<Feed>> {
-        return Pager(
-            config = PAGING_CONFIG,
-            pagingSourceFactory = {
-                FeedPagingSource(service, PAGING_CONFIG.pageSize)
-            }
-        ).flow
+    suspend fun getFeedDetail(id: String): Result<Feed> {
+        val response = withContext(Dispatchers.IO) {
+            service.getFeedDetail(id).execute()
+        }
+        return when {
+            response.isSuccessful && response.body() != null -> Success(response.body()!!)
+            else -> ErrorResult(HttpException(response))
+        }
     }
 
     fun getAnonymousSchoolFeed(timestamp: Long): Flow<PagingData<ANSchoolEntryWithFeed>> {

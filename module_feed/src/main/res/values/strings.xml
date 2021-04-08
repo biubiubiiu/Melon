@@ -3,4 +3,9 @@
     <string name="feed_school">School</string>
     <string name="feed_explore">Explore</string>
     <string name="feed_trending">Trending</string>
+
+    <string name="feed_repost_count">TODO</string>
+    <string name="feed_like_count">TODO</string>
+
+    <string name="comment_total_reply_count">%d more replies</string>
 </resources>

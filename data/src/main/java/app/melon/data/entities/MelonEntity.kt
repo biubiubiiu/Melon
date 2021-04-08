@@ -1,6 +1,8 @@
 package app.melon.data.entities
 
-interface MelonEntity {
+import java.io.Serializable
+
+interface MelonEntity: Serializable {
     val id: Long
 }
 

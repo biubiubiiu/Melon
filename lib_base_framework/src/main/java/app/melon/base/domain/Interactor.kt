@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 /**
  * source: https://github.com/chrisbanes/tivi
  */
-abstract class Interactor<in P, out R> {
+abstract class Interactor<in P> {
     operator fun invoke(params: P, timeoutMs: Long = defaultTimeoutMs): Flow<InvokeStatus> {
         return flow {
             withTimeout(timeoutMs) {
@@ -33,9 +33,9 @@ abstract class Interactor<in P, out R> {
         }
     }
 
-    suspend fun executeSync(params: P): R = doWork(params)
+    suspend fun executeSync(params: P) = doWork(params)
 
-    protected abstract suspend fun doWork(params: P): R
+    protected abstract suspend fun doWork(params: P)
 
     companion object {
         private val defaultTimeoutMs = TimeUnit.MINUTES.toMillis(5)

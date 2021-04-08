@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/comment_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bgPrimary"
+    android:paddingHorizontal="@dimen/spacing_conventional"
+    android:paddingVertical="@dimen/spacing_small">
+
+    <ImageView
+        android:id="@+id/comment_user_avatar"
+        android:layout_width="@dimen/comment_avatar_size"
+        android:layout_height="@dimen/comment_avatar_size"
+        android:contentDescription="@string/app_common_avatar_desc"
+        tools:src="#808080" />
+
+    <RelativeLayout
+        android:id="@+id/comment_title_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_conventional"
+        android:layout_toEndOf="@id/comment_user_avatar">
+
+        <TextView
+            android:id="@+id/comment_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Melon.TextAppearance.Title"
+            tools:text="Sandor Clegane" />
+
+        <TextView
+            android:id="@+id/comment_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/app_consistent_text_horizontal_spacing_small"
+            android:layout_toEndOf="@id/comment_user_id"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/Melon.TextAppearance.Info"
+            tools:text="\@Sandor_Clegane" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/comment_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_title_content_container"
+        android:layout_alignStart="@id/comment_title_content_container"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textAppearance="@style/Melon.TextAppearance.Content"
+        tools:text="A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text." />
+
+    <LinearLayout
+        android:id="@+id/reply_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_content"
+        android:layout_alignStart="@id/comment_title_content_container"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/spacing_conventional"
+        android:background="#50808080"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_small"
+        android:paddingVertical="@dimen/spacing_small">
+
+        <TextView
+            android:id="@+id/reply_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingVertical="@dimen/spacing_nano"
+            android:textColor="@color/TextPrimary"
+            android:textColorHighlight="?attr/colorPrimary"
+            tools:text="Ron Krays: fuck off" />
+
+        <TextView
+            android:id="@+id/reply_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingVertical="@dimen/spacing_nano"
+            android:textColor="@color/TextPrimary"
+            android:textColorHighlight="?attr/colorPrimary"
+            tools:text="Ron Krays: fuck off" />
+
+        <TextView
+            android:id="@+id/more_reply_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/spacing_nano"
+            android:textColorHighlight="?attr/colorPrimary"
+            tools:text="5 More replies" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/comment_post_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reply_container"
+        android:layout_alignStart="@id/comment_title_content_container"
+        android:layout_centerVertical="true"
+        android:layout_marginVertical="@dimen/spacing_small"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        tools:text="20/12/19" />
+
+    <ImageView
+        android:id="@+id/comment_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/comment_post_time"
+        android:layout_alignBottom="@id/comment_post_time"
+        android:layout_marginEnd="@dimen/spacing_large"
+        android:layout_toStartOf="@id/comment_reply"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_round_share_16" />
+
+    <ImageView
+        android:id="@+id/comment_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/comment_post_time"
+        android:layout_alignBottom="@id/comment_post_time"
+        android:layout_marginEnd="@dimen/spacing_large"
+        android:layout_toStartOf="@id/comment_favourite"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_round_comment_16" />
+
+    <ImageView
+        android:id="@+id/comment_favourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/comment_post_time"
+        android:layout_alignBottom="@id/comment_post_time"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_toStartOf="@id/comment_favor_count"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_round_favorite_border_16" />
+
+    <TextView
+        android:id="@+id/comment_favor_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/comment_post_time"
+        android:layout_alignBottom="@id/comment_post_time"
+        android:layout_alignParentEnd="true"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        tools:text="15" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/comment_post_time"
+        android:layout_alignStart="@id/comment_title_content_container"
+        android:layout_alignParentEnd="true"
+        android:background="?android:attr/listDivider" />
+
+</RelativeLayout>

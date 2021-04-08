@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/feed_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bgPrimary"
+    android:paddingHorizontal="@dimen/spacing_conventional"
+    android:paddingVertical="@dimen/spacing_conventional">
+
+    <ImageView
+        android:id="@+id/feed_user_avatar"
+        android:layout_width="@dimen/feed_avatar_size"
+        android:layout_height="@dimen/feed_avatar_size"
+        android:contentDescription="@string/app_common_avatar_desc"
+        tools:src="#808080" />
+
+    <RelativeLayout
+        android:id="@+id/feed_title_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_conventional"
+        android:layout_toEndOf="@id/feed_user_avatar">
+
+        <TextView
+            android:id="@+id/feed_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Melon.TextAppearance.Title"
+            tools:text="Sandor Clegane" />
+
+        <TextView
+            android:id="@+id/feed_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/app_consistent_text_horizontal_spacing_small"
+            android:layout_toStartOf="@id/feed_more"
+            android:layout_toEndOf="@id/feed_username"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/Melon.TextAppearance.Info"
+            tools:text="\@Sandor_Clegane" />
+
+        <ImageView
+            android:id="@+id/feed_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_common_more_operation_desc"
+            android:paddingHorizontal="@dimen/spacing_small"
+            app:srcCompat="@drawable/ic_round_more_vert_16" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/feed_user_school"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_title_content_container"
+        android:layout_alignStart="@id/feed_title_content_container"
+        android:layout_toEndOf="@id/feed_user_avatar"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        tools:text="Kings Landing" />
+
+    <TextView
+        android:id="@+id/feed_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_user_school"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textAppearance="@style/Melon.TextAppearance.Content"
+        tools:text="A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text." />
+
+    <app.melon.base.ui.ShapedFourPhotoView
+        android:id="@+id/feed_photos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_content"
+        android:layout_alignStart="@id/feed_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/feed_tag_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_photos"
+        android:layout_alignStart="@id/feed_content"
+        android:orientation="horizontal">
+
+        <app.melon.base.uikit.TagView
+            android:id="@+id/feed_location_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:visibility="gone" />
+
+        <app.melon.base.uikit.TagView
+            android:id="@+id/feed_type_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/feed_post_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feed_tag_container"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textAppearance="@style/Melon.TextAppearance.Info"
+        tools:text="20/12/19" />
+
+    <View
+        android:id="@+id/divider_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/feed_post_time"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/feed_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider_1"
+        android:layout_alignStart="@id/feed_content"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/spacing_small">
+
+        <TextView
+            android:id="@+id/feed_repost_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Melon.TextAppearance.Content"
+            android:textStyle="bold"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/feed_repost_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_micro"
+            android:text="@string/feed_repost_count"
+            android:textAppearance="@style/Melon.TextAppearance.Info" />
+
+        <TextView
+            android:id="@+id/feed_like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:textAppearance="@style/Melon.TextAppearance.Content"
+            android:textStyle="bold"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/feed_like_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_micro"
+            android:text="@string/feed_like_count"
+            android:textAppearance="@style/Melon.TextAppearance.Info" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/feed_info_container"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/feed_operation_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider_2"
+        android:layout_alignStart="@id/feed_content"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/spacing_small">
+
+        <ImageView
+            android:id="@+id/feed_share"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_round_share_16" />
+
+        <ImageView
+            android:id="@+id/feed_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_round_comment_16" />
+
+        <ImageView
+            android:id="@+id/feed_favorite"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_round_favorite_border_16" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider_3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/feed_operation_container"
+        android:background="?android:attr/listDivider" />
+
+
+</RelativeLayout>

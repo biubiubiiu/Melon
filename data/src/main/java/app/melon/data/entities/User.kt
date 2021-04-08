@@ -17,8 +17,8 @@ data class User(
     @SerializedName("age") val age: Int = 0,
     @SerializedName("gender") val gender: String = "",
     @SerializedName("background") val backgroundUrl: String = "",
-    @SerializedName("followers") val followerCount: Long,
-    @SerializedName("following") val followingCount: Long,
+    @SerializedName("followers") val followerCount: Long? = 0L,
+    @SerializedName("following") val followingCount: Long? = 0L,
     @SerializedName("photos") val photos: List<String> = emptyList()
 ) {
     val isMale get() = gender == "Male"

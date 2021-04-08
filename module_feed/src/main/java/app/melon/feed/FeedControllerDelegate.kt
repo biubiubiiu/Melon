@@ -13,6 +13,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
+
 class FeedControllerDelegate @AssistedInject constructor(
     @Assisted private val context: Context,
     private val userService: IUserService
@@ -28,12 +29,12 @@ class FeedControllerDelegate @AssistedInject constructor(
         return FeedItem_()
             .id(idProvider.invoke())
             .item(feed)
-            .holderClickListener { this.onHolderClick() }
-            .avatarClickListener { this.onAvatarClick(feed.postId) }
-            .shareClickListener { this.onShareClick() }
-            .commentClickListener { this.onCommentClick() }
-            .favorClickListener { this.onFavorClick() }
-            .moreClickListener { this.onMoreClick() }
+            .holderClickListener { this.onHolderClick(it) }
+            .avatarClickListener { this.onAvatarClick(it) }
+            .shareClickListener { this.onShareClick(it) }
+            .commentClickListener { this.onCommentClick(it) }
+            .favorClickListener { this.onFavorClick(it) }
+            .moreClickListener { this.onMoreClick(it) }
             .saveImageListener { this.onSaveImage(it) }
     }
 
@@ -45,34 +46,35 @@ class FeedControllerDelegate @AssistedInject constructor(
         return AnonymousFeedItem_()
             .id(idProvider.invoke())
             .item(feed)
-            .holderClickListener { this.onHolderClick() }
-            .shareClickListener { this.onShareClick() }
-            .commentClickListener { this.onCommentClick() }
-            .favorClickListener { this.onFavorClick() }
-            .moreClickListener { this.onMoreClick() }
+            .holderClickListener { this.onHolderClick(it) }
+            .shareClickListener { this.onShareClick(it) }
+            .commentClickListener { this.onCommentClick(it) }
+            .favorClickListener { this.onFavorClick(it) }
+            .moreClickListener { this.onMoreClick(it) }
     }
 
-    override fun onHolderClick() {
-        context.showToast("click holder")
+    override fun onHolderClick(feed: Feed) {
+        val intent = FeedDetailActivity.prepareIntent(context, feed)
+        context.startActivity(intent)
     }
 
     override fun onAvatarClick(uid: String) {
         userService.navigateToUserProfile(context, uid)
     }
 
-    override fun onShareClick() {
+    override fun onShareClick(feed: Feed) {
         context.showToast("click share")
     }
 
-    override fun onCommentClick() {
+    override fun onCommentClick(feed: Feed) {
         context.showToast("click comment")
     }
 
-    override fun onFavorClick() {
+    override fun onFavorClick(id: String) {
         context.showToast("click favor")
     }
 
-    override fun onMoreClick() {
+    override fun onMoreClick(feed: Feed) {
         context.showToast("click more")
     }
 
