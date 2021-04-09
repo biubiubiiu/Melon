@@ -1,10 +1,9 @@
 package app.melon.feed.ui.controller
 
 import android.content.Context
-import app.melon.base.ui.list.loadMoreView
+import app.melon.comment.CommentControllerDelegate
 import app.melon.data.entities.Comment
 import app.melon.data.entities.Feed
-import app.melon.feed.ui.widget.commentItem
 import app.melon.feed.ui.widget.feedHeader
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
@@ -16,8 +15,11 @@ import dagger.assisted.AssistedInject
 
 class FeedDetailController @AssistedInject constructor(
     @Assisted private val context: Context,
+    commentControllerFactory: CommentControllerDelegate.Factory,
     private val userService: IUserService
 ) : Typed3EpoxyController<Feed, List<Comment>, Boolean>() {
+
+    private val commentDelegate = commentControllerFactory.create(context, this)
 
     override fun buildModels(feed: Feed?, commentList: List<Comment>?, loadingComment: Boolean) {
         if (feed != null) {
@@ -33,23 +35,7 @@ class FeedDetailController @AssistedInject constructor(
                 moreClickListener { context.showToast("Click more") }
             }
         }
-        // TODO add header placeholder
-        commentList?.forEachIndexed { index, comment ->
-            commentItem {
-                id("comment_${index}")
-                item(comment)
-                avatarClickListener { userService.navigateToUserProfile(context, comment.displayPoster.id) }
-                shareClickListener { context.showToast("Click share") }
-                replyClickListener { context.showToast("Click reply") }
-                favorClickListener { context.showToast("Click favor") }
-                replyEntryClickListener { context.showToast("Click reply entry") }
-            }
-        }
-        if (loadingComment) {
-            loadMoreView {
-                id("comment_loading_more")
-            }
-        }
+        commentDelegate.buildCommentList(commentList, loadingComment)
     }
 
     @AssistedFactory

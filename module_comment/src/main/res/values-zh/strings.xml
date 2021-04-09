@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comment_total_reply_count">共%d条回复</string>
+</resources>

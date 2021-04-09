@@ -5,7 +5,6 @@ import app.melon.feed.anonymous.AnonymousFeedFragment
 import app.melon.feed.anonymous.ui.ExploreFeedFragment
 import app.melon.feed.anonymous.ui.SchoolFeedFragment
 import app.melon.feed.anonymous.ui.TrendingFeedFragment
-import app.melon.feed.data.CommentApiService
 import app.melon.feed.data.FeedApiService
 import app.melon.feed.ui.FeedDetailFragment
 import dagger.Module
@@ -56,7 +55,4 @@ internal class RemoteServiceModule {
 
     @Provides
     fun provideFeedService(retrofit: Retrofit) = retrofit.create(FeedApiService::class.java)
-
-    @Provides
-    fun provideCommentService(retrofit: Retrofit) = retrofit.create(CommentApiService::class.java)
 }

@@ -5,6 +5,7 @@ import app.melon.account.di.AccountModule
 import app.melon.account.di.StorageModule
 import app.melon.base.di.NetworkModule
 import app.melon.base.scope.ApplicationScope
+import app.melon.comment.di.CommentModule
 import app.melon.data.di.DatabaseModule
 import app.melon.feed.di.FeedModule
 import app.melon.group.di.GroupBuilder
@@ -32,6 +33,7 @@ import javax.inject.Singleton
         UserModule::class,
         AccountModule::class,
         FeedModule::class,
+        CommentModule::class,
         GroupBuilder::class,
         StorageModule::class,
         AppSubComponents::class

@@ -44,7 +44,6 @@ dependencies {
     implementation(project(Modules.dataAndroid))
 
     implementation(project(Modules.userApi))
-    implementation(project(Modules.comment))
 
     implementation(Libraries.Fragment.fragment)
     implementation(Libraries.Fragment.ktx)

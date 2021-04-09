@@ -1,10 +1,9 @@
-package app.melon.feed.interactors
+package app.melon.comment.interactor
 
 import app.melon.base.domain.SuspendingWorkInteractor
+import app.melon.comment.data.CommentRepository
 import app.melon.data.entities.Comment
-import app.melon.feed.data.CommentRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

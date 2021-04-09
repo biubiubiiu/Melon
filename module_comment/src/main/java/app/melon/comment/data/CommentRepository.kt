@@ -1,8 +1,7 @@
-package app.melon.feed.data
+package app.melon.comment.data
 
 import app.melon.data.entities.Comment
 import app.melon.data.entities.User
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class CommentRepository @Inject constructor(
@@ -10,8 +9,6 @@ class CommentRepository @Inject constructor(
 ) {
 
     suspend fun fetchCommentList(id: String, page: Int, pageSize: Int): List<Comment> {
-
-        delay(2000)
         // Testing
         val offset = page * pageSize
         return (0 until pageSize).map { it + offset }.map {

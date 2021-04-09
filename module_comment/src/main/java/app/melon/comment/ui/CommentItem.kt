@@ -1,4 +1,4 @@
-package app.melon.feed.ui.widget
+package app.melon.comment.ui
 
 import android.text.SpannableString
 import android.text.Spanned
@@ -10,8 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
+import app.melon.comment.R
 import app.melon.data.entities.Comment
-import app.melon.feed.R
 import app.melon.util.extensions.getResourceString
 import app.melon.util.extensions.ifTrue
 import app.melon.util.extensions.setVisibleIf

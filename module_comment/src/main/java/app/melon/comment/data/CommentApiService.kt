@@ -1,4 +1,4 @@
-package app.melon.feed.data
+package app.melon.comment.data
 
 interface CommentApiService {
 }

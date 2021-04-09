@@ -3,7 +3,7 @@ package app.melon.feed.ui
 import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ReduxViewModel
 import app.melon.data.entities.Feed
-import app.melon.feed.interactors.UpdateComments
+import app.melon.comment.interactor.UpdateComments
 import app.melon.feed.interactors.UpdateFeedDetail
 import app.melon.feed.ui.state.FeedDetailViewState
 import app.melon.util.base.ErrorResult
