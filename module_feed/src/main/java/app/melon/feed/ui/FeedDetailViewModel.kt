@@ -8,6 +8,7 @@ import app.melon.feed.interactors.UpdateFeedDetail
 import app.melon.feed.ui.state.FeedDetailViewState
 import app.melon.util.base.ErrorResult
 import app.melon.util.base.Success
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +21,7 @@ class FeedDetailViewModel @Inject constructor(
 ) {
 
     private var commentPage = 0
+    private var loadingMore = false
     private var feedId: String = ""
 
     init {
@@ -39,6 +41,11 @@ class FeedDetailViewModel @Inject constructor(
         viewModelScope.launch {
             updateComments.observe().collectAndSetState {
                 copy(comments = it)
+            }
+        }
+        viewModelScope.launch {
+            updateComments.loadingMore.observable.collect {
+                loadingMore = it
             }
         }
         selectSubscribeDistinct(FeedDetailViewState::feed) {
@@ -62,6 +69,9 @@ class FeedDetailViewModel @Inject constructor(
     }
 
     fun loadMoreComment() {
+        if (loadingMore) {
+            return
+        }
         commentPage += 1
         viewModelScope.launch {
             updateComments(UpdateComments.Params(feedId, commentPage))

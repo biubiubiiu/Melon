@@ -14,6 +14,7 @@ import app.melon.util.extensions.dpInt
 import app.melon.util.extensions.getColorCompat
 import app.melon.util.extensions.showToast
 import app.melon.util.extensions.sp
+import app.melon.util.time.MelonDateTimeFormatter
 import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -23,7 +24,8 @@ import dagger.assisted.AssistedInject
 class ReplyPageController @AssistedInject constructor(
     @Assisted context: Context,
     factory: CommentControllerDelegate.Factory,
-    private val userService: IUserService
+    private val userService: IUserService,
+    private val dateTimeFormatter: MelonDateTimeFormatter
 ) : BasePagingController<Comment>(context) {
 
     var loadingFirstComment: Boolean by observable(false, ::requestModelBuild)
@@ -39,6 +41,7 @@ class ReplyPageController @AssistedInject constructor(
         return ReplyItem_()
             .id("reply_$currentPosition")
             .item(item!!)
+            .formatter(dateTimeFormatter)
             .favorClickListener { context.showToast("click favor") }
             .shareClickListener { context.showToast("click share") }
             .replyEntryClickListener { context.showToast("click reply") }

@@ -7,6 +7,7 @@ import app.melon.comment.ui.widget.commentItem
 import app.melon.data.entities.Comment
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
+import app.melon.util.time.MelonDateTimeFormatter
 import com.airbnb.epoxy.ModelCollector
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -16,7 +17,8 @@ import dagger.assisted.AssistedInject
 class CommentControllerDelegate @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val collector: ModelCollector,
-    private val userService: IUserService
+    private val userService: IUserService,
+    private val dateTimeFormatter: MelonDateTimeFormatter
 ) : CommentActions {
 
     fun buildCommentList(
@@ -29,6 +31,7 @@ class CommentControllerDelegate @AssistedInject constructor(
             commentItem {
                 id("comment_${index}")
                 item(comment)
+                formatter(dateTimeFormatter)
                 displayReplyCount(displayReplyCount)
                 backgroundRes(backgroundRes)
                 avatarClickListener { userService.navigateToUserProfile(context, comment.displayPoster.id) }

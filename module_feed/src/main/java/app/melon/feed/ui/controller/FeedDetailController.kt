@@ -7,6 +7,7 @@ import app.melon.data.entities.Feed
 import app.melon.feed.ui.widget.feedHeader
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
+import app.melon.util.time.MelonDateTimeFormatter
 import com.airbnb.epoxy.Typed3EpoxyController
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -16,7 +17,8 @@ import dagger.assisted.AssistedInject
 class FeedDetailController @AssistedInject constructor(
     @Assisted private val context: Context,
     commentControllerFactory: CommentControllerDelegate.Factory,
-    private val userService: IUserService
+    private val userService: IUserService,
+    private val dateTimeFormatter: MelonDateTimeFormatter
 ) : Typed3EpoxyController<Feed, List<Comment>, Boolean>() {
 
     private val commentDelegate = commentControllerFactory.create(context, this)
@@ -26,6 +28,7 @@ class FeedDetailController @AssistedInject constructor(
             feedHeader {
                 id("feed_detail_header")
                 item(feed)
+                formatter(dateTimeFormatter)
                 avatarClickListener { userService.navigateToUserProfile(context, feed.userId) }
                 repostEntryClickListener { context.showToast("Click repost entry") }
                 favorEntryClickListener { context.showToast("Click favor entry") }

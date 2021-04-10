@@ -12,6 +12,8 @@ import app.melon.base.uikit.TagView
 import app.melon.data.entities.Feed
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt
+import app.melon.util.extensions.toOffsetDateTime
+import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
@@ -32,6 +34,7 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
     @EpoxyAttribute lateinit var saveImageListener: (String) -> Unit
 
     @EpoxyAttribute lateinit var item: Feed
+    @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     private var overlayView: ImageViewerOverlay? = null
 
@@ -61,7 +64,7 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
             usernameView.text = item.username
             userIdView.text = item.userId
             userSchoolView.text = item.school
-            postTimeView.text = item.postTime.toString()
+            postTimeView.text = formatter.formatShortRelativeTime(item.postTime.toOffsetDateTime())
             contentView.text = item.content
             commentView.text = item.replyCount.toString()
             favoriteView.text = item.favouriteCount.toString()

@@ -11,6 +11,8 @@ import app.melon.data.entities.Feed
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt
 import app.melon.util.extensions.showToast
+import app.melon.util.extensions.toOffsetDateTime
+import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
@@ -27,6 +29,7 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
     @EpoxyAttribute lateinit var moreClickListener: (Feed) -> Unit
 
     @EpoxyAttribute lateinit var item: Feed
+    @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     override fun getDefaultLayout(): Int = R.layout.item_anonymous_feed
 
@@ -43,7 +46,7 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
             usernameView.text = item.username
             userIdView.text = item.userId
             userSchoolView.text = item.school
-            postTimeView.text = item.postTime.toString()
+            postTimeView.text = formatter.formatShortRelativeTime(item.postTime.toOffsetDateTime())
             titleView.text = item.title
             contentView.text = item.content
             commentView.text = item.replyCount.toString()

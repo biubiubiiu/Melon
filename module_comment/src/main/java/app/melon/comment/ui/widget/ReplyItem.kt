@@ -12,6 +12,8 @@ import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.comment.R
 import app.melon.data.entities.Comment
+import app.melon.util.extensions.toOffsetDateTime
+import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
@@ -29,8 +31,8 @@ abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
     @EpoxyAttribute lateinit var replyEntryClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var profileEntryClickListener: (String) -> Unit
 
-
     @EpoxyAttribute lateinit var item: Comment
+    @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     override fun bind(holder: Holder) {
         setupContent(holder)
@@ -44,7 +46,7 @@ abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
             }
             usernameView.text = item.displayPoster.username
             userIdView.text = item.displayPoster.id
-            postTimeView.text = item.postTime.toString()
+            postTimeView.text = formatter.formatShortRelativeTime(item.postTime.toOffsetDateTime())
             contentView.text = item.content
             favourCountView.text = item.favorCount.toString()
 

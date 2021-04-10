@@ -13,6 +13,8 @@ import app.melon.feed.ui.FeedDetailFragment
 
 class FeedDetailActivity : AppCompatActivity() {
 
+    private val cache by lazy { requireNotNull(intent.getSerializableExtra(KEY_CACHE_FEED) as Feed) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed_detail)
@@ -20,7 +22,7 @@ class FeedDetailActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                replace(R.id.fragment_container, FeedDetailFragment.newInstance(Feed(feedId = "test")))
+                replace(R.id.fragment_container, FeedDetailFragment.newInstance(cache))
             }
         }
     }

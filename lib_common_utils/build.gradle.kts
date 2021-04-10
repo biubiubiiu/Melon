@@ -16,6 +16,15 @@ android {
 
         versionCode = AndroidClient.versionCode
         versionName = AndroidClient.versionName
+
+        multiDexEnabled = true
+    }
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     buildTypes {
@@ -37,6 +46,9 @@ kapt {
 
 dependencies {
     implementation(Libraries.kotlinStdLib)
+    implementation(Libraries.MultiDex.multiDex)
+
+    coreLibraryDesugaring(Libraries.JavaSDK.Desugar.desugar)
 
     api(Libraries.AndroidX.Core.ktx)
 

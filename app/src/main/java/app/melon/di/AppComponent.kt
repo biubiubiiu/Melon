@@ -11,6 +11,7 @@ import app.melon.feed.di.FeedModule
 import app.melon.group.di.GroupBuilder
 import app.melon.home.di.HomeBuilder
 import app.melon.user.di.UserModule
+import app.melon.util.di.UtilModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -36,7 +37,8 @@ import javax.inject.Singleton
         CommentModule::class,
         GroupBuilder::class,
         StorageModule::class,
-        AppSubComponents::class
+        AppSubComponents::class,
+        UtilModule::class
     ]
 )
 interface AppComponent : AndroidInjector<MelonApplication> {

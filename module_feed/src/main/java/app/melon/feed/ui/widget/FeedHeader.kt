@@ -9,6 +9,8 @@ import app.melon.base.uikit.TagView
 import app.melon.data.entities.Feed
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt
+import app.melon.util.extensions.toOffsetDateTime
+import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
@@ -28,6 +30,7 @@ abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
     @EpoxyAttribute lateinit var moreClickListener: (String) -> Unit
 
     @EpoxyAttribute lateinit var item: Feed
+    @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     override fun getDefaultLayout(): Int = R.layout.view_feed_detail_header
 
@@ -58,7 +61,7 @@ abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
             usernameView.text = item.username
             userIdView.text = item.userId
             userSchoolView.text = item.school
-            postTimeView.text = item.postTime.toString()
+            postTimeView.text = formatter.formatShortRelativeTime(item.postTime.toOffsetDateTime())
             contentView.text = item.content
 //            commentView.text = item.replyCount.toString()
             favorCountView.isVisible = item.favouriteCount > 0

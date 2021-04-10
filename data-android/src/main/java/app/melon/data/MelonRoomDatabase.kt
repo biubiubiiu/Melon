@@ -23,7 +23,7 @@ import app.melon.data.entities.RecommendedFeedEntry
         ANSchoolFeedEntry::class,
         ANTrendingFeedEntry::class
     ],
-    version = 9,
+    version = 10,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

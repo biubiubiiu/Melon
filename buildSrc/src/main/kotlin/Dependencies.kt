@@ -63,6 +63,13 @@ object Libraries {
 
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Kotlin.standardLibrary}"
 
+    object JavaSDK {
+        object Desugar {
+            private const val version = "1.0.9"
+            const val desugar = "com.android.tools:desugar_jdk_libs:$version"
+        }
+    }
+
     object AndroidX {
         object Core {
             private const val version = "1.2.0"

@@ -9,6 +9,6 @@ data class Comment(
     @SerializedName("content") val content: String = "",
     @SerializedName("reply_count") val replyCount: Int = 0,
     @SerializedName("favor_count") val favorCount: Int = 0,
-    @SerializedName("post_time") val postTime: Long = 0L,
+    @SerializedName("post_time") val postTime: String = "",
     @SerializedName("quote") val quote: Comment? = null
 ) : Serializable
