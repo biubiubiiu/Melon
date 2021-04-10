@@ -5,6 +5,7 @@
     android:id="@+id/comment_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/bgSecondary"
     android:paddingHorizontal="@dimen/spacing_conventional"
     android:paddingVertical="@dimen/spacing_small">
 
@@ -55,22 +56,40 @@
         android:textAppearance="@style/Melon.TextAppearance.Content"
         tools:text="A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text." />
 
-    <TextView
-        android:id="@+id/more_reply_entry"
+    <LinearLayout
+        android:id="@+id/quote_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/comment_content"
         android:layout_alignStart="@id/comment_title_content_container"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/spacing_conventional"
-        android:paddingVertical="@dimen/spacing_nano"
-        android:textColorHighlight="?attr/colorPrimary"
-        tools:text="5 More replies" />
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/spacing_small">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/divider" />
+
+        <TextView
+            android:id="@+id/quote_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:paddingVertical="@dimen/spacing_nano"
+            android:textAppearance="@style/Melon.TextAppearance.Info"
+            android:textColor="@color/TextPrimary"
+            android:textColorHighlight="?attr/colorPrimary"
+            tools:text="Ron Krays: fuck off" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/comment_post_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/more_reply_entry"
+        android:layout_below="@id/quote_container"
         android:layout_alignStart="@id/comment_title_content_container"
         android:layout_centerVertical="true"
         android:layout_marginVertical="@dimen/spacing_small"

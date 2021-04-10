@@ -41,6 +41,7 @@
     <string name="app_common_search_desc">Search</string>
     <string name="app_common_interest_group_desc">Interest Group</string>
     <string name="app_common_save_desc">Save</string>
+    <string name="app_common_go_back_desc">Back</string>
 
     <string name="app_common_error_hint">Something went wrong</string>
     <string name="app_common_retry_hint">TRY AGAIN</string>

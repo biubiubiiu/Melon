@@ -1,8 +1,10 @@
 package app.melon.comment.di
 
 import app.melon.base.scope.ActivityScope
+import app.melon.base.scope.FragmentScope
 import app.melon.comment.CommentReplyActivity
 import app.melon.comment.data.CommentApiService
+import app.melon.comment.ui.ReplyListFragment
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -22,6 +24,10 @@ abstract class CommentBuilder {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun injectCommentReplyActivity(): CommentReplyActivity
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun injectReplyListFragment(): ReplyListFragment
 }
 
 @Module

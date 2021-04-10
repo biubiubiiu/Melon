@@ -65,6 +65,11 @@ abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
             favorLabel.isVisible = item.favouriteCount > 0
             favorCountView.takeIf { it.isVisible }?.text = item.favouriteCount.toString()
 
+            val repostCount = 2 // TODO use repost count
+            repostCountView.isVisible = repostCount > 0
+            repostLabel.isVisible = repostCount > 0
+            repostCountView.takeIf { it.isVisible }?.text = repostCount.toString()
+
             photoView.isVisible = item.photos.isNotEmpty()
             photoView.takeIf { it.isVisible }?.apply {
                 itemPadding = 4.dpInt

@@ -3,7 +3,7 @@
     package="app.melon.comment">
 
     <application>
-        <activity android:name=".CommentReplyActivity"></activity>
+        <activity android:name=".CommentReplyActivity" />
     </application>
 
 </manifest>

@@ -1,8 +1,9 @@
 package app.melon.comment
 
 import android.content.Context
+import androidx.annotation.ColorRes
 import app.melon.base.ui.list.loadMoreView
-import app.melon.comment.ui.commentItem
+import app.melon.comment.ui.widget.commentItem
 import app.melon.data.entities.Comment
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
@@ -18,16 +19,23 @@ class CommentControllerDelegate @AssistedInject constructor(
     private val userService: IUserService
 ) : CommentActions {
 
-    fun buildCommentList(list: List<Comment>?, loading: Boolean) = with(collector) {
+    fun buildCommentList(
+        list: List<Comment>?,
+        loading: Boolean,
+        displayReplyCount: Boolean = true,
+        @ColorRes backgroundRes: Int = R.color.bgPrimary
+    ) = with(collector) {
         list?.forEachIndexed { index, comment ->
             commentItem {
                 id("comment_${index}")
                 item(comment)
+                displayReplyCount(displayReplyCount)
+                backgroundRes(backgroundRes)
                 avatarClickListener { userService.navigateToUserProfile(context, comment.displayPoster.id) }
                 shareClickListener { context.showToast("Click share") }
                 replyClickListener { context.showToast("Click reply") }
                 favorClickListener { context.showToast("Click favor") }
-                replyEntryClickListener { context.showToast("Click reply entry") }
+                subCommentEntryClickListener { onSubCommentEntryClick(it) }
             }
         }
         if (loading) {
@@ -35,6 +43,10 @@ class CommentControllerDelegate @AssistedInject constructor(
                 id("comment_loading_more")
             }
         }
+    }
+
+    override fun onSubCommentEntryClick(id: String) {
+        CommentReplyActivity.start(context, id)
     }
 
     @AssistedFactory

@@ -1,4 +1,4 @@
-package app.melon.comment.ui
+package app.melon.comment.ui.widget
 
 import android.text.SpannableString
 import android.text.Spanned
@@ -8,13 +8,12 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.comment.R
 import app.melon.data.entities.Comment
 import app.melon.util.extensions.getResourceString
-import app.melon.util.extensions.ifTrue
-import app.melon.util.extensions.setVisibleIf
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
@@ -29,10 +28,13 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
     @EpoxyAttribute lateinit var shareClickListener: () -> Unit
     @EpoxyAttribute lateinit var replyClickListener: () -> Unit
     @EpoxyAttribute lateinit var favorClickListener: () -> Unit
-    @EpoxyAttribute lateinit var replyEntryClickListener: () -> Unit
+    @EpoxyAttribute lateinit var subCommentEntryClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var userEntryClickListener: (String) -> Unit
 
     @EpoxyAttribute lateinit var item: Comment
+
+    @EpoxyAttribute var displayReplyCount: Boolean = true
+    @EpoxyAttribute @ColorRes var backgroundRes: Int = R.color.bgPrimary
 
     override fun getDefaultLayout(): Int = R.layout.item_comment
 
@@ -43,6 +45,7 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
 
     private fun setupContent(holder: Holder) {
         with(holder) {
+            containerView.setBackgroundResource(backgroundRes)
             avatarView.load(item.displayPoster.avatarUrl) {
                 transformations(CircleCropTransformation())
             }
@@ -52,28 +55,12 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
             contentView.text = item.content
             favourCountView.text = item.favorCount.toString()
 
-            displayReplyContainer.isVisible = item.displayReply.isNotEmpty()
-            displayReplyContainer.setVisibleIf(item.displayReply.isNotEmpty()).ifTrue {
-                val firstReply = item.displayReply.getOrNull(0)
-                if (firstReply != null) {
-                    replyOne.isVisible = true
-                    replyOne.text = buildReplyClickableSpan(firstReply.displayPoster.username, firstReply.content)
-                    replyOne.movementMethod = LinkMovementMethod.getInstance()
-                } else {
-                    replyOne.isVisible = false
-                }
-
-                val secondReply = item.displayReply.getOrNull(1)
-                if (secondReply != null) {
-                    replyTwo.isVisible = true
-                    replyTwo.text = buildReplyClickableSpan(secondReply.displayPoster.username, secondReply.content)
-                    replyTwo.movementMethod = LinkMovementMethod.getInstance()
-                } else {
-                    replyTwo.isVisible = false
-                }
-
-                moreReplyEntryView.setVisibleIf(item.hasMoreReply)
-                moreReplyEntryView.takeIf { it.isVisible }?.text = buildReplyEntryClickableSpan(item.replyCount)
+            if (item.replyCount > 0) {
+                moreReplyEntryView.isVisible = true
+                moreReplyEntryView.text = buildReplyEntryClickableSpan(item.replyCount)
+                moreReplyEntryView.movementMethod = LinkMovementMethod.getInstance()
+            } else {
+                moreReplyEntryView.isVisible = false
             }
         }
     }
@@ -84,31 +71,14 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
             shareView.setOnClickListener { shareClickListener.invoke() }
             replyView.setOnClickListener { replyClickListener.invoke() }
             favoriteView.setOnClickListener { favorClickListener.invoke() }
-            moreReplyEntryView.setOnClickListener { replyEntryClickListener.invoke() }
         }
-    }
-
-    private fun buildReplyClickableSpan(username: String, content: String): SpannableString {
-        val ss = SpannableString("$username: $content")
-        val clickableSpan: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(textView: View) {
-                userEntryClickListener.invoke(item.displayPoster.id)
-            }
-
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.isUnderlineText = false
-            }
-        }
-        ss.setSpan(clickableSpan, 0, username.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        return ss
     }
 
     private fun buildReplyEntryClickableSpan(count: Int): SpannableString {
         val ss = SpannableString(getResourceString(R.string.comment_total_reply_count, count))
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
-                replyEntryClickListener.invoke()
+                subCommentEntryClickListener.invoke(item.id)
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -121,6 +91,7 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
     }
 
     class Holder : BaseEpoxyHolder() {
+        internal val containerView: View by bind(R.id.comment_container)
         internal val avatarView: ImageView by bind(R.id.comment_user_avatar)
         internal val usernameView: TextView by bind(R.id.comment_username)
         internal val userIdView: TextView by bind(R.id.comment_user_id)
@@ -131,8 +102,5 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
         internal val favoriteView: ImageView by bind(R.id.comment_favourite)
         internal val favourCountView: TextView by bind(R.id.comment_favor_count)
         internal val moreReplyEntryView: TextView by bind(R.id.more_reply_entry)
-        internal val displayReplyContainer: View by bind(R.id.reply_container)
-        internal val replyOne: TextView by bind(R.id.reply_one)
-        internal val replyTwo: TextView by bind(R.id.reply_two)
     }
 }

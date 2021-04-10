@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="comment_total_reply_count">%d more replies</string>
+    <string name="comment_total_reply_count_title">Replies(%d)</string>
+    <string name="comment_all_replies">All replies</string>
 </resources>

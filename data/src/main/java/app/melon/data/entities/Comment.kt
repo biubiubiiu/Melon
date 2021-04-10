@@ -1,13 +1,14 @@
 package app.melon.data.entities
 
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+
 data class Comment(
-    val id: String = "",
-    val displayPoster: User = User(),
-    val content: String = "",
-    val replyCount: Int = 0,
-    val favorCount: Int = 0,
-    val displayReply: List<Comment> = emptyList(),
-    val postTime: Long = 0L
-) {
-    val hasMoreReply get() = replyCount > displayReply.size
-}
+    @SerializedName("id") val id: String = "",
+    @SerializedName("poster") val displayPoster: User = User(),
+    @SerializedName("content") val content: String = "",
+    @SerializedName("reply_count") val replyCount: Int = 0,
+    @SerializedName("favor_count") val favorCount: Int = 0,
+    @SerializedName("post_time") val postTime: Long = 0L,
+    @SerializedName("quote") val quote: Comment? = null
+) : Serializable

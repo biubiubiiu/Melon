@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    private val ADDRESS = "10.16.83.15"
+    private val ADDRESS = "10.10.248.248"
     private val PORT = "3000"
     private val API_HOST = "$ADDRESS:$PORT"
     private val BASE_URL = "http://$API_HOST/"

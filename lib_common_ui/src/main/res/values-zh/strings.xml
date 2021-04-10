@@ -27,6 +27,7 @@
     <string name="app_common_search_desc">搜索</string>
     <string name="app_common_interest_group_desc">兴趣小组</string>
     <string name="app_common_save_desc">保存</string>
+    <string name="app_common_go_back_desc">返回</string>
 
     <string name="app_common_error_hint">出错了</string>
     <string name="app_common_retry_hint">重试</string>

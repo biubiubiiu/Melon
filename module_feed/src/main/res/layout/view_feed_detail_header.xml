@@ -136,7 +136,7 @@
         android:layout_below="@id/divider_1"
         android:layout_alignStart="@id/feed_content"
         android:orientation="horizontal"
-        android:paddingVertical="@dimen/spacing_small">
+        android:paddingVertical="@dimen/spacing_conventional">
 
         <TextView
             android:id="@+id/feed_repost_count"
@@ -187,7 +187,7 @@
         android:layout_below="@id/divider_2"
         android:layout_alignStart="@id/feed_content"
         android:orientation="horizontal"
-        android:paddingVertical="@dimen/spacing_small">
+        android:paddingVertical="@dimen/spacing_conventional">
 
         <ImageView
             android:id="@+id/feed_share"
