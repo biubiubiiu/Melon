@@ -2,13 +2,14 @@ package app.melon.account
 
 import app.melon.account.di.RegistrationStorage
 import app.melon.account.di.UserComponent
+import app.melon.account.login.data.LoginRepository
 import app.melon.account.storage.Storage
 import app.melon.data.entities.User
+import app.melon.util.base.Success
+import app.melon.util.network.TokenManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val REGISTERED_USER = "registered_user"
-private const val PASSWORD_SUFFIX = "password"
 
 /**
  * Handles User lifecycle. Manages registrations, logs in and logs out.
@@ -17,8 +18,15 @@ private const val PASSWORD_SUFFIX = "password"
 @Singleton
 class UserManager @Inject constructor(
     @RegistrationStorage private val storage: Storage,
-    private val userComponentFactory: UserComponent.Factory
+    private val userComponentFactory: UserComponent.Factory,
+    private val repo: LoginRepository,
+    private val tokenManager: TokenManager
 ) {
+
+    companion object {
+        private const val REGISTERED_USER = "registered_user"
+        private const val PASSWORD_SUFFIX = "password"
+    }
 
     var userComponent: UserComponent? = null
         private set
@@ -40,18 +48,23 @@ class UserManager @Inject constructor(
         userJustLoggedIn()
     }
 
-    fun loginUser(username: String, password: String): Boolean {
-        val registeredUser = this.username
-        if (registeredUser != username) return false
+    suspend fun loginUser(): Boolean {
+        return loginUser(this.username, this.password)
+    }
 
-        val registeredPassword = this.password
-        if (registeredPassword != password) return false
-
-        userJustLoggedIn()
-        return true
+    suspend fun loginUser(username: String, password: String): Boolean {
+        val result = repo.login(username, password)
+        return if (result is Success) {
+            tokenManager.updateToken(token = result.get())
+            userJustLoggedIn()
+            true
+        } else {
+            false
+        }
     }
 
     fun logout() {
+        tokenManager.clearToken()
         userComponent = null
     }
 

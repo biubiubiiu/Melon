@@ -4,20 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.melon.account.login.data.LoginRepository
 import app.melon.account.R
 import app.melon.account.UserManager
 import app.melon.account.login.state.LoginFormState
 import app.melon.account.login.state.LoginResult
 import app.melon.base.scope.ActivityScope
-import app.melon.util.base.Success
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @ActivityScope
 class LoginViewModel @Inject constructor(
-    private val loginRepository: LoginRepository,
     private val userManager: UserManager
 ) : ViewModel() {
 
@@ -30,13 +27,11 @@ class LoginViewModel @Inject constructor(
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
         viewModelScope.launch {
-            val result = loginRepository.login(username, password)
-            if (result is Success) {
-                _loginResult.value = LoginResult(
-                    success = result.get()
-                )
+            val result = userManager.loginUser(username, password)
+            _loginResult.value = if (result) {
+                LoginResult(success = true)
             } else {
-                _loginResult.value = LoginResult(error = R.string.login_failed)
+                LoginResult(error = R.string.login_failed)
             }
         }
     }

@@ -69,13 +69,9 @@ class LoginActivity : DaggerAppCompatActivity() {
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
-            if (loginResult.success != null) {
-                // TODO save token and request data
+            if (loginResult.success) {
+                onLoginSuccess()
             }
-            setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
         })
 
         username.afterTextChanged {
@@ -116,6 +112,13 @@ class LoginActivity : DaggerAppCompatActivity() {
 
     private fun showLoginFailed(@StringRes errorString: Int) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onLoginSuccess() {
+        setResult(Activity.RESULT_OK)
+
+        //Complete and destroy login activity once successful
+        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

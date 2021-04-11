@@ -2,9 +2,9 @@ package app.melon.account.login.state
 
 
 /**
- * Authentication result : success (token) or error message.
+ * Authentication result : success or error message.
  */
 data class LoginResult(
-    val success: String? = null,
+    val success: Boolean = false,
     val error: Int? = null
 )
