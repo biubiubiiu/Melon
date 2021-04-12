@@ -3,7 +3,8 @@
     package="app.melon.event">
 
     <application>
-        <activity android:name=".NearbyEventsActivity"></activity>
+        <activity android:name=".EventDetailActivity"></activity>
+        <activity android:name=".NearbyEventsActivity" />
     </application>
 
 </manifest>

@@ -13,5 +13,11 @@ data class Event(
     @SerializedName("end_time") val endTime: String = "",
     @SerializedName("location") val location: String,
     @SerializedName("cost") val cost: Float? = null,
-    @SerializedName("demand") val demand: String? = null
-) : Serializable
+    @SerializedName("demand") val demand: String? = null,
+    @SerializedName("status") val status: String? = null
+) : Serializable {
+    val isIdle get() = status == null || status == "idle"
+    val isJoining get() = status == "joining"
+    val isExclude get() = status == "excluded"
+    val isExpired get() = status == "expired"
+}

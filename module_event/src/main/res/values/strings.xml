@@ -2,4 +2,10 @@
 <resources>
     <string name="my_events">TODO</string>
     <string name="nearby_events">Nearby Events</string>
+    <string name="event_detail">Event Detail</string>
+
+    <string name="event_idle">TODO</string>
+    <string name="event_joining">TODO</string>
+    <string name="event_excluded">TODO</string>
+    <string name="event_expired">TODO</string>
 </resources>

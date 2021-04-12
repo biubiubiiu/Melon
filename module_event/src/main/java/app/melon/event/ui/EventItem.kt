@@ -27,6 +27,8 @@ abstract class EventItem : EpoxyModelWithHolder<EventItem.Holder>() {
     @EpoxyAttribute lateinit var item: Event
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
+    @EpoxyAttribute var showCoarseLocationInfo = true
+
     override fun bind(holder: Holder) {
         setupContent(holder)
         setupListener(holder)
@@ -46,7 +48,11 @@ abstract class EventItem : EpoxyModelWithHolder<EventItem.Holder>() {
             contentView.text = item.content
             timeRangeView.text =
                 "${formatter.formatMediumDateTime(item.startTime)} - ${formatter.formatMediumDateTime(item.endTime)}"
-            locationView.text = item.location
+
+            locationView.isVisible = showCoarseLocationInfo
+            if (showCoarseLocationInfo) {
+                locationView.text = item.location
+            }
 
             costView.isVisible = item.cost != null
             item.cost?.let { costView.text = it.toString() }

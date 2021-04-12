@@ -1,10 +1,10 @@
 package app.melon.data.entities
 
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class User(
-    @PrimaryKey @SerializedName("uid") val id: String = "",
+    @SerializedName("uid") val id: String = "",
     @SerializedName("username") val username: String = "",
     @SerializedName("school") val school: String? = null,
     @SerializedName("college") val college: String? = null,
@@ -20,7 +20,7 @@ data class User(
     @SerializedName("followers") val followerCount: Long? = 0L,
     @SerializedName("following") val followingCount: Long? = 0L,
     @SerializedName("photos") val photos: List<String> = emptyList()
-) {
+) : Serializable {
     val isMale get() = gender == "Male"
     val isFemale get() = gender == "Female"
     val isHybrid get() = gender == "Hybrid"

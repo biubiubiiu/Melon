@@ -49,6 +49,9 @@ class DatabaseDaoModule {
 
     @Provides
     fun provideTrendingFeedsDao(db: MelonDatabase) = db.ANTrendingDao()
+
+    @Provides
+    fun provideEventDao(db: MelonDatabase) = db.eventDao()
 }
 
 @Module

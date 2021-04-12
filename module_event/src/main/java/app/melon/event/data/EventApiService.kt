@@ -15,4 +15,9 @@ interface EventApiService : ApiService {
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
     ): Call<List<Event>>
+
+    @GET("event_detail")
+    fun detail(
+        @Query("id") id: String
+    ): Call<Event>
 }

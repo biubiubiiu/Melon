@@ -2,4 +2,10 @@
 <resources>
     <string name="my_events">我的活动</string>
     <string name="nearby_events">同城活动</string>
+    <string name="event_detail">活动详情</string>
+
+    <string name="event_idle">我要报名</string>
+    <string name="event_joining">已加入</string>
+    <string name="event_excluded">已和他人组队成功</string>
+    <string name="event_expired">已结束</string>
 </resources>

@@ -3,6 +3,7 @@ package app.melon.event.nearby
 import android.content.Context
 import app.melon.base.framework.BasePagingController
 import app.melon.data.entities.Event
+import app.melon.event.EventDetailActivity
 import app.melon.event.ui.EventItem_
 import app.melon.user.api.IUserService
 import app.melon.util.time.MelonDateTimeFormatter
@@ -23,7 +24,7 @@ class NearbyEventsController @AssistedInject constructor(
             .id("nearby_event_$currentPosition")
             .item(item!!)
             .formatter(dateTimeFormatter)
-            .detailEntryClickListener { }
+            .detailEntryClickListener { EventDetailActivity.start(context, it.id, it) }
             .profileEntryClickListener { userService.navigateToUserProfile(context, it) }
     }
 
