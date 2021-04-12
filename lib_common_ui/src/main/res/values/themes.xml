@@ -33,5 +33,6 @@
     <style name="Melon.TextAppearance.Content" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 </resources>

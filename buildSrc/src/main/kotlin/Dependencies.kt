@@ -57,6 +57,9 @@ object Modules {
 
     const val accountApi = ":module_account_api"
     const val account = ":module_account"
+
+    const val eventApi = ":module_event_api"
+    const val event = ":module_event"
 }
 
 object Libraries {

@@ -1,6 +1,7 @@
 package app.melon.util.time
 
 import android.text.format.DateUtils
+import app.melon.util.extensions.toOffsetDateTime
 import java.time.LocalTime
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
@@ -20,13 +21,14 @@ class MelonDateTimeFormatter @Inject constructor(
     @MediumDateTime private val mediumDateTimeFormatter: DateTimeFormatter
 ) {
 
-    fun formatShortDate(temporalAmount: Temporal): String = shortDateFormatter.format(temporalAmount)
+    fun formatShortDate(isoTimeString: String) = formatShortDate(isoTimeString.toOffsetDateTime())
+    fun formatMediumDate(isoTimeString: String) = formatMediumDate(isoTimeString.toOffsetDateTime())
+    fun formatMediumDateTime(isoTimeString: String) = formatMediumDateTime(isoTimeString.toOffsetDateTime())
 
-    fun formatMediumDate(temporalAmount: Temporal): String = mediumDateFormatter.format(temporalAmount)
-
-    fun formatMediumDateTime(temporalAmount: Temporal): String = mediumDateTimeFormatter.format(temporalAmount)
-
-    fun formatShortTime(localTime: LocalTime): String = shortTimeFormatter.format(localTime)
+    fun formatShortDate(temporalAmount: Temporal) = shortDateFormatter.format(temporalAmount)
+    fun formatMediumDate(temporalAmount: Temporal) = mediumDateFormatter.format(temporalAmount)
+    fun formatMediumDateTime(temporalAmount: Temporal) = mediumDateTimeFormatter.format(temporalAmount)
+    fun formatShortTime(localTime: LocalTime) = shortTimeFormatter.format(localTime)
 
     fun formatShortRelativeTime(dateTime: OffsetDateTime): String {
         val now = OffsetDateTime.now()

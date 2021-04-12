@@ -7,6 +7,7 @@ import app.melon.base.di.NetworkModule
 import app.melon.base.scope.ApplicationScope
 import app.melon.comment.di.CommentModule
 import app.melon.data.di.DatabaseModule
+import app.melon.event.di.EventModule
 import app.melon.feed.di.FeedModule
 import app.melon.group.di.GroupBuilder
 import app.melon.home.di.HomeBuilder
@@ -32,6 +33,7 @@ import javax.inject.Singleton
         NetworkModule::class,
         HomeBuilder::class,
         UserModule::class,
+        EventModule::class,
         AccountModule::class,
         FeedModule::class,
         CommentModule::class,

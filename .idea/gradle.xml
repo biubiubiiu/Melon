@@ -23,6 +23,8 @@
             <option value="$PROJECT_DIR$/module_account" />
             <option value="$PROJECT_DIR$/module_account_api" />
             <option value="$PROJECT_DIR$/module_comment" />
+            <option value="$PROJECT_DIR$/module_event" />
+            <option value="$PROJECT_DIR$/module_event_api" />
             <option value="$PROJECT_DIR$/module_feed" />
             <option value="$PROJECT_DIR$/module_group" />
             <option value="$PROJECT_DIR$/module_user" />

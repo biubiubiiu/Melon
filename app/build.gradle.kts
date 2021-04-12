@@ -54,12 +54,14 @@ dependencies {
     implementation(project(Modules.follow))
     implementation(project(Modules.user))
     implementation(project(Modules.account))
+    implementation(project(Modules.event))
     implementation(project(Modules.feed))
     implementation(project(Modules.comment))
     implementation(project(Modules.group))
 
     compileOnly(project(Modules.accountApi))
     compileOnly(project(Modules.userApi))
+    compileOnly(project(Modules.eventApi))
 
     implementation(Libraries.MultiDex.multiDex)
 

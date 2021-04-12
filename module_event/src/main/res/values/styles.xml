@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EventListToolbarTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/TextPrimary</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>

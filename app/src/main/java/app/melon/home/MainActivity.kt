@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import app.melon.MainViewModel
 import app.melon.R
 import app.melon.account.api.IAccountService
+import app.melon.event.api.IEventService
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.reverse
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,6 +31,7 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
 
     @Inject internal lateinit var accountService: IAccountService
     @Inject internal lateinit var userService: IUserService
+    @Inject internal lateinit var eventService: IEventService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +83,7 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
                 R.id.home_nav_drawer_nav_to_login -> accountService.startLogin(this)
                 R.id.home_nav_drawer_nav_to_registration -> accountService.startRegister(this)
                 R.id.home_nav_drawer_nav_to_profile -> userService.navigateToMyProfile(this)
+                R.id.home_nav_drawer_nav_to_events -> eventService.navigateToEventList(this)
                 else -> {
                 } // TODO
             }
