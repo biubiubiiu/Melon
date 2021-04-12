@@ -39,6 +39,8 @@ kapt {
 dependencies {
     implementation(Libraries.kotlinStdLib)
 
+    compileOnly(project(Modules.data))
+
     compileOnly(Libraries.AndroidX.Core.ktx)
     compileOnly("androidx.activity:activity-ktx:1.2.0-beta02")
 

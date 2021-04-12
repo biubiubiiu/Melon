@@ -11,7 +11,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import app.melon.base.uikit.TagView
+import app.melon.base.ui.TagView
 import app.melon.util.extensions.viewModelProviderFactoryOf
 import app.melon.util.extensions.getColorCompat
 import app.melon.user.R

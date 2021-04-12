@@ -94,14 +94,14 @@
         android:layout_alignStart="@id/feed_content"
         android:orientation="horizontal">
 
-        <app.melon.base.uikit.TagView
+        <app.melon.base.ui.TagView
             android:id="@+id/feed_location_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small"
             android:visibility="gone" />
 
-        <app.melon.base.uikit.TagView
+        <app.melon.base.ui.TagView
             android:id="@+id/feed_type_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

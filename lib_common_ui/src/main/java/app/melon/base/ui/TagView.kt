@@ -1,4 +1,4 @@
-package app.melon.base.uikit
+package app.melon.base.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.graphics.toColorInt
 import androidx.core.view.updatePadding
 import app.melon.data.entities.User
+
 
 class TagView @JvmOverloads constructor(
     context: Context,

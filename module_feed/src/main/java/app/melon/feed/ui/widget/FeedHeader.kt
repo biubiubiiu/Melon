@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.ShapedFourPhotoView
-import app.melon.base.uikit.TagView
+import app.melon.base.ui.TagView
 import app.melon.data.entities.Feed
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt

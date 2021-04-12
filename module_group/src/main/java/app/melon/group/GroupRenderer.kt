@@ -1,9 +1,9 @@
 package app.melon.group
 
 import android.content.Context
+import app.melon.base.ui.carouselHeader
 import app.melon.base.ui.list.vertSpaceMicro
 import app.melon.base.ui.list.vertSpaceSmall
-import app.melon.base.uikit.list.carouselHeader
 import app.melon.data.entities.InterestGroup
 import app.melon.group.data.GroupRepository
 import app.melon.util.extensions.showToast

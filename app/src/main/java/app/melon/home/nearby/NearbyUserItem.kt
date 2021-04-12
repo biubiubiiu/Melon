@@ -5,7 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import app.melon.R
 import app.melon.base.ui.BaseEpoxyHolder
-import app.melon.base.uikit.TagView
+import app.melon.base.ui.TagView
 import app.melon.data.entities.User
 import coil.load
 import coil.transform.CircleCropTransformation
