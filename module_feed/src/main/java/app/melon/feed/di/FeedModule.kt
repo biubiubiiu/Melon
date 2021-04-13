@@ -23,12 +23,6 @@ class FeedModule
 @Module
 abstract class FeedBuilder {
 
-    // to add [FeedControllerDelegate] to dependency graph
-    // couldn't find @AssistedModule yet, so doing this for now
-    @FragmentScope
-    @ContributesAndroidInjector
-    abstract fun provideDummyFragment(): DummyFragment
-
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun injectFeedFragment(): AnonymousFeedFragment

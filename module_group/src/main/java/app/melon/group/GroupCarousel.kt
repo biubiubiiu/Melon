@@ -10,7 +10,6 @@ import com.airbnb.epoxy.ModelView
 /**
  * source: https://github.com/enginebai/MovieHunt
  */
-
 @ModelView(saveViewState = true, autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)
 class GroupCarousel(context: Context) : Carousel(context) {
 
