@@ -8,7 +8,6 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import app.melon.event.databinding.ActivityNearbyEventsBinding
 import app.melon.event.nearby.NearbyEventsViewModel
-import app.melon.event.nearby.ViewModelFactory
 import app.melon.util.delegates.viewBinding
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -38,7 +37,7 @@ class NearbyEventsActivity : DaggerAppCompatActivity() {
                 true
             }
             R.id.action_view_my_events -> {
-                // TODO
+                MyEventsActivity.start(this)
                 true
             }
             else -> super.onOptionsItemSelected(item)

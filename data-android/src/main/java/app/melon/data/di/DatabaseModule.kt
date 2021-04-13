@@ -52,6 +52,9 @@ class DatabaseDaoModule {
 
     @Provides
     fun provideEventDao(db: MelonDatabase) = db.eventDao()
+
+    @Provides
+    fun provideOrganisedEventDao(db: MelonDatabase) = db.organisedEventDao()
 }
 
 @Module

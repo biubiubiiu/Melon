@@ -1,10 +1,9 @@
-package app.melon.event.nearby
+package app.melon.event.ui
 
 import android.content.Context
 import app.melon.base.framework.BasePagingController
 import app.melon.data.entities.Event
 import app.melon.event.EventDetailActivity
-import app.melon.event.ui.EventItem_
 import app.melon.user.api.IUserService
 import app.melon.util.time.MelonDateTimeFormatter
 import com.airbnb.epoxy.EpoxyModel
@@ -12,8 +11,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
-
-class NearbyEventsController @AssistedInject constructor(
+class EventsPageController @AssistedInject constructor(
     @Assisted context: Context,
     private val userService: IUserService,
     private val dateTimeFormatter: MelonDateTimeFormatter
@@ -30,6 +28,6 @@ class NearbyEventsController @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(context: Context): NearbyEventsController
+        fun create(context: Context): EventsPageController
     }
 }

@@ -1,23 +1,30 @@
 package app.melon.event.data
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.map
 import app.melon.data.daos.EventDao
+import app.melon.data.daos.OrganisedEventDao
 import app.melon.data.entities.Event
 import app.melon.data.entities.JoiningEvent
+import app.melon.data.entities.toEvent
 import app.melon.util.extensions.toResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
+@OptIn(ExperimentalPagingApi::class)
 class EventRepository @Inject constructor(
     private val service: EventApiService,
-    private val eventDao: EventDao
+    private val eventDao: EventDao,
+    private val organisedEventDao: OrganisedEventDao
 ) {
 
     fun getStream(): Flow<PagingData<Event>> {
@@ -32,6 +39,36 @@ class EventRepository @Inject constructor(
                 EventsPagingSource(service, PAGE_SIZE)
             }
         ).flow
+    }
+
+    fun getOrganisedEvents(pagingConfig: PagingConfig): Flow<PagingData<Event>> {
+        return Pager(
+            config = pagingConfig,
+            remoteMediator = OrganisedEventRemoteMediator(
+                service,
+                organisedEventDao
+            ),
+            pagingSourceFactory = { organisedEventDao.eventsDataSource() }
+        ).flow.map { pagingData ->
+            pagingData.map {
+                it.toEvent()
+            }
+        }
+    }
+
+    fun getJoiningEvents(pagingConfig: PagingConfig): Flow<PagingData<Event>> {
+        return Pager(
+            config = pagingConfig,
+            remoteMediator = JoiningEventRemoteMediator(
+                service,
+                eventDao
+            ),
+            pagingSourceFactory = { eventDao.eventsDataSource() }
+        ).flow.map { pagingData ->
+            pagingData.map {
+                it.toEvent()
+            }
+        }
     }
 
     suspend fun getEventDetail(id: String): Event {

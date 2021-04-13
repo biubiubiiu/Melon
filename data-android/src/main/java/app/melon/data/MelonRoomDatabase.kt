@@ -10,6 +10,7 @@ import app.melon.data.entities.ANTrendingFeedEntry
 import app.melon.data.entities.Feed
 import app.melon.data.entities.FollowingFeedEntry
 import app.melon.data.entities.JoiningEvent
+import app.melon.data.entities.OrganisedEvent
 import app.melon.data.entities.RecommendedFeedEntry
 
 /**
@@ -23,9 +24,10 @@ import app.melon.data.entities.RecommendedFeedEntry
         ANExploreFeedEntry::class,
         ANSchoolFeedEntry::class,
         ANTrendingFeedEntry::class,
-        JoiningEvent::class
+        JoiningEvent::class,
+        OrganisedEvent::class
     ],
-    version = 11,
+    version = 13,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

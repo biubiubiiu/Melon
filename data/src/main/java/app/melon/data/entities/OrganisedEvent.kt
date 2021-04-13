@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(
-    tableName = "joining_event",
+    tableName = "organised_event",
     indices = [
         Index(value = ["event_id"], unique = true)
     ]
@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
  * We don't use embedded [Event] here cause we want to
  * save a **minimal** information of joined events
  */
-data class JoiningEvent(
+data class OrganisedEvent(
     @PrimaryKey(autoGenerate = true) override val id: Long = 0,
     @ColumnInfo(name = "event_id") val eventId: String = "",
     @ColumnInfo(name = "event_type") val eventType: String? = null,
@@ -32,8 +32,8 @@ data class JoiningEvent(
 ) : MelonEntity {
 
     companion object {
-        fun from(event: Event): JoiningEvent {
-            return JoiningEvent(
+        fun from(event: Event): OrganisedEvent {
+            return OrganisedEvent(
                 id = 0,
                 eventId = event.id,
                 eventType = event.type,
@@ -51,7 +51,7 @@ data class JoiningEvent(
     }
 }
 
-fun JoiningEvent.toEvent(): Event {
+fun OrganisedEvent.toEvent(): Event {
     return Event(
         id = this.eventId,
         type = this.eventType,

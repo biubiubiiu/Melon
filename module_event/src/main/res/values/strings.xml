@@ -8,4 +8,7 @@
     <string name="event_joining">TODO</string>
     <string name="event_excluded">TODO</string>
     <string name="event_expired">TODO</string>
+    
+    <string name="my_organisation">TODO</string>
+    <string name="my_joining">TODO</string>
 </resources>

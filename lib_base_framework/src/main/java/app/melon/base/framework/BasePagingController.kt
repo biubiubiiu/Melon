@@ -30,7 +30,7 @@ abstract class BasePagingController<T : Any>(
     protected open val loadMoreView = LoadMoreView_().apply { id(LoadMoreView::class.java.simpleName) }
     protected open val refreshingView = RefreshView_().apply { id(RefreshView::class.java.simpleName) }
     protected open val emptyView = EmptyView_().apply { id(EmptyView::class.java.simpleName) }
-    protected open val errorView = ErrorView_().apply {
+    protected open val errorView get() = ErrorView_().apply {
         id(ErrorView::class.java.simpleName)
         retryListener { retry() }
     }

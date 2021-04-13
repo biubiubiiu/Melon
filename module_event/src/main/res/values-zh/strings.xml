@@ -8,4 +8,7 @@
     <string name="event_joining">已加入</string>
     <string name="event_excluded">已和他人组队成功</string>
     <string name="event_expired">已结束</string>
+
+    <string name="my_organisation">我发起的</string>
+    <string name="my_joining">我报名的</string>
 </resources>
