@@ -1,4 +1,6 @@
 package app.melon.group.service
 
-interface GroupApiService {
+import app.melon.data.services.ApiService
+
+interface GroupApiService: ApiService {
 }

@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 class TrendingFeedFragment : BasePagingListFragment() {
 
     @Inject internal lateinit var viewModelFactory: ViewModelFactory
@@ -24,7 +25,7 @@ class TrendingFeedFragment : BasePagingListFragment() {
     override val controller by lazy {
         controllerFactory.create(
             context = requireContext(),
-            idProvider = { feed, _ -> "anonymous_trending_feeds_${feed!!.feedId}" },
+            idProvider = { _, position -> "anonymous_trending_feeds_$position" },
             type = FeedPageController.Type.ANONYMOUS
         )
     }
@@ -35,7 +36,7 @@ class TrendingFeedFragment : BasePagingListFragment() {
         fetchJob?.cancel()
         fetchJob = lifecycleScope.launch {
             viewModel.refreshTrendingFeeds(timestamp = 1000000).collectLatest {
-                controller.submitData(it.map { entryWithFeed -> entryWithFeed.feed })
+                controller.submitData(it.map { entry -> entry.compoundItem })
             }
         }
     }

@@ -8,10 +8,10 @@ import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.NinePhotoView
 import app.melon.base.ui.TagView
 import app.melon.data.entities.Feed
+import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt
 import app.melon.util.extensions.showToast
-import app.melon.util.extensions.toOffsetDateTime
 import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -19,16 +19,17 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 
+
 @EpoxyModelClass
 abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder>() {
 
-    @EpoxyAttribute lateinit var holderClickListener: (Feed) -> Unit
+    @EpoxyAttribute lateinit var holderClickListener: (FeedAndAuthor) -> Unit
     @EpoxyAttribute lateinit var shareClickListener: (Feed) -> Unit
     @EpoxyAttribute lateinit var commentClickListener: (Feed) -> Unit
     @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var moreClickListener: (Feed) -> Unit
 
-    @EpoxyAttribute lateinit var item: Feed
+    @EpoxyAttribute lateinit var item: FeedAndAuthor
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     override fun getDefaultLayout(): Int = R.layout.item_anonymous_feed
@@ -40,23 +41,23 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
 
     private fun setupContent(holder: Holder) {
         with(holder) {
-            avatarView.load(item.avatarUrl) {
+            avatarView.load(item.author.avatarUrl) {
                 transformations(CircleCropTransformation()) // TODO add interceptor here
             }
-            usernameView.text = item.username
-            userIdView.text = item.userId
-            userSchoolView.text = item.school
-            postTimeView.text = formatter.formatShortRelativeTime(item.postTime.toOffsetDateTime())
-            titleView.text = item.title
-            contentView.text = item.content
-            commentView.text = item.replyCount.toString()
-            favoriteView.text = item.favouriteCount.toString()
+            usernameView.text = item.author.username
+            userIdView.text = "TODO"
+            userSchoolView.text = item.author.school
+            postTimeView.text = formatter.formatShortRelativeTime(item.feed.postTime)
+            titleView.text = item.feed.title
+            contentView.text = item.feed.content
+            commentView.text = item.feed.replyCount.toString()
+            favoriteView.text = item.feed.favouriteCount.toString()
 
-            photoView.isVisible = item.photos.isNotEmpty()
+            photoView.isVisible = item.feed.photos.isNotEmpty()
             photoView.takeIf { it.isVisible }?.apply {
                 itemPadding = 4.dpInt
                 cornerRadius = 24f
-                urls = item.photos
+                urls = item.feed.photos
                 photoView.loadImage()
                 onClickListener = { urls, index -> context.showToast("Click item $index, urls size: ${urls.size}") }
             }
@@ -66,10 +67,10 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
     private fun setupListeners(holder: Holder) {
         with(holder) {
             containerView.setOnClickListener { holderClickListener.invoke(item) }
-            shareView.setOnClickListener { shareClickListener.invoke(item) }
-            commentView.setOnClickListener { commentClickListener.invoke(item) }
-            favoriteView.setOnClickListener { favorClickListener.invoke(item.feedId) }
-            moreOperationView.setOnClickListener { moreClickListener.invoke(item) }
+            shareView.setOnClickListener { shareClickListener.invoke(item.feed) }
+            commentView.setOnClickListener { commentClickListener.invoke(item.feed) }
+            favoriteView.setOnClickListener { favorClickListener.invoke(item.feed.id) }
+            moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed) }
         }
     }
 

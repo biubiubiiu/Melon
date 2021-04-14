@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.TagView
-import app.melon.data.entities.Event
+import app.melon.data.resultentities.EventAndOrganiser
 import app.melon.event.R
 import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
@@ -21,10 +21,10 @@ abstract class EventItem : EpoxyModelWithHolder<EventItem.Holder>() {
 
     override fun getDefaultLayout(): Int = R.layout.item_event
 
-    @EpoxyAttribute lateinit var detailEntryClickListener: (Event) -> Unit
+    @EpoxyAttribute lateinit var detailEntryClickListener: (EventAndOrganiser) -> Unit
     @EpoxyAttribute lateinit var profileEntryClickListener: (String) -> Unit
 
-    @EpoxyAttribute lateinit var item: Event
+    @EpoxyAttribute lateinit var item: EventAndOrganiser
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     @EpoxyAttribute var showCoarseLocationInfo = true
@@ -36,36 +36,35 @@ abstract class EventItem : EpoxyModelWithHolder<EventItem.Holder>() {
 
     private fun setupContent(holder: Holder) {
         with(holder) {
-            val user = item.organiser!!
-            avatarView.load(user.avatarUrl) {
+            avatarView.load(item.organiser.avatarUrl) {
                 transformations(CircleCropTransformation())
             }
-            usernameView.text = user.username
-            schoolView.text = user.school
-            userTag.bind(user, TagView.TagStyle.Info(showZodiacSign = false))
+            usernameView.text = item.organiser.username
+            schoolView.text = item.organiser.school
+            userTag.bind(item.organiser, TagView.TagStyle.Info(showZodiacSign = false))
             distanceView.text = "TODO"
-            titleView.text = item.title
-            contentView.text = item.content
+            titleView.text = item.event.title
+            contentView.text = item.event.content
             timeRangeView.text =
-                "${formatter.formatMediumDateTime(item.startTime)} - ${formatter.formatMediumDateTime(item.endTime)}"
+                "${formatter.formatMediumDateTime(item.event.startTime)} - ${formatter.formatMediumDateTime(item.event.endTime)}"
 
             locationView.isVisible = showCoarseLocationInfo
             if (showCoarseLocationInfo) {
-                locationView.text = item.location
+                locationView.text = item.event.location
             }
 
-            costView.isVisible = item.cost != null
-            item.cost?.let { costView.text = it.toString() }
+            costView.isVisible = item.event.cost != null
+            item.event.cost?.let { costView.text = it.toString() }
 
-            demandView.isVisible = item.demand != null
-            item.demand?.let { demandView.text = it }
+            demandView.isVisible = item.event.demand != null
+            item.event.demand?.let { demandView.text = it }
         }
     }
 
     private fun setupListener(holder: Holder) {
         with(holder) {
             containerView.setOnClickListener { detailEntryClickListener.invoke(item) }
-            avatarView.setOnClickListener { profileEntryClickListener.invoke(item.organiser!!.id) }
+            avatarView.setOnClickListener { profileEntryClickListener.invoke(item.organiser.id) }
         }
     }
 

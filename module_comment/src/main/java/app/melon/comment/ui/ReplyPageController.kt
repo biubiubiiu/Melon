@@ -7,7 +7,8 @@ import app.melon.base.ui.textHeader
 import app.melon.comment.CommentControllerDelegate
 import app.melon.comment.R
 import app.melon.comment.ui.widget.ReplyItem_
-import app.melon.data.entities.Comment
+
+import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.user.api.IUserService
 import app.melon.util.delegates.observable
 import app.melon.util.extensions.dpInt
@@ -26,10 +27,10 @@ class ReplyPageController @AssistedInject constructor(
     factory: CommentControllerDelegate.Factory,
     private val userService: IUserService,
     private val dateTimeFormatter: MelonDateTimeFormatter
-) : BasePagingController<Comment>(context) {
+) : BasePagingController<CommentAndAuthor>(context) {
 
     var loadingFirstComment: Boolean by observable(false, ::requestModelBuild)
-    var firstComment: Comment? = null
+    var firstComment: CommentAndAuthor? = null
         set(value) {
             field = value
             requestModelBuild()
@@ -37,7 +38,7 @@ class ReplyPageController @AssistedInject constructor(
 
     private val delegate = factory.create(context, this)
 
-    override fun buildItemModel(currentPosition: Int, item: Comment?): EpoxyModel<*> {
+    override fun buildItemModel(currentPosition: Int, item: CommentAndAuthor?): EpoxyModel<*> {
         return ReplyItem_()
             .id("reply_$currentPosition")
             .item(item!!)

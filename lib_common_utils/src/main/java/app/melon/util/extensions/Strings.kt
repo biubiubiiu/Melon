@@ -7,6 +7,8 @@ import android.util.Log
 import androidx.annotation.ColorInt
 import androidx.core.graphics.toColorInt
 
+inline fun String.toException(): Exception = Exception(this)
+
 inline fun String.ifNotBlank(block: (String) -> Unit) {
     if (this.isNotBlank()) {
         block(this)

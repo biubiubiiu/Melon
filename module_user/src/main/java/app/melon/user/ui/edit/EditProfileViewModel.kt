@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ReduxViewModel
 import app.melon.data.entities.User
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class EditProfileViewModel @Inject constructor(

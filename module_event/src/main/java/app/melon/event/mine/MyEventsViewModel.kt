@@ -1,24 +1,23 @@
 package app.melon.event.mine
 
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagingData
-import app.melon.data.entities.Event
+import app.melon.data.constants.JOINED_EVENTS
+import app.melon.data.constants.ORGANISED_EVENTS
 import app.melon.event.interactor.UpdateEventList
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import javax.inject.Inject
+
 
 class MyEventsViewModel @Inject constructor(
     private val updateOrganisedEvents: UpdateEventList,
     private val updateJoiningEvents: UpdateEventList
 ) : ViewModel() {
 
-    val organisedEvents: Flow<PagingData<Event>> = updateOrganisedEvents.observe()
-    val joiningEvents: Flow<PagingData<Event>> = updateJoiningEvents.observe()
+    val organisedEvents = updateOrganisedEvents.observe()
+    val joiningEvents = updateJoiningEvents.observe()
 
     init {
-        updateOrganisedEvents(UpdateEventList.Params(UpdateEventList.QueryType.ORGANISED))
-        updateJoiningEvents(UpdateEventList.Params(UpdateEventList.QueryType.JOINING))
+        updateOrganisedEvents(UpdateEventList.Params(ORGANISED_EVENTS))
+        updateJoiningEvents(UpdateEventList.Params(JOINED_EVENTS))
     }
 
     fun reselect(position: Int) {

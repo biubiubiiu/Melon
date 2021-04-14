@@ -1,7 +1,7 @@
 package app.melon.group
 
-import app.melon.data.entities.InterestGroup
+import app.melon.data.entities.Group
 
 interface GroupActions {
-    fun onHolderClick(group: InterestGroup)
+    fun onHolderClick(group: Group)
 }

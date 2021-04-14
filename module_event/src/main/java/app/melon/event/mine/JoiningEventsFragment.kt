@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.map
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BasePagingListFragment
 import app.melon.event.ViewModelFactory
@@ -12,6 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 class JoiningEventsFragment : BasePagingListFragment() {
 
@@ -31,7 +33,7 @@ class JoiningEventsFragment : BasePagingListFragment() {
         fetchJob?.cancel()
         fetchJob = lifecycleScope.launch {
             viewModel.joiningEvents.collectLatest {
-                controller.submitData(it)
+                controller.submitData(it.map { entry -> entry.compoundItem })
             }
         }
     }

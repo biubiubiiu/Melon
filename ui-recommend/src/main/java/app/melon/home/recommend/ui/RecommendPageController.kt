@@ -2,10 +2,9 @@ package app.melon.home.recommend.ui
 
 import android.content.Context
 import app.melon.base.framework.BasePagingController
-import app.melon.data.resultentities.RecommendedEntryWithFeed
+import app.melon.data.resultentities.EntryWithFeedAndAuthor
 import app.melon.feed.FeedControllerDelegate
 import app.melon.group.GroupRenderer
-import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -17,15 +16,15 @@ class RecommendPageController @AssistedInject constructor(
     @Assisted private val scope: CoroutineScope,
     feedControllerFactory: FeedControllerDelegate.Factory,
     groupRendererFactory: GroupRenderer.Factory
-) : BasePagingController<RecommendedEntryWithFeed>(context) {
+) : BasePagingController<EntryWithFeedAndAuthor>(context) {
 
     private val feedDelegate = feedControllerFactory.create(context)
     private val groupDelegate = groupRendererFactory.create(context, scope)
 
-    override fun buildItemModel(currentPosition: Int, item: RecommendedEntryWithFeed?): EpoxyModel<*> =
+    override fun buildItemModel(currentPosition: Int, item: EntryWithFeedAndAuthor?) =
         feedDelegate.buildFeedItem(
-            feedProvider = { item!!.feed },
-            idProvider = { "recommend_feed${item!!.entry.feedId}" }
+            dataProvider = { item!!.compoundItem },
+            idProvider = { "recommend_feed_$currentPosition" }
         )
 
     override fun addExtraModels() {

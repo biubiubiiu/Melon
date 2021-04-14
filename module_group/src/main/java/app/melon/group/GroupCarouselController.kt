@@ -1,13 +1,13 @@
 package app.melon.group
 
-import app.melon.data.entities.InterestGroup
+import app.melon.data.entities.Group
 import com.airbnb.epoxy.Typed2EpoxyController
 
 class GroupCarouselController(
-    private val enterDetailListener: (InterestGroup) -> Unit
-) : Typed2EpoxyController<List<InterestGroup>, Int>() {
+    private val enterDetailListener: (Group) -> Unit
+) : Typed2EpoxyController<List<Group>, Int>() {
 
-    override fun buildModels(groups: List<InterestGroup>, showItems: Int) {
+    override fun buildModels(groups: List<Group>, showItems: Int) {
         groups.take(showItems).forEach {
             groupItem {
                 id("interest group ${it.id}")

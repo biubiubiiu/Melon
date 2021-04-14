@@ -5,11 +5,16 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.melon.data.entities.User
 import app.melon.user.data.UserApiService
+import app.melon.user.data.mapper.RemoteNearbyUserToUser
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+
+@Singleton
 class NearbyRepository @Inject constructor(
-    private val service: UserApiService
+    private val service: UserApiService,
+    private val listItemMapper: RemoteNearbyUserToUser
 ) {
 
     fun getStream(): Flow<PagingData<User>> {
@@ -21,7 +26,7 @@ class NearbyRepository @Inject constructor(
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
-                NearbyPagingSource(service, PAGE_SIZE)
+                NearbyPagingSource(service, PAGE_SIZE, listItemMapper)
             }
         ).flow
     }

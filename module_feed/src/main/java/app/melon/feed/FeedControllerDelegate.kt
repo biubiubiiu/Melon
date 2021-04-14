@@ -2,6 +2,7 @@ package app.melon.feed
 
 import android.content.Context
 import app.melon.data.entities.Feed
+import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.ui.AnonymousFeedItem_
 import app.melon.feed.ui.FeedItem_
 import app.melon.permission.helper.SaveHelper
@@ -24,13 +25,13 @@ class FeedControllerDelegate @AssistedInject constructor(
     private val saveHelper by lazy { SaveHelper(context.activityContext!!) }
 
     fun buildFeedItem(
-        feedProvider: () -> Feed,
-        idProvider: () -> String = { "feed_${feedProvider.invoke().feedId}" }
+        dataProvider: () -> FeedAndAuthor,
+        idProvider: () -> String = { "feed_${dataProvider.invoke().feed.id}" }
     ): EpoxyModel<*> {
-        val feed = feedProvider.invoke()
+        val item = dataProvider.invoke()
         return FeedItem_()
             .id(idProvider.invoke())
-            .item(feed)
+            .item(item)
             .formatter(dateTimeFormatter)
             .holderClickListener { this.onHolderClick(it) }
             .avatarClickListener { this.onAvatarClick(it) }
@@ -42,13 +43,13 @@ class FeedControllerDelegate @AssistedInject constructor(
     }
 
     fun buildAnonymousFeedItem(
-        feedProvider: () -> Feed,
-        idProvider: () -> String = { "feed_${feedProvider.invoke().feedId}" }
+        dataProvider: () -> FeedAndAuthor,
+        idProvider: () -> String = { "feed_${dataProvider.invoke().feed.id}" }
     ): EpoxyModel<*> {
-        val feed = feedProvider.invoke()
+        val item = dataProvider.invoke()
         return AnonymousFeedItem_()
             .id(idProvider.invoke())
-            .item(feed)
+            .item(item)
             .formatter(dateTimeFormatter)
             .holderClickListener { this.onHolderClick(it) }
             .shareClickListener { this.onShareClick(it) }
@@ -57,7 +58,7 @@ class FeedControllerDelegate @AssistedInject constructor(
             .moreClickListener { this.onMoreClick(it) }
     }
 
-    override fun onHolderClick(feed: Feed) {
+    override fun onHolderClick(feed: FeedAndAuthor) {
         val intent = FeedDetailActivity.prepareIntent(context, feed)
         context.startActivity(intent)
     }

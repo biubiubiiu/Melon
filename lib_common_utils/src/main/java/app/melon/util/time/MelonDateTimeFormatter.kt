@@ -25,10 +25,22 @@ class MelonDateTimeFormatter @Inject constructor(
     fun formatMediumDate(isoTimeString: String) = formatMediumDate(isoTimeString.toOffsetDateTime())
     fun formatMediumDateTime(isoTimeString: String) = formatMediumDateTime(isoTimeString.toOffsetDateTime())
 
-    fun formatShortDate(temporalAmount: Temporal) = shortDateFormatter.format(temporalAmount)
-    fun formatMediumDate(temporalAmount: Temporal) = mediumDateFormatter.format(temporalAmount)
-    fun formatMediumDateTime(temporalAmount: Temporal) = mediumDateTimeFormatter.format(temporalAmount)
-    fun formatShortTime(localTime: LocalTime) = shortTimeFormatter.format(localTime)
+    fun formatShortDate(temporalAmount: Temporal) = exceptionWrapper { shortDateFormatter.format(temporalAmount) }
+    fun formatMediumDate(temporalAmount: Temporal) = exceptionWrapper { mediumDateFormatter.format(temporalAmount) }
+    fun formatMediumDateTime(temporalAmount: Temporal) = exceptionWrapper { mediumDateTimeFormatter.format(temporalAmount) }
+    fun formatShortTime(localTime: LocalTime) = exceptionWrapper { shortTimeFormatter.format(localTime) }
+
+    private fun exceptionWrapper(block: () -> String): String {
+        return try {
+            block()
+        } catch (e: Exception) {
+            "ERROR"
+        }
+    }
+
+    fun formatShortRelativeTime(isoTimeString: String) = exceptionWrapper {
+        formatShortRelativeTime(isoTimeString.toOffsetDateTime())
+    }
 
     fun formatShortRelativeTime(dateTime: OffsetDateTime): String {
         val now = OffsetDateTime.now()

@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
+
 class AnonymousFeedFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
     private val binding: FragmentCommonTabsBinding by viewBinding()

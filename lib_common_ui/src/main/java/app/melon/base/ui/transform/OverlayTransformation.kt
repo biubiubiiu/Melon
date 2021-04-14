@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.core.graphics.applyCanvas
 import coil.bitmap.BitmapPool
 import coil.size.Size
@@ -29,7 +28,6 @@ class OverlayTransformation constructor(
 
             val marginLeft = (output.width - overlayBitmap.width) / 2f
             val marginTop = (output.height - overlayBitmap.height) / 2f
-            Log.d("raymond", "margin lt: $marginLeft, $marginTop, size: ${overlayBitmap.width} * ${overlayBitmap.height}}")
             drawBitmap(overlayBitmap, marginLeft, marginTop, null)
         }
 

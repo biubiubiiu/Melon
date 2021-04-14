@@ -2,8 +2,8 @@ package app.melon.feed.ui
 
 import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ReduxViewModel
-import app.melon.data.entities.Feed
 import app.melon.comment.interactor.UpdateComments
+import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.interactors.UpdateFeedDetail
 import app.melon.feed.ui.state.FeedDetailViewState
 import app.melon.util.base.ErrorResult
@@ -33,7 +33,7 @@ class FeedDetailViewModel @Inject constructor(
         viewModelScope.launch {
             updateFeedDetail.observe().collectAndSetState {
                 when (it) {
-                    is Success -> copy(feed = it.get())
+                    is Success -> copy(pageItem = it.get())
                     is ErrorResult -> copy(error = it.throwable)
                 }
             }
@@ -48,23 +48,23 @@ class FeedDetailViewModel @Inject constructor(
                 loadingMore = it
             }
         }
-        selectSubscribeDistinct(FeedDetailViewState::feed) {
+        selectSubscribeDistinct(FeedDetailViewState::pageItem) {
             if (it != null) {
-                feedId = it.feedId
+                feedId = it.feed.id
             }
         }
     }
 
-    fun refresh(feed: Feed) {
+    fun refresh(item: FeedAndAuthor) {
         viewModelScope.launchSetState {
-            copy(feed = feed)
+            copy(pageItem = item)
         }
         viewModelScope.launch {
-            updateFeedDetail(UpdateFeedDetail.Params(feed.feedId))
+            updateFeedDetail(UpdateFeedDetail.Params(item.feed.id))
         }
         commentPage = 0
         viewModelScope.launch {
-            updateComments(UpdateComments.Params(feed.feedId, commentPage))
+            updateComments(UpdateComments.Params(item.feed.id, commentPage))
         }
     }
 

@@ -3,6 +3,7 @@ package app.melon.event.nearby
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.map
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BasePagingListFragment
 import app.melon.event.ViewModelFactory
@@ -28,8 +29,8 @@ class NearbyEventsFragment : BasePagingListFragment() {
     private fun refresh() {
         fetchJob?.cancel()
         fetchJob = lifecycleScope.launch {
-            viewModel.getStream().collectLatest {
-                controller.submitData(it)
+            viewModel.eventsPagingData.collectLatest {
+                controller.submitData(it.map { entry -> entry.compoundItem })
             }
         }
     }

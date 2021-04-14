@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.comment.R
-import app.melon.data.entities.Comment
+import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.util.extensions.toOffsetDateTime
 import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
@@ -31,7 +31,7 @@ abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
     @EpoxyAttribute lateinit var replyEntryClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var profileEntryClickListener: (String) -> Unit
 
-    @EpoxyAttribute lateinit var item: Comment
+    @EpoxyAttribute lateinit var item: CommentAndAuthor
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     override fun bind(holder: Holder) {
@@ -41,19 +41,19 @@ abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
 
     private fun setupContent(holder: Holder) {
         with(holder) {
-            avatarView.load(item.displayPoster.avatarUrl) {
+            avatarView.load(item.author.avatarUrl) {
                 transformations(CircleCropTransformation())
             }
-            usernameView.text = item.displayPoster.username
-            userIdView.text = item.displayPoster.id
-            postTimeView.text = formatter.formatShortRelativeTime(item.postTime.toOffsetDateTime())
-            contentView.text = item.content
-            favourCountView.text = item.favorCount.toString()
+            usernameView.text = item.author.username
+            userIdView.text = item.author.id
+            postTimeView.text = formatter.formatShortRelativeTime(item.comment.postTime.toOffsetDateTime())
+            contentView.text = item.comment.content
+            favourCountView.text = item.comment.favorCount.toString()
 
             val quote = item.quote
             quoteContainer.isVisible = quote != null
             quoteContainer.takeIf { it.isVisible }?.run {
-                quoteContent.text = buildReplyClickableSpan(quote!!.displayPoster.username, quote.content)
+                quoteContent.text = buildReplyClickableSpan(quote!!.author.username, quote.comment.content)
                 quoteContent.movementMethod = LinkMovementMethod.getInstance()
             }
         }
@@ -61,10 +61,10 @@ abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
 
     private fun setupListeners(holder: Holder) {
         with(holder) {
-            avatarView.setOnClickListener { profileEntryClickListener.invoke(item.displayPoster.id) }
-            shareView.setOnClickListener { shareClickListener.invoke(item.id) }
-            replyView.setOnClickListener { replyEntryClickListener.invoke(item.id) }
-            favoriteView.setOnClickListener { favorClickListener.invoke(item.id) }
+            avatarView.setOnClickListener { profileEntryClickListener.invoke(item.author.id) }
+            shareView.setOnClickListener { shareClickListener.invoke(item.comment.id) }
+            replyView.setOnClickListener { replyEntryClickListener.invoke(item.comment.id) }
+            favoriteView.setOnClickListener { favorClickListener.invoke(item.comment.id) }
         }
     }
 
@@ -72,7 +72,7 @@ abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
         val ss = SpannableString("$username: $content")
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
-                profileEntryClickListener.invoke(item.quote!!.displayPoster.id)
+                profileEntryClickListener.invoke(item.quote!!.author.id)
             }
 
             override fun updateDrawState(ds: TextPaint) {

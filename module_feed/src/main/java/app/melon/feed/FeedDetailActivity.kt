@@ -7,13 +7,13 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.commit
-import app.melon.data.entities.Feed
+import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.ui.FeedDetailFragment
 
 
 class FeedDetailActivity : AppCompatActivity() {
 
-    private val cache by lazy { requireNotNull(intent.getSerializableExtra(KEY_CACHE_FEED) as Feed) }
+    private val cache by lazy { requireNotNull(intent.getSerializableExtra(KEY_CACHE_FEED) as FeedAndAuthor) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,7 @@ class FeedDetailActivity : AppCompatActivity() {
     companion object {
         private const val KEY_CACHE_FEED = "KEY_CACHE_FEED"
 
-        fun prepareIntent(context: Context, feed: Feed): Intent {
+        fun prepareIntent(context: Context, feed: FeedAndAuthor): Intent {
             return Intent(context, FeedDetailActivity::class.java).apply {
                 putExtra(KEY_CACHE_FEED, feed)
             }

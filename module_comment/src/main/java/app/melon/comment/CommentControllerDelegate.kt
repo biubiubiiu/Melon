@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.ColorRes
 import app.melon.base.ui.list.loadMoreView
 import app.melon.comment.ui.widget.commentItem
-import app.melon.data.entities.Comment
+import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
 import app.melon.util.time.MelonDateTimeFormatter
@@ -22,19 +22,19 @@ class CommentControllerDelegate @AssistedInject constructor(
 ) : CommentActions {
 
     fun buildCommentList(
-        list: List<Comment>?,
+        list: List<CommentAndAuthor>?,
         loading: Boolean,
         displayReplyCount: Boolean = true,
         @ColorRes backgroundRes: Int = R.color.bgPrimary
     ) = with(collector) {
-        list?.forEachIndexed { index, comment ->
+        list?.forEachIndexed { index, item ->
             commentItem {
                 id("comment_${index}")
-                item(comment)
+                item(item)
                 formatter(dateTimeFormatter)
                 displayReplyCount(displayReplyCount)
                 backgroundRes(backgroundRes)
-                avatarClickListener { userService.navigateToUserProfile(context, comment.displayPoster.id) }
+                avatarClickListener { userService.navigateToUserProfile(context, item.author.id) }
                 shareClickListener { context.showToast("Click share") }
                 replyClickListener { context.showToast("Click reply") }
                 favorClickListener { context.showToast("Click favor") }

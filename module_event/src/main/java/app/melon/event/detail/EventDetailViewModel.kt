@@ -2,12 +2,15 @@ package app.melon.event.detail
 
 import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ReduxViewModel
-import app.melon.data.entities.Event
+import app.melon.data.resultentities.EventAndOrganiser
 import app.melon.event.interactor.UpdateEventDetail
+import app.melon.util.base.ErrorResult
+import app.melon.util.base.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
+
 
 class EventDetailViewModel @AssistedInject constructor(
     @Assisted private val initialState: EventDetailViewState,
@@ -25,7 +28,10 @@ class EventDetailViewModel @AssistedInject constructor(
         }
         viewModelScope.launch {
             updateEventDetail.observe().collectAndSetState {
-                copy(pageItem = it)
+                when (it) {
+                    is Success -> copy(pageItem = it.get())
+                    is ErrorResult -> copy(error = it.throwable)
+                }
             }
         }
         viewModelScope.launch {
@@ -35,7 +41,8 @@ class EventDetailViewModel @AssistedInject constructor(
         }
         viewModelScope.launch {
             changeEventStatus.observe().collectAndSetState {
-                copy(pageItem = it)
+                val currentPageItem = currentState().pageItem
+                copy(pageItem = currentPageItem!!.copy(event = it))
             }
         }
         selectSubscribeDistinct(EventDetailViewState::id) {
@@ -48,7 +55,7 @@ class EventDetailViewModel @AssistedInject constructor(
         viewModelScope.launch {
             changeEventStatus(
                 ChangeEventStatus.Params(
-                    event = item,
+                    eventId = item.event.id,
                     action = ChangeEventStatus.Action.TOGGLE
                 )
             )
@@ -63,7 +70,7 @@ class EventDetailViewModel @AssistedInject constructor(
 
 fun EventDetailViewModel.Factory.create(
     id: String,
-    cache: Event? = null
+    cache: EventAndOrganiser? = null
 ): EventDetailViewModel {
     val initialState = EventDetailViewState(id = id, pageItem = cache)
     return create(initialState)

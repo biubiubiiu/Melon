@@ -2,26 +2,40 @@ package app.melon.user.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import app.melon.data.entities.Feed
+import app.melon.data.resultentities.FeedAndAuthor
+import app.melon.feed.data.FeedApiService
+import app.melon.feed.data.mapper.RemoteFeedListToFeedAndAuthor
 import app.melon.util.extensions.executeWithRetry
+import app.melon.util.extensions.toException
 import app.melon.util.extensions.toResult
+import app.melon.util.mappers.toListMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+
 class UserFeedsPagingSource constructor(
     private val uid: String,
-    private val service: UserApiService,
-    private val pageSize: Int
-) : PagingSource<Int, Feed>() {
-    override fun getRefreshKey(state: PagingState<Int, Feed>): Int? = null
+    private val service: FeedApiService,
+    private val pageSize: Int,
+    private val listItemMapper: RemoteFeedListToFeedAndAuthor
+) : PagingSource<Int, FeedAndAuthor>() {
+    override fun getRefreshKey(state: PagingState<Int, FeedAndAuthor>): Int? = null
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Feed> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, FeedAndAuthor> {
         val position = params.key ?: 0
         return try {
-            val response = withContext(Dispatchers.IO) {
-                service.feedsFromUser(uid, position, pageSize).executeWithRetry().toResult()
+            val apiResponse = withContext(Dispatchers.IO) {
+                service.feedsFromUser(uid, position, pageSize)
+                    .executeWithRetry()
+                    .toResult()
+                    .getOrThrow()
             }
-            val items = response.get() ?: emptyList()
+            if (!apiResponse.isSuccess) {
+                return LoadResult.Error(apiResponse.errorMessage.toException())
+            }
+            val items = withContext(Dispatchers.Default) {
+                listItemMapper.toListMapper().invoke(apiResponse.data ?: emptyList())
+            }
             val nextKey = if (items.isEmpty()) {
                 null
             } else {

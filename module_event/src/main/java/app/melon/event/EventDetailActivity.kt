@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.Observer
-import app.melon.data.entities.Event
+import app.melon.data.resultentities.EventAndOrganiser
 import app.melon.event.databinding.ActivityEventDetailBinding
 import app.melon.event.detail.EventDetailController
 import app.melon.event.detail.EventDetailViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class EventDetailActivity : DaggerAppCompatActivity() {
 
     private val id get() = intent.getStringExtra(KEY_EVENT_ID)!!
-    private val cache get() = intent.getSerializableExtra(KEY_EVENT_CACHE) as? Event
+    private val cache get() = intent.getSerializableExtra(KEY_EVENT_CACHE) as? EventAndOrganiser
 
     private val binding: ActivityEventDetailBinding by viewBinding()
 
@@ -69,7 +69,7 @@ class EventDetailActivity : DaggerAppCompatActivity() {
 
     private fun setupButton() {
         viewModel.selectObserve(EventDetailViewState::pageItem).observe(this, Observer {
-            val event = it ?: return@Observer
+            val event = it?.event ?: return@Observer
             binding.status.setText(
                 when {
                     event.isIdle -> R.string.event_idle
@@ -97,7 +97,7 @@ class EventDetailActivity : DaggerAppCompatActivity() {
         private const val KEY_EVENT_ID = "KEY_EVENT_ID"
         private const val KEY_EVENT_CACHE = "KEY_EVENT_CACHE"
 
-        internal fun start(context: Context, id: String, cache: Event? = null) {
+        internal fun start(context: Context, id: String, cache: EventAndOrganiser? = null) {
             val intent = Intent(context, EventDetailActivity::class.java).apply {
                 putExtra(KEY_EVENT_ID, id)
                 putExtra(KEY_EVENT_CACHE, cache)

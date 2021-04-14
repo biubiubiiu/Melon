@@ -12,6 +12,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
 
+
 class ReplyListViewModel @AssistedInject constructor(
     @Assisted private val initialState: ReplyListViewState,
     private val updateComment: UpdateComment,

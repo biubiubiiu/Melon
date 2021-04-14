@@ -23,7 +23,7 @@ class MyFavorPostsFragment : BasePagingListFragment() {
     override val controller by lazy {
         controllerFactory.create(
             context = requireContext(),
-            idProvider = { feed, _ -> "anonymous_school_feeds_${feed!!.feedId}" }
+            idProvider = { _, position -> "my_favourite_feeds_$position" }
         )
     }
 

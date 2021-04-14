@@ -11,8 +11,8 @@ import app.melon.util.extensions.dpInt
 import app.melon.util.extensions.getResourceColor
 import app.melon.util.extensions.showToast
 import app.melon.util.extensions.sp
-import app.melon.data.entities.Feed
 import app.melon.data.entities.User
+import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.FeedControllerDelegate
 import app.melon.user.R
 import app.melon.user.ui.widget.schoolInfo
@@ -26,13 +26,13 @@ class UserProfileController @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val action: Action,
     private val factory: FeedControllerDelegate.Factory
-) : Typed3EpoxyController<User, List<Feed>, Boolean>() {
+) : Typed3EpoxyController<User, List<FeedAndAuthor>, Boolean>() {
 
     private val delegate by lazy {
         factory.create(context)
     }
 
-    override fun buildModels(user: User?, feeds: List<Feed>?, refreshing: Boolean) {
+    override fun buildModels(user: User?, feeds: List<FeedAndAuthor>?, refreshing: Boolean) {
         if (refreshing) {
             refreshView {
                 id("user_profile_refresh_view")
@@ -101,10 +101,10 @@ class UserProfileController @AssistedInject constructor(
         }
     }
 
-    private fun buildFeeds(feeds: List<Feed>?) {
-        feeds?.forEachIndexed { index, feed ->
+    private fun buildFeeds(items: List<FeedAndAuthor>?) {
+        items?.forEachIndexed { index, item ->
             add(delegate.buildFeedItem(
-                feedProvider = { feed },
+                dataProvider = { item },
                 idProvider = { "user_profile_feed_$index" }
             ))
         }

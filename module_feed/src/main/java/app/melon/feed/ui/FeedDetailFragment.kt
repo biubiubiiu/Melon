@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BaseMvRxEpoxyFragment
-import app.melon.data.entities.Feed
+import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.ui.controller.FeedDetailController
 import javax.inject.Inject
 
 
 class FeedDetailFragment : BaseMvRxEpoxyFragment() {
 
-    private val cache by lazy { requireNotNull(arguments?.get(KEY_FEED_CACHE) as? Feed) }
+    private val cache by lazy { requireNotNull(arguments?.get(KEY_FEED_CACHE) as? FeedAndAuthor) }
 
     @Inject internal lateinit var viewModel: FeedDetailViewModel
 
@@ -50,7 +50,7 @@ class FeedDetailFragment : BaseMvRxEpoxyFragment() {
         })
 
         viewModel.liveData.observe(viewLifecycleOwner, Observer {
-            controller.setData(it.feed, it.comments, it.refreshing)
+            controller.setData(it.pageItem, it.comments, it.refreshing)
         })
     }
 
@@ -61,7 +61,7 @@ class FeedDetailFragment : BaseMvRxEpoxyFragment() {
     companion object {
         private const val KEY_FEED_CACHE = "KEY_FEED_CACHE"
 
-        fun newInstance(cache: Feed): FeedDetailFragment {
+        fun newInstance(cache: FeedAndAuthor): FeedDetailFragment {
             return FeedDetailFragment().apply {
                 arguments = bundleOf(KEY_FEED_CACHE to cache)
             }

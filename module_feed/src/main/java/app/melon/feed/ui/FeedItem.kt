@@ -10,9 +10,9 @@ import app.melon.base.ui.ImageViewerOverlay
 import app.melon.base.ui.ShapedFourPhotoView
 import app.melon.base.ui.TagView
 import app.melon.data.entities.Feed
+import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt
-import app.melon.util.extensions.toOffsetDateTime
 import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -22,10 +22,11 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.stfalcon.imageviewer.StfalconImageViewer
 import com.stfalcon.imageviewer.loader.ImageLoader
 
+
 @EpoxyModelClass
 abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
 
-    @EpoxyAttribute lateinit var holderClickListener: (Feed) -> Unit
+    @EpoxyAttribute lateinit var holderClickListener: (FeedAndAuthor) -> Unit
     @EpoxyAttribute lateinit var avatarClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var shareClickListener: (Feed) -> Unit
     @EpoxyAttribute lateinit var commentClickListener: (Feed) -> Unit
@@ -33,7 +34,7 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
     @EpoxyAttribute lateinit var moreClickListener: (Feed) -> Unit
     @EpoxyAttribute lateinit var saveImageListener: (String) -> Unit
 
-    @EpoxyAttribute lateinit var item: Feed
+    @EpoxyAttribute lateinit var item: FeedAndAuthor
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     private var overlayView: ImageViewerOverlay? = null
@@ -48,32 +49,32 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
     private fun setupListeners(holder: Holder) {
         with(holder) {
             containerView.setOnClickListener { holderClickListener.invoke(item) }
-            avatarView.setOnClickListener { avatarClickListener.invoke(item.userId) }
-            shareView.setOnClickListener { shareClickListener.invoke(item) }
-            commentView.setOnClickListener { commentClickListener.invoke(item) }
-            favoriteView.setOnClickListener { favorClickListener.invoke(item.feedId) }
-            moreOperationView.setOnClickListener { moreClickListener.invoke(item) }
+            avatarView.setOnClickListener { avatarClickListener.invoke(item.author.id) }
+            shareView.setOnClickListener { shareClickListener.invoke(item.feed) }
+            commentView.setOnClickListener { commentClickListener.invoke(item.feed) }
+            favoriteView.setOnClickListener { favorClickListener.invoke(item.feed.id) }
+            moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed) }
         }
     }
 
     private fun setupContent(holder: Holder) {
         with(holder) {
-            avatarView.load(item.avatarUrl) {
+            avatarView.load(item.author.avatarUrl) {
                 transformations(CircleCropTransformation())
             }
-            usernameView.text = item.username
-            userIdView.text = item.userId
-            userSchoolView.text = item.school
-            postTimeView.text = formatter.formatShortRelativeTime(item.postTime.toOffsetDateTime())
-            contentView.text = item.content
-            commentView.text = item.replyCount.toString()
-            favoriteView.text = item.favouriteCount.toString()
+            usernameView.text = item.author.username
+            userIdView.text = "TODO"
+            userSchoolView.text = item.author.school
+            postTimeView.text = formatter.formatShortRelativeTime(item.feed.postTime)
+            contentView.text = item.feed.content
+            commentView.text = item.feed.replyCount.toString()
+            favoriteView.text = item.feed.favouriteCount.toString()
 
-            photoView.isVisible = item.photos.isNotEmpty()
+            photoView.isVisible = item.feed.photos.isNotEmpty()
             photoView.takeIf { it.isVisible }?.apply {
                 itemPadding = 4.dpInt
                 cornerRadius = 32f
-                urls = item.photos
+                urls = item.feed.photos
                 photoView.loadImage()
                 onClickListener = { urls, index, view ->
                     val loader = ImageLoader<String> { imageView, url -> imageView.load(url) }

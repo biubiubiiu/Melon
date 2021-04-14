@@ -4,16 +4,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import app.melon.base.ui.BaseEpoxyHolder
-import app.melon.data.entities.InterestGroup
+import app.melon.data.entities.Group
 import coil.load
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 
+
 @EpoxyModelClass
 abstract class GroupItem : EpoxyModelWithHolder<GroupItem.Holder>() {
 
-    @EpoxyAttribute lateinit var clickListener: (InterestGroup) -> Unit
+    @EpoxyAttribute lateinit var clickListener: (Group) -> Unit
 
     @EpoxyAttribute lateinit var showPicUrl: String
     @EpoxyAttribute lateinit var groupName: String

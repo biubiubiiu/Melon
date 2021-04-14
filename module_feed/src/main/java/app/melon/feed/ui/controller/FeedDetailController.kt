@@ -2,8 +2,8 @@ package app.melon.feed.ui.controller
 
 import android.content.Context
 import app.melon.comment.CommentControllerDelegate
-import app.melon.data.entities.Comment
-import app.melon.data.entities.Feed
+import app.melon.data.resultentities.CommentAndAuthor
+import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.ui.widget.feedHeader
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
@@ -19,17 +19,17 @@ class FeedDetailController @AssistedInject constructor(
     commentControllerFactory: CommentControllerDelegate.Factory,
     private val userService: IUserService,
     private val dateTimeFormatter: MelonDateTimeFormatter
-) : Typed3EpoxyController<Feed, List<Comment>, Boolean>() {
+) : Typed3EpoxyController<FeedAndAuthor, List<CommentAndAuthor>, Boolean>() {
 
     private val commentDelegate = commentControllerFactory.create(context, this)
 
-    override fun buildModels(feed: Feed?, commentList: List<Comment>?, loadingComment: Boolean) {
-        if (feed != null) {
+    override fun buildModels(item: FeedAndAuthor?, commentList: List<CommentAndAuthor>?, loadingComment: Boolean) {
+        if (item != null) {
             feedHeader {
                 id("feed_detail_header")
-                item(feed)
+                item(item)
                 formatter(dateTimeFormatter)
-                avatarClickListener { userService.navigateToUserProfile(context, feed.userId) }
+                avatarClickListener { userService.navigateToUserProfile(context, item.author.id) }
                 repostEntryClickListener { context.showToast("Click repost entry") }
                 favorEntryClickListener { context.showToast("Click favor entry") }
                 commentClickListener { context.showToast("Click comment") }

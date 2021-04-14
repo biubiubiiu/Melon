@@ -1,123 +1,102 @@
 package app.melon.feed.data
 
 import androidx.paging.ExperimentalPagingApi
-import androidx.paging.LoadType
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import app.melon.base.domain.PaginatedEntryRemoteMediator
 import app.melon.data.MelonDatabase
-import app.melon.data.constants.FeedType
-import app.melon.data.entities.ANExploreFeedEntry
-import app.melon.data.entities.ANSchoolFeedEntry
-import app.melon.data.entities.ANTrendingFeedEntry
+import app.melon.data.constants.FeedPageType
 import app.melon.data.entities.Feed
-import app.melon.data.resultentities.ANExploreEntryWithFeed
-import app.melon.data.resultentities.ANSchoolEntryWithFeed
-import app.melon.data.resultentities.ANTrendingEntryWithFeed
+import app.melon.data.entities.User
+import app.melon.data.resultentities.EntryWithFeedAndAuthor
+import app.melon.data.resultentities.FeedAndAuthor
+import app.melon.feed.data.mapper.RemoteFeedDetailToFeedAndAuthor
+import app.melon.feed.data.mapper.RemoteFeedListToFeedAuthorPair
 import app.melon.util.base.ErrorResult
 import app.melon.util.base.Result
 import app.melon.util.base.Success
 import app.melon.util.extensions.executeWithRetry
+import app.melon.util.extensions.toException
 import app.melon.util.extensions.toResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
+
 
 @Singleton
 @OptIn(ExperimentalPagingApi::class)
 class FeedRepository @Inject constructor(
     private val service: FeedApiService,
-    private val database: MelonDatabase
+    private val database: MelonDatabase,
+    private val listItemMapper: RemoteFeedListToFeedAuthorPair,
+    private val detailItemMapper: RemoteFeedDetailToFeedAndAuthor
 ) {
 
-    suspend fun getFeedDetail(id: String): Result<Feed> {
-        val response = withContext(Dispatchers.IO) {
-            service.getFeedDetail(id).execute()
+    // TODO too long
+    suspend fun getFeedDetail(id: String): Result<FeedAndAuthor> {
+        return try {
+            val apiResponse = withContext(Dispatchers.IO) {
+                service.detail(id)
+                    .executeWithRetry()
+                    .toResult()
+                    .getOrThrow()
+            }
+            if (!apiResponse.isSuccess) {
+                return ErrorResult(apiResponse.errorMessage.toException())
+            }
+            val (feed, user) = withContext(Dispatchers.Default) {
+                detailItemMapper.map(apiResponse.data!!)
+            }
+            database.runWithTransaction {
+                val localFeed = database.feedDao().getFeedWithId(feed.id) ?: Feed()
+                val localUser = database.userDao().getUserWithId(user.id) ?: User()
+                database.feedDao().insertOrUpdate(mergeFeed(localFeed, feed))
+                database.userDao().insertOrUpdate(mergeUser(localUser, user))
+            }
+            val result = withContext(Dispatchers.IO) {
+                database.feedDao().getFeedAndAuthorWithId(id)
+            }
+            Success(result!!)
+        } catch (e: Exception) {
+            ErrorResult(e)
         }
-        return when {
-            response.isSuccessful && response.body() != null -> Success(response.body()!!)
-            else -> ErrorResult(HttpException(response))
-        }
     }
 
-    fun getAnonymousSchoolFeed(timestamp: Long): Flow<PagingData<ANSchoolEntryWithFeed>> {
+    fun getFeedList(timestamp: Long, @FeedPageType queryType: Int): Flow<PagingData<EntryWithFeedAndAuthor>> {
         return Pager(
             config = PAGING_CONFIG,
-            remoteMediator = PaginatedEntryRemoteMediator { loadType, page, pageSize ->
-                val apiResponse = withContext(Dispatchers.IO) {
-                    service.anonymousSchoolFeeds(timestamp, page, pageSize).executeWithRetry().toResult()
-                }
-                val items = apiResponse.getOrThrow().map { it.copy(type = FeedType.AnonymousSchoolFeed) }
-                val entries = items.mapIndexed { index, feed ->
-                    ANSchoolFeedEntry(feedId = feed.feedId, page = page, pageOrder = index)
-                }
-                database.runWithTransaction {
-                    if (loadType == LoadType.REFRESH) {
-                        database.ANSchoolDao().deleteAll()
-                        database.feedDao().deleteFeedByType(FeedType.AnonymousSchoolFeed)
-                    }
-                    database.feedDao().insertAll(items)
-                    database.ANSchoolDao().insertAll(entries)
-                }
-                items.isNullOrEmpty()
-            },
-            pagingSourceFactory = { database.ANSchoolDao().feedDataSource() }
+            remoteMediator = FeedRemoteMediator(
+                timestamp,
+                queryType,
+                service,
+                database,
+                listItemMapper
+            ),
+            pagingSourceFactory = { database.feedEntryDao().feedDataSource(queryType) }
         ).flow
     }
 
-    fun getAnonymousExploreFeed(timestamp: Long): Flow<PagingData<ANExploreEntryWithFeed>> {
-        return Pager(
-            config = PAGING_CONFIG,
-            remoteMediator = PaginatedEntryRemoteMediator { loadType, page, pageSize ->
-                val apiResponse = withContext(Dispatchers.IO) {
-                    service.anonymousExploreFeeds(timestamp, page, pageSize).executeWithRetry().toResult()
-                }
-                val items = apiResponse.getOrThrow().map { it.copy(type = FeedType.AnonymousExploreFeed) }
-                val entries = items.mapIndexed { index, feed ->
-                    ANExploreFeedEntry(feedId = feed.feedId, page = page, pageOrder = index)
-                }
-                database.runWithTransaction {
-                    if (loadType == LoadType.REFRESH) {
-                        database.ANExploreDao().deleteAll()
-                        database.feedDao().deleteFeedByType(FeedType.AnonymousExploreFeed)
-                    }
-                    database.feedDao().insertAll(items)
-                    database.ANExploreDao().insertAll(entries)
-                }
-                items.isNullOrEmpty()
-            },
-            pagingSourceFactory = { database.ANExploreDao().feedDataSource() }
-        ).flow
-    }
+    private fun mergeFeed(local: Feed, remote: Feed) = local.copy(
+        id = remote.id,
+        authorUid = remote.authorUid,
+        content = remote.content,
+        photos = remote.photos,
+        postTime = remote.postTime,
+        replyCount = remote.replyCount,
+        favouriteCount = remote.favouriteCount
+    )
 
-    fun getAnonymousTrendingFeed(timestamp: Long): Flow<PagingData<ANTrendingEntryWithFeed>> {
-        return Pager(
-            config = PAGING_CONFIG,
-            remoteMediator = PaginatedEntryRemoteMediator { loadType, page, pageSize ->
-                val apiResponse = withContext(Dispatchers.IO) {
-                    service.anonymousTrendingFeeds(timestamp, page, pageSize).executeWithRetry().toResult()
-                }
-                val items = apiResponse.getOrThrow().map { it.copy(type = FeedType.AnonymousTrendingFeed) }
-                val entries = items.mapIndexed { index, feed ->
-                    ANTrendingFeedEntry(feedId = feed.feedId, page = page, pageOrder = index)
-                }
-                database.runWithTransaction {
-                    if (loadType == LoadType.REFRESH) {
-                        database.ANTrendingDao().deleteAll()
-                        database.feedDao().deleteFeedByType(FeedType.AnonymousTrendingFeed)
-                    }
-                    database.feedDao().insertAll(items)
-                    database.ANTrendingDao().insertAll(entries)
-                }
-                items.isNullOrEmpty()
-            },
-            pagingSourceFactory = { database.ANTrendingDao().feedDataSource() }
-        ).flow
-    }
+    private fun mergeUser(local: User, remote: User) = local.copy(
+        id = remote.id,
+        username = remote.username,
+        gender = remote.gender,
+        age = remote.age,
+        school = remote.school,
+        location = remote.location,
+        avatarUrl = remote.avatarUrl
+    )
 
     companion object {
         val PAGING_CONFIG = PagingConfig(

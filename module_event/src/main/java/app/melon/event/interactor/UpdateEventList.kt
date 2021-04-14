@@ -3,35 +3,30 @@ package app.melon.event.interactor
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.melon.base.domain.PagingInteractor
-import app.melon.data.entities.Event
+import app.melon.data.constants.EventPageType
+import app.melon.data.resultentities.EntryWithEventAndOrganiser
 import app.melon.event.data.EventRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+
 class UpdateEventList @Inject constructor(
     private val repo: EventRepository
-) : PagingInteractor<UpdateEventList.Params, Event>() {
+) : PagingInteractor<UpdateEventList.Params, EntryWithEventAndOrganiser>() {
 
-    override fun createObservable(params: Params): Flow<PagingData<Event>> {
-        return when (params.type) {
-            QueryType.NEARBY -> repo.getStream()
-            QueryType.JOINING -> repo.getJoiningEvents(PAGING_CONFIG)
-            QueryType.ORGANISED -> repo.getOrganisedEvents(PAGING_CONFIG)
-        }
+    override fun createObservable(params: Params): Flow<PagingData<EntryWithEventAndOrganiser>> {
+        return repo.getStream(params.type, customPagingConfig = PAGING_CONFIG)
     }
 
     data class Params(
-        val type: QueryType,
+        @EventPageType val type: Int,
         override val pagingConfig: PagingConfig = PAGING_CONFIG
-    ) : Parameters<Event>
+    ) : Parameters<EntryWithEventAndOrganiser>
 
-    enum class QueryType { NEARBY, JOINING, ORGANISED }
-
-    companion object {
-        private const val PAGE_SIZE = 8
+    private companion object {
         private val PAGING_CONFIG = PagingConfig(
-            pageSize = PAGE_SIZE,
-            initialLoadSize = 10,
+            pageSize = 8,
+            initialLoadSize = 16,
             prefetchDistance = 3,
             enablePlaceholders = false
         )

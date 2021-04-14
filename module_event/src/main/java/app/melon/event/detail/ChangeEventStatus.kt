@@ -8,6 +8,7 @@ import javax.inject.Inject
 
 class ChangeEventStatus @Inject constructor(
     private val repo: EventRepository
+    // TODO inject UserManager
 ) : SuspendingWorkInteractor<ChangeEventStatus.Params, Event>() {
 
     val loadingState = ObservableLoadingCounter()
@@ -16,26 +17,25 @@ class ChangeEventStatus @Inject constructor(
         loadingState.addLoader()
         return when (params.action) {
             Action.TOGGLE -> {
-                if (repo.isJoiningEvent(params.event.id)) {
-                    leave(params.event)
+                if (repo.isJoiningEvent(params.eventId)) {
+                    leave(params.eventId)
                 } else {
-                    join(params.event)
+                    join(params.eventId)
                 }
             }
-            Action.JOIN -> join(params.event)
-            Action.LEAVE -> leave(params.event)
+            Action.JOIN -> join(params.eventId)
+            Action.LEAVE -> leave(params.eventId)
         }.also { loadingState.removeLoader() }
     }
 
-    private suspend fun join(event: Event) = repo.addJoiningEvent(event)
+    private suspend fun join(eventId: String) = repo.addJoiningEvent(eventId)
 
-    private suspend fun leave(event: Event) = repo.removeJoiningEvent(event)
+    private suspend fun leave(eventId: String) = repo.removeJoiningEvent(eventId)
 
     data class Params(
-        val event: Event,
+        val eventId: String,
         val action: Action
     )
 
     enum class Action { JOIN, LEAVE, TOGGLE }
-
 }

@@ -12,7 +12,7 @@ import androidx.annotation.ColorRes
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.comment.R
-import app.melon.data.entities.Comment
+import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.util.extensions.getResourceString
 import app.melon.util.extensions.toOffsetDateTime
 import app.melon.util.time.MelonDateTimeFormatter
@@ -21,7 +21,6 @@ import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import java.time.format.DateTimeFormatter
 
 
 @EpoxyModelClass
@@ -34,7 +33,7 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
     @EpoxyAttribute lateinit var subCommentEntryClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var userEntryClickListener: (String) -> Unit
 
-    @EpoxyAttribute lateinit var item: Comment
+    @EpoxyAttribute lateinit var item: CommentAndAuthor
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     @EpoxyAttribute var displayReplyCount: Boolean = true
@@ -50,18 +49,18 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
     private fun setupContent(holder: Holder) {
         with(holder) {
             containerView.setBackgroundResource(backgroundRes)
-            avatarView.load(item.displayPoster.avatarUrl) {
+            avatarView.load(item.author.avatarUrl) {
                 transformations(CircleCropTransformation())
             }
-            usernameView.text = item.displayPoster.username
-            userIdView.text = item.displayPoster.id
-            postTimeView.text = formatter.formatShortRelativeTime(item.postTime.toOffsetDateTime())
-            contentView.text = item.content
-            favourCountView.text = item.favorCount.toString()
+            usernameView.text = item.author.username
+            userIdView.text = item.author.id
+            postTimeView.text = formatter.formatShortRelativeTime(item.comment.postTime.toOffsetDateTime())
+            contentView.text = item.comment.content
+            favourCountView.text = item.comment.favorCount.toString()
 
-            if (item.replyCount > 0) {
+            if (item.comment.replyCount > 0) {
                 moreReplyEntryView.isVisible = true
-                moreReplyEntryView.text = buildReplyEntryClickableSpan(item.replyCount)
+                moreReplyEntryView.text = buildReplyEntryClickableSpan(item.comment.replyCount)
                 moreReplyEntryView.movementMethod = LinkMovementMethod.getInstance()
             } else {
                 moreReplyEntryView.isVisible = false
@@ -78,11 +77,11 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
         }
     }
 
-    private fun buildReplyEntryClickableSpan(count: Int): SpannableString {
+    private fun buildReplyEntryClickableSpan(count: Long): SpannableString {
         val ss = SpannableString(getResourceString(R.string.comment_total_reply_count, count))
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
-                subCommentEntryClickListener.invoke(item.id)
+                subCommentEntryClickListener.invoke(item.comment.id)
             }
 
             override fun updateDrawState(ds: TextPaint) {

@@ -4,7 +4,7 @@ import android.content.Context
 import app.melon.base.ui.carouselHeader
 import app.melon.base.ui.list.vertSpaceMicro
 import app.melon.base.ui.list.vertSpaceSmall
-import app.melon.data.entities.InterestGroup
+import app.melon.data.entities.Group
 import app.melon.group.data.GroupRepository
 import app.melon.util.extensions.showToast
 import com.airbnb.epoxy.ModelCollector
@@ -14,6 +14,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
 
 class GroupRenderer @AssistedInject constructor(
     @Assisted private val context: Context, // TODO we need a token manager here so it can request data on its own
@@ -57,7 +58,7 @@ class GroupRenderer @AssistedInject constructor(
         }
     }
 
-    override fun onHolderClick(group: InterestGroup) {
+    override fun onHolderClick(group: Group) {
         context.showToast("click group holder")
     }
 

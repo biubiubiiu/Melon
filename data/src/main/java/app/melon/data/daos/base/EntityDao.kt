@@ -5,15 +5,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Transaction
 import androidx.room.Update
-import app.melon.data.entities.MelonEntity
 
 /**
  * source: https://github.com/chrisbanes/tivi
  */
-abstract class EntityDao<in E : MelonEntity> {
+abstract class EntityDao<E> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(entity: E): Long
+    abstract suspend fun insert(entity: E)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertAll(vararg entity: E)
@@ -29,4 +28,13 @@ abstract class EntityDao<in E : MelonEntity> {
 
     @Transaction
     open suspend fun withTransaction(tx: suspend () -> Unit) = tx()
+
+    open suspend fun insertOrUpdate(entity: E) {}
+
+    @Transaction
+    open suspend fun insertOrUpdate(entities: List<E>) {
+        entities.forEach {
+            insertOrUpdate(it)
+        }
+    }
 }

@@ -1,26 +1,46 @@
 package app.melon.data.daos
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import app.melon.data.daos.base.EntityDao
-import app.melon.data.entities.JoiningEvent
+import app.melon.data.entities.Event
+import app.melon.data.resultentities.EventAndOrganiser
 
 
 @Dao
-abstract class EventDao : EntityDao<JoiningEvent>() {
+abstract class EventDao : EntityDao<Event>() {
+
+    @Query("SELECT * FROM events WHERE event_id = :id")
+    abstract suspend fun getEventWithId(id: String): Event?
+
+    suspend fun getEventWithIdOrThrow(id: String): Event {
+        return getEventWithId(id) ?: throw IllegalArgumentException("No event with id $id in database")
+    }
 
     @Transaction
-    @Query("SELECT * FROM joining_event")
-    abstract fun eventsDataSource(): PagingSource<Int, JoiningEvent>
+    @Query("SELECT * FROM events WHERE event_id = :id")
+    abstract suspend fun getEventAndOrganiserWithId(id: String): EventAndOrganiser?
 
-    @Query("SELECT * FROM joining_event WHERE event_id = :id")
-    abstract fun getEventWithId(id: String): JoiningEvent?
+    @Query("DELETE FROM events WHERE event_id = :id")
+    abstract suspend fun delete(id: String)
 
-    @Query("DELETE FROM joining_event WHERE event_id = :id")
-    abstract fun deleteEventWithId(id: String)
+    @Transaction
+    open suspend fun deleteAll(ids: List<String>) {
+        ids.forEach {
+            delete(it)
+        }
+    }
 
-    @Query("DELETE FROM joining_event")
-    abstract fun deleteAll()
+    @Query("DELETE FROM events")
+    abstract suspend fun deleteAll()
+
+    override suspend fun insertOrUpdate(entity: Event) {
+        val item = getEventWithId(entity.id)
+        if (item == null) {
+            insert(entity)
+        } else {
+            update(entity)
+        }
+    }
 }

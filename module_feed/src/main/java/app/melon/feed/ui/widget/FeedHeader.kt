@@ -7,9 +7,9 @@ import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.ShapedFourPhotoView
 import app.melon.base.ui.TagView
 import app.melon.data.entities.Feed
+import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt
-import app.melon.util.extensions.toOffsetDateTime
 import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -26,10 +26,10 @@ abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
     @EpoxyAttribute lateinit var favorEntryClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var commentClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
-    @EpoxyAttribute lateinit var shareClickListener: (String) -> Unit
+    @EpoxyAttribute lateinit var shareClickListener: (Feed) -> Unit
     @EpoxyAttribute lateinit var moreClickListener: (String) -> Unit
 
-    @EpoxyAttribute lateinit var item: Feed
+    @EpoxyAttribute lateinit var item: FeedAndAuthor
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     override fun getDefaultLayout(): Int = R.layout.view_feed_detail_header
@@ -41,43 +41,43 @@ abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
 
     private fun setupContent(holder: Holder) {
         with(holder) {
-            avatarView.setOnClickListener { avatarClickListener.invoke(item.userId) }
-            shareView.setOnClickListener { shareClickListener.invoke(item.feedId) }
-            commentView.setOnClickListener { commentClickListener.invoke(item.feedId) }
-            favoriteView.setOnClickListener { favorClickListener.invoke(item.feedId) }
-            moreOperationView.setOnClickListener { moreClickListener.invoke(item.feedId) }
-            repostCountView.setOnClickListener { repostEntryClickListener.invoke(item.feedId) }
-            repostLabel.setOnClickListener { repostEntryClickListener.invoke(item.feedId) }
-            favorCountView.setOnClickListener { favorEntryClickListener.invoke(item.feedId) }
-            favorLabel.setOnClickListener { favorEntryClickListener.invoke(item.feedId) }
+            avatarView.setOnClickListener { avatarClickListener.invoke(item.author.id) }
+            shareView.setOnClickListener { shareClickListener.invoke(item.feed) }
+            commentView.setOnClickListener { commentClickListener.invoke(item.feed.id) }
+            favoriteView.setOnClickListener { favorClickListener.invoke(item.feed.id) }
+            moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed.id) }
+            repostCountView.setOnClickListener { repostEntryClickListener.invoke(item.feed.id) }
+            repostLabel.setOnClickListener { repostEntryClickListener.invoke(item.feed.id) }
+            favorCountView.setOnClickListener { favorEntryClickListener.invoke(item.feed.id) }
+            favorLabel.setOnClickListener { favorEntryClickListener.invoke(item.feed.id) }
         }
     }
 
     private fun setupListeners(holder: Holder) {
         with(holder) {
-            avatarView.load(item.avatarUrl) {
+            avatarView.load(item.author.avatarUrl) {
                 transformations(CircleCropTransformation())
             }
-            usernameView.text = item.username
-            userIdView.text = item.userId
-            userSchoolView.text = item.school
-            postTimeView.text = formatter.formatShortRelativeTime(item.postTime.toOffsetDateTime())
-            contentView.text = item.content
+            usernameView.text = item.author.username
+            userIdView.text = "TODO"
+            userSchoolView.text = item.author.school
+            postTimeView.text = formatter.formatShortRelativeTime(item.feed.postTime)
+            contentView.text = item.feed.content
 //            commentView.text = item.replyCount.toString()
-            favorCountView.isVisible = item.favouriteCount > 0
-            favorLabel.isVisible = item.favouriteCount > 0
-            favorCountView.takeIf { it.isVisible }?.text = item.favouriteCount.toString()
+            favorCountView.isVisible = item.feed.favouriteCount > 0
+            favorLabel.isVisible = item.feed.favouriteCount > 0
+            favorCountView.takeIf { it.isVisible }?.text = item.feed.favouriteCount.toString()
 
             val repostCount = 2 // TODO use repost count
             repostCountView.isVisible = repostCount > 0
             repostLabel.isVisible = repostCount > 0
             repostCountView.takeIf { it.isVisible }?.text = repostCount.toString()
 
-            photoView.isVisible = item.photos.isNotEmpty()
+            photoView.isVisible = item.feed.photos.isNotEmpty()
             photoView.takeIf { it.isVisible }?.apply {
                 itemPadding = 4.dpInt
                 cornerRadius = 32f
-                urls = item.photos
+                urls = item.feed.photos
                 photoView.loadImage()
             }
         }

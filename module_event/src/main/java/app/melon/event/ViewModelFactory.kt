@@ -2,7 +2,6 @@ package app.melon.event
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.melon.event.data.EventRepository
 import app.melon.event.interactor.UpdateEventList
 import app.melon.event.mine.MyEventsViewModel
 import app.melon.event.nearby.NearbyEventsViewModel
@@ -13,7 +12,6 @@ import javax.inject.Singleton
 
 @Singleton
 internal class ViewModelFactory @Inject constructor(
-    private val repo: EventRepository,
     private val updateEventList: Provider<UpdateEventList>
 ) : ViewModelProvider.Factory {
 
@@ -21,7 +19,7 @@ internal class ViewModelFactory @Inject constructor(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = with(modelClass) {
         when {
             isAssignableFrom(NearbyEventsViewModel::class.java) -> NearbyEventsViewModel(
-                repo
+                updateEventList.get()
             )
             isAssignableFrom(MyEventsViewModel::class.java) -> MyEventsViewModel(
                 updateEventList.get(),

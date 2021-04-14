@@ -1,6 +1,8 @@
 package app.melon.comment.data
 
-import app.melon.data.entities.Comment
+import app.melon.comment.data.remote.CommentStruct
+import app.melon.data.dto.BaseApiResponse
+
 import app.melon.data.services.ApiService
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,17 +16,17 @@ interface CommentApiService : ApiService {
         @Path("id") id: String,
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
-    ): Call<List<Comment>>
+    ): Call<BaseApiResponse<List<CommentStruct>>>
 
     @GET("comment/{id}/detail")
     fun detail(
         @Path("id") id: String
-    ): Call<Comment>
+    ): Call<BaseApiResponse<CommentStruct>>
 
     @GET("comment/{id}/replies")
     fun reply(
         @Path("id") id: String,
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
-    ): Call<List<Comment>>
+    ): Call<BaseApiResponse<List<CommentStruct>>>
 }

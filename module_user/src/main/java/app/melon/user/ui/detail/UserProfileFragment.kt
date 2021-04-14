@@ -90,7 +90,7 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
 
         viewModel.liveData.observe(viewLifecycleOwner, Observer { state ->
             view.findViewById<View>(R.id.user_profile_refresh_view).isVisible = state.refreshing
-            controller.setData(state.user, state.feeds, state.refreshing)
+            controller.setData(state.user, state.pageItems, state.refreshing)
 
             val user = state.user ?: return@Observer
             toolbar.title = user.username

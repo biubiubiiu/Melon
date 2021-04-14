@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
+
 @Module(
     includes = [
         RoomDatabaseModule::class,
@@ -36,25 +37,28 @@ class DatabaseDaoModule {
     fun provideFeedDao(db: MelonDatabase) = db.feedDao()
 
     @Provides
-    fun provideRecommendDao(db: MelonDatabase) = db.recommendedDao()
+    fun provideFeedEntryDao(db: MelonDatabase) = db.feedEntryDao()
 
     @Provides
-    fun provideFollowingDao(db: MelonDatabase) = db.followingDao()
-
-    @Provides
-    fun provideSchoolFeedsDao(db: MelonDatabase) = db.ANSchoolDao()
-
-    @Provides
-    fun provideExploreFeedsDao(db: MelonDatabase) = db.ANExploreDao()
-
-    @Provides
-    fun provideTrendingFeedsDao(db: MelonDatabase) = db.ANTrendingDao()
+    fun provideUserDao(db: MelonDatabase) = db.userDao()
 
     @Provides
     fun provideEventDao(db: MelonDatabase) = db.eventDao()
 
     @Provides
-    fun provideOrganisedEventDao(db: MelonDatabase) = db.organisedEventDao()
+    fun provideEventEntryDao(db: MelonDatabase) = db.eventEntryDao()
+
+    @Provides
+    fun provideAttendEventDao(db: MelonDatabase) = db.attendEventDao()
+
+    @Provides
+    fun provideGroupDao(db: MelonDatabase) = db.groupDao()
+
+    @Provides
+    fun provideGroupEntryDao(db: MelonDatabase) = db.groupEntryDao()
+
+    @Provides
+    fun provideJoinGroupDao(db: MelonDatabase) = db.joinGroupDao()
 }
 
 @Module

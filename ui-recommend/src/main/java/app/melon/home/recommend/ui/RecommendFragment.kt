@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 class RecommendFragment : BasePagingListFragment() {
 
     @Inject internal lateinit var viewModel: RecommendViewModel
 
     @Inject internal lateinit var controllerFactory: RecommendPageController.Factory
-
     override val controller by lazy {
         controllerFactory.create(
             context = requireContext(),
