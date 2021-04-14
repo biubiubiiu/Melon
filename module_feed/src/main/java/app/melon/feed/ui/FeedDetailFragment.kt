@@ -3,12 +3,13 @@ package app.melon.feed.ui
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.lifecycleScope
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BaseMvRxEpoxyFragment
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.ui.controller.FeedDetailController
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -32,25 +33,14 @@ class FeedDetailFragment : BaseMvRxEpoxyFragment() {
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
         super.onViewCreated(binding, savedInstanceState)
         binding.swipeRefreshLayout.isEnabled = false // disable swipe refresh
-        binding.recyclerView.setController(controller)
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy <= 0) {
-                    return
-                }
-                val viewManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
-                val visibleItemCount = viewManager.childCount
-                val totalItemCount = viewManager.itemCount
-                val lastVisibleItem = viewManager.findLastVisibleItemPosition()
 
-                if (visibleItemCount + lastVisibleItem + 3 >= totalItemCount) {
-                    viewModel.loadMoreComment()
-                }
+        lifecycleScope.launch {
+            viewModel.commentsPagingData.collectLatest {
+                controller.submitData(it)
             }
-        })
-
+        }
         viewModel.liveData.observe(viewLifecycleOwner, Observer {
-            controller.setData(it.pageItem, it.comments, it.refreshing)
+            controller.item = it.pageItem
         })
     }
 

@@ -8,6 +8,7 @@ import app.melon.util.base.ErrorResult
 import app.melon.util.base.Result
 import javax.inject.Inject
 
+
 class UpdateComment @Inject constructor(
     private val repo: CommentRepository
 ) : SuspendingWorkInteractor<UpdateComment.Params, Result<CommentAndAuthor>>() {

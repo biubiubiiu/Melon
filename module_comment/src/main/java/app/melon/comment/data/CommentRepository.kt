@@ -11,7 +11,6 @@ import app.melon.util.base.Success
 import app.melon.util.extensions.executeWithRetry
 import app.melon.util.extensions.toException
 import app.melon.util.extensions.toResult
-import app.melon.util.mappers.toListMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -25,15 +24,22 @@ class CommentRepository @Inject constructor(
     private val itemMapper: RemoteCommentToCommentAndAuthor
 ) {
 
-    suspend fun fetchCommentList(id: String, page: Int, pageSize: Int): List<CommentAndAuthor> {
-        return withContext(Dispatchers.IO) {
-            service.list(id, page, pageSize)
-                .executeWithRetry()
-                .toResult {
-                    itemMapper.toListMapper().invoke(it.data ?: emptyList())
-                }
-                .getOrThrow()
-        }
+    fun fetchCommentList(id: String, config: PagingConfig): Flow<PagingData<CommentAndAuthor>> {
+        return Pager(
+            config = config,
+            pagingSourceFactory = {
+                CommentReplyPagingSource(id, service, config.pageSize, itemMapper)
+            }
+        ).flow
+    }
+
+    fun fetchReplyList(id: String, config: PagingConfig): Flow<PagingData<CommentAndAuthor>> {
+        return Pager(
+            config = config,
+            pagingSourceFactory = {
+                CommentReplyPagingSource(id, service, config.pageSize, itemMapper, fetchComments = false)
+            }
+        ).flow
     }
 
     suspend fun getCommentDetail(id: String): Result<CommentAndAuthor> {
@@ -50,14 +56,5 @@ class CommentRepository @Inject constructor(
             itemMapper.map(apiResponse.data!!)
         }
         return Success(item)
-    }
-
-    fun fetchReplyList(id: String, config: PagingConfig): Flow<PagingData<CommentAndAuthor>> {
-        return Pager(
-            config = config,
-            pagingSourceFactory = {
-                CommentPagingSource(id, service, config.pageSize, itemMapper)
-            }
-        ).flow
     }
 }

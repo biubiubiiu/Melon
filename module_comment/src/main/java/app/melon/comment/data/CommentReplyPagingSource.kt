@@ -11,11 +11,13 @@ import app.melon.util.mappers.toListMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class CommentPagingSource constructor(
-    private val id: String,
+
+class CommentReplyPagingSource constructor(
+    private val id: String, // feed id or comment id
     private val service: CommentApiService,
     private val pageSize: Int,
-    private val listItemMapper: RemoteCommentToCommentAndAuthor
+    private val listItemMapper: RemoteCommentToCommentAndAuthor,
+    private val fetchComments: Boolean = true
 ) : PagingSource<Int, CommentAndAuthor>() {
     override fun getRefreshKey(state: PagingState<Int, CommentAndAuthor>): Int? = null
 
@@ -23,8 +25,12 @@ class CommentPagingSource constructor(
         val position = params.key ?: 0
         return try {
             val response = withContext(Dispatchers.IO) {
-                service.reply(id, position, pageSize)
-                    .executeWithRetry()
+                val call = if (fetchComments) {
+                    service.list(id, position, pageSize)
+                } else {
+                    service.reply(id, position, pageSize)
+                }
+                call.executeWithRetry()
                     .toResult()
                     .getOrThrow()
             }
