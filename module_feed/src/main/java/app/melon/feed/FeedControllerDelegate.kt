@@ -9,6 +9,7 @@ import app.melon.permission.helper.SaveHelper
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.activityContext
 import app.melon.util.extensions.showToast
+import app.melon.util.number.MelonNumberFormatter
 import app.melon.util.time.MelonDateTimeFormatter
 import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
@@ -19,7 +20,8 @@ import dagger.assisted.AssistedInject
 class FeedControllerDelegate @AssistedInject constructor(
     @Assisted private val context: Context,
     private val userService: IUserService,
-    private val dateTimeFormatter: MelonDateTimeFormatter
+    private val dateTimeFormatter: MelonDateTimeFormatter,
+    private val numberFormatter: MelonNumberFormatter
 ) : FeedActions {
 
     private val saveHelper by lazy { SaveHelper(context.activityContext!!) }
@@ -33,6 +35,7 @@ class FeedControllerDelegate @AssistedInject constructor(
             .id(idProvider.invoke())
             .item(item)
             .formatter(dateTimeFormatter)
+            .numberFormatter(numberFormatter)
             .holderClickListener { this.onHolderClick(it) }
             .avatarClickListener { this.onAvatarClick(it) }
             .shareClickListener { this.onShareClick(it) }
@@ -51,6 +54,7 @@ class FeedControllerDelegate @AssistedInject constructor(
             .id(idProvider.invoke())
             .item(item)
             .formatter(dateTimeFormatter)
+            .numberFormatter(numberFormatter)
             .holderClickListener { this.onHolderClick(it) }
             .shareClickListener { this.onShareClick(it) }
             .commentClickListener { this.onCommentClick(it) }

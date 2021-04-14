@@ -12,6 +12,7 @@ import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt
 import app.melon.util.extensions.showToast
+import app.melon.util.number.MelonNumberFormatter
 import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -31,6 +32,7 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
 
     @EpoxyAttribute lateinit var item: FeedAndAuthor
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
+    @EpoxyAttribute lateinit var numberFormatter: MelonNumberFormatter
 
     override fun getDefaultLayout(): Int = R.layout.item_anonymous_feed
 
@@ -50,8 +52,8 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
             postTimeView.text = formatter.formatShortRelativeTime(item.feed.postTime)
             titleView.text = item.feed.title
             contentView.text = item.feed.content
-            commentView.text = item.feed.replyCount.toString()
-            favoriteView.text = item.feed.favouriteCount.toString()
+            commentView.text = numberFormatter.format(item.feed.replyCount)
+            favoriteView.text = numberFormatter.format(item.feed.favouriteCount)
 
             photoView.isVisible = item.feed.photos.isNotEmpty()
             photoView.takeIf { it.isVisible }?.apply {

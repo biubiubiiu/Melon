@@ -13,6 +13,7 @@ import app.melon.data.entities.Feed
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.R
 import app.melon.util.extensions.dpInt
+import app.melon.util.number.MelonNumberFormatter
 import app.melon.util.time.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -36,6 +37,7 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
 
     @EpoxyAttribute lateinit var item: FeedAndAuthor
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
+    @EpoxyAttribute lateinit var numberFormatter: MelonNumberFormatter
 
     private var overlayView: ImageViewerOverlay? = null
 
@@ -67,8 +69,8 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
             userSchoolView.text = item.author.school
             postTimeView.text = formatter.formatShortRelativeTime(item.feed.postTime)
             contentView.text = item.feed.content
-            commentView.text = item.feed.replyCount.toString()
-            favoriteView.text = item.feed.favouriteCount.toString()
+            commentView.text = numberFormatter.format(item.feed.replyCount)
+            favoriteView.text = numberFormatter.format(item.feed.favouriteCount)
 
             photoView.isVisible = item.feed.photos.isNotEmpty()
             photoView.takeIf { it.isVisible }?.apply {

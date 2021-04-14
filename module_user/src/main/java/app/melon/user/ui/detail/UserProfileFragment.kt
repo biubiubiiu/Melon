@@ -15,6 +15,7 @@ import app.melon.base.ui.TagView
 import app.melon.util.extensions.viewModelProviderFactoryOf
 import app.melon.util.extensions.getColorCompat
 import app.melon.user.R
+import app.melon.util.number.MelonNumberFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyRecyclerView
@@ -27,6 +28,8 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
 
     @Inject internal lateinit var viewModelFactory: UserProfileViewModel.Factory
     @Inject internal lateinit var controllerFactory: UserProfileController.Factory
+
+    @Inject internal lateinit var numberFormatter: MelonNumberFormatter
 
     private val viewModel: UserProfileViewModel by viewModels {
         viewModelProviderFactoryOf {
@@ -103,8 +106,8 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
             }
             view.findViewById<TextView>(R.id.user_profile_username).text = user.username
             view.findViewById<TextView>(R.id.user_profile_description).text = user.description
-            view.findViewById<TextView>(R.id.uesr_profile_followers).text = user.followerCount.toString()
-            view.findViewById<TextView>(R.id.user_profile_following).text = user.followingCount.toString()
+            view.findViewById<TextView>(R.id.uesr_profile_followers).text = numberFormatter.format(user.followerCount ?: 0)
+            view.findViewById<TextView>(R.id.user_profile_following).text = numberFormatter.format(user.followerCount ?: 0)
             view.findViewById<TagView>(R.id.user_profile_tag).bind(user, style = TagView.TagStyle.Info())
             view.findViewById<TagView>(R.id.user_profile_distance_tag).bind(
                 user,

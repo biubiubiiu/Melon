@@ -40,7 +40,7 @@ class MelonNumberFormatter @Inject constructor(
         val value = floor(log10(numValue.toDouble())).toInt()
         val base = value / unit
         return if (value >= unit && base < suffix.size) {
-            DecimalFormat(bigNumPattern).format(numValue / 10f.pow(base * 3f)) + suffix[base]
+            DecimalFormat(bigNumPattern).format(numValue / 10f.pow(base * unit)) + suffix[base]
         } else {
             DecimalFormat(smallNumPattern).format(numValue)
         }
