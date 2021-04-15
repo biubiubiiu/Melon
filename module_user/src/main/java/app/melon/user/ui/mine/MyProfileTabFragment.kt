@@ -7,11 +7,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import app.melon.base.ui.databinding.FragmentCommonTabsBinding
 import app.melon.base.ui.lazyload.LazyFragmentPagerAdapter
+import app.melon.data.constants.MY_ANONYMOUS_POST
+import app.melon.data.constants.MY_FAVORITE_POST
+import app.melon.data.constants.MY_POST
+import app.melon.feed.FeedPageConfig
+import app.melon.feed.ui.CommonFeedFragment
 import app.melon.user.R
 import app.melon.util.delegates.viewBinding
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
+
 
 class MyProfileTabFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
@@ -33,14 +39,18 @@ class MyProfileTabFragment : DaggerFragment(R.layout.fragment_common_tabs) {
                 getString(R.string.my_profile_posts),
                 getString(R.string.my_profile_favors)
             )
+            private val pageConfig = arrayOf(
+                FeedPageConfig(MY_ANONYMOUS_POST, "my_anonymous_posts", true),
+                FeedPageConfig(MY_POST, "my_posts", false),
+                FeedPageConfig(MY_FAVORITE_POST, "my_favorite_posts", false)
+            )
             private val pages = titles.size
 
             override fun getItem(container: ViewGroup?, position: Int): Fragment {
-                return when (position) {
-                    0 -> MyPostsFragment.newInstance(page = 0)
-                    1 -> MyAnonymousPostsFragment.newInstance(page = 1)
-                    2 -> MyFavorPostsFragment.newInstance(page = 2)
-                    else -> throw IllegalArgumentException("out of range")
+                if (position in 0 until pages) {
+                    return CommonFeedFragment.newInstance(page = position, config = pageConfig[position])
+                } else {
+                    throw IllegalArgumentException("out of range")
                 }
             }
 

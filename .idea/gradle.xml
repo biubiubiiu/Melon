@@ -29,8 +29,6 @@
             <option value="$PROJECT_DIR$/module_group" />
             <option value="$PROJECT_DIR$/module_user" />
             <option value="$PROJECT_DIR$/module_user_api" />
-            <option value="$PROJECT_DIR$/ui-following" />
-            <option value="$PROJECT_DIR$/ui-recommend" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

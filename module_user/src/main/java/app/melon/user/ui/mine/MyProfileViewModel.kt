@@ -4,22 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.melon.data.entities.User
-import app.melon.user.interactor.UpdateUserFeeds
 import javax.inject.Inject
 
-class MyProfileViewModel @Inject constructor(
-    // TODO inject UserManager
-    private val updateMyFeeds: UpdateUserFeeds,
-    private val updateMyAnonymousFeeds: UpdateUserFeeds,
-    private val updateMyFavorFeeds: UpdateUserFeeds
-) : ViewModel() {
+
+class MyProfileViewModel @Inject constructor() : ViewModel() {
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
-
-    val myFeedsPagingData = updateMyFeeds.observe()
-    val myAnonymousFeedsPagingData = updateMyAnonymousFeeds.observe()
-    val myFavorFeedsPagingData = updateMyFavorFeeds.observe()
 
     init {
         _user.value = User(
@@ -31,19 +22,9 @@ class MyProfileViewModel @Inject constructor(
             followerCount = 100,
             followingCount = 1002
         )
-
-        setUid("6")
     }
 
     fun reselect(position: Int) {
 
-    }
-
-    // TODO retrieve uid from UserManager
-    // TODO add type as param to UpdateUserFeeds
-    fun setUid(uid: String) {
-        updateMyFeeds(UpdateUserFeeds.Params(uid = uid))
-        updateMyAnonymousFeeds(UpdateUserFeeds.Params(uid = uid))
-        updateMyFavorFeeds(UpdateUserFeeds.Params(uid = uid))
     }
 }

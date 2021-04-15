@@ -13,7 +13,7 @@ import app.melon.util.extensions.showToast
 import app.melon.util.extensions.sp
 import app.melon.data.entities.User
 import app.melon.data.resultentities.FeedAndAuthor
-import app.melon.feed.FeedControllerDelegate
+import app.melon.feed.ui.controller.FeedControllerDelegate
 import app.melon.user.R
 import app.melon.user.ui.widget.schoolInfo
 import com.airbnb.epoxy.Typed3EpoxyController

@@ -41,8 +41,6 @@ object Modules {
     const val baseFramework = ":lib_base_framework"
     const val data = ":data"
     const val dataAndroid = ":data-android"
-    const val recommend = ":ui-recommend"
-    const val follow = ":ui-following"
 
     const val user = ":module_user"
     const val userApi = ":module_user_api"

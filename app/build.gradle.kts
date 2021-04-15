@@ -50,8 +50,6 @@ kapt {
 dependencies {
     implementation(project(Modules.baseFramework))
     implementation(project(Modules.dataAndroid))
-    implementation(project(Modules.recommend))
-    implementation(project(Modules.follow))
     implementation(project(Modules.user))
     implementation(project(Modules.account))
     implementation(project(Modules.event))

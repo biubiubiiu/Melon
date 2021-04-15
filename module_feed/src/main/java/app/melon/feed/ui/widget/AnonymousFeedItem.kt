@@ -1,4 +1,4 @@
-package app.melon.feed.ui
+package app.melon.feed.ui.widget
 
 import android.view.ViewGroup
 import android.widget.ImageView

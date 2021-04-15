@@ -1,28 +1,25 @@
-package app.melon.feed.anonymous
+package app.melon.home.anonymous
 
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import app.melon.base.ui.databinding.FragmentCommonTabsBinding
 import app.melon.base.ui.lazyload.LazyFragmentPagerAdapter
+import app.melon.data.constants.ANONYMOUS_ALL_FEED
+import app.melon.data.constants.ANONYMOUS_SCHOOL_FEED
+import app.melon.data.constants.ANONYMOUS_TRENDING_FEED
+import app.melon.feed.ui.CommonFeedFragment
+import app.melon.feed.FeedPageConfig
 import app.melon.feed.R
-import app.melon.feed.anonymous.ui.ExploreFeedFragment
-import app.melon.feed.anonymous.ui.SchoolFeedFragment
-import app.melon.feed.anonymous.ui.TrendingFeedFragment
 import app.melon.util.delegates.viewBinding
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
-import javax.inject.Inject
 
 
-class AnonymousFeedFragment : DaggerFragment(R.layout.fragment_common_tabs) {
+class AnonymousForumFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
     private val binding: FragmentCommonTabsBinding by viewBinding()
-
-    @Inject internal lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<AnonymousFeedViewModel> { viewModelFactory }
 
     private val viewPager get() = binding.viewpager
     private val tabLayout get() = binding.tabLayout
@@ -37,14 +34,18 @@ class AnonymousFeedFragment : DaggerFragment(R.layout.fragment_common_tabs) {
                 getString(R.string.feed_explore),
                 getString(R.string.feed_trending)
             )
+            private val pageConfig = arrayOf(
+                FeedPageConfig(ANONYMOUS_SCHOOL_FEED, "anonymous_school_feeds", true),
+                FeedPageConfig(ANONYMOUS_ALL_FEED, "anonymous_all_feeds", true),
+                FeedPageConfig(ANONYMOUS_TRENDING_FEED, "anonymous_trending_feeds", true)
+            )
             private val pages = titles.size
 
             override fun getItem(container: ViewGroup?, position: Int): Fragment {
-                return when (position) {
-                    0 -> SchoolFeedFragment.newInstance(page = 0)
-                    1 -> ExploreFeedFragment.newInstance(page = 1)
-                    2 -> TrendingFeedFragment.newInstance(page = 2)
-                    else -> throw IllegalArgumentException("out of range")
+                if (position in 0 until pages) {
+                    return CommonFeedFragment.newInstance(page = position, config = pageConfig[position])
+                } else {
+                    throw IllegalArgumentException("out of range")
                 }
             }
 
@@ -56,7 +57,7 @@ class AnonymousFeedFragment : DaggerFragment(R.layout.fragment_common_tabs) {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 tab ?: return
-                viewModel.reselect(tab.position)
+//                viewModel.reselect(tab.position)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {

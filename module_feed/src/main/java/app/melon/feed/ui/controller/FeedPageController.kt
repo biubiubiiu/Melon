@@ -1,9 +1,8 @@
-package app.melon.feed.anonymous.ui
+package app.melon.feed.ui.controller
 
 import android.content.Context
 import app.melon.base.framework.BasePagingController
 import app.melon.data.resultentities.FeedAndAuthor
-import app.melon.feed.FeedControllerDelegate
 import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

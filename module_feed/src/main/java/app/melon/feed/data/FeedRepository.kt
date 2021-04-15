@@ -4,14 +4,16 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.map
 import app.melon.data.MelonDatabase
 import app.melon.data.constants.FeedPageType
 import app.melon.data.entities.Feed
 import app.melon.data.entities.User
-import app.melon.data.resultentities.EntryWithFeedAndAuthor
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.data.mapper.RemoteFeedDetailToFeedAndAuthor
+import app.melon.feed.data.mapper.RemoteFeedListToFeedAndAuthor
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAuthorPair
+import app.melon.feed.data.remote.FeedPagingSource
 import app.melon.util.base.ErrorResult
 import app.melon.util.base.Result
 import app.melon.util.base.Success
@@ -20,6 +22,7 @@ import app.melon.util.extensions.toException
 import app.melon.util.extensions.toResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,6 +33,7 @@ import javax.inject.Singleton
 class FeedRepository @Inject constructor(
     private val service: FeedApiService,
     private val database: MelonDatabase,
+    private val itemMapper: RemoteFeedListToFeedAndAuthor,
     private val listItemMapper: RemoteFeedListToFeedAuthorPair,
     private val detailItemMapper: RemoteFeedDetailToFeedAndAuthor
 ) {
@@ -64,7 +68,7 @@ class FeedRepository @Inject constructor(
         }
     }
 
-    fun getFeedList(timestamp: Long, @FeedPageType queryType: Int): Flow<PagingData<EntryWithFeedAndAuthor>> {
+    fun getFeedList(timestamp: Long, @FeedPageType queryType: Int): Flow<PagingData<FeedAndAuthor>> {
         return Pager(
             config = PAGING_CONFIG,
             remoteMediator = FeedRemoteMediator(
@@ -75,6 +79,19 @@ class FeedRepository @Inject constructor(
                 listItemMapper
             ),
             pagingSourceFactory = { database.feedEntryDao().feedDataSource(queryType) }
+        ).flow.map {
+            it.map { entry ->
+                entry.compoundItem
+            }
+        }
+    }
+
+    fun getFeedsFromUser(uid: String): Flow<PagingData<FeedAndAuthor>> {
+        return Pager(
+            config = PAGING_CONFIG,
+            pagingSourceFactory = {
+                FeedPagingSource(uid, service, PAGING_CONFIG.pageSize, itemMapper)
+            }
         ).flow
     }
 

@@ -4,18 +4,19 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.melon.base.domain.PagingInteractor
 import app.melon.data.resultentities.FeedAndAuthor
-import app.melon.user.data.UserRepository
+import app.melon.feed.data.FeedRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+
 class UpdateUserFeeds @Inject constructor(
-    private val repository: UserRepository
+    private val repository: FeedRepository
 ) : PagingInteractor<UpdateUserFeeds.Params, FeedAndAuthor>() {
 
     override fun createObservable(
         params: Params
     ): Flow<PagingData<FeedAndAuthor>> {
-        return repository.getFeedsFromUser(params.uid, params.pagingConfig)
+        return repository.getFeedsFromUser(params.uid)
     }
 
     data class Params(

@@ -8,14 +8,17 @@ import app.melon.R
 import app.melon.base.framework.BaseMvRxEpoxyFragment
 import app.melon.base.ui.lazyload.LazyFragmentPagerAdapter
 import app.melon.base.ui.databinding.FragmentCommonTabsBinding
-import app.melon.home.following.ui.FollowFragment
-import app.melon.home.recommend.ui.RecommendFragment
+import app.melon.data.constants.FOLLOWING_FEED
+import app.melon.data.constants.RECOMMEND_FEED
+import app.melon.feed.ui.CommonFeedFragment
+import app.melon.feed.FeedPageConfig
 import app.melon.util.delegates.viewBinding
 import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
 import java.lang.ref.WeakReference
+
 
 class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs), MavericksView {
 
@@ -32,16 +35,20 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs), Maveric
             private lateinit var fragmentOnScreen: WeakReference<BaseMvRxEpoxyFragment>
 
             private val titles = arrayOf(
-                requireContext().getString(R.string.home_tab_recommend),
-                requireContext().getString(R.string.home_tab_following)
+                getString(R.string.home_tab_recommend),
+                getString(R.string.home_tab_following)
+            )
+            private val pageConfig = arrayOf(
+                FeedPageConfig(RECOMMEND_FEED, "recommend_feed", false),
+                FeedPageConfig(FOLLOWING_FEED, "following_feed", false)
             )
             private val pages = titles.size
 
             override fun getItem(container: ViewGroup?, position: Int): Fragment {
-                return when (position) {
-                    0 -> RecommendFragment.newInstance(page = 0)
-                    1 -> FollowFragment.newInstance(page = 1)
-                    else -> throw IllegalArgumentException("out of range")
+                if (position in 0 until pages) {
+                    return CommonFeedFragment.newInstance(page = position, config = pageConfig[position])
+                } else {
+                    throw IllegalArgumentException("out of range")
                 }
             }
 

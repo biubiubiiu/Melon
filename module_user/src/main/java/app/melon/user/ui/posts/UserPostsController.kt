@@ -3,7 +3,7 @@ package app.melon.user.ui.posts
 import android.content.Context
 import app.melon.base.framework.BasePagingController
 import app.melon.data.resultentities.FeedAndAuthor
-import app.melon.feed.FeedControllerDelegate
+import app.melon.feed.ui.controller.FeedControllerDelegate
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

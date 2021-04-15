@@ -1,10 +1,12 @@
-package app.melon.feed
+package app.melon.feed.ui.controller
 
 import android.content.Context
 import app.melon.data.entities.Feed
 import app.melon.data.resultentities.FeedAndAuthor
-import app.melon.feed.ui.AnonymousFeedItem_
-import app.melon.feed.ui.FeedItem_
+import app.melon.feed.FeedActions
+import app.melon.feed.FeedDetailActivity
+import app.melon.feed.ui.widget.AnonymousFeedItem_
+import app.melon.feed.ui.widget.FeedItem_
 import app.melon.permission.helper.SaveHelper
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.activityContext
