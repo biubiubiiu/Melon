@@ -28,7 +28,9 @@
             app:titleEnabled="false"
             app:toolbarId="@+id/toolbar">
 
-            <include layout="@layout/content_user_profile_header" />
+            <include
+                android:id="@+id/header"
+                layout="@layout/content_user_profile_header" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -44,7 +46,9 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_user_profile" />
+    <include
+        android:id="@+id/user_profile_content"
+        layout="@layout/content_user_profile" />
 
     <include
         android:id="@+id/user_profile_refresh_view"

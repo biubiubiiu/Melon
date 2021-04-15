@@ -3,28 +3,28 @@ package app.melon.user.ui.detail
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import app.melon.base.ui.TagView
-import app.melon.util.extensions.viewModelProviderFactoryOf
-import app.melon.util.extensions.getColorCompat
 import app.melon.user.R
+import app.melon.user.databinding.FragmentUserProfileBinding
+import app.melon.util.delegates.viewBinding
+import app.melon.util.extensions.getColorCompat
+import app.melon.util.extensions.viewModelProviderFactoryOf
 import app.melon.util.number.MelonNumberFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.airbnb.epoxy.EpoxyRecyclerView
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
+
 class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
+
+    private val binding: FragmentUserProfileBinding by viewBinding()
 
     @Inject internal lateinit var viewModelFactory: UserProfileViewModel.Factory
     @Inject internal lateinit var controllerFactory: UserProfileController.Factory
@@ -53,74 +53,63 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
 
     private var showMorePostsCallback: ((View) -> Unit)? = null
 
-    private lateinit var toolbar: Toolbar
-    private lateinit var collapsingToolbarLayout: CollapsingToolbarLayout
-    private lateinit var appBarLayout: AppBarLayout
-    private lateinit var recyclerView: EpoxyRecyclerView
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        findViews(view)
+        setupToolbar()
 
-        val activity = requireActivity() as AppCompatActivity
-        activity.setSupportActionBar(toolbar)
-        activity.supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setDisplayShowHomeEnabled(true)
-        }
-
-        appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-            var isShow = false
-            var scrollRange = -1
-
-            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.totalScrollRange
-                    toolbar.setTitleTextColor(Color.TRANSPARENT)
-                    toolbar.background.alpha = 0
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    toolbar.setTitleTextColor(appBarLayout.context.getColorCompat(R.color.TextPrimary))
-                    isShow = true
-                } else if (isShow) {
-                    toolbar.setTitleTextColor(Color.TRANSPARENT)
-                    isShow = false
-                }
-            }
-        })
-        recyclerView.setController(controller)
+        binding.userProfileContent.userProfileList.setController(controller)
 
         viewModel.liveData.observe(viewLifecycleOwner, Observer { state ->
-            view.findViewById<View>(R.id.user_profile_refresh_view).isVisible = state.refreshing
+            binding.userProfileRefreshView.root.isVisible = state.refreshing
             controller.setData(state.user, state.pageItems, state.refreshing)
 
             val user = state.user ?: return@Observer
-            toolbar.title = user.username
-            view.findViewById<ImageView>(R.id.user_profile_background).load(user.backgroundUrl) {
-                placeholder(app.melon.base.ui.R.drawable.image_placeholder)
+            binding.toolbar.title = user.username
+            binding.header.userProfileBackground.load(user.backgroundUrl) {
+                placeholder(R.drawable.image_placeholder)
             }
-            view.findViewById<ImageView>(R.id.user_profile_avatar).load(user.avatarUrl) {
-                placeholder(app.melon.base.ui.R.drawable.image_placeholder)
+            binding.header.userProfileAvatar.load(user.avatarUrl) {
+                placeholder(R.drawable.image_placeholder)
                 transformations(CircleCropTransformation())
             }
-            view.findViewById<TextView>(R.id.user_profile_username).text = user.username
-            view.findViewById<TextView>(R.id.user_profile_description).text = user.description
-            view.findViewById<TextView>(R.id.uesr_profile_followers).text = numberFormatter.format(user.followerCount ?: 0)
-            view.findViewById<TextView>(R.id.user_profile_following).text = numberFormatter.format(user.followerCount ?: 0)
-            view.findViewById<TagView>(R.id.user_profile_tag).bind(user, style = TagView.TagStyle.Info())
-            view.findViewById<TagView>(R.id.user_profile_distance_tag).bind(
+            binding.header.userProfileUsername.text = user.username
+            binding.header.userProfileDescription.text = user.description
+            binding.header.uesrProfileFollowers.text = numberFormatter.format(user.followerCount ?: 0)
+            binding.header.userProfileFollowing.text = numberFormatter.format(user.followerCount ?: 0)
+            binding.header.userProfileTag.bind(user, style = TagView.TagStyle.Info())
+            binding.header.userProfileDistanceTag.bind(
                 user,
                 style = TagView.TagStyle.Distance(distance = 2f)
             ) // TODO import locate SDK
         })
     }
 
-    private fun findViews(view: View) {
-        toolbar = view.findViewById(R.id.toolbar)
-        collapsingToolbarLayout = view.findViewById(R.id.toolbar_layout)
-        appBarLayout = view.findViewById(R.id.app_bar)
-        recyclerView = view.findViewById(R.id.user_profile_list)
+    private fun setupToolbar() {
+        val activity = requireActivity() as AppCompatActivity
+        activity.setSupportActionBar(binding.toolbar)
+        activity.supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setDisplayShowHomeEnabled(true)
+        }
+        binding.appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+            var isShow = false
+            var scrollRange = -1
+
+            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.totalScrollRange
+                    binding.toolbar.setTitleTextColor(Color.TRANSPARENT)
+                    binding.toolbar.background.alpha = 0
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    binding.toolbar.setTitleTextColor(appBarLayout.context.getColorCompat(R.color.TextPrimary))
+                    isShow = true
+                } else if (isShow) {
+                    binding.toolbar.setTitleTextColor(Color.TRANSPARENT)
+                    isShow = false
+                }
+            }
+        })
     }
 
     fun configureShowMorePosts(

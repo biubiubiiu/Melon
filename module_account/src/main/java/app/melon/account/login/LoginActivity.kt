@@ -8,14 +8,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import app.melon.account.R
+import app.melon.account.databinding.ActivityLoginBinding
 import app.melon.account.signup.SignUpStepFormActivity
+import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.afterTextChanged
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -25,6 +25,8 @@ class LoginActivity : DaggerAppCompatActivity() {
 
     private val presetUsername get() = intent.getStringExtra(KEY_USERNAME)
     private val presetPassword get() = intent.getStringExtra(KEY_PASSWORD)
+
+    private val binding: ActivityLoginBinding by viewBinding()
 
     companion object {
         private const val KEY_USERNAME = "KEY_USERNAME"
@@ -42,50 +44,34 @@ class LoginActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_login)
-
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        val username = findViewById<EditText>(R.id.login_credential)
-        val password = findViewById<EditText>(R.id.login_password)
-        val login = findViewById<TextView>(R.id.login)
-        val loading = findViewById<View>(R.id.login_loading)
+        setupToolbar()
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
-            val loginState = it ?: return@Observer
-
             // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
+            binding.login.isEnabled = it?.isDataValid == true
         })
 
-        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
-            val loginResult = it ?: return@Observer
-
-            loading.visibility = View.GONE
-            if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
-            }
-            if (loginResult.success) {
+        loginViewModel.loginResult.observe(this@LoginActivity, Observer { result ->
+            result ?: return@Observer
+            binding.loginLoading.isVisible = false
+            result.error?.let { showLoginFailed(it) }
+            if (result.success) {
                 onLoginSuccess()
             }
         })
 
-        username.afterTextChanged {
+        binding.loginCredential.afterTextChanged {
             loginViewModel.loginDataChanged(
-                username.text.toString(),
-                password.text.toString()
+                binding.loginCredential.text.toString(),
+                binding.loginPassword.text.toString()
             )
         }
 
-        password.apply {
+        binding.loginPassword.apply {
             afterTextChanged {
                 loginViewModel.loginDataChanged(
-                    username.text.toString(),
-                    password.text.toString()
+                    binding.loginCredential.text.toString(),
+                    binding.loginPassword.text.toString()
                 )
             }
 
@@ -93,21 +79,27 @@ class LoginActivity : DaggerAppCompatActivity() {
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString()
+                            binding.loginCredential.text.toString(),
+                            binding.loginPassword.text.toString()
                         )
                 }
                 false
             }
 
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+            binding.login.setOnClickListener {
+                binding.loginLoading.visibility = View.VISIBLE
+                loginViewModel.login(binding.loginCredential.text.toString(), binding.loginPassword.text.toString())
             }
         }
 
-        username.setText(presetUsername.orEmpty())
-        password.setText(presetPassword.orEmpty())
+        binding.loginCredential.setText(presetUsername.orEmpty())
+        binding.loginPassword.setText(presetPassword.orEmpty())
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

@@ -5,19 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.commit
 import app.melon.data.resultentities.FeedAndAuthor
+import app.melon.feed.databinding.ActivityFeedDetailBinding
 import app.melon.feed.ui.FeedDetailFragment
+import app.melon.util.delegates.viewBinding
 
 
 class FeedDetailActivity : AppCompatActivity() {
 
     private val cache by lazy { requireNotNull(intent.getSerializableExtra(KEY_CACHE_FEED) as FeedAndAuthor) }
 
+    private val binding: ActivityFeedDetailBinding by viewBinding()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feed_detail)
         setupToolbar()
 
         if (savedInstanceState == null) {
@@ -28,8 +30,7 @@ class FeedDetailActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)

@@ -92,7 +92,7 @@ class UserProfileContainerFragment : DaggerFragment(R.layout.fragment_user_profi
     }
 
     override fun onBackPressed(): Boolean {
-        if (view?.findViewById<View>(R.id.user_posts_root) != null) {
+        if (view?.findViewById<View>(END_FRAGMENT_ROOT_ID) != null) {
             childFragmentManager.popBackStack()
             return true
         }

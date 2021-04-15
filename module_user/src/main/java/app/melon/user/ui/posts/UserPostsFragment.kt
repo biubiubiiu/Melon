@@ -12,6 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import app.melon.util.extensions.ifNotEmpty
 import app.melon.util.extensions.viewModelProviderFactoryOf
 import app.melon.user.R
+import app.melon.user.databinding.FragmentUserPostsBinding
+import app.melon.util.delegates.viewBinding
 import com.airbnb.epoxy.EpoxyRecyclerView
 import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.flow.collectLatest
@@ -23,6 +25,8 @@ class UserPostsFragment : DaggerFragment(R.layout.fragment_user_posts) {
 
     @Inject internal lateinit var viewModelFactory: UserPostsViewModel.Factory
     @Inject internal lateinit var controllerFactory: UserPostsController.Factory
+
+    private val binding: FragmentUserPostsBinding by viewBinding()
 
     private val viewModel: UserPostsViewModel by viewModels {
         viewModelProviderFactoryOf {
@@ -36,8 +40,6 @@ class UserPostsFragment : DaggerFragment(R.layout.fragment_user_posts) {
     private val controller: UserPostsController by lazy {
         controllerFactory.create(requireContext())
     }
-
-    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,12 +56,10 @@ class UserPostsFragment : DaggerFragment(R.layout.fragment_user_posts) {
         super.onViewCreated(view, savedInstanceState)
         transitionName.ifNotEmpty { ViewCompat.setTransitionName(view, it) }
 
-        val recyclerView: EpoxyRecyclerView = view.findViewById(R.id.user_post_list)
-        recyclerView.setController(controller)
+        binding.recyclerView.setController(controller)
 
-        toolbar = view.findViewById(R.id.toolbar)
         val activity = requireActivity() as AppCompatActivity
-        activity.setSupportActionBar(toolbar)
+        activity.setSupportActionBar(binding.toolbar)
         activity.supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
             it.setDisplayShowHomeEnabled(true)

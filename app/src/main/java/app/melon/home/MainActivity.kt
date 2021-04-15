@@ -4,28 +4,25 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.ImageView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import app.melon.MainViewModel
 import app.melon.R
 import app.melon.account.api.IAccountService
+import app.melon.databinding.ActivityMainBinding
 import app.melon.event.api.IEventService
 import app.melon.user.api.IUserService
+import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.reverse
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
+class MainActivity : DaggerAppCompatActivity() {
 
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navView: NavigationView
+    private val binding: ActivityMainBinding by viewBinding()
 
     @Inject internal lateinit var viewModel: MainViewModel
 
@@ -35,36 +32,32 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.mainScreen.toolbar)
 
 //        val fab: FloatingActionButton = findViewById(R.id.fab)
 //        fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
 //        }
-        findViews()
-
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.home_bottom_navigation)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.home_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        bottomNavigationView.setupWithNavController(navController)
+        binding.mainScreen.homeBottomNavigation.setupWithNavController(navController)
 
-        toolbar.setNavigationOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
+        binding.mainScreen.toolbar.setNavigationOnClickListener {
+            binding.homeDrawerLayout.openDrawer(GravityCompat.START)
         }
 
-        val headerView = navView.getHeaderView(0)
+        val headerView = binding.homeNavView.getHeaderView(0)
         val navViewHeader: View = headerView.findViewById(R.id.home_nav_header_root)
         val expandMoreIcon: ImageView = headerView.findViewById(R.id.home_nav_expand_more_icon)
         navViewHeader.setOnClickListener {
             viewModel.drawerMenuChanged()
         }
         viewModel.drawerMode.observe(this, Observer {
-            navView.menu.setGroupVisible(R.id.home_nav_drawer_group_operations, it)
-            navView.menu.setGroupVisible(R.id.home_nav_drawer_group_setting, it)
-            navView.menu.setGroupVisible(R.id.home_nav_drawer_group_account, it.reverse())
+            binding.homeNavView.menu.setGroupVisible(R.id.home_nav_drawer_group_operations, it)
+            binding.homeNavView.menu.setGroupVisible(R.id.home_nav_drawer_group_setting, it)
+            binding.homeNavView.menu.setGroupVisible(R.id.home_nav_drawer_group_account, it.reverse())
 
             expandMoreIcon.rotation = if (it) 0f else 180f
         })
@@ -72,13 +65,8 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
         setupDrawerNavigation()
     }
 
-    private fun findViews() {
-        drawerLayout = findViewById(R.id.home_drawer_layout)
-        navView = findViewById(R.id.home_nav_view)
-    }
-
     private fun setupDrawerNavigation() {
-        navView.setNavigationItemSelectedListener { menuItem ->
+        binding.homeNavView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home_nav_drawer_nav_to_login -> accountService.startLogin(this)
                 R.id.home_nav_drawer_nav_to_registration -> accountService.startRegister(this)
@@ -88,7 +76,7 @@ class MainActivity : DaggerAppCompatActivity(R.layout.activity_main) {
                 } // TODO
             }
             menuItem.isChecked = false
-            drawerLayout.closeDrawers()
+            binding.homeDrawerLayout.closeDrawers()
             true
         }
     }
