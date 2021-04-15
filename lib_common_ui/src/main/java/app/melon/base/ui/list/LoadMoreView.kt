@@ -12,6 +12,6 @@ abstract class LoadMoreView : EpoxyModelWithHolder<LoadMoreView.Holder>() {
     override fun getDefaultLayout(): Int = R.layout.view_list_load_more
 
     class Holder : BaseEpoxyHolder() {
-        val progressbar by bind<ContentLoadingProgressBar>(R.id.content_loading_progressbar)
+        internal val progressbar by bind<ContentLoadingProgressBar>(R.id.content_loading_progressbar)
     }
 }

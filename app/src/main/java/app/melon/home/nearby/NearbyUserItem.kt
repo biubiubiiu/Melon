@@ -44,12 +44,12 @@ abstract class NearbyUserItem : EpoxyModelWithHolder<NearbyUserItem.Holder>() {
     }
 
     class Holder : BaseEpoxyHolder() {
-        val containerView by bind<ViewGroup>(R.id.container_view)
-        val avatarView by bind<ImageView>(R.id.nearby_user_avatar)
-        val usernameView by bind<TextView>(R.id.nearby_username)
-        val userTagView by bind<TagView>(R.id.nearby_user_tag)
-        val userDescriptionView by bind<TextView>(R.id.nearby_user_description)
-        val schoolView by bind<TextView>(R.id.nearby_user_school)
-        val distance by bind<TextView>(R.id.nearby_user_distance)
+        internal val containerView by bind<ViewGroup>(R.id.container_view)
+        internal val avatarView by bind<ImageView>(R.id.nearby_user_avatar)
+        internal val usernameView by bind<TextView>(R.id.nearby_username)
+        internal val userTagView by bind<TagView>(R.id.nearby_user_tag)
+        internal val userDescriptionView by bind<TextView>(R.id.nearby_user_description)
+        internal val schoolView by bind<TextView>(R.id.nearby_user_school)
+        internal val distance by bind<TextView>(R.id.nearby_user_distance)
     }
 }

@@ -24,7 +24,7 @@ abstract class CarouselHeader : EpoxyModelWithHolder<CarouselHeader.Holder>() {
     }
 
     class Holder : BaseEpoxyHolder() {
-        val titleView by bind<TextView>(R.id.header_title)
-        val trailingView by bind<TextView>(R.id.header_trailing)
+        internal val titleView by bind<TextView>(R.id.header_title)
+        internal val trailingView by bind<TextView>(R.id.header_trailing)
     }
 }

@@ -30,10 +30,10 @@ abstract class SchoolInfo : EpoxyModelWithHolder<SchoolInfo.Holder>() {
     }
 
     class Holder : BaseEpoxyHolder() {
-        val hometownView by bind<TextView>(R.id.user_profile_hometown)
-        val schoolView by bind<TextView>(R.id.user_profile_school)
-        val collegeView by bind<TextView>(R.id.user_profile_college)
-        val majorView by bind<TextView>(R.id.user_profile_major)
-        val degreeView by bind<TextView>(R.id.user_profile_degree)
+        internal val hometownView by bind<TextView>(R.id.user_profile_hometown)
+        internal val schoolView by bind<TextView>(R.id.user_profile_school)
+        internal val collegeView by bind<TextView>(R.id.user_profile_college)
+        internal val majorView by bind<TextView>(R.id.user_profile_major)
+        internal val degreeView by bind<TextView>(R.id.user_profile_degree)
     }
 }

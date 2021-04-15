@@ -34,8 +34,8 @@ abstract class GroupItem : EpoxyModelWithHolder<GroupItem.Holder>() {
     }
 
     class Holder : BaseEpoxyHolder() {
-        val showPic by bind<ImageView>(R.id.interest_group_pic)
-        val groupNameView by bind<TextView>(
+        internal val showPic by bind<ImageView>(R.id.interest_group_pic)
+        internal val groupNameView by bind<TextView>(
             R.id.interest_group_name
         )
     }

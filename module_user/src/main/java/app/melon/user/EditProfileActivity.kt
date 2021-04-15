@@ -10,15 +10,16 @@ import app.melon.user.databinding.ActivityEditProfileBinding
 import app.melon.permission.helper.EditHelper
 import app.melon.user.ui.edit.EditProfileController
 import app.melon.user.ui.edit.EditProfileViewModel
+import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.setTitleColor
 import app.melon.util.extensions.showToast
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
+
 class EditProfileActivity : DaggerAppCompatActivity(), EditProfileController.Action {
 
-    private var _binding: ActivityEditProfileBinding? = null
-    private val binding get() = _binding!!
+    private val binding: ActivityEditProfileBinding by viewBinding()
 
     private val controller = EditProfileController(this)
     private val editHelper = EditHelper(this)
@@ -27,8 +28,6 @@ class EditProfileActivity : DaggerAppCompatActivity(), EditProfileController.Act
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityEditProfileBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         setupToolbar()
         binding.recyclerView.setController(controller)
@@ -36,11 +35,6 @@ class EditProfileActivity : DaggerAppCompatActivity(), EditProfileController.Act
         viewModel.user.observe(this, Observer {
             controller.setData(it)
         })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -70,7 +64,6 @@ class EditProfileActivity : DaggerAppCompatActivity(), EditProfileController.Act
             setDisplayShowHomeEnabled(true)
         }
     }
-
 
     override fun afterHometownChanged(content: String) = viewModel.hometownChanged(content)
     override fun afterCollegeChanged(content: String) = viewModel.collegeChanged(content)
