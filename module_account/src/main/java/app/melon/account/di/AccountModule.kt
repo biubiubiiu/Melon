@@ -1,5 +1,6 @@
 package app.melon.account.di
 
+import android.content.Context
 import app.melon.account.FakeAccountService
 import app.melon.account.api.IAccountService
 import app.melon.account.service.AccountApiService
@@ -20,7 +21,7 @@ class AccountModule {
 
     @Singleton
     @Provides
-    fun provideAccountService() = FakeAccountService()
+    fun provideAccountService(context: Context) = FakeAccountService(context)
 }
 
 @Module

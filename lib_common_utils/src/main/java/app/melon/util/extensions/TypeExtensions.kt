@@ -15,6 +15,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import kotlin.math.sqrt
 
 fun Fragment.startActivity(cls: Class<*>) {
     startActivity(Intent(context, cls))
@@ -58,7 +59,7 @@ inline fun <reified T> flatten(vararg lists: List<T>?) = lists.flatMap { it ?: e
 
 fun Float.lerp(other: Float, amount: Float): Float = this + amount * (other - this)
 
-fun Float.sqrt() = Math.sqrt(this.toDouble()).toFloat()
+fun Float.sqrt() = sqrt(this.toDouble()).toFloat()
 
 fun Boolean.reverse() = !this
 

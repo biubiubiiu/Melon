@@ -14,14 +14,14 @@ import java.util.TimeZone;
 
 public class CalendarReminderUtils {
 
-    private static String CALENDER_URL = "content://com.android.calendar/calendars";
-    private static String CALENDER_EVENT_URL = "content://com.android.calendar/events";
-    private static String CALENDER_REMINDER_URL = "content://com.android.calendar/reminders";
+    private static final String CALENDER_URL = "content://com.android.calendar/calendars";
+    private static final String CALENDER_EVENT_URL = "content://com.android.calendar/events";
+    private static final String CALENDER_REMINDER_URL = "content://com.android.calendar/reminders";
 
-    private static String CALENDARS_NAME = "boohee";
-    private static String CALENDARS_ACCOUNT_NAME = "BOOHEE@boohee.com";
-    private static String CALENDARS_ACCOUNT_TYPE = "com.android.boohee";
-    private static String CALENDARS_DISPLAY_NAME = "BOOHEE账户";
+    private static final String CALENDARS_NAME = "boohee";
+    private static final String CALENDARS_ACCOUNT_NAME = "BOOHEE@boohee.com";
+    private static final String CALENDARS_ACCOUNT_TYPE = "com.android.boohee";
+    private static final String CALENDARS_DISPLAY_NAME = "BOOHEE账户";
 
     /**
      * 检查是否已经添加了日历账户，如果没有添加先添加一个日历账户再查询
@@ -90,8 +90,7 @@ public class CalendarReminderUtils {
                 .build();
 
         Uri result = context.getContentResolver().insert(calendarUri, value);
-        long id = result == null ? -1 : ContentUris.parseId(result);
-        return id;
+        return result == null ? -1 : ContentUris.parseId(result);
     }
 
     /**
@@ -137,10 +136,7 @@ public class CalendarReminderUtils {
         values.put(CalendarContract.Reminders.EVENT_ID, ContentUris.parseId(newEvent));
         values.put(CalendarContract.Reminders.MINUTES, previousDate * 24 * 60);// 提前previousDate天有提醒
         values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
-        Uri uri = context.getContentResolver().insert(Uri.parse(CALENDER_REMINDER_URL), values);
-        if (uri == null) { //添加事件提醒失败直接返回
-            return;
-        }
+        context.getContentResolver().insert(Uri.parse(CALENDER_REMINDER_URL), values);
     }
 
     /**

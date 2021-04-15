@@ -13,10 +13,12 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    private val ADDRESS = "10.16.80.28"
-    private val PORT = "3000"
-    private val API_HOST = "$ADDRESS:$PORT"
-    private val BASE_URL = "http://$API_HOST/"
+    private companion object {
+        const val ADDRESS = "10.16.80.28"
+        const val PORT = "3000"
+        const val API_HOST = "$ADDRESS:$PORT"
+        const val BASE_URL = "http://$API_HOST/"
+    }
 
     @Singleton
     @Provides

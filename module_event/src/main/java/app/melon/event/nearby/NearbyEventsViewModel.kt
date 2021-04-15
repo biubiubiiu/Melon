@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 
 class NearbyEventsViewModel @Inject constructor(
-    private val updateNearbyEvents: UpdateEventList
+    updateNearbyEvents: UpdateEventList
 ) : ViewModel() {
 
     val eventsPagingData = updateNearbyEvents.observe()

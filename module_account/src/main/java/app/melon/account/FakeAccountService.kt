@@ -7,15 +7,16 @@ import app.melon.account.api.IAccountService
 import app.melon.account.login.LoginActivity
 import app.melon.account.signup.SignUpStepFormActivity
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class FakeAccountService @Inject constructor() : IAccountService {
+
+@Singleton
+class FakeAccountService @Inject constructor(
+    context: Context
+) : IAccountService {
 
     private var mIsLogin = false
     private val mObservers: MutableList<Observer> = ArrayList()
-
-    private fun FakeAccountService(context: Context) {
-        // ...
-    }
 
     override fun startLogin(context: Context) {
         context.startActivity(Intent(context, LoginActivity::class.java))

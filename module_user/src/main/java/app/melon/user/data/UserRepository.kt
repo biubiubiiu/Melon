@@ -1,8 +1,5 @@
 package app.melon.user.data
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import app.melon.data.MelonDatabase
 import app.melon.data.entities.User
 import app.melon.data.resultentities.FeedAndAuthor
@@ -17,7 +14,6 @@ import app.melon.util.extensions.toException
 import app.melon.util.extensions.toResult
 import app.melon.util.mappers.toListMapper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -71,15 +67,6 @@ class UserRepository @Inject constructor(
         return withContext(Dispatchers.Default) {
             listItemMapper.toListMapper().invoke(apiResponse.data ?: emptyList())
         }
-    }
-
-    fun getFeedsFromUser(uid: String, pagingConfig: PagingConfig): Flow<PagingData<FeedAndAuthor>> {
-        return Pager(
-            config = pagingConfig,
-            pagingSourceFactory = {
-                UserFeedsPagingSource(uid, feedService, pagingConfig.pageSize, listItemMapper)
-            }
-        ).flow
     }
 
     private fun mergeUser(local: User, remote: User) = local.copy(

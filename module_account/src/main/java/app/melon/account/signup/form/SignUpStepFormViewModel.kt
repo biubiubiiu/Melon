@@ -168,7 +168,7 @@ class ValidatePhone @Inject constructor() : SuspendingWorkInteractor<String, Int
 
     companion object {
         private const val PHONE_PATTERN =
-            "^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}\$"
+            "^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][189]))[0-9]{8}\$"
         private val PHONE: Pattern = Pattern.compile(PHONE_PATTERN)
     }
 

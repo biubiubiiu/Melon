@@ -57,10 +57,9 @@ public class LazyViewPager extends ViewPager {
                     mLazyPagerAdapter.finishUpdate(this);
                 }
             } else if (getCurrentItem() > position) {
-                int lazyPosition = position;
-                if (1 - offset >= mInitLazyItemOffset && mLazyPagerAdapter.isLazyItem(lazyPosition)) {
+                if (1 - offset >= mInitLazyItemOffset && mLazyPagerAdapter.isLazyItem(position)) {
                     mLazyPagerAdapter.startUpdate(this);
-                    mLazyPagerAdapter.addLazyItem(this, lazyPosition);
+                    mLazyPagerAdapter.addLazyItem(this, position);
                     mLazyPagerAdapter.finishUpdate(this);
                 }
             }

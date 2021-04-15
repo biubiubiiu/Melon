@@ -22,18 +22,10 @@ class UserProfileViewModel @AssistedInject constructor(
 ) : ReduxViewModel<UserProfileViewState>(initialState) {
 
     private val loadingState = ObservableLoadingCounter()
-    private val pendingActions = MutableSharedFlow<UserProfileAction>()
 
     init {
         viewModelScope.launch {
             loadingState.observable.collectAndSetState { copy(refreshing = it) }
-        }
-        viewModelScope.launch {
-            pendingActions.collect { action ->
-                when (action) {
-                    // TODO add more actions here
-                }
-            }
         }
         viewModelScope.launch {
             updateUserDetail.observe().collectAndSetState {

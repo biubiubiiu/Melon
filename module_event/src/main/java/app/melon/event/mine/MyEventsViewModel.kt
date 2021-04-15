@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 
 class MyEventsViewModel @Inject constructor(
-    private val updateOrganisedEvents: UpdateEventList,
-    private val updateJoiningEvents: UpdateEventList
+    updateOrganisedEvents: UpdateEventList,
+    updateJoiningEvents: UpdateEventList
 ) : ViewModel() {
 
     val organisedEvents = updateOrganisedEvents.observe()
