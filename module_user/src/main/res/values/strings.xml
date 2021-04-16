@@ -16,4 +16,7 @@
 
     <string name="take_from_camera">TODO</string>
     <string name="select_from_album">TODO</string>
+
+    <string name="update_profile_fail">TODO</string>
+    <string name="update_profile_success">TODO</string>
 </resources>

@@ -17,4 +17,7 @@
 
     <string name="take_from_camera">拍摄照片</string>
     <string name="select_from_album">选择已有照片</string>
+
+    <string name="update_profile_fail">个人资料更新失败</string>
+    <string name="update_profile_success">个人资料更新完成</string>
 </resources>

@@ -4,6 +4,7 @@ import app.melon.base.scope.ActivityScope
 import app.melon.base.scope.FragmentScope
 import app.melon.user.EditProfileActivity
 import app.melon.user.ProfileActivity
+import app.melon.user.ProfileImageActivity
 import app.melon.user.UserProfileActivity
 import app.melon.user.ui.UserProfileContainerFragment
 import app.melon.user.ui.detail.UserProfileFragment
@@ -26,6 +27,10 @@ abstract class UserBuilder {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun injectEditProfileActivity(): EditProfileActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun injectProfileImageActivity(): ProfileImageActivity
 
     @FragmentScope
     @ContributesAndroidInjector

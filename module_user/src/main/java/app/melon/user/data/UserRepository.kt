@@ -15,6 +15,10 @@ import app.melon.util.extensions.toResult
 import app.melon.util.mappers.toListMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -66,6 +70,25 @@ class UserRepository @Inject constructor(
         // so we just return what we got from remote
         return withContext(Dispatchers.Default) {
             listItemMapper.toListMapper().invoke(apiResponse.data ?: emptyList())
+        }
+    }
+
+    suspend fun updateAvatar(file: File): Result<String> {
+        val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+        val requestBody = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+        builder.addFormDataPart("file", file.name, requestBody)
+        return try {
+            val apiResponse = UserApiService.testInstance()
+                .updateAvatar(builder.build().parts)
+                .execute()
+                .toResult()
+                .getOrThrow()
+            if (!apiResponse.isSuccess) {
+                return ErrorResult(apiResponse.errorMessage.toException())
+            }
+            Success(apiResponse.data!!.avatarUrl!!)
+        } catch (e: Exception) {
+            ErrorResult(e)
         }
     }
 
