@@ -13,6 +13,9 @@ Thumbs.db
   
 # Java class files
 *.class
+
+# Keystore file
+*.jks
   
 # generated files
 bin/
