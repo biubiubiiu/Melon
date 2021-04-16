@@ -15,7 +15,8 @@ import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.android.support.DaggerFragment
 
-class UserProfileContainerFragment : DaggerFragment(R.layout.fragment_user_profile_container),
+
+class UserProfileContainerFragment : DaggerFragment(R.layout.common_fragment_container),
     OnBackPressedHandler {
 
     private val uid by lazy { requireArguments().getString(ARG_USER_ID, "") }
@@ -29,10 +30,9 @@ class UserProfileContainerFragment : DaggerFragment(R.layout.fragment_user_profi
         private val END_FRAGMENT_ROOT_ID = R.id.user_posts_root
 
         private const val ARG_USER_ID = "arg_user_id"
-        fun newInstance(uid: String): UserProfileContainerFragment =
-            UserProfileContainerFragment().apply {
-                arguments = bundleOf(ARG_USER_ID to uid)
-            }
+        fun newInstance(uid: String) = UserProfileContainerFragment().apply {
+            arguments = bundleOf(ARG_USER_ID to uid)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,13 +56,15 @@ class UserProfileContainerFragment : DaggerFragment(R.layout.fragment_user_profi
     }
 
     private fun showPostsFragment(sharedElement: View) {
-        val fragment = UserPostsFragment.newInstance(uid,
+        val fragment = UserPostsFragment.newInstance(
+            uid,
             END_FRAGMENT_TRANSITION_NAME
         )
         configureTransitions(fragment)
 
         childFragmentManager.commit {
-            addSharedElement(sharedElement,
+            addSharedElement(
+                sharedElement,
                 END_FRAGMENT_TRANSITION_NAME
             )
             replace(R.id.fragment_container, fragment)

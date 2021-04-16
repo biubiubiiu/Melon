@@ -48,9 +48,22 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.homeDrawerLayout.openDrawer(GravityCompat.START)
         }
 
+        setupDrawerHeader()
+        setupDrawerNavigation()
+    }
+
+    private fun setupDrawerHeader() {
         val headerView = binding.homeNavView.getHeaderView(0)
         val navViewHeader: View = headerView.findViewById(R.id.home_nav_header_root)
         val expandMoreIcon: ImageView = headerView.findViewById(R.id.home_nav_expand_more_icon)
+        val followingEntry: View = headerView.findViewById(R.id.following_entry)
+        val followerEntry: View = headerView.findViewById(R.id.followers_entry)
+        followingEntry.setOnClickListener {
+            userService.navigateToFollowingList(this, "fake_uid")
+        }
+        followerEntry.setOnClickListener {
+            userService.navigateToFollowersList(this, "fake_uid")
+        }
         navViewHeader.setOnClickListener {
             viewModel.drawerMenuChanged()
         }
@@ -61,8 +74,6 @@ class MainActivity : DaggerAppCompatActivity() {
 
             expandMoreIcon.rotation = if (it) 0f else 180f
         })
-
-        setupDrawerNavigation()
     }
 
     private fun setupDrawerNavigation() {

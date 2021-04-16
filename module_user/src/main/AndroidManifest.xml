@@ -7,6 +7,8 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ProfileImageActivity" />
         <activity android:name=".EditProfileActivity" />
+        <activity android:name=".FollowersActivity" />
+        <activity android:name=".FollowingActivity" />
     </application>
 
 </manifest>

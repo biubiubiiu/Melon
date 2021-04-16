@@ -95,6 +95,12 @@ class ProfileActivity : DaggerAppCompatActivity() {
         headerBinding.editProfile.setOnClickListener {
             EditProfileActivity.start(this)
         }
+        headerBinding.followingEntry.setOnClickListener {
+            FollowingActivity.start(this, viewModel.user.value!!.id)
+        }
+        headerBinding.followersEntry.setOnClickListener {
+            FollowersActivity.start(this, viewModel.user.value!!.id)
+        }
     }
 
     private fun initData() {
