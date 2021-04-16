@@ -43,18 +43,22 @@ class CommentRepository @Inject constructor(
     }
 
     suspend fun getCommentDetail(id: String): Result<CommentAndAuthor> {
-        val apiResponse = withContext(Dispatchers.IO) {
-            service.detail(id)
-                .executeWithRetry()
-                .toResult()
-                .getOrThrow()
+        return try {
+            val apiResponse = withContext(Dispatchers.IO) {
+                service.detail(id)
+                    .executeWithRetry()
+                    .toResult()
+                    .getOrThrow()
+            }
+            if (!apiResponse.isSuccess) {
+                return ErrorResult(apiResponse.errorMessage.toException())
+            }
+            val item = withContext(Dispatchers.Default) {
+                itemMapper.map(apiResponse.data!!)
+            }
+            Success(item)
+        } catch (e: Exception) {
+            ErrorResult(e)
         }
-        if (!apiResponse.isSuccess) {
-            return ErrorResult(apiResponse.errorMessage.toException())
-        }
-        val item = withContext(Dispatchers.Default) {
-            itemMapper.map(apiResponse.data!!)
-        }
-        return Success(item)
     }
 }

@@ -1,7 +1,6 @@
 package app.melon.user.ui.detail
 
 import androidx.lifecycle.viewModelScope
-import app.melon.base.framework.ObservableLoadingCounter
 import app.melon.base.framework.ReduxViewModel
 import app.melon.user.interactor.UpdateFirstPageUserFeeds
 import app.melon.user.interactor.UpdateUserDetail
@@ -10,8 +9,7 @@ import app.melon.util.base.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 
@@ -21,11 +19,16 @@ class UserProfileViewModel @AssistedInject constructor(
     private val updateFirstPageUserFeeds: UpdateFirstPageUserFeeds
 ) : ReduxViewModel<UserProfileViewState>(initialState) {
 
-    private val loadingState = ObservableLoadingCounter()
-
     init {
         viewModelScope.launch {
-            loadingState.observable.collectAndSetState { copy(refreshing = it) }
+            combine(
+                updateUserDetail.loadingState.observable,
+                updateFirstPageUserFeeds.loadingState.observable
+            ) { firstLoading, secondLoading ->
+                firstLoading || secondLoading
+            }.collectAndSetState {
+                copy(refreshing = it)
+            }
         }
         viewModelScope.launch {
             updateUserDetail.observe().collectAndSetState {
@@ -36,7 +39,12 @@ class UserProfileViewModel @AssistedInject constructor(
             }
         }
         viewModelScope.launch {
-            updateFirstPageUserFeeds.observe().collectAndSetState { copy(pageItems = it) }
+            updateFirstPageUserFeeds.observe().collectAndSetState {
+                when (it) {
+                    is Success -> copy(pageItems = it.get())
+                    is ErrorResult -> copy(error = it.throwable)
+                }
+            }
         }
         selectSubscribeDistinct(UserProfileViewState::uid) {
             fetchUserDetail(it)
@@ -46,23 +54,13 @@ class UserProfileViewModel @AssistedInject constructor(
 
     private fun fetchUserDetail(uid: String) {
         viewModelScope.launch {
-            val job = launch {
-                loadingState.addLoader()
-                updateUserDetail(UpdateUserDetail.Params(uid))
-            }
-            job.invokeOnCompletion { loadingState.removeLoader() }
-            job.join()
+            updateUserDetail(UpdateUserDetail.Params(uid))
         }
     }
 
     private fun fetchUserFeedsFirstPage(uid: String) {
         viewModelScope.launch {
-            val job = launch {
-                loadingState.addLoader()
-                updateFirstPageUserFeeds(UpdateFirstPageUserFeeds.Params(uid))
-            }
-            job.invokeOnCompletion { loadingState.removeLoader() }
-            job.join()
+            updateFirstPageUserFeeds(UpdateFirstPageUserFeeds.Params(uid))
         }
     }
 

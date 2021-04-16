@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class NetworkModule {
 
     private companion object {
-        const val ADDRESS = "10.19.128.31"
+        const val ADDRESS = "192.168.73.185"
         const val PORT = "3000"
         const val API_HOST = "$ADDRESS:$PORT"
         const val BASE_URL = "http://$API_HOST/"

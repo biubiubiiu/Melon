@@ -18,16 +18,22 @@ class SignUpDataSource @Inject constructor(
 ) {
 
     suspend fun signUp(username: String, password: String): Result<Boolean> {
-//        val response = withContext(Dispatchers.IO) {
-//            service.register(
-//                username = username,
-//                password = EncryptUtils.getSHA512HashOfString(password)
-//            ).execute()
+//        return try {
+//            val response = withContext(Dispatchers.IO) {
+//                service.register(
+//                    username = username,
+//                    password = EncryptUtils.getSHA512HashOfString(password)
+//                )
+//                    .executeWithRetry()
+//            }
+//            when {
+//                response.isSuccessful && response.body()?.code == 200 -> Success(true)
+//                else -> ErrorResult(HttpException(response))
+//            }
+//        } catch (e: Exception) {
+//            ErrorResult(e)
 //        }
-//        return when {
-//            response.isSuccessful && response.body()?.code == 200 -> Success(true)
-//            else -> ErrorResult(HttpException(response))
-//        }
+
         return Success(true)
     }
 }

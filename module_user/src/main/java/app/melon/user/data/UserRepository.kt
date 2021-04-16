@@ -57,30 +57,39 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun getFirstPageUserFeeds(uid: String): List<FeedAndAuthor> {
-        val apiResponse = feedService.feedsFromUser(uid, 0, 5)
-            .executeWithRetry()
-            .toResult()
-            .getOrThrow()
-        if (!apiResponse.isSuccess) {
-            return emptyList()
-        }
-
-        // At here, we don't need to store feeds and user information,
-        // so we just return what we got from remote
-        return withContext(Dispatchers.Default) {
-            listItemMapper.toListMapper().invoke(apiResponse.data ?: emptyList())
+    suspend fun getFirstPageUserFeeds(uid: String): Result<List<FeedAndAuthor>> {
+        return try {
+            val apiResponse = feedService.feedsFromUser(uid, 0, 5)
+                .executeWithRetry()
+                .toResult()
+                .getOrThrow()
+            if (!apiResponse.isSuccess) {
+                return ErrorResult(apiResponse.errorMessage.toException())
+            }
+            // At here, we don't need to store feeds and user information,
+            // so we just return what we got from remote
+            val result = withContext(Dispatchers.Default) {
+                listItemMapper.toListMapper().invoke(apiResponse.data ?: emptyList())
+            }
+            return Success(result)
+        } catch (e: Exception) {
+            ErrorResult(e)
         }
     }
 
     suspend fun updateAvatar(file: File): Result<String> {
-        val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-        val requestBody = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
-        builder.addFormDataPart("file", file.name, requestBody)
         return try {
+            val body = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart(
+                    name = "file",
+                    filename = file.name,
+                    body = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+                )
+                .build()
             val apiResponse = UserApiService.testInstance()
-                .updateAvatar(builder.build().parts)
-                .execute()
+                .updateAvatar(body.parts)
+                .executeWithRetry()
                 .toResult()
                 .getOrThrow()
             if (!apiResponse.isSuccess) {
