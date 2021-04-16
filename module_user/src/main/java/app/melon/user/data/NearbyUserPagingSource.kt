@@ -1,9 +1,8 @@
-package app.melon.home.nearby
+package app.melon.user.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import app.melon.data.entities.User
-import app.melon.user.data.UserApiService
 import app.melon.user.data.mapper.RemoteNearbyUserToUser
 import app.melon.util.extensions.executeWithRetry
 import app.melon.util.extensions.toException
@@ -13,7 +12,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class NearbyPagingSource constructor(
+class NearbyUserPagingSource constructor(
+    private val longitude: Float,
+    private val latitude: Float,
     private val service: UserApiService,
     private val pageSize: Int,
     private val listItemMapper: RemoteNearbyUserToUser
@@ -21,10 +22,10 @@ class NearbyPagingSource constructor(
     override fun getRefreshKey(state: PagingState<Int, User>): Int? = null
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
-        val position = params.key ?: 0
+        val loadKey = params.key ?: 0
         return try {
             val response = withContext(Dispatchers.IO) {
-                service.nearby(1f, 1f, position, params.loadSize)
+                service.nearby(longitude, latitude, loadKey, params.loadSize)
                     .executeWithRetry()
                     .toResult()
                     .getOrThrow()
@@ -38,11 +39,11 @@ class NearbyPagingSource constructor(
             val nextKey = if (users.isEmpty()) {
                 null
             } else {
-                position + (params.loadSize / pageSize)
+                loadKey + (params.loadSize / pageSize)
             }
             LoadResult.Page(
                 data = users,
-                prevKey = if (position == 0) null else position - 1,
+                prevKey = if (loadKey == 0) null else loadKey - 1,
                 nextKey = nextKey
             )
         } catch (throwable: Throwable) {

@@ -13,7 +13,6 @@ import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.data.mapper.RemoteFeedDetailToFeedAndAuthor
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAndAuthor
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAuthorPair
-import app.melon.feed.data.remote.FeedPagingSource
 import app.melon.util.base.ErrorResult
 import app.melon.util.base.Result
 import app.melon.util.base.Success
@@ -115,7 +114,7 @@ class FeedRepository @Inject constructor(
         avatarUrl = remote.avatarUrl
     )
 
-    companion object {
+    private companion object {
         val PAGING_CONFIG = PagingConfig(
             pageSize = 10,
             initialLoadSize = 20,

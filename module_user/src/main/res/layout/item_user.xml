@@ -9,7 +9,7 @@
     android:paddingVertical="@dimen/spacing_conventional">
 
     <ImageView
-        android:id="@+id/nearby_user_avatar"
+        android:id="@+id/avatar"
         android:layout_width="@dimen/nearby_avatar_size"
         android:layout_height="@dimen/nearby_avatar_size"
         android:contentDescription="@string/app_common_avatar_desc"
@@ -17,59 +17,72 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/nearby_username"
-        android:layout_width="0dp"
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_toEndOf="@id/nearby_user_avatar"
+        android:layout_toEndOf="@id/avatar"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/Melon.TextAppearance.Title"
-        app:layout_constraintEnd_toStartOf="@id/nearby_user_school"
-        app:layout_constraintStart_toEndOf="@id/nearby_user_avatar"
-        app:layout_constraintTop_toTopOf="@id/nearby_user_avatar"
+        app:layout_constraintEnd_toStartOf="@id/spacer"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
         tools:text="Valar Morghulis" />
 
     <app.melon.base.ui.TagView
-        android:id="@+id/nearby_user_tag"
+        android:id="@+id/tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_micro"
-        app:layout_constraintBottom_toTopOf="@id/nearby_user_description"
-        app:layout_constraintStart_toStartOf="@id/nearby_username"
-        app:layout_constraintTop_toBottomOf="@id/nearby_username" />
+        app:layout_constraintBottom_toTopOf="@id/description"
+        app:layout_constraintStart_toStartOf="@id/username"
+        app:layout_constraintTop_toBottomOf="@id/username" />
 
     <TextView
-        android:id="@+id/nearby_user_description"
+        android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_micro"
         android:ellipsize="end"
         android:maxLines="2"
         android:textAppearance="@style/Melon.TextAppearance.Info"
-        app:layout_constraintEnd_toStartOf="@id/nearby_user_distance"
-        app:layout_constraintStart_toStartOf="@id/nearby_username"
-        app:layout_constraintTop_toBottomOf="@id/nearby_user_tag"
+        app:layout_constraintEnd_toStartOf="@id/distance"
+        app:layout_constraintStart_toStartOf="@id/username"
+        app:layout_constraintTop_toBottomOf="@id/tag"
         tools:text="Chaos is a ladder." />
 
-    <TextView
-        android:id="@+id/nearby_user_school"
-        android:layout_width="wrap_content"
+    <Space
+        android:id="@+id/spacer"
+        android:layout_width="@dimen/spacing_conventional"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/username"
+        app:layout_constraintEnd_toStartOf="@id/school"
+        app:layout_constraintStart_toEndOf="@id/username"
+        app:layout_constraintTop_toTopOf="@id/username" />
+
+    <TextView
+        android:id="@+id/school"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_conventional"
+        android:gravity="end"
+        android:maxLines="1"
         android:textAppearance="@style/Melon.TextAppearance.Info"
-        app:layout_constraintBottom_toBottomOf="@id/nearby_username"
+        app:layout_constraintBottom_toBottomOf="@id/username"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/nearby_username"
+        app:layout_constraintStart_toEndOf="@id/spacer"
+        app:layout_constraintTop_toTopOf="@id/username"
         tools:text="University of California" />
 
     <TextView
-        android:id="@+id/nearby_user_distance"
+        android:id="@+id/distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/Melon.TextAppearance.Info"
-        app:layout_constraintBottom_toBottomOf="@id/nearby_user_tag"
+        app:layout_constraintBottom_toBottomOf="@id/tag"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/nearby_user_tag"
+        app:layout_constraintTop_toTopOf="@id/tag"
         tools:text="1.2km" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

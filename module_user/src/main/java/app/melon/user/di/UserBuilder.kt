@@ -6,6 +6,7 @@ import app.melon.user.EditProfileActivity
 import app.melon.user.ProfileActivity
 import app.melon.user.ProfileImageActivity
 import app.melon.user.UserProfileActivity
+import app.melon.user.ui.CommonUserFragment
 import app.melon.user.ui.UserProfileContainerFragment
 import app.melon.user.ui.detail.UserProfileFragment
 import app.melon.user.ui.mine.MyProfileTabFragment
@@ -15,6 +16,10 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class UserBuilder {
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun injectUserListFragment(): CommonUserFragment
 
     @ActivityScope
     @ContributesAndroidInjector

@@ -5,7 +5,6 @@ import app.melon.base.scope.FragmentScope
 import app.melon.home.MainActivity
 import app.melon.home.anonymous.AnonymousForumFragment
 import app.melon.home.discovery.DiscoveryFragment
-import app.melon.home.nearby.NearbyFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -18,10 +17,6 @@ internal abstract class HomeBuilder {
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun discoverFragment(): DiscoveryFragment
-
-    @FragmentScope
-    @ContributesAndroidInjector
-    abstract fun nearbyFragment(): NearbyFragment
 
     @FragmentScope
     @ContributesAndroidInjector

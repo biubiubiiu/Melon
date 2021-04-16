@@ -12,6 +12,14 @@ class UserService : IUserService {
         UserProfileActivity.start(context, uid)
     }
 
+    override fun navigateToFollowersList(context: Context, uid: String) {
+        FollowersActivity.start(context, uid)
+    }
+
+    override fun navigateToFollowingList(context: Context, uid: String) {
+        FollowingActivity.start(context, uid)
+    }
+
     override fun navigateToMyProfile(context: Context) {
         ProfileActivity.start(context)
     }
