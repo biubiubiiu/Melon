@@ -60,12 +60,3 @@ val validGenders = setOf(
 annotation class Gender
 
 fun String.isValidGender(): Boolean = validGenders.contains(this)
-
-data class Location(
-    val longitude: Double,
-    val latitude: Double
-) {
-    override fun toString(): String {
-        return "($longitude,$latitude)"
-    }
-}
