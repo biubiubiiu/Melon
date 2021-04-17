@@ -4,20 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import app.melon.base.ui.databinding.ActivityCommonFragmentWithToolbarBinding
-import app.melon.data.constants.FOLLOWERS_USER
-import app.melon.user.api.UserServiceConstants
-import app.melon.user.ui.CommonUserFragment
+import app.melon.user.api.FollowerUserList
+import app.melon.user.api.IUserService
 import app.melon.util.delegates.viewBinding
+import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
 
-class FollowersActivity : AppCompatActivity() {
+class FollowersActivity : DaggerAppCompatActivity() {
 
     private val binding: ActivityCommonFragmentWithToolbarBinding by viewBinding()
 
-    private val uid get() = intent.getStringExtra(KEY_USER_ID)
+    private val uid get() = intent.getStringExtra(KEY_USER_ID)!!
+
+    @Inject internal lateinit var userService: IUserService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,15 +28,12 @@ class FollowersActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 replace(
-                    R.id.fragment_container, CommonUserFragment.newInstance(
-                        -1,
-                        UserPageConfig(
-                            pageType = FOLLOWERS_USER,
-                            idPrefix = "followers_user"
-                        ),
-                        extraParams = Bundle().apply {
-                            putString(UserServiceConstants.PARAM_USER_ID, uid)
-                        }
+                    R.id.fragment_container,
+                    userService.buildUserListFragment(
+                        FollowerUserList(
+                            listItemIdPrefix = "nearby_user",
+                            uid = uid
+                        )
                     )
                 )
             }

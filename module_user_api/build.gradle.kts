@@ -17,5 +17,7 @@ android {
 }
 
 dependencies {
-    implementation(Libraries.kotlinStdLib)
+    compileOnly(Libraries.kotlinStdLib)
+    compileOnly(project(Modules.data))
+    compileOnly(Libraries.Fragment.fragment)
 }

@@ -3,6 +3,8 @@ package app.melon.user.di
 import app.melon.base.scope.ActivityScope
 import app.melon.base.scope.FragmentScope
 import app.melon.user.EditProfileActivity
+import app.melon.user.FollowersActivity
+import app.melon.user.FollowingActivity
 import app.melon.user.ProfileActivity
 import app.melon.user.ProfileImageActivity
 import app.melon.user.UserProfileActivity
@@ -52,4 +54,12 @@ abstract class UserBuilder {
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun injectMyProfileTabFragment(): MyProfileTabFragment
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun injectFollowersActivity(): FollowersActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun injectFollowingActivity(): FollowingActivity
 }

@@ -14,7 +14,7 @@ class UserListViewModel @Inject constructor(
     private val repo: UserRepository
 ) : ViewModel() {
 
-    fun refresh(queryType: Int, param: Bundle?): Flow<PagingData<User>> {
+    fun refresh(): Flow<PagingData<User>> {
         return emptyFlow() // TODO
     }
 

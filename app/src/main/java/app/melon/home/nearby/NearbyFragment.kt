@@ -6,14 +6,12 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import app.melon.R
 import app.melon.base.ui.databinding.CommonFragmentContainerBinding
-import app.melon.data.constants.NEARBY_USER
 import app.melon.location.LocateFail
 import app.melon.location.LocateSuccess
 import app.melon.location.LocationHelper
 import app.melon.permission.PermissionHelperOwner
-import app.melon.user.UserPageConfig
-import app.melon.user.api.UserServiceConstants
-import app.melon.user.ui.CommonUserFragment
+import app.melon.user.api.IUserService
+import app.melon.user.api.NearbyUserList
 import app.melon.util.delegates.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
@@ -26,6 +24,7 @@ class NearbyFragment : DaggerFragment(R.layout.common_fragment_container) {
 
     private val binding: CommonFragmentContainerBinding by viewBinding()
 
+    @Inject internal lateinit var userService: IUserService
     @Inject internal lateinit var locationHelper: LocationHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,16 +49,13 @@ class NearbyFragment : DaggerFragment(R.layout.common_fragment_container) {
     private fun showNearbyUsers(longitude: Double, latitude: Double) {
         childFragmentManager.commit {
             replace(
-                R.id.fragment_container, CommonUserFragment.newInstance(
-                    -1,
-                    UserPageConfig(
-                        pageType = NEARBY_USER,
-                        idPrefix = "nearby_user"
-                    ),
-                    extraParams = Bundle().apply {
-                        putDouble(UserServiceConstants.PARAM_LONGITUDE, longitude)
-                        putDouble(UserServiceConstants.PARAM_LATITUDE, latitude)
-                    }
+                R.id.fragment_container,
+                userService.buildUserListFragment(
+                    NearbyUserList(
+                        listItemIdPrefix = "nearby_user",
+                        longitude = longitude,
+                        latitude = latitude
+                    )
                 )
             )
         }
