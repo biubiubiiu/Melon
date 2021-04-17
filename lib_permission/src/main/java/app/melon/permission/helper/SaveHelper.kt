@@ -7,10 +7,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
-import app.melon.permission.PermissionRequestActivity
-import app.melon.permission.ReadStorage
 import app.melon.util.AppHelper
-import app.melon.util.extensions.showToast
 import app.melon.util.graphics.GraphicsUtil
 import coil.imageLoader
 import coil.request.ImageRequest
@@ -63,8 +60,8 @@ class SaveHelper(
         if (true) {
             getBitmapFromUrl(bitmapUrl)
         } else {
-            val intent = PermissionRequestActivity.prepareIntent(this, ReadStorage)
-            showToast("no permission")
+//            val intent = PermissionRequestActivity.prepareIntent(this, ReadStorage)
+//            showToast("no permission")
 //            this@SaveHelper.showWriteStorageRational.launch(intent)
         }
     }

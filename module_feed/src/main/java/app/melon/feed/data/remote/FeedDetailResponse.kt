@@ -1,5 +1,6 @@
 package app.melon.feed.data.remote
 
+import app.melon.data.remote.LocationStruct
 import com.google.gson.annotations.SerializedName
 
 data class FeedDetailResponse(
@@ -23,5 +24,5 @@ data class FeedDetailUserStruct(
     @SerializedName("age") val age: Int? = null,
     @SerializedName("gender") val gender: String? = null,
     @SerializedName("email") val email: String? = null,
-    @SerializedName("lastLocation") val lastLocation: String? = null
+    @SerializedName("lastLocation") val lastLocation: LocationStruct? = null
 )

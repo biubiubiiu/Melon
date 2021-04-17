@@ -13,14 +13,20 @@ import app.melon.R
 import app.melon.account.api.IAccountService
 import app.melon.databinding.ActivityMainBinding
 import app.melon.event.api.IEventService
+import app.melon.home.nearby.LocateRequest
+import app.melon.permission.PermissionHelper
+import app.melon.permission.PermissionHelperOwner
+import app.melon.permission.PermissionRequest
 import app.melon.user.api.IUserService
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.reverse
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-class MainActivity : DaggerAppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
 
     private val binding: ActivityMainBinding by viewBinding()
 
@@ -30,15 +36,17 @@ class MainActivity : DaggerAppCompatActivity() {
     @Inject internal lateinit var userService: IUserService
     @Inject internal lateinit var eventService: IEventService
 
+    private val locatePermissionHelper = PermissionHelper(this, LocateRequest)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.mainScreen.toolbar)
 
-//        val fab: FloatingActionButton = findViewById(R.id.fab)
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.home_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
@@ -50,6 +58,20 @@ class MainActivity : DaggerAppCompatActivity() {
 
         setupDrawerHeader()
         setupDrawerNavigation()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.home_tool_bar_menu, menu)
+        return true
+    }
+
+    override fun checkPermission(request: PermissionRequest, onPermissionsGranted: () -> Unit) {
+        if (request == LocateRequest) {
+            locatePermissionHelper.checkPermissions(
+                onPermissionAllGranted = onPermissionsGranted
+            )
+        }
     }
 
     private fun setupDrawerHeader() {
@@ -90,11 +112,5 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.homeDrawerLayout.closeDrawers()
             true
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.home_tool_bar_menu, menu)
-        return true
     }
 }

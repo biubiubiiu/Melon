@@ -13,7 +13,6 @@
         android:orientation="vertical"
         tools:context=".login.LoginActivity">
 
-        <!--    TODO add a logo-->
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             style="@style/AccountMenuTextAppearance"

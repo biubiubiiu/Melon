@@ -48,6 +48,7 @@ object Modules {
     const val commonUi = ":lib_common_ui"
     const val commonUtils = ":lib_common_utils"
     const val runtimePermissions = ":lib_permission"
+    const val location = ":lib_location"
 
     const val feed = ":module_feed"
     const val group = ":module_group"

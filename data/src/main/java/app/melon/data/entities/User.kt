@@ -20,7 +20,7 @@ data class User(
     @ColumnInfo(name = "college") val college: String? = null,
     @ColumnInfo(name = "major") val major: String? = null,
     @ColumnInfo(name = "degree") val degree: String? = null,
-    @ColumnInfo(name = "location") val location: String = "",
+    @ColumnInfo(name = "location") val location: Location? = null,
     @ColumnInfo(name = "description") val description: String = "",
     @ColumnInfo(name = "follower_count") val followerCount: Long? = 0L,
     @ColumnInfo(name = "following_count") val followingCount: Long? = 0L,
@@ -60,3 +60,12 @@ val validGenders = setOf(
 annotation class Gender
 
 fun String.isValidGender(): Boolean = validGenders.contains(this)
+
+data class Location(
+    val longitude: Double,
+    val latitude: Double
+) {
+    override fun toString(): String {
+        return "($longitude,$latitude)"
+    }
+}

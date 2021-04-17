@@ -1,5 +1,6 @@
 package app.melon.feed.data.remote
 
+import app.melon.data.remote.LocationStruct
 import com.google.gson.annotations.SerializedName
 
 data class FeedListItemResponse(
@@ -8,7 +9,7 @@ data class FeedListItemResponse(
     @SerializedName("title") val title: String? = null,
     @SerializedName("text") val content: String = "",
     @SerializedName("fileUrlList") val photos: List<String>? = null,
-    @SerializedName("location") val location: String? = null, // TODO define location struct
+    @SerializedName("location") val location: LocationStruct? = null,
     @SerializedName("likeNum") val favorCount: Long? = null,
     @SerializedName("remarkNum") val replyCount: Long? = null,
     @SerializedName("like") val isFavor: Boolean = false,
@@ -24,5 +25,5 @@ data class FeedListUserStruct(
     @SerializedName("age") val age: Int? = null,
     @SerializedName("gender") val gender: String? = null,
     @SerializedName("email") val email: String? = null,
-    @SerializedName("lastLocation") val lastLocation: String? = null
+    @SerializedName("lastLocation") val lastLocation: LocationStruct? = null
 )

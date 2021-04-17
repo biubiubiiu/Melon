@@ -8,6 +8,8 @@
     <string name="request_read_stroage_title">要添加媒体，我们需要使用你的相册</string>
     <string name="request_camera_title">拍摄照片和视频</string>
     <string name="request_camera_subtitle">允许Melon访问你的相机、媒体和麦克风以使用</string>
+    <string name="request_locate_title">获取位置信息</string>
+    <string name="request_locate_subtitle">允许Melon获取你的位置信息以使用</string>
 
     <string name="request_fail_title">你好像已经关闭了该功能的使用权限。</string>
     <string name="request_fail_subtitle">AGE许可可以在设置>应用>Melon>许可下启用</string>

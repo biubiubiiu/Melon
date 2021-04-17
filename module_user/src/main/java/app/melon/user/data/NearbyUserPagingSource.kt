@@ -13,8 +13,8 @@ import kotlinx.coroutines.withContext
 
 
 class NearbyUserPagingSource constructor(
-    private val longitude: Float,
-    private val latitude: Float,
+    private val longitude: Double,
+    private val latitude: Double,
     private val service: UserApiService,
     private val pageSize: Int,
     private val listItemMapper: RemoteNearbyUserToUser

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="locate_fail_error_message" translatable="false">%s: [%s]-%s</string>
+
+    <string name="locate_fail_prefix">Locate failed</string>
+    <string name="locate_fail_null_result">Location is null</string>
+    <string name="locate_fail_missing_permission">Missing required permission</string>
+</resources>

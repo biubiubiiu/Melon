@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="locate_fail_prefix">定位失败</string>
+    <string name="locate_fail_null_result">定位结果为空</string>
+    <string name="locate_fail_missing_permission">缺少定位权限</string>
+</resources>

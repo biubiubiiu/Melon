@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     // Application Specific Plugins
     id(BuildPlugins.androidApplication)
@@ -26,6 +28,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        manifestPlaceholders["amap_api_key"] = gradleLocalProperties(rootDir).getProperty("amap_api_key")
     }
 
     buildTypes {
@@ -33,6 +37,21 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles("proguard-rules.pro")
+        }
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file(gradleLocalProperties(rootDir).getProperty("keystore.debug.filename"))
+            storePassword = gradleLocalProperties(rootDir).getProperty("keystore.debug.storePassword")
+            keyAlias = gradleLocalProperties(rootDir).getProperty("keystore.debug.keyAlias")
+            keyPassword = gradleLocalProperties(rootDir).getProperty("keystore.debug.keyPassword")
+        }
+        create("release") {
+            storeFile = file(gradleLocalProperties(rootDir).getProperty("keystore.release.filename"))
+            storePassword = gradleLocalProperties(rootDir).getProperty("keystore.release.storePassword")
+            keyAlias = gradleLocalProperties(rootDir).getProperty("keystore.release.keyAlias")
+            keyPassword = gradleLocalProperties(rootDir).getProperty("keystore.release.keyPassword")
         }
     }
 

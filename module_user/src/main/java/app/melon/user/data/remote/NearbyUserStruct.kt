@@ -1,5 +1,6 @@
 package app.melon.user.data.remote
 
+import app.melon.data.remote.LocationStruct
 import com.google.gson.annotations.SerializedName
 
 data class NearbyUserStruct(
@@ -11,5 +12,5 @@ data class NearbyUserStruct(
     @SerializedName("gender") val gender: String? = null,
     @SerializedName("email") val email: String? = null,
     @SerializedName("description") val description: String? = null,
-    @SerializedName("lastLocation") val lastLocation: String? = null
+    @SerializedName("lastLocation") val lastLocation: LocationStruct? = null
 )

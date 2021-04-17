@@ -15,7 +15,7 @@ import app.melon.comment.R
 import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.util.extensions.getResourceString
 import app.melon.util.extensions.toOffsetDateTime
-import app.melon.util.time.MelonDateTimeFormatter
+import app.melon.util.formatter.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute

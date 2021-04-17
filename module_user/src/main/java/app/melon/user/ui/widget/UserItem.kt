@@ -3,10 +3,13 @@ package app.melon.user.ui.widget
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.TagView
 import app.melon.data.entities.User
+import app.melon.location.LocationHelper
 import app.melon.user.R
+import app.melon.util.formatter.MelonDistanceFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
@@ -22,6 +25,9 @@ abstract class UserItem : EpoxyModelWithHolder<UserItem.Holder>() {
     @EpoxyAttribute lateinit var user: User
     @EpoxyAttribute lateinit var holderClickListener: (User) -> Unit
 
+    @EpoxyAttribute lateinit var locationHelper: LocationHelper
+    @EpoxyAttribute lateinit var formatter: MelonDistanceFormatter
+
     override fun bind(holder: Holder) {
         setupContent(holder)
         setupListeners(holder)
@@ -36,7 +42,19 @@ abstract class UserItem : EpoxyModelWithHolder<UserItem.Holder>() {
             userTagView.bind(user, style = TagView.TagStyle.Info())
             userDescriptionView.text = user.description
             schoolView.text = user.school.orEmpty()
-            distance.text = "1km" // TODO import location module
+
+            val lastLocation = locationHelper.lastLocation
+            val userLocation = user.location
+            if (lastLocation != null && userLocation != null) {
+                distance.isVisible = true
+                distance.text = formatter.formatDistance(
+                    distance = locationHelper.calculateDistance(
+                        lastLocation.longitude, lastLocation.latitude, userLocation.longitude, userLocation.latitude
+                    )
+                )
+            } else {
+                distance.isVisible = false
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package app.melon.util.time
+package app.melon.util.formatter
 
 import javax.inject.Qualifier
 

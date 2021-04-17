@@ -8,7 +8,7 @@ import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.ui.widget.feedHeader
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
-import app.melon.util.time.MelonDateTimeFormatter
+import app.melon.util.formatter.MelonDateTimeFormatter
 import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

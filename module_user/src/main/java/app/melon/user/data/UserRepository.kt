@@ -63,7 +63,7 @@ class UserRepository @Inject constructor(
         }
     }
 
-    fun getNearbyUser(longitude: Float, latitude: Float): Flow<PagingData<User>> {
+    fun getNearbyUser(longitude: Double, latitude: Double): Flow<PagingData<User>> {
         return Pager(
             config = PAGING_CONFIG,
             pagingSourceFactory = {

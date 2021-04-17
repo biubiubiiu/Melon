@@ -3,7 +3,6 @@ package app.melon.user.ui
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
-import app.melon.data.constants.NEARBY_USER
 import app.melon.data.entities.User
 import app.melon.user.data.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,12 +15,10 @@ class UserListViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun refresh(queryType: Int, param: Bundle?): Flow<PagingData<User>> {
-        return when (queryType) {
-            NEARBY_USER -> repo.getNearbyUser(
-                1f, // TODO
-                1f
-            )
-            else -> emptyFlow()
-        }
+        return emptyFlow() // TODO
+    }
+
+    fun fetchNearbyUser(longitude: Double, latitude: Double): Flow<PagingData<User>> {
+        return repo.getNearbyUser(longitude, latitude)
     }
 }

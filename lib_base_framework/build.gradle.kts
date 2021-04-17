@@ -41,6 +41,7 @@ dependencies {
     api(project(Modules.commonUi))
     api(project(Modules.commonUtils))
     api(project(Modules.runtimePermissions))
+    api(project(Modules.location))
 
     api(Libraries.AndroidX.AppCompat.appCompat)
 

@@ -2,10 +2,10 @@ package app.melon.util.di
 
 import android.content.Context
 import androidx.core.os.ConfigurationCompat
-import app.melon.util.time.MediumDate
-import app.melon.util.time.MediumDateTime
-import app.melon.util.time.ShortDate
-import app.melon.util.time.ShortTime
+import app.melon.util.formatter.MediumDate
+import app.melon.util.formatter.MediumDateTime
+import app.melon.util.formatter.ShortDate
+import app.melon.util.formatter.ShortTime
 import dagger.Module
 import dagger.Provides
 import java.time.format.DateTimeFormatter

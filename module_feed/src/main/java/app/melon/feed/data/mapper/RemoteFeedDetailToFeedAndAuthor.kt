@@ -4,6 +4,7 @@ import app.melon.data.entities.Feed
 import app.melon.data.entities.MALE
 import app.melon.data.entities.User
 import app.melon.data.entities.isValidGender
+import app.melon.data.remote.toLocation
 import app.melon.feed.data.remote.FeedDetailResponse
 import app.melon.util.mappers.Mapper
 import javax.inject.Inject
@@ -28,7 +29,7 @@ class RemoteFeedDetailToFeedAndAuthor @Inject constructor() : Mapper<FeedDetailR
             gender = if (from.user.gender?.isValidGender() == true) from.user.gender else MALE,
             age = from.user.age ?: 0,
             school = from.user.school,
-            location = from.user.lastLocation ?: "",
+            location = from.user.lastLocation.toLocation(),
             avatarUrl = from.user.avatarUrl ?: ""
         )
         return feed to user

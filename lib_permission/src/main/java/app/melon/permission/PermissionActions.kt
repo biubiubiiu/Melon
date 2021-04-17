@@ -1,27 +1,25 @@
 package app.melon.permission
 
-import androidx.annotation.StringRes
 import java.io.Serializable
 
 sealed class PermissionActions : Serializable {
+    abstract val permissions: Array<out String>
     abstract val title: Int
     abstract val subTitle: Int
+    abstract val name: String
 }
 
-abstract class PermissionRequest : PermissionActions()
+open class PermissionRequest(
+    override val permissions: Array<out String>,
+    override val title: Int,
+    override val subTitle: Int,
+    override val name: String
+) : PermissionActions()
+
 class PermissionDenial(
-    val permissions: List<String>
+    override val permissions: Array<out String>
 ) : PermissionActions() {
     override val title: Int = R.string.request_fail_title
     override val subTitle: Int = R.string.request_fail_subtitle
-}
-
-object ReadStorage : PermissionRequest() {
-    @StringRes override val title: Int = R.string.request_read_stroage_title
-    @StringRes override val subTitle: Int = -1
-}
-
-object UseCamera : PermissionRequest() {
-    @StringRes override val title: Int = R.string.request_camera_title
-    @StringRes override val subTitle: Int = R.string.request_camera_subtitle
+    override val name: String = javaClass.name
 }

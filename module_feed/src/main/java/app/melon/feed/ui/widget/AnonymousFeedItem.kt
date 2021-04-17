@@ -13,7 +13,7 @@ import app.melon.feed.R
 import app.melon.util.extensions.dpInt
 import app.melon.util.extensions.showToast
 import app.melon.util.number.MelonNumberFormatter
-import app.melon.util.time.MelonDateTimeFormatter
+import app.melon.util.formatter.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute

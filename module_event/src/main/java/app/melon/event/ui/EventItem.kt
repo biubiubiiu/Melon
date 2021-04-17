@@ -8,7 +8,7 @@ import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.TagView
 import app.melon.data.resultentities.EventAndOrganiser
 import app.melon.event.R
-import app.melon.util.time.MelonDateTimeFormatter
+import app.melon.util.formatter.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute

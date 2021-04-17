@@ -8,6 +8,8 @@
     <string name="request_read_stroage_title">TODO</string>
     <string name="request_camera_title">TODO</string>
     <string name="request_camera_subtitle">TODO</string>
+    <string name="request_locate_title">TODO</string>
+    <string name="request_locate_subtitle">TODO</string>
 
     <string name="request_fail_title">TODO</string>
     <string name="request_fail_subtitle">TODO</string>

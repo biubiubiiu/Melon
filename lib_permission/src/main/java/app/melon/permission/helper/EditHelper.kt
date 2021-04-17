@@ -1,28 +1,50 @@
 package app.melon.permission.helper
 
 import android.Manifest
-import android.app.Activity
 import android.content.ContentValues
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import app.melon.permission.PermissionDenial
-import app.melon.permission.PermissionList
-import app.melon.permission.PermissionRequestActivity
-import app.melon.permission.ReadStorage
-import app.melon.permission.UseCamera
+import app.melon.permission.PermissionHelper
+import app.melon.permission.PermissionRequest
+import app.melon.permission.R
 import app.melon.util.AppHelper
-import app.melon.util.extensions.hasPermission
-import app.melon.util.extensions.hasPermissions
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+
 
 class EditHelper(
     private val activity: AppCompatActivity,
     private val onReceiveTakePictureResult: ((Boolean) -> Unit)? = null,
     private val onReceiveUriFromAlbum: ((Uri?) -> Unit)? = null
 ) : EditOptionsDialogFragment.Listener {
+
+    private val readStoragePermissionHelper = PermissionHelper(
+        activity,
+        PermissionRequest(
+            permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            title = R.string.request_read_stroage_title,
+            subTitle = -1,
+            name = "TODO"
+        )
+    )
+
+    private val useCameraPermissionHelper = PermissionHelper(
+        activity,
+        PermissionRequest(
+            permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                arrayOf(Manifest.permission.CAMERA)
+            } else {
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            },
+            title = R.string.request_camera_title,
+            subTitle = R.string.request_camera_subtitle,
+            name = "TODO"
+        )
+    )
+
 
     private var pendingProcessCameraImageUri: Uri? = null
     private val takeImageFromCamera = with(activity) {
@@ -42,61 +64,6 @@ class EditHelper(
         }
     }
 
-    private val showReadStorageRational = with(activity) {
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            when (it.resultCode) {
-                Activity.RESULT_OK -> {
-                    requestReadStoragePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-                }
-                Activity.RESULT_CANCELED -> {
-                    // No-op
-                }
-            }
-        }
-    }
-
-    private val showUseCameraRational = with(activity) {
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            when (it.resultCode) {
-                Activity.RESULT_OK -> {
-                    this@EditHelper.requestCameraPermission.launch(PermissionList.permissionsForCamera)
-                }
-                Activity.RESULT_CANCELED -> {
-                    // No-op
-                }
-            }
-        }
-    }
-
-    private val requestReadStoragePermission = with(activity) {
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                this@EditHelper.openAlbum()
-            } else {
-                val intent = PermissionRequestActivity.prepareIntent(
-                    this,
-                    PermissionDenial(listOf(Manifest.permission.READ_EXTERNAL_STORAGE))
-                )
-                startActivity(intent)
-            }
-        }
-    }
-
-    private val requestCameraPermission = with(activity) {
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result: Map<String, Boolean> ->
-            val isAllGranted = !result.values.contains(element = false)
-            if (isAllGranted) {
-                this@EditHelper.openCamera()
-            } else {
-                val intent = PermissionRequestActivity.prepareIntent(
-                    this,
-                    PermissionDenial(result.filterValues { !it }.keys.toList())
-                )
-                startActivity(intent)
-            }
-        }
-    }
-
     fun showEditOptions() {
         val fragment = EditOptionsDialogFragment().also { it.setListener(this) }
         fragment.show(activity.supportFragmentManager, "options")
@@ -110,31 +77,29 @@ class EditHelper(
         openAlbum()
     }
 
-    private fun openCamera(): Unit = with(activity) {
-        if (activity.hasPermissions(*PermissionList.permissionsForCamera)) {
-            val currentDateTime = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(Date())
-            val filename = "Melon_${currentDateTime}.jpg"
-            val resolver = AppHelper.applicationContext.contentResolver
-            val imageCollection = MediaStore.Images.Media.getContentUri(
-                MediaStore.VOLUME_EXTERNAL_PRIMARY
-            )
-            val newImageDetails = ContentValues().apply {
-                put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+    private fun openCamera() {
+        useCameraPermissionHelper.checkPermissions(
+            onPermissionAllGranted = {
+                val currentDateTime = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(Date())
+                val filename = "Melon_${currentDateTime}.jpg"
+                val resolver = AppHelper.applicationContext.contentResolver
+                val imageCollection = MediaStore.Images.Media.getContentUri(
+                    MediaStore.VOLUME_EXTERNAL_PRIMARY
+                )
+                val newImageDetails = ContentValues().apply {
+                    put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+                }
+                pendingProcessCameraImageUri = resolver.insert(imageCollection, newImageDetails)
+                takeImageFromCamera.launch(pendingProcessCameraImageUri)
             }
-            pendingProcessCameraImageUri = resolver.insert(imageCollection, newImageDetails)
-            takeImageFromCamera.launch(pendingProcessCameraImageUri)
-        } else {
-            val intent = PermissionRequestActivity.prepareIntent(this, UseCamera)
-            this@EditHelper.showUseCameraRational.launch(intent)
-        }
+        )
     }
 
-    private fun openAlbum(): Unit = with(activity) {
-        if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            selectImageFromAlbum.launch("image/*")
-        } else {
-            val intent = PermissionRequestActivity.prepareIntent(this, ReadStorage)
-            this@EditHelper.showReadStorageRational.launch(intent)
-        }
+    private fun openAlbum() {
+        readStoragePermissionHelper.checkPermissions(
+            onPermissionAllGranted = {
+                selectImageFromAlbum.launch("image/*")
+            }
+        )
     }
 }

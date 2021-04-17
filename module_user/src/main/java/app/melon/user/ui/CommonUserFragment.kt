@@ -5,8 +5,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BasePagingListFragment
+import app.melon.data.constants.NEARBY_USER
 import app.melon.data.constants.UserPageType
 import app.melon.user.UserPageConfig
+import app.melon.user.api.UserServiceConstants
 import app.melon.user.ui.controller.UserPageController
 import app.melon.util.extensions.showToast
 import kotlinx.coroutines.Job
@@ -40,8 +42,18 @@ class CommonUserFragment : BasePagingListFragment() {
     private fun refresh() {
         fetchJob?.cancel()
         fetchJob = lifecycleScope.launch {
-            viewModel.refresh(pageType, extraParam).collectLatest {
-                controller.submitData(it)
+            when (pageType) {
+                NEARBY_USER -> {
+                    viewModel.fetchNearbyUser(
+                        extraParam!!.getDouble(UserServiceConstants.PARAM_LONGITUDE), // TODO use sealed class to wrap params
+                        extraParam!!.getDouble(UserServiceConstants.PARAM_LATITUDE)
+                    ).collectLatest {
+                        controller.submitData(it)
+                    }
+                }
+                else -> viewModel.refresh(pageType, extraParam).collectLatest {
+                    controller.submitData(it)
+                }
             }
         }
     }

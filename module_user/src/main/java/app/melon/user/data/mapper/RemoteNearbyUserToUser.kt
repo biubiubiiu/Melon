@@ -3,6 +3,7 @@ package app.melon.user.data.mapper
 import app.melon.data.entities.MALE
 import app.melon.data.entities.User
 import app.melon.data.entities.isValidGender
+import app.melon.data.remote.toLocation
 import app.melon.user.data.remote.NearbyUserStruct
 import app.melon.util.mappers.Mapper
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class RemoteNearbyUserToUser @Inject constructor() : Mapper<NearbyUserStruct, Us
             age = from.age ?: 0,
             school = from.school,
             description = from.description ?: "",
-            location = from.lastLocation ?: "",
+            location = from.lastLocation.toLocation(),
             avatarUrl = from.avatarUrl ?: ""
         )
     }

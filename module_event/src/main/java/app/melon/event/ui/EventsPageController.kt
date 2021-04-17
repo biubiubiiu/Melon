@@ -5,7 +5,7 @@ import app.melon.base.framework.BasePagingController
 import app.melon.data.resultentities.EventAndOrganiser
 import app.melon.event.EventDetailActivity
 import app.melon.user.api.IUserService
-import app.melon.util.time.MelonDateTimeFormatter
+import app.melon.util.formatter.MelonDateTimeFormatter
 import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

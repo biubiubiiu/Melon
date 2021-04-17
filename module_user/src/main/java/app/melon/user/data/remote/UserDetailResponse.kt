@@ -1,5 +1,6 @@
 package app.melon.user.data.remote
 
+import app.melon.data.remote.LocationStruct
 import com.google.gson.annotations.SerializedName
 
 data class UserDetailResponse(
@@ -14,5 +15,5 @@ data class UserDetailResponse(
     @SerializedName("followers") val followerCount: Long? = null,
     @SerializedName("following") val followingCount: Long? = null,
     @SerializedName("description") val description: String? = null,
-    @SerializedName("lastLocation") val lastLocation: String? = null
+    @SerializedName("lastLocation") val lastLocation: LocationStruct? = null
 )

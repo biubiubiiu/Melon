@@ -24,8 +24,8 @@ interface UserApiService : ApiService {
 
     @GET("nearby_user")
     fun nearby(
-        @Query("longitude") longitude: Float,
-        @Query("latitude") latitude: Float,
+        @Query("longitude") longitude: Double,
+        @Query("latitude") latitude: Double,
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
     ): Call<BaseApiResponse<List<NearbyUserStruct>>>
