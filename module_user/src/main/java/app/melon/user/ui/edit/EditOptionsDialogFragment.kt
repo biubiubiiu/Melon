@@ -1,26 +1,20 @@
-package app.melon.permission.helper
+package app.melon.user.ui.edit
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
-import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import app.melon.permission.R
+import app.melon.user.R
+import app.melon.user.databinding.FragmentEditOptionsBinding
+import app.melon.util.delegates.viewBinding
 
-class EditOptionsDialogFragment : DialogFragment() {
+
+class EditOptionsDialogFragment : DialogFragment(R.layout.fragment_edit_options) {
+
+    private val binding: FragmentEditOptionsBinding by viewBinding()
 
     private var listener: Listener? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_edit_options, container, false)
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
@@ -30,11 +24,11 @@ class EditOptionsDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<TextView>(R.id.from_album).setOnClickListener {
+        binding.fromAlbum.setOnClickListener {
             listener?.onSelectOptionAlbum()
             dismiss()
         }
-        view.findViewById<TextView>(R.id.from_camera).setOnClickListener {
+        binding.fromCamera.setOnClickListener {
             listener?.onSelectOptionCamera()
             dismiss()
         }

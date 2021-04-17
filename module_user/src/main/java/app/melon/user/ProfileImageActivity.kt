@@ -9,7 +9,7 @@ import android.view.MenuItem
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import app.melon.permission.helper.EditHelper
+import app.melon.user.ui.edit.EditHelper
 import app.melon.user.databinding.ActivityProfileImageBinding
 import app.melon.user.ui.image.ProfileImageViewModel
 import app.melon.util.base.ErrorResult

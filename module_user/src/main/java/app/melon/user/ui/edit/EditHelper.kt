@@ -1,4 +1,4 @@
-package app.melon.permission.helper
+package app.melon.user.ui.edit
 
 import android.Manifest
 import android.content.ContentValues
@@ -44,7 +44,6 @@ class EditHelper(
             name = "TODO"
         )
     )
-
 
     private var pendingProcessCameraImageUri: Uri? = null
     private val takeImageFromCamera = with(activity) {
