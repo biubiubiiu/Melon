@@ -77,10 +77,10 @@ dependencies {
     implementation(project(Modules.group))
     implementation(project(Modules.poi))
 
-    compileOnly(project(Modules.accountApi))
-    compileOnly(project(Modules.userApi))
-    compileOnly(project(Modules.eventApi))
-    compileOnly(project(Modules.poiApi))
+    implementation(project(Modules.accountApi))
+    implementation(project(Modules.userApi))
+    implementation(project(Modules.eventApi))
+    implementation(project(Modules.poiApi))
 
     implementation(Libraries.MultiDex.multiDex)
 
@@ -88,10 +88,7 @@ dependencies {
     implementation(Libraries.Navigation.ui)
     implementation(Libraries.Navigation.fragmentKtx)
     implementation(Libraries.Navigation.uiKtx)
-    implementation(Libraries.Paging3.runtime)
 
     kapt(Libraries.Dagger.compiler)
     kapt(Libraries.Dagger.processor)
-
-    kapt(Libraries.Epoxy.compiler)
 }

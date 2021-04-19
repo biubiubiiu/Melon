@@ -120,13 +120,6 @@ object Libraries {
         const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
     }
 
-    object Lifecycle {
-        private const val version = "2.3.0"
-        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel:$version"
-        const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
-        const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
-    }
-
     object Transition {
         private const val version = "1.4.0"
         const val transition = "androidx.transition:transition:$version"

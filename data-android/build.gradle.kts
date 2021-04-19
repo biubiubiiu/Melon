@@ -18,13 +18,6 @@ android {
         versionCode = AndroidClient.versionCode
         versionName = AndroidClient.versionName
     }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles("proguard-rules.pro")
-        }
-    }
 }
 
 kapt {
@@ -33,13 +26,11 @@ kapt {
 }
 
 dependencies {
-    implementation(project(Modules.data))
+    api(project(Modules.data))
 
-    implementation(Libraries.Room.runtime)
+    api(Libraries.Room.runtime)
     api(Libraries.Room.ktx)
 
     kapt(Libraries.Room.compiler)
     kapt(Libraries.Dagger.compiler)
-
-    implementation(Libraries.Paging3.runtime)
 }

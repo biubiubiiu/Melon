@@ -37,7 +37,6 @@ kapt {
 }
 
 dependencies {
-    api(project(Modules.data))
     api(project(Modules.commonUi))
     api(project(Modules.commonUtils))
     api(project(Modules.runtimePermissions))
@@ -45,16 +44,12 @@ dependencies {
 
     api(Libraries.AndroidX.AppCompat.appCompat)
 
-    api(Libraries.Room.runtime)
-
     api(Libraries.Mavericks.mavericks)
 
     api(Libraries.Epoxy.paging)
 
     api(Libraries.Retrofit.gsonConverter)
-    api(Libraries.Retrofit.retrofit)
     api(Libraries.OkHttp.okHttp)
 
-    kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)
 }

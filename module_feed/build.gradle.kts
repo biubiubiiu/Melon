@@ -40,16 +40,15 @@ kapt {
 }
 
 dependencies {
-    implementation(project(Modules.baseFramework))
-    implementation(project(Modules.dataAndroid))
+    compileOnly(project(Modules.baseFramework))
+    compileOnly(project(Modules.dataAndroid))
 
-    implementation(project(Modules.userApi))
-    implementation(project(Modules.poiApi))
-    implementation(project(Modules.comment))
+    compileOnly(project(Modules.userApi))
+    compileOnly(project(Modules.poiApi))
+    compileOnly(project(Modules.comment))
 
     implementation(Libraries.Fragment.fragment)
     implementation(Libraries.Fragment.ktx)
-    implementation(Libraries.Mavericks.mavericks)
 
     kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)

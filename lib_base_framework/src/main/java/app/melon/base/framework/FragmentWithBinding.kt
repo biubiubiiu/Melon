@@ -16,7 +16,7 @@ abstract class FragmentWithBinding<V : ViewBinding> : DaggerFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return createBinding(inflater, container, savedInstanceState)
             .also { _binding = it }
             .root

@@ -40,17 +40,13 @@ kapt {
 }
 
 dependencies {
-    implementation(project(Modules.accountApi))
+    compileOnly(project(Modules.accountApi))
 
-    implementation(project(Modules.baseFramework))
-    implementation(project(Modules.dataAndroid))
+    compileOnly(project(Modules.baseFramework))
+    compileOnly(project(Modules.dataAndroid))
 
     implementation(Libraries.Fragment.fragment)
     implementation(Libraries.Fragment.ktx)
-    implementation(Libraries.Mavericks.mavericks)
-//    implementation("androidx.annotation:annotation:1.1.0")
-//    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
-//    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
 
     kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)
