@@ -89,7 +89,22 @@ class FeedRepository @Inject constructor(
         return Pager(
             config = PAGING_CONFIG,
             pagingSourceFactory = {
-                FeedPagingSource(uid, service, PAGING_CONFIG.pageSize, itemMapper)
+                FeedPagingSource(
+                    fetcher = { page -> service.feedsFromUser(uid, page, PAGING_CONFIG.pageSize) },
+                    pageSize = PAGING_CONFIG.pageSize,
+                    listItemMapper = itemMapper)
+            }
+        ).flow
+    }
+
+    fun getNearbyFeeds(longitude: Double, latitude: Double): Flow<PagingData<FeedAndAuthor>> {
+        return Pager(
+            config = PAGING_CONFIG,
+            pagingSourceFactory = {
+                FeedPagingSource(
+                    fetcher = { page -> service.nearby(longitude, latitude, page, PAGING_CONFIG.pageSize) },
+                    pageSize = PAGING_CONFIG.pageSize,
+                    listItemMapper = itemMapper)
             }
         ).flow
     }

@@ -65,8 +65,9 @@ class TextHeader @JvmOverloads constructor(
         setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
     }
 
+    @JvmOverloads
     @ModelProp
-    fun padding(paddings: IntArray) {
+    fun padding(paddings: IntArray = intArrayOf(0)) {
         when (paddings.size) {
             1 -> setPadding(paddings[0], paddings[0], paddings[0], paddings[0])
             2 -> setPadding(paddings[0], paddings[1], paddings[0], paddings[1])

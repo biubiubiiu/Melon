@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/info_window_bg"
+        android:padding="@dimen/spacing_conventional"
+        tools:backgroundTint="#808080">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/TextPrimary"
+            android:textSize="14sp"
+            tools:text="Kings Landing" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:maxWidth="210dp"
+            android:textColor="@color/TextSecondary"
+            android:textSize="12sp"
+            tools:text="This is a Address Address Address" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_triangle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:importantForAccessibility="no"
+        android:src="@drawable/bubble_spike"
+        tools:tint="#808080" />
+
+</LinearLayout>

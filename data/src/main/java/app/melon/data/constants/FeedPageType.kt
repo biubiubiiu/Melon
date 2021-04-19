@@ -10,6 +10,7 @@ const val ANONYMOUS_ALL_FEED = 4
 const val MY_ANONYMOUS_POST = 5
 const val MY_POST = 6
 const val MY_FAVORITE_POST = 7
+const val POI_FEEDS = 8
 
 @Retention(AnnotationRetention.SOURCE)
 @IntDef(

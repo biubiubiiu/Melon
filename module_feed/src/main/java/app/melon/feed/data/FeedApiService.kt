@@ -31,4 +31,12 @@ interface FeedApiService : ApiService {
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
     ): Call<BaseApiResponse<List<FeedListItemResponse>>>
+
+    @GET("feed/list/nearby")
+    fun nearby(
+        @Query("longitude") longitude: Double,
+        @Query("latitude") latitude: Double,
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Call<BaseApiResponse<List<FeedListItemResponse>>>
 }

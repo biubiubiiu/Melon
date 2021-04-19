@@ -1,5 +1,4 @@
 plugins {
-    // Library Specific Plugins
     id(BuildPlugins.androidLibrary)
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinKapt)
@@ -17,8 +16,10 @@ android {
 
         versionCode = AndroidClient.versionCode
         versionName = AndroidClient.versionName
+    }
 
-        consumerProguardFiles("consumer-rules.pro")
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -28,10 +29,15 @@ kapt {
 }
 
 dependencies {
-    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    compileOnly(project(Modules.commonUtils))
+    implementation(project(Modules.baseFramework))
+    implementation(project(Modules.dataAndroid))
+    implementation(project(Modules.feed))
 
-    compileOnly(Libraries.kotlinStdLib)
-    compileOnly(Libraries.Dagger.dagger)
+    implementation(Libraries.Fragment.fragment)
+    implementation(Libraries.Fragment.ktx)
+    implementation(Libraries.Mavericks.mavericks)
+
+    kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)
+    kapt(Libraries.Dagger.processor)
 }

@@ -75,6 +75,7 @@ dependencies {
     implementation(project(Modules.feed))
     implementation(project(Modules.comment))
     implementation(project(Modules.group))
+    implementation(project(Modules.poi))
 
     compileOnly(project(Modules.accountApi))
     compileOnly(project(Modules.userApi))

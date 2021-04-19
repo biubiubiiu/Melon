@@ -1,6 +1,5 @@
 package app.melon.user.ui
 
-import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import app.melon.data.entities.User

@@ -27,7 +27,11 @@ class MelonDateTimeFormatter @Inject constructor(
 
     fun formatShortDate(temporalAmount: Temporal) = exceptionWrapper { shortDateFormatter.format(temporalAmount) }
     fun formatMediumDate(temporalAmount: Temporal) = exceptionWrapper { mediumDateFormatter.format(temporalAmount) }
-    fun formatMediumDateTime(temporalAmount: Temporal) = exceptionWrapper { mediumDateTimeFormatter.format(temporalAmount) }
+    fun formatMediumDateTime(temporalAmount: Temporal) = exceptionWrapper {
+        mediumDateTimeFormatter.format(
+            temporalAmount)
+    }
+
     fun formatShortTime(localTime: LocalTime) = exceptionWrapper { shortTimeFormatter.format(localTime) }
 
     private fun exceptionWrapper(block: () -> String): String {
@@ -72,5 +76,19 @@ class MelonDateTimeFormatter @Inject constructor(
                 formatShortDate(dateTime)
             }
         }
+    }
+
+    // TODO use official library
+    fun formatDuration(second: Long): String {
+        if (second > 3600) {
+            val hour = second / 3600
+            val minute = second % 3600 / 60
+            return hour.toString() + "小时" + minute + "分钟"
+        }
+        if (second >= 60) {
+            val minute = second / 60
+            return minute.toString() + "分钟"
+        }
+        return second.toString() + "秒"
     }
 }

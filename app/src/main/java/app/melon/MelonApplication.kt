@@ -8,9 +8,11 @@ import com.airbnb.mvrx.Mavericks
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 
+
 class MelonApplication : DaggerApplication() {
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = DaggerAppComponent.factory().create(this)
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+        DaggerAppComponent.factory().create(this)
 
     override fun onCreate() {
         super.onCreate()

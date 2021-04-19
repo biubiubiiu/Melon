@@ -17,6 +17,7 @@ import app.melon.home.nearby.LocateRequest
 import app.melon.permission.PermissionHelper
 import app.melon.permission.PermissionHelperOwner
 import app.melon.permission.PermissionRequest
+import app.melon.poi.PoiDetailActivity
 import app.melon.user.api.IUserService
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.reverse
@@ -105,6 +106,7 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
                 R.id.home_nav_drawer_nav_to_registration -> accountService.startRegister(this)
                 R.id.home_nav_drawer_nav_to_profile -> userService.navigateToMyProfile(this)
                 R.id.home_nav_drawer_nav_to_events -> eventService.navigateToEventList(this)
+                R.id.home_nav_drawer_nav_to_messages -> PoiDetailActivity.start(this)
                 else -> {
                 } // TODO
             }

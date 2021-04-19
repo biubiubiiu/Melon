@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="poi_district_and_type" translatable="false">%s/%s</string>
+    <string name="poi_locate">Locate</string>
+    <string name="poi_all_posts">%d posts in total</string>
+
+    <string name="walk_route_duration">Walk: %s</string>
+    <string name="drive_route_duration">Drive: %s</string>
+</resources>
