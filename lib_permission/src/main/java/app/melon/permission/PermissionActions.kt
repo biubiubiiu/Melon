@@ -9,7 +9,7 @@ sealed class PermissionActions : Serializable {
     abstract val name: String
 }
 
-open class PermissionRequest(
+abstract class PermissionRequest(
     override val permissions: Array<out String>,
     override val title: Int,
     override val subTitle: Int,
