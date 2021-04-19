@@ -39,7 +39,7 @@ abstract class UserItem : EpoxyModelWithHolder<UserItem.Holder>() {
                 transformations(CircleCropTransformation())
             }
             usernameView.text = user.username
-            userTagView.bind(user, style = TagView.TagStyle.Info())
+            userTagView.render(style = TagView.TagStyle.Info(user))
             userDescriptionView.text = user.description
             schoolView.text = user.school.orEmpty()
 

@@ -41,7 +41,7 @@ abstract class EventItem : EpoxyModelWithHolder<EventItem.Holder>() {
             }
             usernameView.text = item.organiser.username
             schoolView.text = item.organiser.school
-            userTag.bind(item.organiser, TagView.TagStyle.Info(showZodiacSign = false))
+            userTag.render(TagView.TagStyle.Info(user = item.organiser, showZodiacSign = false))
             distanceView.text = "TODO"
             titleView.text = item.event.title
             contentView.text = item.event.content

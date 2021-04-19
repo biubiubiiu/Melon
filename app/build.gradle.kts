@@ -80,6 +80,7 @@ dependencies {
     compileOnly(project(Modules.accountApi))
     compileOnly(project(Modules.userApi))
     compileOnly(project(Modules.eventApi))
+    compileOnly(project(Modules.poiApi))
 
     implementation(Libraries.MultiDex.multiDex)
 

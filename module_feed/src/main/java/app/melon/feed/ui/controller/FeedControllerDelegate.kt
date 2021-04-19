@@ -8,11 +8,14 @@ import app.melon.feed.FeedDetailActivity
 import app.melon.feed.ui.widget.AnonymousFeedItem_
 import app.melon.feed.ui.widget.FeedItem_
 import app.melon.permission.helper.SaveHelper
+import app.melon.poi.api.IPoiService
+import app.melon.poi.api.PoiInfo
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.activityContext
 import app.melon.util.extensions.showToast
 import app.melon.util.number.MelonNumberFormatter
 import app.melon.util.formatter.MelonDateTimeFormatter
+import app.melon.util.formatter.MelonDistanceFormatter
 import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -22,8 +25,10 @@ import dagger.assisted.AssistedInject
 class FeedControllerDelegate @AssistedInject constructor(
     @Assisted private val context: Context,
     private val userService: IUserService,
+    private val poiService: IPoiService,
     private val dateTimeFormatter: MelonDateTimeFormatter,
-    private val numberFormatter: MelonNumberFormatter
+    private val numberFormatter: MelonNumberFormatter,
+    private val distanceFormatter: MelonDistanceFormatter
 ) : FeedActions {
 
     private val saveHelper by lazy { SaveHelper(context.activityContext!!) }
@@ -38,6 +43,7 @@ class FeedControllerDelegate @AssistedInject constructor(
             .item(item)
             .formatter(dateTimeFormatter)
             .numberFormatter(numberFormatter)
+            .distanceFormatter(distanceFormatter)
             .holderClickListener { this.onHolderClick(it) }
             .avatarClickListener { this.onAvatarClick(it) }
             .shareClickListener { this.onShareClick(it) }
@@ -45,6 +51,7 @@ class FeedControllerDelegate @AssistedInject constructor(
             .favorClickListener { this.onFavorClick(it) }
             .moreClickListener { this.onMoreClick(it) }
             .saveImageListener { this.onSaveImage(it) }
+            .poiEntryClickListener { this.onPoiEntryClick(it) }
     }
 
     fun buildAnonymousFeedItem(
@@ -91,6 +98,10 @@ class FeedControllerDelegate @AssistedInject constructor(
 
     override fun onSaveImage(url: String) {
         saveHelper.saveImage(url)
+    }
+
+    override fun onPoiEntryClick(info: PoiInfo) {
+        poiService.navigateToPoiDetail(context, info)
     }
 
     @AssistedFactory

@@ -12,9 +12,11 @@ import app.melon.base.ui.TagView
 import app.melon.data.entities.Feed
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.R
+import app.melon.poi.api.PoiInfo
 import app.melon.util.extensions.dpInt
 import app.melon.util.number.MelonNumberFormatter
 import app.melon.util.formatter.MelonDateTimeFormatter
+import app.melon.util.formatter.MelonDistanceFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
@@ -34,10 +36,12 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
     @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var moreClickListener: (Feed) -> Unit
     @EpoxyAttribute lateinit var saveImageListener: (String) -> Unit
+    @EpoxyAttribute lateinit var poiEntryClickListener: (PoiInfo) -> Unit
 
     @EpoxyAttribute lateinit var item: FeedAndAuthor
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
     @EpoxyAttribute lateinit var numberFormatter: MelonNumberFormatter
+    @EpoxyAttribute lateinit var distanceFormatter: MelonDistanceFormatter
 
     private var overlayView: ImageViewerOverlay? = null
 
@@ -56,6 +60,11 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
             commentView.setOnClickListener { commentClickListener.invoke(item.feed) }
             favoriteView.setOnClickListener { favorClickListener.invoke(item.feed.id) }
             moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed) }
+            locationTag.setOnClickListener {
+                poiEntryClickListener.invoke(
+                    PoiInfo("B001B0ISPB", 114.1808934593, 22.322230460245)
+                )
+            }
         }
     }
 
@@ -93,6 +102,10 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
                         .show()
                 }
             }
+
+            // TODO
+            locationTag.isVisible = true
+            locationTag.render(TagView.TagStyle.Poi("华中科技大学", "2km"))
         }
     }
 

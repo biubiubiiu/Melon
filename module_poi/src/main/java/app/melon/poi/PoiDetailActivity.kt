@@ -12,6 +12,7 @@ import app.melon.location.LocationHelper
 import app.melon.location.SimplifiedLocation
 import app.melon.location.toLatLng
 import app.melon.location.toLatLonPoint
+import app.melon.poi.api.PoiInfo
 import app.melon.poi.databinding.ActivityPoiDetailBinding
 import app.melon.poi.ui.DaggerActivityWithMapView
 import app.melon.poi.ui.PoiDetailViewModel
@@ -42,6 +43,8 @@ class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
 
     private val binding: ActivityPoiDetailBinding by viewBinding()
 
+    private val info get() = intent.getSerializableExtra(KEY_INFO) as PoiInfo
+
     private val infoWindow by lazy {
         layoutInflater.inflate(R.layout.view_info_window, binding.root, false)
     }
@@ -55,10 +58,9 @@ class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
     @Inject internal lateinit var locationHelper: LocationHelper
     @Inject internal lateinit var formatter: MelonDateTimeFormatter
 
-    private val poiLocation = SimplifiedLocation(
-        longitude = 114.1808934593,
-        latitude = 22.322230460245
-    )
+    private val poiLocation by lazy {
+        SimplifiedLocation(info.longitude, info.latitude)
+    }
 
     private val myLocation by lazy {
         locationHelper.lastLocation ?: SimplifiedLocation(
@@ -196,7 +198,7 @@ class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
     }
 
     private fun refresh() {
-        viewModel.refresh("B001B0ISPB", myLocation, poiLocation) // TODO
+        viewModel.refresh(info.id, myLocation, poiLocation)
     }
 
     private fun shareRoute(location: SimplifiedLocation) {
@@ -204,8 +206,13 @@ class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
     }
 
     companion object {
-        fun start(context: Context) {
-            context.startActivity(Intent(context, PoiDetailActivity::class.java))
+        private const val KEY_INFO = "KEY_INFO"
+
+        internal fun start(context: Context, info: PoiInfo) {
+            val intent = Intent(context, PoiDetailActivity::class.java).apply {
+                putExtra(KEY_INFO, info)
+            }
+            context.startActivity(intent)
         }
     }
 }

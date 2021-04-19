@@ -2,13 +2,16 @@ package app.melon.base.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import androidx.annotation.AttrRes
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
+import androidx.core.view.setPadding
 import androidx.core.view.updatePadding
 import app.melon.data.entities.User
 
@@ -30,6 +33,7 @@ class TagView @JvmOverloads constructor(
         private val BG_COLOR_OTHER = "#000000".toColorInt()
 
         private val BG_DISTANCE = "#888888".toColorInt()
+        private val BG_POI = "#3F808080".toColorInt()
 
         private const val PREFIX_MALE = "♂"
         private const val PREFIX_FEMALE = "♀"
@@ -42,6 +46,7 @@ class TagView @JvmOverloads constructor(
 
     sealed class TagStyle {
         data class Info(
+            val user: User,
             val showGender: Boolean = true,
             val showAge: Boolean = true,
             val showZodiacSign: Boolean = true
@@ -49,6 +54,11 @@ class TagView @JvmOverloads constructor(
 
         data class Distance(
             val distance: Float
+        ) : TagStyle()
+
+        data class Poi(
+            val name: String,
+            val distance: String
         ) : TagStyle()
     }
 
@@ -65,13 +75,11 @@ class TagView @JvmOverloads constructor(
         gravity = Gravity.CENTER
     }
 
-    fun bind(
-        user: User,
-        style: TagStyle
-    ) {
+    fun render(style: TagStyle) {
         when (style) {
-            is TagStyle.Info -> renderInfoStyle(user, style.showGender, style.showAge)
-            is TagStyle.Distance -> renderDistanceStyle(user, style.distance)
+            is TagStyle.Info -> renderInfoStyle(style.user, style.showGender, style.showAge)
+            is TagStyle.Distance -> renderDistanceStyle(style.distance)
+            is TagStyle.Poi -> renderPoiStyle(style.name, style.distance)
         }
     }
 
@@ -104,7 +112,7 @@ class TagView @JvmOverloads constructor(
     }
 
     @SuppressLint("SetTextI18n")
-    private fun renderDistanceStyle(user: User, distance: Float) {
+    private fun renderDistanceStyle(distance: Float) {
         val prefix = PREFIX_DISTANCE
         text = "$prefix ${processDistance(distance)}"
         background = GradientDrawable().apply {
@@ -112,6 +120,26 @@ class TagView @JvmOverloads constructor(
             cornerRadius = 30f
         }
     }
+
+    @SuppressLint("SetTextI18n")
+    private fun renderPoiStyle(name: String, distance: String) {
+        setPadding(4f.dpInt)
+        setTextColor(Color.WHITE)
+        text = "$name · $distance"
+        compoundDrawablePadding = 4f.dpInt
+        val drawableStart = ContextCompat.getDrawable(context, R.drawable.icon_home_location)?.mutate()
+        drawableStart?.setBounds(0, 0, 16f.dpInt, 16f.dpInt)
+        setCompoundDrawablesRelative(
+            drawableStart, null, null, null
+        )
+        background = GradientDrawable().apply {
+            setColor(BG_POI)
+            cornerRadius = 6f.dp
+        }
+    }
+
+    private val Float.dp get() = context.resources.displayMetrics.density * this + 0.5f
+    private val Float.dpInt get() = this.dp.toInt()
 
     private fun processDistance(distance: Float): String {
         return "${distance}km"

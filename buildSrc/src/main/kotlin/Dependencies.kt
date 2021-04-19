@@ -53,6 +53,8 @@ object Modules {
     const val feed = ":module_feed"
     const val group = ":module_group"
     const val comment = ":module_comment"
+
+    const val poiApi = ":module_poi_api"
     const val poi = ":module_poi"
 
     const val accountApi = ":module_account_api"

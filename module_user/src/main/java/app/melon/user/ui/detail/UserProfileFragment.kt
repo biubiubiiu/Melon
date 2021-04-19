@@ -76,9 +76,8 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
             binding.header.userProfileDescription.text = user.description
             binding.header.uesrProfileFollowers.text = numberFormatter.format(user.followerCount ?: 0)
             binding.header.userProfileFollowing.text = numberFormatter.format(user.followerCount ?: 0)
-            binding.header.userProfileTag.bind(user, style = TagView.TagStyle.Info())
-            binding.header.userProfileDistanceTag.bind(
-                user,
+            binding.header.userProfileTag.render(style = TagView.TagStyle.Info(user))
+            binding.header.userProfileDistanceTag.render(
                 style = TagView.TagStyle.Distance(distance = 2f)
             ) // TODO import locate SDK
         })
