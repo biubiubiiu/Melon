@@ -11,7 +11,10 @@ import dagger.assisted.AssistedInject
 class UserPostsController @AssistedInject constructor(
     @Assisted context: Context,
     private val factory: FeedControllerDelegate.Factory
-) : BasePagingController<FeedAndAuthor>(context) {
+) : BasePagingController<FeedAndAuthor>(
+    context,
+    sameContentIndicator = { oldItem, newItem -> oldItem.feed.id == newItem.feed.id }
+) {
 
     private val delegate by lazy {
         factory.create(context)

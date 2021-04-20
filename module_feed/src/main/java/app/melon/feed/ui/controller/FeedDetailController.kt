@@ -28,7 +28,10 @@ class FeedDetailController @AssistedInject constructor(
     private val numberFormatter: MelonNumberFormatter,
     private val dateTimeFormatter: MelonDateTimeFormatter,
     private val distanceFormatter: MelonDistanceFormatter
-) : BasePagingController<CommentAndAuthor>(context) {
+) : BasePagingController<CommentAndAuthor>(
+    context,
+    sameContentIndicator = { oldItem, newItem -> oldItem.comment.id == newItem.comment.id }
+) {
 
     var item: FeedAndAuthor? = null
         set(value) {

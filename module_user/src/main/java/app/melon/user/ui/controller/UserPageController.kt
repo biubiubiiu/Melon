@@ -14,7 +14,10 @@ class UserPageController @AssistedInject constructor(
     @Assisted private val idProvider: (User?, Int) -> String,
     @Assisted private val showFollowButton: Boolean,
     factory: UserControllerDelegate.Factory
-) : BasePagingController<User>(context) {
+) : BasePagingController<User>(
+    context,
+    sameContentIndicator = { oldItem, newItem -> oldItem.id == newItem.id }
+) {
 
     private val delegate = factory.create(context)
 

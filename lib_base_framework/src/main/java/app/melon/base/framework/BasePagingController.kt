@@ -3,6 +3,7 @@ package app.melon.base.framework
 import android.content.Context
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.DiffUtil
 import app.melon.base.ui.R
 import app.melon.base.ui.list.EmptyView
 import app.melon.base.ui.list.EmptyView_
@@ -21,19 +22,26 @@ import java.net.SocketTimeoutException
 
 @OptIn(ObsoleteCoroutinesApi::class)
 abstract class BasePagingController<T : Any>(
-    protected val context: Context
+    protected val context: Context,
+    @Suppress("UNCHECKED_CAST")
+    sameContentIndicator: (T, T) -> Boolean = { oldItem, newItem -> oldItem == newItem }
 ) : PagingDataEpoxyController<T>(
     modelBuildingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler(),
-    diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler()
+    diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler(),
+    itemDiffCallback = object : DiffUtil.ItemCallback<T>() {
+        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
+        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = sameContentIndicator.invoke(oldItem, newItem)
+    }
 ) {
 
     protected open val loadMoreView = LoadMoreView_().apply { id(LoadMoreView::class.java.simpleName) }
     protected open val refreshingView = RefreshView_().apply { id(RefreshView::class.java.simpleName) }
     protected open val emptyView = EmptyView_().apply { id(EmptyView::class.java.simpleName) }
-    protected open val errorView get() = ErrorView_().apply {
-        id(ErrorView::class.java.simpleName)
-        retryListener { retry() }
-    }
+    protected open val errorView
+        get() = ErrorView_().apply {
+            id(ErrorView::class.java.simpleName)
+            retryListener { retry() }
+        }
 
     init {
         addLoadStateListener {

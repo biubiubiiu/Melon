@@ -14,7 +14,10 @@ class FeedPageController @AssistedInject constructor(
     @Assisted private val type: Type, // TODO move this field to [Feed]
     @Assisted private val idProvider: (FeedAndAuthor?, Int) -> String,
     private val factory: FeedControllerDelegate.Factory
-) : BasePagingController<FeedAndAuthor>(context) {
+) : BasePagingController<FeedAndAuthor>(
+    context,
+    sameContentIndicator = { oldItem, newItem -> oldItem.feed.id == newItem.feed.id }
+) {
 
     enum class Type {
         NORMAL, ANONYMOUS
