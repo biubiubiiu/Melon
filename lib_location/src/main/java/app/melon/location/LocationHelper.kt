@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.os.Build
 import app.melon.util.extensions.addIf
+import app.melon.util.extensions.suspendCoroutineWithTimeout
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
@@ -14,7 +15,6 @@ import com.amap.api.maps2d.model.LatLng
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 
 @Singleton
@@ -32,6 +32,8 @@ class LocationHelper @Inject constructor(
             predicate = { Build.VERSION.SDK_INT < Build.VERSION_CODES.P },
             element = Manifest.permission.WRITE_EXTERNAL_STORAGE
         ).toTypedArray()
+
+        private const val CUSTOM_ERROR_CODE = -1
     }
 
     private val locationClient = AMapLocationClient(context)
@@ -65,8 +67,11 @@ class LocationHelper @Inject constructor(
         }
     }
 
-    suspend fun tryLocate(accuracyThreshold: Float = 100f): LocateResult {
-        return suspendCoroutine { coroutine ->
+    suspend fun tryLocate(
+        accuracyThreshold: Float = 100f,
+        timeoutMillis: Long = 5000L
+    ): LocateResult {
+        return suspendCoroutineWithTimeout(timeoutMillis) { coroutine ->
             locationClient.setLocationListener {
                 val result = it.toLocateResult()
                 if (result is LocateSuccess) {
@@ -79,6 +84,8 @@ class LocationHelper @Inject constructor(
                 coroutine.resume(result)
             }
             locationClient.startLocation()
+        } ?: LocateFail(CUSTOM_ERROR_CODE, "Locate timeout").also {
+            locationClient.stopLocation() // make sure it stops locating after timeout
         }
     }
 
@@ -107,7 +114,7 @@ class LocationHelper @Inject constructor(
     private fun AMapLocation?.toLocateResult(): LocateResult {
         return when {
             this == null -> LocateFail(
-                -1,
+                CUSTOM_ERROR_CODE,
                 context.getString(R.string.locate_fail_null_result)
             )
             this.errorCode == 12 -> LocateFail(
