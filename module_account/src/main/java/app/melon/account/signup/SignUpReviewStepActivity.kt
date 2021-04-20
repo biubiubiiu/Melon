@@ -12,10 +12,12 @@ import app.melon.account.databinding.ActivitySignUpStepReviewBinding
 import app.melon.account.login.LoginActivity
 import app.melon.account.signup.data.SignUpForm
 import app.melon.account.signup.review.SignUpReviewStepViewModel
-import app.melon.util.extensions.clearTop
+import app.melon.util.extensions.clearTask
+import app.melon.util.extensions.newTask
 import app.melon.util.extensions.showToast
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
+
 
 class SignUpReviewStepActivity : DaggerAppCompatActivity(R.layout.activity_sign_up_step_review) {
 
@@ -68,7 +70,8 @@ class SignUpReviewStepActivity : DaggerAppCompatActivity(R.layout.activity_sign_
             } else if (it.success) {
                 viewModel.saveUser(form)
                 val intent = LoginActivity.prepareIntent(this, form.username, form.password)
-                    .clearTop()
+                    .clearTask()
+                    .newTask()
                 startActivity(intent)
             }
         })
