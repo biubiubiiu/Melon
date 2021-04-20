@@ -3,7 +3,6 @@
     package="app.melon.user">
 
     <application>
-        <activity android:name=".UserProfileActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ProfileImageActivity" />
         <activity android:name=".EditProfileActivity" />

@@ -91,6 +91,9 @@ class UserProfileController @AssistedInject constructor(
         vertSpaceSmall {
             id("profile_info_bottom_space")
         }
+    }
+
+    private fun buildFeeds(items: List<FeedAndAuthor>?) {
         textHeader {
             id("profile_feeds_header")
             content(R.string.user_profile_posts)
@@ -99,9 +102,6 @@ class UserProfileController @AssistedInject constructor(
             padding(intArrayOf(12.dpInt, 12.dpInt))
             background(R.color.bgPrimary)
         }
-    }
-
-    private fun buildFeeds(items: List<FeedAndAuthor>?) {
         items?.forEachIndexed { index, item ->
             add(delegate.buildFeedItem(
                 dataProvider = { item },

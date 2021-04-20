@@ -1,7 +1,9 @@
 package app.melon.user.ui.detail
 
+import android.view.View
 import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ReduxViewModel
+import app.melon.base.framework.SingleEvent
 import app.melon.user.interactor.UpdateFirstPageUserFeeds
 import app.melon.user.interactor.UpdateUserDetail
 import app.melon.util.base.ErrorResult
@@ -61,6 +63,12 @@ class UserProfileViewModel @AssistedInject constructor(
     private fun fetchUserFeedsFirstPage(uid: String) {
         viewModelScope.launch {
             updateFirstPageUserFeeds(UpdateFirstPageUserFeeds.Params(uid))
+        }
+    }
+
+    fun viewMorePosts(view: View) {
+        viewModelScope.launchSetState {
+            copy(enterMorePosts = SingleEvent(view))
         }
     }
 

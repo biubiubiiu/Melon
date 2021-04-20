@@ -9,6 +9,7 @@ import app.melon.base.ui.databinding.ActivityCommonFragmentWithToolbarBinding
 import app.melon.user.api.FollowerUserList
 import app.melon.user.api.IUserService
 import app.melon.util.delegates.viewBinding
+import app.melon.util.extensions.getColorCompat
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -41,6 +42,8 @@ class FollowersActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupToolbar() {
+        binding.toolbar.setTitle(R.string.app_common_follower)
+        binding.toolbar.setNavigationIconTint(getColorCompat(R.color.colorPrimary))
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)

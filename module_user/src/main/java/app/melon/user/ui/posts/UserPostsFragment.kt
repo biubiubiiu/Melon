@@ -4,17 +4,15 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import app.melon.util.extensions.ifNotEmpty
-import app.melon.util.extensions.viewModelProviderFactoryOf
 import app.melon.user.R
 import app.melon.user.databinding.FragmentUserPostsBinding
 import app.melon.util.delegates.viewBinding
-import com.airbnb.epoxy.EpoxyRecyclerView
+import app.melon.util.extensions.ifNotEmpty
+import app.melon.util.extensions.viewModelProviderFactoryOf
 import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -57,18 +55,21 @@ class UserPostsFragment : DaggerFragment(R.layout.fragment_user_posts) {
         transitionName.ifNotEmpty { ViewCompat.setTransitionName(view, it) }
 
         binding.recyclerView.setController(controller)
+        setupToolbar()
+    }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.findItem(R.id.action_more).isVisible = false
+        super.onPrepareOptionsMenu(menu)
+    }
+
+    private fun setupToolbar() {
         val activity = requireActivity() as AppCompatActivity
         activity.setSupportActionBar(binding.toolbar)
         activity.supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
             it.setDisplayShowHomeEnabled(true)
         }
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.action_search).isVisible = false
-        super.onPrepareOptionsMenu(menu)
     }
 
     companion object {

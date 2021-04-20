@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import app.melon.base.ui.databinding.FragmentCommonTabsBinding
 import app.melon.base.ui.lazyload.LazyFragmentPagerAdapter
 import app.melon.data.constants.MY_ANONYMOUS_POST
@@ -16,15 +15,11 @@ import app.melon.user.R
 import app.melon.util.delegates.viewBinding
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
-import javax.inject.Inject
 
 
 class MyProfileTabFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
     private val binding: FragmentCommonTabsBinding by viewBinding()
-
-    @Inject internal lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by viewModels<MyProfileViewModel>(::requireActivity) { viewModelFactory }
 
     private val viewPager get() = binding.viewpager
     private val tabLayout get() = binding.tabLayout
@@ -54,7 +49,7 @@ class MyProfileTabFragment : DaggerFragment(R.layout.fragment_common_tabs) {
                 }
             }
 
-            override fun getPageTitle(position: Int): CharSequence? = titles[position]
+            override fun getPageTitle(position: Int): CharSequence = titles[position]
 
             override fun getCount(): Int = pages
         }
@@ -62,7 +57,6 @@ class MyProfileTabFragment : DaggerFragment(R.layout.fragment_common_tabs) {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 tab ?: return
-                viewModel.reselect(tab.position)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {

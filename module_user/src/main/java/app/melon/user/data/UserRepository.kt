@@ -129,6 +129,7 @@ class UserRepository @Inject constructor(
         age = remote.age,
         school = remote.school,
         location = remote.location,
+        photos = remote.photos,
         description = remote.description,
         avatarUrl = remote.avatarUrl,
         backgroundUrl = remote.backgroundUrl,

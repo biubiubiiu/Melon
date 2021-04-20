@@ -5,10 +5,9 @@ import app.melon.base.scope.FragmentScope
 import app.melon.user.EditProfileActivity
 import app.melon.user.FollowersActivity
 import app.melon.user.FollowingActivity
-import app.melon.user.ProfileActivity
 import app.melon.user.ProfileImageActivity
-import app.melon.user.UserProfileActivity
 import app.melon.user.ui.CommonUserFragment
+import app.melon.user.ui.ProfileFragment
 import app.melon.user.ui.UserProfileContainerFragment
 import app.melon.user.ui.detail.UserProfileFragment
 import app.melon.user.ui.mine.MyProfileTabFragment
@@ -23,13 +22,13 @@ abstract class UserBuilder {
     @ContributesAndroidInjector
     abstract fun injectUserListFragment(): CommonUserFragment
 
-    @ActivityScope
+    @FragmentScope
     @ContributesAndroidInjector
-    abstract fun provideActivity(): UserProfileActivity
+    abstract fun injectProfileContainerFragment(): UserProfileContainerFragment
 
-    @ActivityScope
+    @FragmentScope
     @ContributesAndroidInjector
-    abstract fun injectMyProfileActivity(): ProfileActivity
+    abstract fun injectProfileFragment(): ProfileFragment
 
     @ActivityScope
     @ContributesAndroidInjector
@@ -38,10 +37,6 @@ abstract class UserBuilder {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun injectProfileImageActivity(): ProfileImageActivity
-
-    @FragmentScope
-    @ContributesAndroidInjector
-    abstract fun provideContainerFragment(): UserProfileContainerFragment
 
     @FragmentScope
     @ContributesAndroidInjector
