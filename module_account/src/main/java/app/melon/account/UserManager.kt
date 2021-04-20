@@ -1,5 +1,6 @@
 package app.melon.account
 
+import app.melon.account.api.UserManager
 import app.melon.account.di.RegistrationStorage
 import app.melon.account.di.UserComponent
 import app.melon.account.login.data.LoginRepository
@@ -7,6 +8,8 @@ import app.melon.account.storage.Storage
 import app.melon.data.entities.User
 import app.melon.util.base.Success
 import app.melon.util.network.TokenManager
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,12 +19,12 @@ import javax.inject.Singleton
  * Knows when the user is logged in.
  */
 @Singleton
-class UserManager @Inject constructor(
+class UserManagerImpl @Inject constructor(
     @RegistrationStorage private val storage: Storage,
     private val userComponentFactory: UserComponent.Factory,
     private val repo: LoginRepository,
     private val tokenManager: TokenManager
-) {
+) : UserManager() {
 
     companion object {
         private const val REGISTERED_USER = "registered_user"
@@ -31,28 +34,27 @@ class UserManager @Inject constructor(
     var userComponent: UserComponent? = null
         private set
 
-    private val username: String get() = storage.getString(REGISTERED_USER)
-    private val password: String get() = storage.getString("$username$PASSWORD_SUFFIX")
+    override val savedUsername: String get() = storage.getString(REGISTERED_USER)
+    override val savePassword: String get() = storage.getString("$savedUsername$PASSWORD_SUFFIX")
 
     // in-memory cache of the loggedInUser object
-    var user: User? = null
-        private set
+    override val user: Flow<User?> = emptyFlow()
 
-    fun isUserLoggedIn() = userComponent != null
+    override fun isUserLoggedIn() = userComponent != null
 
-    fun isUserRegistered() = storage.getString(REGISTERED_USER).isNotEmpty()
+    override fun isUserRegistered() = storage.getString(REGISTERED_USER).isNotEmpty()
 
-    fun registerUser(username: String, password: String) {
+    override fun registerUser(username: String, password: String) {
         storage.setString(REGISTERED_USER, username)
         storage.setString("$username$PASSWORD_SUFFIX", password)
         userJustLoggedIn()
     }
 
-    suspend fun loginUser(): Boolean {
-        return loginUser(this.username, this.password)
+    override suspend fun loginUser(): Boolean {
+        return loginUser(this.savedUsername, this.savePassword)
     }
 
-    suspend fun loginUser(username: String, password: String): Boolean {
+    override suspend fun loginUser(username: String, password: String): Boolean {
         val result = repo.login(username, password)
         return if (result is Success) {
             tokenManager.updateToken(token = result.get())
@@ -63,7 +65,7 @@ class UserManager @Inject constructor(
         }
     }
 
-    fun logout() {
+    override fun logout() {
         tokenManager.clearToken()
         userComponent = null
     }

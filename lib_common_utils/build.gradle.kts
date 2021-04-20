@@ -45,7 +45,7 @@ kapt {
 }
 
 dependencies {
-    implementation(Libraries.kotlinStdLib)
+    compileOnly(Libraries.kotlinStdLib)
     implementation(Libraries.MultiDex.multiDex)
 
     coreLibraryDesugaring(Libraries.JavaSDK.Desugar.desugar)

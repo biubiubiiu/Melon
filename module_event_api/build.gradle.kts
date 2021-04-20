@@ -17,5 +17,5 @@ android {
 }
 
 dependencies {
-    implementation(Libraries.kotlinStdLib)
+    compileOnly(Libraries.kotlinStdLib)
 }

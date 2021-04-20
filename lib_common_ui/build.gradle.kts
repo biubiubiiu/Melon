@@ -37,7 +37,7 @@ kapt {
 }
 
 dependencies {
-    implementation(Libraries.kotlinStdLib)
+    compileOnly(Libraries.kotlinStdLib)
 
     compileOnly(project(Modules.data))
 

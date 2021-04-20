@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.melon.account.R
-import app.melon.account.UserManager
+import app.melon.account.api.UserManager
 import app.melon.account.signup.data.SignUpForm
 import app.melon.account.signup.state.SignUpResult
 import app.melon.base.scope.ActivityScope
