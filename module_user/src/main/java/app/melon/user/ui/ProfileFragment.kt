@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -73,9 +74,7 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressed
             }
         }
         initData()
-        setupToolbar()
-        setupAnimation()
-        setupListener()
+        initView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -92,6 +91,13 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressed
 
     override fun onBackPressed(): Boolean {
         return (currentFragment as? OnBackPressedHandler)?.onBackPressed() ?: false
+    }
+
+    private fun initView() {
+        setupToolbar()
+        setupAnimation()
+        updateViewVisibility()
+        setListeners()
     }
 
     private fun setupToolbar() {
@@ -142,9 +148,23 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressed
         })
     }
 
-    private fun setupListener() {
+    private fun updateViewVisibility() = with(headerBinding) {
+        editProfile.isVisible = isMyProfile
+        follow.isVisible = isMyProfile.not()
+
+        // testing
+        follow.setState(following = false)
+    }
+
+    private fun setListeners() {
         headerBinding.editProfile.setOnClickListener {
-            EditProfileActivity.start(requireContext())
+            EditProfileActivity.start(it.context)
+        }
+        headerBinding.follow.setOnClickListener {
+            viewModel.toggleFollowState()
+
+            // testing
+            headerBinding.follow.setState(following = true)
         }
     }
 

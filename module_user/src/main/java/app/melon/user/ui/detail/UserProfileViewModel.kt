@@ -72,6 +72,12 @@ class UserProfileViewModel @AssistedInject constructor(
         }
     }
 
+    fun toggleFollowState() {
+        viewModelScope.launch {
+            // TODO update follow state
+        }
+    }
+
     @AssistedFactory
     interface Factory {
         fun create(initialState: UserProfileViewState): UserProfileViewModel

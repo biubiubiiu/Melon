@@ -23,6 +23,7 @@
     <string name="home_bottom_menu_nearby">Nearby</string>
     <string name="home_bottom_menu_anonymous">Anonymous</string>
 
+    <string name="app_common_follow">Follow</string>
     <string name="app_common_following">Following</string>
     <string name="app_common_follower">Followers</string>
     <string name="app_common_search">Search</string>
