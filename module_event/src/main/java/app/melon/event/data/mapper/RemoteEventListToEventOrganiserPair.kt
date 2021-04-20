@@ -13,7 +13,7 @@ class RemoteEventListToEventOrganiserPair @Inject constructor() : Mapper<EventSt
     override suspend fun map(from: EventStruct): Pair<Event, User> {
         val event = Event(
             id = from.id,
-            organiserUid = from.organiser.id,
+            organiserUid = from.organiser?.id,
             title = from.title,
             content = from.content,
             startTime = from.startTime,
@@ -23,9 +23,9 @@ class RemoteEventListToEventOrganiserPair @Inject constructor() : Mapper<EventSt
             demand = from.demand
         )
         val user = User(
-            id = from.organiser.id,
-            username = from.organiser.username,
-            avatarUrl = from.organiser.avatarUrl ?: ""
+            id = from.organiser?.id ?: "",
+            username = from.organiser?.username,
+            avatarUrl = from.organiser?.avatarUrl
         )
         return event to user
     }

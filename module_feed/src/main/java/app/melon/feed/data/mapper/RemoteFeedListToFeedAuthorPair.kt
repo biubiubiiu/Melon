@@ -5,6 +5,7 @@ import app.melon.data.entities.MALE
 import app.melon.data.entities.User
 import app.melon.data.entities.isValidGender
 import app.melon.data.remote.toLocation
+import app.melon.data.remote.toPoiInfo
 import app.melon.feed.data.remote.FeedListItemResponse
 import app.melon.util.mappers.Mapper
 import javax.inject.Inject
@@ -16,22 +17,23 @@ class RemoteFeedListToFeedAuthorPair @Inject constructor() : Mapper<FeedListItem
     override suspend fun map(from: FeedListItemResponse): Pair<Feed, User> {
         val feed = Feed(
             id = from.id,
-            authorUid = from.user.id,
-            title = from.title ?: "",
+            authorUid = from.user?.id,
+            title = from.title,
             content = from.content,
-            photos = from.photos ?: emptyList(),
-            postTime = from.postTime ?: "",
-            replyCount = from.replyCount ?: 0L,
-            favouriteCount = from.favorCount ?: 0L
+            photos = from.photos,
+            poiInfo = from.location?.toPoiInfo(),
+            postTime = from.postTime,
+            replyCount = from.replyCount,
+            favouriteCount = from.favorCount
         )
         val user = User(
-            id = from.user.id,
-            username = from.user.username,
-            gender = if (from.user.gender?.isValidGender() == true) from.user.gender else MALE,
-            age = from.user.age ?: 0,
-            school = from.user.school,
-            location = from.user.lastLocation.toLocation(),
-            avatarUrl = from.user.avatarUrl ?: ""
+            id = from.user?.id ?: "",
+            username = from.user?.username,
+            gender = if (from.user?.gender?.isValidGender() == true) from.user.gender else null,
+            age = from.user?.age,
+            school = from.user?.school,
+            location = from.user?.lastLocation.toLocation(),
+            avatarUrl = from.user?.avatarUrl
         )
         return feed to user
     }

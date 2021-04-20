@@ -35,7 +35,8 @@ class MelonNumberFormatter @Inject constructor(
         else -> "#0.0"
     }
 
-    fun format(number: Number): String {
+    fun format(number: Number?): String {
+        number ?: return ""
         val numValue = number.toLong()
         val value = floor(log10(numValue.toDouble())).toInt()
         val base = value / unit

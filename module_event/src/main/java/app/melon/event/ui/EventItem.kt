@@ -8,6 +8,7 @@ import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.TagView
 import app.melon.data.resultentities.EventAndOrganiser
 import app.melon.event.R
+import app.melon.util.extensions.getResourceString
 import app.melon.util.formatter.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -34,38 +35,45 @@ abstract class EventItem : EpoxyModelWithHolder<EventItem.Holder>() {
         setupListener(holder)
     }
 
-    private fun setupContent(holder: Holder) {
-        with(holder) {
-            avatarView.load(item.organiser.avatarUrl) {
-                transformations(CircleCropTransformation())
-            }
-            usernameView.text = item.organiser.username
-            schoolView.text = item.organiser.school
-            userTag.render(TagView.TagStyle.Info(user = item.organiser, showZodiacSign = false))
-            distanceView.text = "TODO"
-            titleView.text = item.event.title
-            contentView.text = item.event.content
-            timeRangeView.text =
-                "${formatter.formatMediumDateTime(item.event.startTime)} - ${formatter.formatMediumDateTime(item.event.endTime)}"
-
-            locationView.isVisible = showCoarseLocationInfo
-            if (showCoarseLocationInfo) {
-                locationView.text = item.event.location
-            }
-
-            costView.isVisible = item.event.cost != null
-            item.event.cost?.let { costView.text = it.toString() }
-
-            demandView.isVisible = item.event.demand != null
-            item.event.demand?.let { demandView.text = it }
+    private fun setupContent(holder: Holder) = with(holder) {
+        avatarView.load(item.organiser.avatarUrl) {
+            transformations(CircleCropTransformation())
         }
+        usernameView.text = item.organiser.username.orEmpty()
+        schoolView.text = item.organiser.school.orEmpty()
+        userTag.render(TagView.TagStyle.Info(user = item.organiser, showZodiacSign = false))
+        distanceView.text = "TODO"
+        titleView.text = item.event.title.orEmpty()
+        contentView.text = item.event.content.orEmpty()
+
+        val startTime = item.event.startTime
+        val endTime = item.event.endTime
+        if (startTime != null && endTime != null) {
+            timeRangeView.isVisible = true
+            timeRangeView.text = getResourceString(
+                R.string.event_time_range,
+                formatter.formatMediumDateTime(startTime),
+                formatter.formatMediumDateTime(endTime)
+            )
+        } else {
+            timeRangeView.isVisible = false
+        }
+
+        locationView.isVisible = showCoarseLocationInfo
+        if (showCoarseLocationInfo) {
+            locationView.text = item.event.location
+        }
+
+        costView.isVisible = item.event.cost != null
+        item.event.cost?.let { costView.text = it.toString() }
+
+        demandView.isVisible = item.event.demand != null
+        item.event.demand?.let { demandView.text = it }
     }
 
-    private fun setupListener(holder: Holder) {
-        with(holder) {
-            containerView.setOnClickListener { detailEntryClickListener.invoke(item) }
-            avatarView.setOnClickListener { profileEntryClickListener.invoke(item.organiser.id) }
-        }
+    private fun setupListener(holder: Holder) = with(holder) {
+        containerView.setOnClickListener { detailEntryClickListener.invoke(item) }
+        avatarView.setOnClickListener { profileEntryClickListener.invoke(item.organiser.id) }
     }
 
     class Holder : BaseEpoxyHolder() {

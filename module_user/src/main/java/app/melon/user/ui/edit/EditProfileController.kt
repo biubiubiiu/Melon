@@ -13,6 +13,7 @@ import app.melon.util.AppHelper
 import app.melon.util.extensions.dpInt
 import com.airbnb.epoxy.TypedEpoxyController
 
+
 class EditProfileController(
     private val action: Action? = null
 ) : TypedEpoxyController<User>() {
@@ -20,8 +21,8 @@ class EditProfileController(
     override fun buildModels(data: User?) {
         editBackgroundAndAvatar {
             id("edit_background_and_avatar")
-            avatarUrl(data!!.avatarUrl)
-            backgroundUrl(data.backgroundUrl)
+            avatarUrl(data?.avatarUrl.orEmpty())
+            backgroundUrl(data?.backgroundUrl.orEmpty())
             editAvatarListener { action?.onClickEditAvatar() }
             editBackgroundListener { action?.onClickEditBackground() }
         }

@@ -14,7 +14,6 @@ import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.comment.R
 import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.util.extensions.getResourceString
-import app.melon.util.extensions.toOffsetDateTime
 import app.melon.util.formatter.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -46,26 +45,25 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
         setupListeners(holder)
     }
 
-    private fun setupContent(holder: Holder) {
-        with(holder) {
+    private fun setupContent(holder: Holder) = with(holder) {
             containerView.setBackgroundResource(backgroundRes)
             avatarView.load(item.author.avatarUrl) {
                 transformations(CircleCropTransformation())
             }
-            usernameView.text = item.author.username
-            userIdView.text = item.author.id
-            postTimeView.text = formatter.formatShortRelativeTime(item.comment.postTime.toOffsetDateTime())
-            contentView.text = item.comment.content
-            favourCountView.text = item.comment.favorCount.toString()
+            usernameView.text = item.author.username.orEmpty()
+            userIdView.text = "TODO"
+            postTimeView.text = formatter.formatShortRelativeTime(item.comment.postTime)
+            contentView.text = item.comment.content.orEmpty()
+            favourCountView.text = item.comment.favorCount?.toString()
 
-            if (item.comment.replyCount > 0) {
+            val replyCount = item.comment.replyCount
+            if (replyCount != null && replyCount > 0) {
                 moreReplyEntryView.isVisible = true
-                moreReplyEntryView.text = buildReplyEntryClickableSpan(item.comment.replyCount)
+                moreReplyEntryView.text = buildReplyEntryClickableSpan(replyCount)
                 moreReplyEntryView.movementMethod = LinkMovementMethod.getInstance()
             } else {
                 moreReplyEntryView.isVisible = false
             }
-        }
     }
 
     private fun setupListeners(holder: Holder) {

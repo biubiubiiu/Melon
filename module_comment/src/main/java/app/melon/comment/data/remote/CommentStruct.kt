@@ -4,18 +4,18 @@ import com.google.gson.annotations.SerializedName
 
 data class CommentStruct(
     @SerializedName("id") val id: String = "",
-    @SerializedName("postId") val feedId: String = "",
-    @SerializedName("text") val content: String = "",
-    @SerializedName("user") val author: CommentAuthorStruct = CommentAuthorStruct(),
+    @SerializedName("postId") val feedId: String? = null,
+    @SerializedName("text") val content: String? = null,
+    @SerializedName("user") val author: CommentAuthorStruct? = null,
     @SerializedName("likeNum") val favorCount: Long? = null,
     @SerializedName("replyNum") val replyCount: Long? = null,
-    @SerializedName("timestamp") val postTime: String = "",
+    @SerializedName("timestamp") val postTime: String? = null,
     @SerializedName("like") val isFavor: Boolean = false,
     @SerializedName("quote") val quote: CommentStruct? = null
 )
 
 data class CommentAuthorStruct(
-    @SerializedName("id") val id: String = "",
-    @SerializedName("username") val username: String = "",
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("username") val username: String? = null,
     @SerializedName("avatarURL") val avatarUrl: String? = null
 )

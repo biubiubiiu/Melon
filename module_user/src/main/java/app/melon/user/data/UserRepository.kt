@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import app.melon.data.MelonDatabase
 import app.melon.data.entities.User
 import app.melon.data.resultentities.FeedAndAuthor
+import app.melon.data.util.mergeUser
 import app.melon.feed.data.FeedApiService
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAndAuthor
 import app.melon.user.data.mapper.RemoteNearbyUserToUser
@@ -121,21 +122,6 @@ class UserRepository @Inject constructor(
             ErrorResult(e)
         }
     }
-
-    private fun mergeUser(local: User, remote: User) = local.copy(
-        id = remote.id,
-        username = remote.username,
-        gender = remote.gender,
-        age = remote.age,
-        school = remote.school,
-        location = remote.location,
-        photos = remote.photos,
-        description = remote.description,
-        avatarUrl = remote.avatarUrl,
-        backgroundUrl = remote.backgroundUrl,
-        followerCount = remote.followerCount,
-        followingCount = remote.followingCount
-    )
 
     private companion object {
         val PAGING_CONFIG = PagingConfig(

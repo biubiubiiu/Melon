@@ -125,7 +125,7 @@ class TagView @JvmOverloads constructor(
     private fun renderPoiStyle(name: String, distance: String) {
         setPadding(4f.dpInt)
         setTextColor(Color.WHITE)
-        text = "$name · $distance"
+        text = if (distance.isNotBlank()) "$name · $distance" else name
         compoundDrawablePadding = 4f.dpInt
         val drawableStart = ContextCompat.getDrawable(context, R.drawable.icon_home_location)?.mutate()
         drawableStart?.setBounds(0, 0, 16f.dpInt, 16f.dpInt)

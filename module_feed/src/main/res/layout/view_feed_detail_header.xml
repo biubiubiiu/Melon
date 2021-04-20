@@ -151,6 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_micro"
+            android:layout_marginEnd="@dimen/spacing_normal"
             android:text="@string/feed_repost_count"
             android:textAppearance="@style/Melon.TextAppearance.Info" />
 
@@ -158,7 +159,6 @@
             android:id="@+id/feed_like_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
             android:textAppearance="@style/Melon.TextAppearance.Content"
             android:textStyle="bold"
             tools:text="1" />

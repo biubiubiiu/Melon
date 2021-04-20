@@ -2,14 +2,15 @@ package app.melon.feed.ui.controller
 
 import android.content.Context
 import app.melon.data.entities.Feed
+import app.melon.data.entities.PoiInfo
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.FeedActions
 import app.melon.feed.FeedDetailActivity
 import app.melon.feed.ui.widget.AnonymousFeedItem_
 import app.melon.feed.ui.widget.FeedItem_
+import app.melon.location.LocationHelper
 import app.melon.permission.helper.SaveHelper
 import app.melon.poi.api.IPoiService
-import app.melon.poi.api.PoiInfo
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.activityContext
 import app.melon.util.extensions.showToast
@@ -26,6 +27,7 @@ class FeedControllerDelegate @AssistedInject constructor(
     @Assisted private val context: Context,
     private val userService: IUserService,
     private val poiService: IPoiService,
+    private val locationHelper: LocationHelper,
     private val dateTimeFormatter: MelonDateTimeFormatter,
     private val numberFormatter: MelonNumberFormatter,
     private val distanceFormatter: MelonDistanceFormatter
@@ -41,6 +43,7 @@ class FeedControllerDelegate @AssistedInject constructor(
         return FeedItem_()
             .id(idProvider.invoke())
             .item(item)
+            .locationHelper(locationHelper)
             .formatter(dateTimeFormatter)
             .numberFormatter(numberFormatter)
             .distanceFormatter(distanceFormatter)

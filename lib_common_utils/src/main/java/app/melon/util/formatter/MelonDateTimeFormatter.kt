@@ -21,16 +21,29 @@ class MelonDateTimeFormatter @Inject constructor(
     @MediumDateTime private val mediumDateTimeFormatter: DateTimeFormatter
 ) {
 
-    fun formatShortDate(isoTimeString: String) = formatShortDate(isoTimeString.toOffsetDateTime())
-    fun formatMediumDate(isoTimeString: String) = formatMediumDate(isoTimeString.toOffsetDateTime())
-    fun formatMediumDateTime(isoTimeString: String) = formatMediumDateTime(isoTimeString.toOffsetDateTime())
-
-    fun formatShortDate(temporalAmount: Temporal) = exceptionWrapper { shortDateFormatter.format(temporalAmount) }
-    fun formatMediumDate(temporalAmount: Temporal) = exceptionWrapper { mediumDateFormatter.format(temporalAmount) }
-    fun formatMediumDateTime(temporalAmount: Temporal) = exceptionWrapper {
-        mediumDateTimeFormatter.format(
-            temporalAmount)
+    fun formatShortDate(isoTimeString: String?): String {
+        isoTimeString ?: return ""
+        return formatShortDate(isoTimeString.toOffsetDateTime())
     }
+
+    fun formatMediumDate(isoTimeString: String?): String {
+        isoTimeString ?: return ""
+        return formatMediumDate(isoTimeString.toOffsetDateTime())
+    }
+
+    fun formatMediumDateTime(isoTimeString: String?): String {
+        isoTimeString ?: return ""
+        return formatMediumDateTime(isoTimeString.toOffsetDateTime())
+    }
+
+    private fun formatShortDate(temporalAmount: Temporal) =
+        exceptionWrapper { shortDateFormatter.format(temporalAmount) }
+
+    private fun formatMediumDate(temporalAmount: Temporal) =
+        exceptionWrapper { mediumDateFormatter.format(temporalAmount) }
+
+    private fun formatMediumDateTime(temporalAmount: Temporal) =
+        exceptionWrapper { mediumDateTimeFormatter.format(temporalAmount) }
 
     fun formatShortTime(localTime: LocalTime) = exceptionWrapper { shortTimeFormatter.format(localTime) }
 
@@ -42,11 +55,12 @@ class MelonDateTimeFormatter @Inject constructor(
         }
     }
 
-    fun formatShortRelativeTime(isoTimeString: String) = exceptionWrapper {
+    fun formatShortRelativeTime(isoTimeString: String?) = exceptionWrapper {
+        isoTimeString ?: return@exceptionWrapper ""
         formatShortRelativeTime(isoTimeString.toOffsetDateTime())
     }
 
-    fun formatShortRelativeTime(dateTime: OffsetDateTime): String {
+    private fun formatShortRelativeTime(dateTime: OffsetDateTime): String {
         val now = OffsetDateTime.now()
 
         return if (dateTime.isBefore(now)) {

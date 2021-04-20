@@ -12,7 +12,6 @@ import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.comment.R
 import app.melon.data.resultentities.CommentAndAuthor
-import app.melon.util.extensions.toOffsetDateTime
 import app.melon.util.formatter.MelonDateTimeFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -44,17 +43,21 @@ abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
             avatarView.load(item.author.avatarUrl) {
                 transformations(CircleCropTransformation())
             }
-            usernameView.text = item.author.username
-            userIdView.text = item.author.id
-            postTimeView.text = formatter.formatShortRelativeTime(item.comment.postTime.toOffsetDateTime())
-            contentView.text = item.comment.content
-            favourCountView.text = item.comment.favorCount.toString()
+            usernameView.text = item.author.username.orEmpty()
+            userIdView.text = "TODO"
+            postTimeView.text = formatter.formatShortRelativeTime(item.comment.postTime)
+            contentView.text = item.comment.content.orEmpty()
+            favourCountView.text = item.comment.favorCount?.toString()
 
             val quote = item.quote
             quoteContainer.isVisible = quote != null
-            quoteContainer.takeIf { it.isVisible }?.run {
-                quoteContent.text = buildReplyClickableSpan(quote!!.author.username, quote.comment.content)
-                quoteContent.movementMethod = LinkMovementMethod.getInstance()
+            if (quote != null) {
+                val username = quote.author.username
+                val content = quote.comment.content
+                if (username != null && content != null) {
+                    quoteContent.text = buildReplyClickableSpan(username, content)
+                    quoteContent.movementMethod = LinkMovementMethod.getInstance()
+                }
             }
         }
     }

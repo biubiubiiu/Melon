@@ -12,21 +12,21 @@ import androidx.room.PrimaryKey
 data class User(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "user_id") override val id: String = "",
-    @ColumnInfo(name = "username") val username: String = "",
-    @ColumnInfo(name = "gender") @Gender val gender: String = MALE,
-    @ColumnInfo(name = "age") val age: Int = 0,
+    @ColumnInfo(name = "username") val username: String? = null,
+    @ColumnInfo(name = "gender") @Gender val gender: String? = null,
+    @ColumnInfo(name = "age") val age: Int? = null,
     @ColumnInfo(name = "hometown") val hometown: String? = null,
     @ColumnInfo(name = "school") val school: String? = null,
     @ColumnInfo(name = "college") val college: String? = null,
     @ColumnInfo(name = "major") val major: String? = null,
     @ColumnInfo(name = "degree") val degree: String? = null,
     @ColumnInfo(name = "location") val location: Location? = null,
-    @ColumnInfo(name = "description") val description: String = "",
-    @ColumnInfo(name = "follower_count") val followerCount: Long? = 0L,
-    @ColumnInfo(name = "following_count") val followingCount: Long? = 0L,
+    @ColumnInfo(name = "description") val description: String? = null,
+    @ColumnInfo(name = "follower_count") val followerCount: Long? = null,
+    @ColumnInfo(name = "following_count") val followingCount: Long? = null,
     @ColumnInfo(name = "photos_url") val photos: List<String> = emptyList(),
-    @ColumnInfo(name = "avatar_url") val avatarUrl: String = "",
-    @ColumnInfo(name = "background_url") val backgroundUrl: String = ""
+    @ColumnInfo(name = "avatar_url") val avatarUrl: String? = null,
+    @ColumnInfo(name = "background_url") val backgroundUrl: String? = null
 ) : MelonEntity {
     val isMale get() = gender == MALE
     val isFemale get() = gender == FEMALE

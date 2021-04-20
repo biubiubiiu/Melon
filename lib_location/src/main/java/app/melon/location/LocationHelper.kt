@@ -91,6 +91,19 @@ class LocationHelper @Inject constructor(
         return AMapUtils.calculateLineDistance(LatLng(latitude1, longitude1), LatLng(latitude2, longitude2))
     }
 
+    fun getMyDistanceTo(
+        longitude: Double,
+        latitude: Double
+    ): Float? {
+        val myLocation = lastLocation ?: return null
+        return calculateDistance(
+            myLocation.longitude,
+            myLocation.latitude,
+            longitude,
+            latitude
+        )
+    }
+
     private fun AMapLocation?.toLocateResult(): LocateResult {
         return when {
             this == null -> LocateFail(

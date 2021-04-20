@@ -1,6 +1,5 @@
 package app.melon.user.data.mapper
 
-import app.melon.data.entities.MALE
 import app.melon.data.entities.User
 import app.melon.data.entities.isValidGender
 import app.melon.data.remote.toLocation
@@ -16,12 +15,12 @@ class RemoteNearbyUserToUser @Inject constructor() : Mapper<NearbyUserStruct, Us
         return User(
             id = from.id,
             username = from.username,
-            gender = if (from.gender?.isValidGender() == true) from.gender else MALE,
-            age = from.age ?: 0,
+            gender = if (from.gender?.isValidGender() == true) from.gender else null,
+            age = from.age,
             school = from.school,
-            description = from.description ?: "",
+            description = from.description,
             location = from.lastLocation.toLocation(),
-            avatarUrl = from.avatarUrl ?: ""
+            avatarUrl = from.avatarUrl
         )
     }
 }

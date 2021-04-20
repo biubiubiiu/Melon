@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="event_time_range">%s 至 %s</string>
     <string name="my_events">我的活动</string>
     <string name="nearby_events">同城活动</string>
     <string name="event_detail">活动详情</string>

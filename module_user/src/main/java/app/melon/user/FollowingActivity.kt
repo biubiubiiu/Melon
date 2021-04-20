@@ -63,7 +63,7 @@ class FollowingActivity: DaggerAppCompatActivity() {
         private const val KEY_USER_ID = "KEY_USER_ID"
 
         internal fun start(context: Context, id: String) {
-            val intent = Intent(context, FollowersActivity::class.java).apply {
+            val intent = Intent(context, FollowingActivity::class.java).apply {
                 putExtra(KEY_USER_ID, id)
             }
             context.startActivity(intent)

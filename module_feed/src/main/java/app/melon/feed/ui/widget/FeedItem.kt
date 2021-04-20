@@ -12,7 +12,8 @@ import app.melon.base.ui.TagView
 import app.melon.data.entities.Feed
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.R
-import app.melon.poi.api.PoiInfo
+import app.melon.data.entities.PoiInfo
+import app.melon.location.LocationHelper
 import app.melon.util.extensions.dpInt
 import app.melon.util.number.MelonNumberFormatter
 import app.melon.util.formatter.MelonDateTimeFormatter
@@ -39,6 +40,7 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
     @EpoxyAttribute lateinit var poiEntryClickListener: (PoiInfo) -> Unit
 
     @EpoxyAttribute lateinit var item: FeedAndAuthor
+    @EpoxyAttribute lateinit var locationHelper: LocationHelper
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
     @EpoxyAttribute lateinit var numberFormatter: MelonNumberFormatter
     @EpoxyAttribute lateinit var distanceFormatter: MelonDistanceFormatter
@@ -52,60 +54,64 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
         setupListeners(holder)
     }
 
-    private fun setupListeners(holder: Holder) {
-        with(holder) {
-            containerView.setOnClickListener { holderClickListener.invoke(item) }
-            avatarView.setOnClickListener { avatarClickListener.invoke(item.author.id) }
-            shareView.setOnClickListener { shareClickListener.invoke(item.feed) }
-            commentView.setOnClickListener { commentClickListener.invoke(item.feed) }
-            favoriteView.setOnClickListener { favorClickListener.invoke(item.feed.id) }
-            moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed) }
-            locationTag.setOnClickListener {
-                poiEntryClickListener.invoke(
-                    PoiInfo("B001B0ISPB", 114.1808934593, 22.322230460245)
-                )
+    private fun setupListeners(holder: Holder) = with(holder) {
+        containerView.setOnClickListener { holderClickListener.invoke(item) }
+        avatarView.setOnClickListener { avatarClickListener.invoke(item.author.id) }
+        shareView.setOnClickListener { shareClickListener.invoke(item.feed) }
+        commentView.setOnClickListener { commentClickListener.invoke(item.feed) }
+        favoriteView.setOnClickListener { favorClickListener.invoke(item.feed.id) }
+        moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed) }
+        locationTag.setOnClickListener {
+            item.feed.poiInfo?.let {
+                poiEntryClickListener.invoke(it)
             }
         }
     }
 
-    private fun setupContent(holder: Holder) {
-        with(holder) {
-            avatarView.load(item.author.avatarUrl) {
-                transformations(CircleCropTransformation())
-            }
-            usernameView.text = item.author.username
-            userIdView.text = "TODO"
-            userSchoolView.text = item.author.school
-            postTimeView.text = formatter.formatShortRelativeTime(item.feed.postTime)
-            contentView.text = item.feed.content
-            commentView.text = numberFormatter.format(item.feed.replyCount)
-            favoriteView.text = numberFormatter.format(item.feed.favouriteCount)
+    private fun setupContent(holder: Holder) = with(holder) {
+        avatarView.load(item.author.avatarUrl) {
+            transformations(CircleCropTransformation())
+        }
+        usernameView.text = item.author.username.orEmpty()
+        userIdView.text = "TODO"
+        userSchoolView.text = item.author.school.orEmpty()
+        postTimeView.text = formatter.formatShortRelativeTime(item.feed.postTime)
+        contentView.text = item.feed.content.orEmpty()
+        commentView.text = numberFormatter.format(item.feed.replyCount)
+        favoriteView.text = numberFormatter.format(item.feed.favouriteCount)
 
-            photoView.isVisible = item.feed.photos.isNotEmpty()
-            photoView.takeIf { it.isVisible }?.apply {
-                itemPadding = 4.dpInt
-                cornerRadius = 32f
-                urls = item.feed.photos
-                photoView.loadImage()
-                onClickListener = { urls, index, view ->
-                    val loader = ImageLoader<String> { imageView, url -> imageView.load(url) }
-                    StfalconImageViewer.Builder<String>(context, urls, loader)
-                        .withStartPosition(index)
-                        .withTransitionFrom(view)
-                        .withHiddenStatusBar(false)
-                        .withOverlayView(setupOverlayView(view.context, urls[index]))
-                        .withImageChangeListener { position ->
-                            overlayView?.update(urls[position])
-                        }
-                        .withDismissListener { overlayView = null }
-                        .withBackgroundColorResource(R.color.bgSecondary)
-                        .show()
-                }
+        photoView.isVisible = item.feed.photos.isNotEmpty()
+        photoView.takeIf { it.isVisible }?.apply {
+            itemPadding = 4.dpInt
+            cornerRadius = 32f
+            urls = item.feed.photos
+            photoView.loadImage()
+            onClickListener = { urls, index, view ->
+                val loader = ImageLoader<String> { imageView, url -> imageView.load(url) }
+                StfalconImageViewer.Builder<String>(context, urls, loader)
+                    .withStartPosition(index)
+                    .withTransitionFrom(view)
+                    .withHiddenStatusBar(false)
+                    .withOverlayView(setupOverlayView(view.context, urls[index]))
+                    .withImageChangeListener { position ->
+                        overlayView?.update(urls[position])
+                    }
+                    .withDismissListener { overlayView = null }
+                    .withBackgroundColorResource(R.color.bgSecondary)
+                    .show()
             }
+        }
 
-            // TODO
-            locationTag.isVisible = true
-            locationTag.render(TagView.TagStyle.Poi("华中科技大学", "2km"))
+        val poiInfo = item.feed.poiInfo
+        locationTag.isVisible = poiInfo != null
+        if (poiInfo != null) {
+            val distance = locationHelper.getMyDistanceTo(poiInfo.longitude, poiInfo.latitude)
+            locationTag.render(
+                TagView.TagStyle.Poi(
+                    poiInfo.poiName,
+                    distanceFormatter.formatDistance(distance)
+                )
+            )
         }
     }
 
@@ -113,7 +119,6 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
         if (overlayView == null) {
             overlayView = ImageViewerOverlay(context).apply {
                 update(url)
-
                 onSaveClick = { saveImageListener(it) }
             }
         }

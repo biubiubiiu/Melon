@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/app_consistent_text_horizontal_spacing_small"
-            android:layout_toEndOf="@id/comment_user_id"
+            android:layout_toEndOf="@id/comment_username"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/Melon.TextAppearance.Info"

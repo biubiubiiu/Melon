@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import app.melon.data.entities.PoiInfo
 import app.melon.location.LocationHelper
 import app.melon.location.SimplifiedLocation
 import app.melon.location.toLatLng
 import app.melon.location.toLatLonPoint
-import app.melon.poi.api.PoiInfo
 import app.melon.poi.databinding.ActivityPoiDetailBinding
 import app.melon.poi.ui.DaggerActivityWithMapView
 import app.melon.poi.ui.PoiDetailViewModel
@@ -198,7 +198,7 @@ class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
     }
 
     private fun refresh() {
-        viewModel.refresh(info.id, myLocation, poiLocation)
+        viewModel.refresh(info.poiId, myLocation, poiLocation)
     }
 
     private fun shareRoute(location: SimplifiedLocation) {

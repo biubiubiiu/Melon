@@ -1,6 +1,5 @@
 package app.melon.user.data.mapper
 
-import app.melon.data.entities.MALE
 import app.melon.data.entities.User
 import app.melon.data.entities.isValidGender
 import app.melon.data.remote.toLocation
@@ -16,16 +15,16 @@ class RemoteUserDetailToUser @Inject constructor() : Mapper<UserDetailResponse, 
         return User(
             id = from.id,
             username = from.username,
-            gender = if (from.gender?.isValidGender() == true) from.gender else MALE,
-            age = from.age ?: 0,
+            gender = if (from.gender?.isValidGender() == true) from.gender else null,
+            age = from.age,
             school = from.school,
             location = from.lastLocation.toLocation(),
-            description = from.description ?: "",
-            avatarUrl = from.avatarUrl ?: "",
+            description = from.description,
+            avatarUrl = from.avatarUrl,
             photos = from.photos,
-            backgroundUrl = from.backgroundUrl ?: "",
-            followingCount = from.followingCount ?: 0L,
-            followerCount = from.followerCount ?: 0L
+            backgroundUrl = from.backgroundUrl,
+            followingCount = from.followingCount,
+            followerCount = from.followerCount
         )
     }
 }

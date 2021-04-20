@@ -16,12 +16,14 @@ import androidx.room.PrimaryKey
 data class Feed(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "feed_id") override val id: String = "",
-    @ColumnInfo(name = "author_uid") val authorUid: String = "",
+    @ColumnInfo(name = "author_uid") val authorUid: String? = null,
     @ColumnInfo(name = "group_id") val groupId: String? = null,
-    @ColumnInfo(name = "title") val title: String = "",
-    @ColumnInfo(name = "content") val content: String = "",
+    @ColumnInfo(name = "title") val title: String? = null,
+    @ColumnInfo(name = "content") val content: String? = null,
     @ColumnInfo(name = "photo_list") val photos: List<String> = emptyList(),
-    @ColumnInfo(name = "post_time") val postTime: String = "",
-    @ColumnInfo(name = "comment") val replyCount: Long = 0L,
-    @ColumnInfo(name = "favor") val favouriteCount: Long = 0L // TODO add is_anonymous field
+    @ColumnInfo(name = "poi_info") val poiInfo: PoiInfo? = null,
+    @ColumnInfo(name = "post_time") val postTime: String? = null,
+    @ColumnInfo(name = "repost_count") val repostCount: Long? = null,
+    @ColumnInfo(name = "reply_count") val replyCount: Long? = null,
+    @ColumnInfo(name = "favor_count") val favouriteCount: Long? = null
 ) : MelonEntity

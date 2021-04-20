@@ -10,6 +10,8 @@ import app.melon.data.entities.Event
 import app.melon.data.entities.User
 import app.melon.data.resultentities.EntryWithEventAndOrganiser
 import app.melon.data.resultentities.EventAndOrganiser
+import app.melon.data.util.mergeEvent
+import app.melon.data.util.mergeUser
 import app.melon.event.data.mapper.RemoteEventListToEventOrganiserPair
 import app.melon.util.base.ErrorResult
 import app.melon.util.base.Result
@@ -112,24 +114,6 @@ class EventRepository @Inject constructor(
             database.attendEventDao().getAttendEventRecord(eventId = eventId, userId = fakeUid) != null
         }
     }
-
-    private fun mergeEvent(local: Event, remote: Event) = local.copy(
-        id = remote.id,
-        organiserUid = remote.id,
-        title = remote.title,
-        content = remote.content,
-        startTime = remote.startTime,
-        endTime = remote.endTime,
-        location = remote.location,
-        cost = remote.cost,
-        demand = remote.demand
-    )
-
-    private fun mergeUser(local: User, remote: User) = local.copy(
-        id = remote.id,
-        username = remote.username,
-        avatarUrl = remote.avatarUrl
-    )
 
     private companion object {
         val DEFAULT_PAGING_CONFIG = PagingConfig(

@@ -19,9 +19,9 @@ class RemoteCommentToCommentAndAuthor @Inject constructor() : Mapper<CommentStru
         }
         val comment = struct2Comment(from)
         val author = User(
-            id = from.author.id,
-            username = from.author.username,
-            avatarUrl = from.author.avatarUrl ?: ""
+            id = from.author?.id ?: "",
+            username = from.author?.username,
+            avatarUrl = from.author?.avatarUrl
         )
         val quote = process(from.quote)
         return CommentAndAuthor(comment, author, quote)
@@ -29,10 +29,10 @@ class RemoteCommentToCommentAndAuthor @Inject constructor() : Mapper<CommentStru
 
     private fun struct2Comment(from: CommentStruct) = Comment(
         id = from.id,
-        authorUid = from.author.id,
+        authorUid = from.author?.id,
         content = from.content,
-        replyCount = from.replyCount ?: 0L,
-        favorCount = from.favorCount ?: 0L,
+        replyCount = from.replyCount,
+        favorCount = from.favorCount,
         postTime = from.postTime,
         quote = struct2CommentRecursive(from.quote)
     )
@@ -43,16 +43,12 @@ class RemoteCommentToCommentAndAuthor @Inject constructor() : Mapper<CommentStru
         }
         return Comment(
             id = from.id,
-            authorUid = from.author.id,
+            authorUid = from.author?.id,
             content = from.content,
-            replyCount = from.replyCount ?: 0L,
-            favorCount = from.favorCount ?: 0L,
+            replyCount = from.replyCount,
+            favorCount = from.favorCount,
             postTime = from.postTime,
             quote = struct2CommentRecursive(from.quote)
         )
-    }
-
-    private fun processCommentAndAuthor(comment: Comment, author: User): CommentAndAuthor {
-        return CommentAndAuthor(comment, author)
     }
 }

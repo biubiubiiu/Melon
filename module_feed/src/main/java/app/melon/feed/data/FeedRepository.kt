@@ -10,6 +10,8 @@ import app.melon.data.constants.FeedPageType
 import app.melon.data.entities.Feed
 import app.melon.data.entities.User
 import app.melon.data.resultentities.FeedAndAuthor
+import app.melon.data.util.mergeFeed
+import app.melon.data.util.mergeUser
 import app.melon.feed.data.mapper.RemoteFeedDetailToFeedAndAuthor
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAndAuthor
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAuthorPair
@@ -108,26 +110,6 @@ class FeedRepository @Inject constructor(
             }
         ).flow
     }
-
-    private fun mergeFeed(local: Feed, remote: Feed) = local.copy(
-        id = remote.id,
-        authorUid = remote.authorUid,
-        content = remote.content,
-        photos = remote.photos,
-        postTime = remote.postTime,
-        replyCount = remote.replyCount,
-        favouriteCount = remote.favouriteCount
-    )
-
-    private fun mergeUser(local: User, remote: User) = local.copy(
-        id = remote.id,
-        username = remote.username,
-        gender = remote.gender,
-        age = remote.age,
-        school = remote.school,
-        location = remote.location,
-        avatarUrl = remote.avatarUrl
-    )
 
     private companion object {
         val PAGING_CONFIG = PagingConfig(

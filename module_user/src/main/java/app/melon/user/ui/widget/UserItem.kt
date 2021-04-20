@@ -33,28 +33,26 @@ abstract class UserItem : EpoxyModelWithHolder<UserItem.Holder>() {
         setupListeners(holder)
     }
 
-    private fun setupContent(holder: Holder) {
-        with(holder) {
-            avatarView.load(user.avatarUrl) {
-                transformations(CircleCropTransformation())
-            }
-            usernameView.text = user.username
-            userTagView.render(style = TagView.TagStyle.Info(user))
-            userDescriptionView.text = user.description
-            schoolView.text = user.school.orEmpty()
+    private fun setupContent(holder: Holder) = with(holder) {
+        avatarView.load(user.avatarUrl) {
+            transformations(CircleCropTransformation())
+        }
+        usernameView.text = user.username.orEmpty()
+        userTagView.render(style = TagView.TagStyle.Info(user))
+        userDescriptionView.text = user.description.orEmpty()
+        schoolView.text = user.school.orEmpty()
 
-            val lastLocation = locationHelper.lastLocation
-            val userLocation = user.location
-            if (lastLocation != null && userLocation != null) {
-                distance.isVisible = true
-                distance.text = formatter.formatDistance(
-                    distance = locationHelper.calculateDistance(
-                        lastLocation.longitude, lastLocation.latitude, userLocation.longitude, userLocation.latitude
-                    )
+        val lastLocation = locationHelper.lastLocation
+        val userLocation = user.location
+        if (lastLocation != null && userLocation != null) {
+            distance.isVisible = true
+            distance.text = formatter.formatDistance(
+                distance = locationHelper.calculateDistance(
+                    lastLocation.longitude, lastLocation.latitude, userLocation.longitude, userLocation.latitude
                 )
-            } else {
-                distance.isVisible = false
-            }
+            )
+        } else {
+            distance.isVisible = false
         }
     }
 

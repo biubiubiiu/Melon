@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class EventStruct(
     @SerializedName("id") val id: String = "",
-    @SerializedName("organiser") val organiser: EventListUserStruct = EventListUserStruct(),
+    @SerializedName("organiser") val organiser: EventListUserStruct? = null,
     @SerializedName("type") val type: String = "",
     @SerializedName("title") val title: String = "",
     @SerializedName("content") val content: String = "",
@@ -16,7 +16,7 @@ data class EventStruct(
 )
 
 data class EventListUserStruct(
-    @SerializedName("id") val id: String = "",
-    @SerializedName("username") val username: String = "",
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("username") val username: String? = null,
     @SerializedName("avatarURL") val avatarUrl: String? = null
 )

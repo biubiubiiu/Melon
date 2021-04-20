@@ -177,7 +177,9 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressed
                     transformations(CircleCropTransformation())
                 }
                 avatar.setOnClickListener { _ ->
-                    ProfileImageActivity.start(requireContext(), it.avatarUrl, isMyProfile)
+                    it.avatarUrl?.let { url ->
+                        ProfileImageActivity.start(requireContext(), url, isMyProfile)
+                    }
                 }
                 followingEntry.setOnClickListener { _ ->
                     FollowingActivity.start(requireContext(), it.id)

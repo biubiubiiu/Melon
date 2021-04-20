@@ -5,10 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 data class FeedDetailResponse(
     @SerializedName("id") val id: String = "",
-    @SerializedName("user") val user: FeedDetailUserStruct = FeedDetailUserStruct(),
-    @SerializedName("title") val title: String = "",
-    @SerializedName("text") val content: String = "",
-    @SerializedName("fileUrlList") val photos: List<String>? = null,
+    @SerializedName("user") val user: FeedDetailUserStruct? = null,
+    @SerializedName("title") val title: String? = null,
+    @SerializedName("text") val content: String? = null,
+    @SerializedName("fileUrlList") val photos: List<String> = emptyList(),
+    @SerializedName("location") val location: LocationStruct? = null,
     @SerializedName("remarkNum") val replyCount: Long? = null,
     @SerializedName("likeNum") val favouriteCount: Long? = null,
     @SerializedName("like") val isFavor: Boolean = false,
@@ -18,7 +19,7 @@ data class FeedDetailResponse(
 
 data class FeedDetailUserStruct(
     @SerializedName("id") val id: String = "",
-    @SerializedName("username") val username: String = "",
+    @SerializedName("username") val username: String? = null,
     @SerializedName("avatarURL") val avatarUrl: String? = null,
     @SerializedName("school") val school: String? = null,
     @SerializedName("age") val age: Int? = null,
