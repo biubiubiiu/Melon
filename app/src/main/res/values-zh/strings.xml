@@ -8,4 +8,6 @@
 
     <string name="meet_nearby_people_label">认识附近的人</string>
     <string name="meet_nearby_people_rationale">你的位置将用于显示附近的用户</string>
+
+    <string name="bookmark_label">书签</string>
 </resources>

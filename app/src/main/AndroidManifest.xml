@@ -45,6 +45,7 @@
 
         <activity android:name=".locationpermission.LocationPermissionActivity" />
         <activity android:name=".home.MainActivity" />
+        <activity android:name=".bookmark.BookmarkActivity" />
         <activity
             android:name=".comment.CommentReplyActivity"
             android:theme="@style/Theme.Melon.Translucent"

@@ -16,6 +16,7 @@ import app.melon.MainViewModel
 import app.melon.R
 import app.melon.account.api.IAccountService
 import app.melon.base.ui.navigation.setupWithNavController
+import app.melon.bookmark.BookmarkActivity
 import app.melon.databinding.ActivityMainBinding
 import app.melon.databinding.HomeContentMainBinding
 import app.melon.event.api.IEventService
@@ -36,7 +37,6 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var contentMainBinding: HomeContentMainBinding
 
     private var currentNavController: LiveData<NavController>? = null
@@ -170,6 +170,7 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
                 R.id.home_nav_drawer_nav_to_registration -> accountService.startRegister(this)
                 R.id.home_nav_drawer_nav_to_profile -> userService.navigateToMyProfile(this)
                 R.id.home_nav_drawer_nav_to_events -> eventService.navigateToEventList(this)
+                R.id.home_nav_drawer_nav_to_collections -> BookmarkActivity.start(this)
                 else -> {
                 } // TODO
             }
