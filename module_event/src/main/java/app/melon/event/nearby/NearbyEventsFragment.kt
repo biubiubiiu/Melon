@@ -40,8 +40,4 @@ class NearbyEventsFragment : BasePagingListFragment() {
         binding.recyclerView.setItemSpacingDp(8)
         refresh()
     }
-
-    override fun invalidate() {
-        // No-op
-    }
 }

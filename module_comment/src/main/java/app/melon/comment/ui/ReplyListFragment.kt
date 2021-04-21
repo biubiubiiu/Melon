@@ -76,10 +76,6 @@ class ReplyListFragment : BasePagingListFragment() {
         }
     }
 
-    override fun invalidate() {
-        // No-op
-    }
-
     companion object {
         private const val KEY_COMMENT_ID = "KEY_COMMENT_ID"
 

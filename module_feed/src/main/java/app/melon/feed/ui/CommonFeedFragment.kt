@@ -114,8 +114,4 @@ class CommonFeedFragment : BasePagingListFragment() {
             }
         }
     }
-
-    override fun invalidate() {
-        // No-op
-    }
 }

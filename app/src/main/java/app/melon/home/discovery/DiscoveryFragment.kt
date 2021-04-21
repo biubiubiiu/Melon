@@ -15,13 +15,12 @@ import app.melon.feed.FeedPageConfig
 import app.melon.feed.ui.CommonFeedFragment
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getResourceString
-import com.airbnb.mvrx.MavericksView
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
 import java.lang.ref.WeakReference
 
 
-class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs), MavericksView {
+class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
     private val binding: FragmentCommonTabsBinding by viewBinding()
 
@@ -70,10 +69,6 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs), Maveric
             override fun onTabSelected(tab: TabLayout.Tab?) {
             }
         })
-    }
-
-    override fun invalidate() {
-        // No-op
     }
 
     private companion object {

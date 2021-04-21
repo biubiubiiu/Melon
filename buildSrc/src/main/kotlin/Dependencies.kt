@@ -138,11 +138,6 @@ object Libraries {
         const val paging = "com.airbnb.android:epoxy-paging3:$version"
     }
 
-    object Mavericks {
-        private const val version = "2.1.0"
-        const val mavericks = "com.airbnb.android:mavericks:$version"
-    }
-
     object Lottie {
         private const val version = "3.7.0"
         const val lottie = "com.airbnb.android:lottie:$version"

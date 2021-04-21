@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.multidex.MultiDex
 import app.melon.di.DaggerAppComponent
 import app.melon.util.AppHelper
-import com.airbnb.mvrx.Mavericks
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 
@@ -16,7 +15,6 @@ class MelonApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        Mavericks.initialize(this)
 
         AppHelper.init(this)
     }

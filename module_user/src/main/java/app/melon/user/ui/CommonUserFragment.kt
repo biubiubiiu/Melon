@@ -55,10 +55,6 @@ class CommonUserFragment : BasePagingListFragment() {
         refresh()
     }
 
-    override fun invalidate() {
-        // No-op
-    }
-
     companion object {
         private const val KEY_PAGE_CONFIG = "KEY_PAGE_CONFIG"
 

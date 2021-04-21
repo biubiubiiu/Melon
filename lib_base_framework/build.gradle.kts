@@ -44,8 +44,6 @@ dependencies {
 
     api(Libraries.AndroidX.AppCompat.appCompat)
 
-    api(Libraries.Mavericks.mavericks)
-
     api(Libraries.Epoxy.paging)
 
     api(Libraries.Retrofit.gsonConverter)

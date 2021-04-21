@@ -64,10 +64,6 @@ class JoiningEventsFragment : BasePagingListFragment() {
         super.onDestroy()
     }
 
-    override fun invalidate() {
-        // no-op
-    }
-
     companion object {
         private const val KEY_PAGE_NAME = "KEY_PAGE_NAME"
 

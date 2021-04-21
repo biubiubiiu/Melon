@@ -44,10 +44,6 @@ class FeedDetailFragment : BaseMvRxEpoxyFragment() {
         })
     }
 
-    override fun invalidate() {
-        // No-op
-    }
-
     companion object {
         private const val KEY_FEED_CACHE = "KEY_FEED_CACHE"
 

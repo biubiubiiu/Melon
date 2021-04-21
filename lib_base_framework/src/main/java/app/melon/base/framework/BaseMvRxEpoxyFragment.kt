@@ -10,10 +10,9 @@ import com.airbnb.epoxy.Typed2EpoxyController
 import com.airbnb.epoxy.Typed3EpoxyController
 import com.airbnb.epoxy.Typed4EpoxyController
 import com.airbnb.epoxy.TypedEpoxyController
-import com.airbnb.mvrx.MavericksView
 
 
-abstract class BaseMvRxEpoxyFragment : FragmentWithBinding<FragmentEpoxyListBinding>(), MavericksView {
+abstract class BaseMvRxEpoxyFragment : FragmentWithBinding<FragmentEpoxyListBinding>() {
 
     abstract val controller: EpoxyController
 
