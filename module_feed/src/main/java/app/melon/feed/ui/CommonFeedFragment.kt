@@ -2,6 +2,7 @@ package app.melon.feed.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.lifecycle.lifecycleScope
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.event.TabReselectEvent
@@ -49,6 +50,15 @@ class CommonFeedFragment : BasePagingListFragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (isArgumentsValid()) {
+            refresh()
+        } else {
+            context?.showToast("Invalid Arguments with pageIndex = [$mPageName], pageType = [$pageType], prefix = [$itemIdPrefix]")
+        }
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         tabReselectEvent = TabReselectEvent(context) {
@@ -61,12 +71,19 @@ class CommonFeedFragment : BasePagingListFragment() {
 
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
         super.onViewCreated(binding, savedInstanceState)
-        binding.recyclerView.setItemSpacingDp(8)
-        if (isArgumentsValid()) {
-            refresh()
+        if (savedInstanceState == null) {
+            binding.recyclerView.setItemSpacingDp(8)
         } else {
-            context?.showToast("Invalid Arguments with pageIndex = [$mPageName], pageType = [$pageType], prefix = [$itemIdPrefix]")
+            val savedLayoutManagerState = savedInstanceState.getParcelable<Parcelable>("layout_manager_state")
+            if (savedInstanceState != null) {
+                binding.recyclerView.layoutManager?.onRestoreInstanceState(savedLayoutManagerState)
+            }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("layout_manager_state", binding.recyclerView.layoutManager?.onSaveInstanceState())
     }
 
     override fun onDestroy() {

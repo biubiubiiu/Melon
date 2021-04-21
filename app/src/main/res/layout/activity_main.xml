@@ -10,9 +10,7 @@
 
     <include
         android:id="@+id/main_screen"
-        layout="@layout/home_app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        layout="@layout/home_app_bar_main" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/home_nav_view"

@@ -3,6 +3,7 @@ package app.melon.splash
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import app.melon.account.api.IAccountService
 import app.melon.account.api.UserManager
@@ -50,7 +51,7 @@ class SplashActivity : DaggerAppCompatActivity() {
 
             val results = deferreds.awaitAll()
             val loginSuccess = results[0] as Boolean
-            val locateSuccess = results.getOrNull(1) as? Boolean ?: false
+            val locateSuccess = results.getOrNull(1) != null
 
             if (loginSuccess) {
                 binding.splash.addAnimatorListener(object : AnimatorListenerAdapter() {

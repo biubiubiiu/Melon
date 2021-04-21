@@ -1,7 +1,6 @@
 package app.melon.location
 
 import android.content.Context
-import android.util.Log
 import app.melon.util.base.ErrorResult
 import app.melon.util.base.Result
 import app.melon.util.base.Success
@@ -10,7 +9,6 @@ import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.PoiItem
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
-import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
@@ -31,8 +29,6 @@ class PoiSearchHelper @Inject constructor(
             val poiSearch = PoiSearch(context, query)
             poiSearch.setOnPoiSearchListener(object : PoiSearchListenerAdapter() {
                 override fun onPoiSearched(result: PoiResult?, rCode: Int) {
-                    Log.d("raymond", "first item: ${result?.pois?.get(0)?.poiId}")
-                    Log.d("raymond", "first item: ${result?.pois?.get(0)?.title}")
                     it.resume(Unit)
                 }
             })

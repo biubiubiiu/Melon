@@ -84,11 +84,6 @@ dependencies {
 
     implementation(Libraries.MultiDex.multiDex)
 
-    implementation(Libraries.Navigation.fragment)
-    implementation(Libraries.Navigation.ui)
-    implementation(Libraries.Navigation.fragmentKtx)
-    implementation(Libraries.Navigation.uiKtx)
-
     kapt(Libraries.Dagger.compiler)
     kapt(Libraries.Dagger.processor)
 }

@@ -7,14 +7,17 @@ import android.view.Menu
 import android.view.View
 import android.widget.ImageView
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.NavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import app.melon.MainViewModel
 import app.melon.R
 import app.melon.account.api.IAccountService
+import app.melon.base.ui.navigation.setupWithNavController
 import app.melon.databinding.ActivityMainBinding
+import app.melon.databinding.HomeContentMainBinding
 import app.melon.event.api.IEventService
 import app.melon.home.nearby.LocateRequest
 import app.melon.location.LocationHelper
@@ -22,9 +25,7 @@ import app.melon.permission.PermissionHelper
 import app.melon.permission.PermissionHelperOwner
 import app.melon.permission.PermissionRequest
 import app.melon.user.api.IUserService
-import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.reverse
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.coroutines.launch
@@ -33,7 +34,12 @@ import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
 
-    private val binding: ActivityMainBinding by viewBinding()
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var contentMainBinding: HomeContentMainBinding
+
+    private var currentNavController: LiveData<NavController>? = null
 
     @Inject internal lateinit var viewModel: MainViewModel
 
@@ -48,30 +54,47 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startLocate() // start locating ASAP
-        setSupportActionBar(binding.mainScreen.toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        contentMainBinding = HomeContentMainBinding.bind(binding.mainScreen.coordinator)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.home_nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        binding.mainScreen.homeBottomNavigation.setupWithNavController(navController)
-
-        binding.mainScreen.toolbar.setNavigationOnClickListener {
-            binding.homeDrawerLayout.openDrawer(GravityCompat.START)
-        }
+        setupToolbar()
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
+        } // Else, need to wait for onRestoreInstanceState
 
         setupDrawerHeader()
         setupDrawerNavigation()
+
+
+        contentMainBinding.fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // Now that BottomNavigationBar has restored its instance state
+        // and its selectedItemId, we can proceed with setting up the
+        // BottomNavigationBar with Navigation
+        setupBottomNavigationBar()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.home_tool_bar_menu, menu)
         return true
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return currentNavController?.value?.navigateUp() ?: false
     }
 
     override fun checkPermission(request: PermissionRequest, onPermissionsGranted: () -> Unit) {
@@ -86,6 +109,34 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
         lifecycleScope.launch {
             locationHelper.tryLocate()
         }
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.mainScreen.toolbar)
+        binding.mainScreen.toolbar.setNavigationOnClickListener {
+            binding.homeDrawerLayout.openDrawer(GravityCompat.START)
+        }
+    }
+
+    /**
+     * Called on first creation and when restoring state.
+     */
+    private fun setupBottomNavigationBar() {
+        val navGraphIds = listOf(R.navigation.home, R.navigation.nearby, R.navigation.forum)
+
+        // Setup the bottom navigation view with a list of navigation graphs
+        val controller = binding.mainScreen.homeBottomNavigation.setupWithNavController(
+            navGraphIds = navGraphIds,
+            fragmentManager = supportFragmentManager,
+            containerId = R.id.nav_host_container,
+            intent = intent
+        )
+
+        // Whenever the selected controller changes, setup the action bar.
+        controller.observe(this, Observer { navController ->
+            setupActionBarWithNavController(navController)
+        })
+        currentNavController = controller
     }
 
     private fun setupDrawerHeader() {

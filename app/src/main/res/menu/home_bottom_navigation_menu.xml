@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home_posts_fragment"
+        android:id="@+id/home"
         android:enabled="true"
         android:icon="@drawable/ic_round_home_24"
         android:iconTint="?attr/colorControlNormal"
         android:title="@string/home_bottom_menu_posts" />
     <item
-        android:id="@+id/home_nearby_fragment"
+        android:id="@+id/nearby"
         android:enabled="true"
         android:icon="@drawable/ic_round_place_24"
         android:iconTint="?attr/colorControlNormal"
         android:title="@string/home_bottom_menu_nearby" />
     <item
-        android:id="@+id/home_anonymous_fragment"
+        android:id="@+id/forum"
         android:enabled="true"
         android:icon="@drawable/ic_round_explore_24"
         android:iconTint="?attr/colorControlNormal"

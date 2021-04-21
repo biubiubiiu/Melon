@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
+    app:startDestination="@id/home_posts_fragment">
+
+    <fragment
+        android:id="@+id/home_posts_fragment"
+        android:name="app.melon.home.discovery.DiscoveryFragment"
+        android:label="@string/home_bottom_menu_posts"
+        tools:layout="@layout/fragment_common_tabs" />
+
+</navigation>

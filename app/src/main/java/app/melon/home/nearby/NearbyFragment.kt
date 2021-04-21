@@ -3,20 +3,18 @@ package app.melon.home.nearby
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.commit
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Observer
+import androidx.lifecycle.distinctUntilChanged
 import app.melon.R
 import app.melon.base.ui.databinding.CommonFragmentContainerBinding
 import app.melon.location.LocateFail
 import app.melon.location.LocateSuccess
 import app.melon.location.LocationHelper
-import app.melon.permission.PermissionHelperOwner
 import app.melon.user.api.IUserService
 import app.melon.user.api.NearbyUserList
 import app.melon.util.delegates.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -27,28 +25,29 @@ class NearbyFragment : DaggerFragment(R.layout.common_fragment_container) {
     @Inject internal lateinit var userService: IUserService
     @Inject internal lateinit var locationHelper: LocationHelper
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        tryLocateAndShowNearbyUsers()
+    @Inject internal lateinit var viewModel: NearbyViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.tryLocate()
     }
 
-    private fun tryLocateAndShowNearbyUsers() {
-        (activity as? PermissionHelperOwner)?.checkPermission(LocateRequest) {
-            lifecycleScope.launchWhenStarted {
-                val result = withContext(Dispatchers.IO) {
-                    locationHelper.tryLocate()
-                }
-                when (result) {
-                    is LocateSuccess -> showNearbyUsers(result.longitude, result.latitude)
-                    is LocateFail -> Snackbar.make(binding.root, result.errorMessage, Snackbar.LENGTH_LONG)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.locateResult.distinctUntilChanged().observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is LocateSuccess -> showNearbyUsers(it.longitude, it.latitude)
+                is LocateFail -> Snackbar.make(binding.root, it.errorMessage, Snackbar.LENGTH_LONG)
             }
-        }
+        })
     }
 
     private fun showNearbyUsers(longitude: Double, latitude: Double) {
+        if (childFragmentManager.findFragmentByTag(NEARBY_FRAGMENT_TAG) != null) {
+            return
+        }
         childFragmentManager.commit {
-            replace(
+            add(
                 R.id.fragment_container,
                 userService.buildUserListFragment(
                     NearbyUserList(
@@ -56,8 +55,13 @@ class NearbyFragment : DaggerFragment(R.layout.common_fragment_container) {
                         longitude = longitude,
                         latitude = latitude
                     )
-                )
+                ),
+                NEARBY_FRAGMENT_TAG
             )
         }
+    }
+
+    companion object {
+        private const val NEARBY_FRAGMENT_TAG = "NEARBY_FRAGMENT_TAG"
     }
 }

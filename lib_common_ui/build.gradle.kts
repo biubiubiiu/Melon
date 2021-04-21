@@ -42,7 +42,11 @@ dependencies {
     compileOnly(project(Modules.data))
 
     compileOnly(Libraries.AndroidX.Core.ktx)
-    compileOnly("androidx.activity:activity-ktx:1.2.0-beta02")
+
+    api(Libraries.Navigation.fragment)
+    api(Libraries.Navigation.ui)
+    api(Libraries.Navigation.fragmentKtx)
+    api(Libraries.Navigation.uiKtx)
 
     api(Libraries.ConstraintLayout.constraintLayout)
     api(Libraries.RecyclerView.recyclerView)

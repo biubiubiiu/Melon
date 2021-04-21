@@ -29,7 +29,12 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState == null) {
+            setupView()
+        }
+    }
 
+    private fun setupView() {
         viewPager.adapter = object : LazyFragmentPagerAdapter(childFragmentManager) {
             private lateinit var fragmentOnScreen: WeakReference<BaseMvRxEpoxyFragment>
 
@@ -41,7 +46,8 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
             override fun getItem(container: ViewGroup?, position: Int): Fragment {
                 if (position in 0 until pages) {
-                    return CommonFeedFragment.newInstance(pageName = titles[position], config = pageConfig[position])
+                    return CommonFeedFragment.newInstance(pageName = titles[position],
+                        config = pageConfig[position])
                 } else {
                     throw IllegalArgumentException("out of range")
                 }

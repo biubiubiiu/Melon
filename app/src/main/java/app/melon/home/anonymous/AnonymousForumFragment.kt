@@ -28,7 +28,12 @@ class AnonymousForumFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState == null) {
+            setupView()
+        }
+    }
 
+    private fun setupView() {
         viewPager.adapter = object : LazyFragmentPagerAdapter(childFragmentManager) {
             private val pageConfig = arrayOf(
                 FeedPageConfig(ANONYMOUS_SCHOOL_FEED, "anonymous_school_feeds", true),

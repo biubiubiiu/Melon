@@ -47,12 +47,16 @@ class CommonUserFragment : BasePagingListFragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        refresh()
+    }
+
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
         super.onViewCreated(binding, savedInstanceState)
         binding.recyclerView.run {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-        refresh()
     }
 
     companion object {
