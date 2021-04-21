@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="more_info">TODO</string>
+
+    <string name="enable_locate_label">TODO</string>
+    <string name="enable_locate_rationale">TODO</string>
+    <string name="enable_locate_action">TODO</string>
+
+    <string name="meet_nearby_people_label">TODO</string>
+    <string name="meet_nearby_people_rationale">TODO</string>
+</resources>

@@ -12,6 +12,7 @@ import app.melon.feed.di.FeedModule
 import app.melon.group.di.GroupBuilder
 import app.melon.home.di.HomeBuilder
 import app.melon.poi.di.PoiModule
+import app.melon.splash.di.SplashBuilder
 import app.melon.user.di.UserModule
 import app.melon.util.di.UtilModule
 import dagger.BindsInstance
@@ -32,6 +33,7 @@ import javax.inject.Singleton
         AppModule::class,
         DatabaseModule::class,
         NetworkModule::class,
+        SplashBuilder::class,
         HomeBuilder::class,
         UserModule::class,
         EventModule::class,

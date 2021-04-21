@@ -1,11 +1,14 @@
 package app.melon.home
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import app.melon.MainViewModel
@@ -14,6 +17,7 @@ import app.melon.account.api.IAccountService
 import app.melon.databinding.ActivityMainBinding
 import app.melon.event.api.IEventService
 import app.melon.home.nearby.LocateRequest
+import app.melon.location.LocationHelper
 import app.melon.permission.PermissionHelper
 import app.melon.permission.PermissionHelperOwner
 import app.melon.permission.PermissionRequest
@@ -23,6 +27,7 @@ import app.melon.util.extensions.reverse
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -36,10 +41,13 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
     @Inject internal lateinit var userService: IUserService
     @Inject internal lateinit var eventService: IEventService
 
+    @Inject internal lateinit var locationHelper: LocationHelper
+
     private val locatePermissionHelper = PermissionHelper(this, LocateRequest)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startLocate() // start locating ASAP
         setSupportActionBar(binding.mainScreen.toolbar)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
@@ -71,6 +79,12 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
             locatePermissionHelper.checkPermissions(
                 onPermissionAllGranted = onPermissionsGranted
             )
+        }
+    }
+
+    private fun startLocate() {
+        lifecycleScope.launch {
+            locationHelper.tryLocate()
         }
     }
 
@@ -111,6 +125,12 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
             menuItem.isChecked = false
             binding.homeDrawerLayout.closeDrawers()
             true
+        }
+    }
+
+    companion object {
+        internal fun start(context: Context) {
+            context.startActivity(Intent(context, MainActivity::class.java))
         }
     }
 }

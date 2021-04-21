@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="more_info">告诉我更多信息</string>
+
+    <string name="enable_locate_label">启用定位</string>
+    <string name="enable_locate_rationale">你需要启用定位才能使用Melon</string>
+    <string name="enable_locate_action">允许定位</string>
+
+    <string name="meet_nearby_people_label">认识附近的人</string>
+    <string name="meet_nearby_people_rationale">你的位置将用于显示附近的用户</string>
+</resources>

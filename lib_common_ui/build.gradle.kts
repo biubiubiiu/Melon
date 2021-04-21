@@ -52,6 +52,7 @@ dependencies {
     api(Libraries.SwipeRefreshLayout.swipeRefreshLayout)
     api(Libraries.ImageViewer.imageViewer)
     api(Libraries.Coil.coil)
+    api(Libraries.Lottie.lottie)
 
     api(Libraries.Epoxy.runtime)
     kapt(Libraries.Epoxy.compiler)

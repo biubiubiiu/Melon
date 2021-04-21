@@ -24,6 +24,17 @@
         <item name="android:listDivider">@color/divider</item>
     </style>
 
+    <style name="Theme.Melon.Splash" parent="Theme.Melon">
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">false</item>
+    </style>
+
     <style name="Theme.Melon.Translucent" parent="Theme.Melon">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>

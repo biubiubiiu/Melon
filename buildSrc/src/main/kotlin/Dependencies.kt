@@ -143,6 +143,11 @@ object Libraries {
         const val mavericks = "com.airbnb.android:mavericks:$version"
     }
 
+    object Lottie {
+        private const val version = "3.7.0"
+        const val lottie = "com.airbnb.android:lottie:$version"
+    }
+
     object Paging3 {
         private const val version = "3.0.0-alpha13"
         const val common = "androidx.paging:paging-common:$version"
