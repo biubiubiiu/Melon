@@ -1,11 +1,13 @@
 package app.melon.event.mine
 
+import android.content.Context
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.map
 import app.melon.base.databinding.FragmentEpoxyListBinding
+import app.melon.base.event.TabReselectEvent
 import app.melon.base.framework.BasePagingListFragment
 import app.melon.event.ViewModelFactory
 import app.melon.event.ui.EventsPageController
@@ -19,6 +21,9 @@ class JoiningEventsFragment : BasePagingListFragment() {
 
     @Inject internal lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<MyEventsViewModel>(::requireActivity) { viewModelFactory }
+
+    private val mPageName get() = arguments?.getString(KEY_PAGE_NAME)
+    private var tabReselectEvent: TabReselectEvent? = null
 
     @Inject internal lateinit var controllerFactory: EventsPageController.Factory
     override val controller by lazy {
@@ -38,7 +43,15 @@ class JoiningEventsFragment : BasePagingListFragment() {
         }
     }
 
-    private val pageIndex by lazy(LazyThreadSafetyMode.NONE) { arguments?.getInt(FIELD_PAGE, -1) }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        tabReselectEvent = TabReselectEvent(context) {
+            val pageName = it.getStringExtra(TabReselectEvent.PAGE_NAME) ?: ""
+            if (pageName == mPageName) {
+                binding.recyclerView.smoothScrollToPosition(0)
+            }
+        }
+    }
 
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
         super.onViewCreated(binding, savedInstanceState)
@@ -46,15 +59,20 @@ class JoiningEventsFragment : BasePagingListFragment() {
         refresh()
     }
 
+    override fun onDestroy() {
+        tabReselectEvent?.dispose()
+        super.onDestroy()
+    }
+
     override fun invalidate() {
         // no-op
     }
 
     companion object {
-        private const val FIELD_PAGE = "page"
+        private const val KEY_PAGE_NAME = "KEY_PAGE_NAME"
 
-        fun newInstance(page: Int) = JoiningEventsFragment().apply {
-            arguments = bundleOf(FIELD_PAGE to page)
+        fun newInstance(pageName: String) = JoiningEventsFragment().apply {
+            arguments = bundleOf(KEY_PAGE_NAME to pageName)
         }
     }
 }

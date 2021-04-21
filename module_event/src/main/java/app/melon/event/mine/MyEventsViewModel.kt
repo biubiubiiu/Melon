@@ -19,8 +19,4 @@ class MyEventsViewModel @Inject constructor(
         updateOrganisedEvents(UpdateEventList.Params(ORGANISED_EVENTS))
         updateJoiningEvents(UpdateEventList.Params(JOINED_EVENTS))
     }
-
-    fun reselect(position: Int) {
-
-    }
 }

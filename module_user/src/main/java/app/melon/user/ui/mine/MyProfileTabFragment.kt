@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import app.melon.base.event.TabReselectEvent
 import app.melon.base.ui.databinding.FragmentCommonTabsBinding
 import app.melon.base.ui.lazyload.LazyFragmentPagerAdapter
 import app.melon.data.constants.MY_ANONYMOUS_POST
@@ -13,6 +14,7 @@ import app.melon.feed.FeedPageConfig
 import app.melon.feed.ui.CommonFeedFragment
 import app.melon.user.R
 import app.melon.util.delegates.viewBinding
+import app.melon.util.extensions.getResourceString
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
 
@@ -29,11 +31,6 @@ class MyProfileTabFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
         viewPager.adapter = object : LazyFragmentPagerAdapter(childFragmentManager) {
 
-            private val titles = arrayOf(
-                getString(R.string.my_profile_anonymous_posts),
-                getString(R.string.my_profile_posts),
-                getString(R.string.my_profile_favors)
-            )
             private val pageConfig = arrayOf(
                 FeedPageConfig(MY_ANONYMOUS_POST, "my_anonymous_posts", true),
                 FeedPageConfig(MY_POST, "my_posts", false),
@@ -43,7 +40,7 @@ class MyProfileTabFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
             override fun getItem(container: ViewGroup?, position: Int): Fragment {
                 if (position in 0 until pages) {
-                    return CommonFeedFragment.newInstance(page = position, config = pageConfig[position])
+                    return CommonFeedFragment.newInstance(pageName = titles[position], config = pageConfig[position])
                 } else {
                     throw IllegalArgumentException("out of range")
                 }
@@ -57,6 +54,7 @@ class MyProfileTabFragment : DaggerFragment(R.layout.fragment_common_tabs) {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 tab ?: return
+                TabReselectEvent.sendEvent(tab.view.context, titles[tab.position])
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -65,5 +63,13 @@ class MyProfileTabFragment : DaggerFragment(R.layout.fragment_common_tabs) {
             override fun onTabSelected(tab: TabLayout.Tab?) {
             }
         })
+    }
+
+    private companion object {
+        private val titles = arrayOf(
+            getResourceString(R.string.my_profile_anonymous_posts),
+            getResourceString(R.string.my_profile_posts),
+            getResourceString(R.string.my_profile_favors)
+        )
     }
 }

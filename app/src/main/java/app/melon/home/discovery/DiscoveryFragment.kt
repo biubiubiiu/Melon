@@ -5,16 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import app.melon.R
+import app.melon.base.event.TabReselectEvent
 import app.melon.base.framework.BaseMvRxEpoxyFragment
-import app.melon.base.ui.lazyload.LazyFragmentPagerAdapter
 import app.melon.base.ui.databinding.FragmentCommonTabsBinding
+import app.melon.base.ui.lazyload.LazyFragmentPagerAdapter
 import app.melon.data.constants.FOLLOWING_FEED
 import app.melon.data.constants.RECOMMEND_FEED
-import app.melon.feed.ui.CommonFeedFragment
 import app.melon.feed.FeedPageConfig
+import app.melon.feed.ui.CommonFeedFragment
 import app.melon.util.delegates.viewBinding
+import app.melon.util.extensions.getResourceString
 import com.airbnb.mvrx.MavericksView
-import com.airbnb.mvrx.fragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
 import java.lang.ref.WeakReference
@@ -23,7 +24,6 @@ import java.lang.ref.WeakReference
 class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs), MavericksView {
 
     private val binding: FragmentCommonTabsBinding by viewBinding()
-    private val viewModel: DiscoveryViewModel by fragmentViewModel()
 
     private val viewPager get() = binding.viewpager
     private val tabLayout get() = binding.tabLayout
@@ -34,10 +34,6 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs), Maveric
         viewPager.adapter = object : LazyFragmentPagerAdapter(childFragmentManager) {
             private lateinit var fragmentOnScreen: WeakReference<BaseMvRxEpoxyFragment>
 
-            private val titles = arrayOf(
-                getString(R.string.home_tab_recommend),
-                getString(R.string.home_tab_following)
-            )
             private val pageConfig = arrayOf(
                 FeedPageConfig(RECOMMEND_FEED, "recommend_feed", false),
                 FeedPageConfig(FOLLOWING_FEED, "following_feed", false)
@@ -46,13 +42,13 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs), Maveric
 
             override fun getItem(container: ViewGroup?, position: Int): Fragment {
                 if (position in 0 until pages) {
-                    return CommonFeedFragment.newInstance(page = position, config = pageConfig[position])
+                    return CommonFeedFragment.newInstance(pageName = titles[position], config = pageConfig[position])
                 } else {
                     throw IllegalArgumentException("out of range")
                 }
             }
 
-            override fun getPageTitle(position: Int): CharSequence? = titles[position]
+            override fun getPageTitle(position: Int): CharSequence = titles[position]
 
             override fun getCount(): Int = pages
 
@@ -65,7 +61,7 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs), Maveric
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 tab ?: return
-                viewModel.reselect(tab.position)
+                TabReselectEvent.sendEvent(tab.view.context, titles[tab.position])
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -78,5 +74,12 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs), Maveric
 
     override fun invalidate() {
         // No-op
+    }
+
+    private companion object {
+        val titles = arrayOf(
+            getResourceString(R.string.home_tab_recommend),
+            getResourceString(R.string.home_tab_following)
+        )
     }
 }
