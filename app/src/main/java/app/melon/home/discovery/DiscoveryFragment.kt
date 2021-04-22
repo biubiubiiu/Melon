@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import app.melon.R
 import app.melon.base.event.TabReselectEvent
 import app.melon.base.framework.BaseMvRxEpoxyFragment
+import app.melon.base.lazyload.LazyFragmentPagerAdapter
 import app.melon.base.ui.databinding.FragmentCommonTabsBinding
-import app.melon.base.ui.lazyload.LazyFragmentPagerAdapter
 import app.melon.data.constants.FOLLOWING_FEED
 import app.melon.data.constants.RECOMMEND_FEED
 import app.melon.feed.FeedPageConfig
@@ -44,7 +44,9 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs) {
             )
             private val pages = titles.size
 
-            override fun getItem(container: ViewGroup?, position: Int): Fragment {
+            override fun getPageTitle(position: Int): CharSequence = titles[position]
+
+            override fun getItem(position: Int): Fragment {
                 if (position in 0 until pages) {
                     return CommonFeedFragment.newInstance(pageName = titles[position],
                         config = pageConfig[position])
@@ -52,8 +54,6 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs) {
                     throw IllegalArgumentException("out of range")
                 }
             }
-
-            override fun getPageTitle(position: Int): CharSequence = titles[position]
 
             override fun getCount(): Int = pages
 

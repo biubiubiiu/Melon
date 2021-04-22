@@ -3,10 +3,9 @@ package app.melon.event
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import app.melon.base.event.TabReselectEvent
-import app.melon.base.ui.lazyload.LazyFragmentPagerAdapter
+import app.melon.base.lazyload.LazyFragmentPagerAdapter
 import app.melon.event.databinding.ActivityMyEventsBinding
 import app.melon.event.mine.JoiningEventsFragment
 import app.melon.event.mine.MyEventsViewModel
@@ -16,6 +15,7 @@ import app.melon.util.extensions.getResourceString
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
+
 
 class MyEventsActivity : DaggerAppCompatActivity() {
 
@@ -37,7 +37,7 @@ class MyEventsActivity : DaggerAppCompatActivity() {
         viewPager.adapter = object : LazyFragmentPagerAdapter(supportFragmentManager) {
             private val pages = titles.size
 
-            override fun getItem(container: ViewGroup?, position: Int): Fragment {
+            override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> JoiningEventsFragment.newInstance(pageName = titles[position])
                     1 -> OrganisedEventsFragment.newInstance(pageName = titles[position])
