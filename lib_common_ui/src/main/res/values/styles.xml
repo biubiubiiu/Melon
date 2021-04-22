@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ToolbarArrow" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/colorPrimary</item>
+<!--        <item name="drawableSize">32dp</item>-->
+<!--        <item name="arrowShaftLength">22dp</item>-->
+<!--        <item name="thickness">1.7dp</item>-->
+<!--        <item name="arrowHeadLength">8dp</item>-->
+    </style>
+</resources>

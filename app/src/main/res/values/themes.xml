@@ -22,6 +22,7 @@
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/bgPrimary</item>
 
         <item name="android:listDivider">@color/divider</item>
+        <item name="drawerArrowStyle">@style/ToolbarArrow</item>
     </style>
 
     <style name="Theme.Melon.Splash" parent="Theme.Melon">
