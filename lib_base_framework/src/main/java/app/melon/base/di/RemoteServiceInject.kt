@@ -14,17 +14,20 @@ import javax.inject.Singleton
 class NetworkModule {
 
     private companion object {
-        const val ADDRESS = "10.19.135.209"
-        const val PORT = "3000"
-        const val API_HOST = "$ADDRESS:$PORT"
-        const val BASE_URL = "http://$API_HOST/"
+
+        init {
+            System.loadLibrary("crypto-data")
+        }
+
+        @JvmStatic
+        external fun baseUrlFromJNI(): String
     }
 
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(baseUrlFromJNI())
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

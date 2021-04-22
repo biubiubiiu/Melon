@@ -7,6 +7,7 @@ object AndroidSDK {
     const val compile = 30
     const val target = compile
     const val buildToolsVersion = "30.0.3"
+    const val ndkVersion = "23.0.7272597"
 }
 
 object AndroidClient {

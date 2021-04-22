@@ -11,6 +11,8 @@ android {
     compileSdkVersion(AndroidSDK.compile)
     buildToolsVersion(AndroidSDK.buildToolsVersion)
 
+    ndkVersion = AndroidSDK.ndkVersion
+
     defaultConfig {
         minSdkVersion(AndroidSDK.min)
         targetSdkVersion(AndroidSDK.target)
@@ -28,6 +30,12 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+
+    externalNativeBuild {
+        cmake {
+            path = File("${projectDir}/src/main/cpp/CMakeLists.txt")
+        }
     }
 }
 
