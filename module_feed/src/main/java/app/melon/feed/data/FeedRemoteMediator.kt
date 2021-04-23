@@ -25,7 +25,7 @@ import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
 class FeedRemoteMediator constructor(
-    private val timestamp: Long,
+    private val timestamp: String,
     @FeedPageType private val queryType: Int,
     private val service: FeedApiService,
     private val database: MelonDatabase,

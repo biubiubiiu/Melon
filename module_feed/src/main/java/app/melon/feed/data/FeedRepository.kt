@@ -69,7 +69,7 @@ class FeedRepository @Inject constructor(
         }
     }
 
-    fun getFeedList(timestamp: Long, @FeedPageType queryType: Int): Flow<PagingData<FeedAndAuthor>> {
+    fun getFeedList(timestamp: String, @FeedPageType queryType: Int): Flow<PagingData<FeedAndAuthor>> {
         return Pager(
             config = PAGING_CONFIG,
             remoteMediator = FeedRemoteMediator(

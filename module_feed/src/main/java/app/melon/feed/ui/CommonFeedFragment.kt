@@ -43,9 +43,7 @@ class CommonFeedFragment : BasePagingListFragment() {
     private fun refresh() {
         fetchJob?.cancel()
         fetchJob = lifecycleScope.launch {
-            viewModel.refresh(pageType, extraParam).collectLatest {
-                controller.submitData(it)
-            }
+            viewModel.refresh(pageType, extraParam)
         }
     }
 
@@ -72,6 +70,11 @@ class CommonFeedFragment : BasePagingListFragment() {
         super.onViewCreated(binding, savedInstanceState)
         if (savedInstanceState == null) {
             binding.recyclerView.setItemSpacingDp(8)
+        }
+        lifecycleScope.launch {
+            viewModel.pagingData.collectLatest {
+                controller.submitData(it)
+            }
         }
     }
 

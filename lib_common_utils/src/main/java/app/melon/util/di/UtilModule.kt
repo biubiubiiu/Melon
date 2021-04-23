@@ -6,8 +6,10 @@ import app.melon.util.formatter.MediumDate
 import app.melon.util.formatter.MediumDateTime
 import app.melon.util.formatter.ShortDate
 import app.melon.util.formatter.ShortTime
+import app.melon.util.timesync.TimeService
 import dagger.Module
 import dagger.Provides
+import retrofit2.Retrofit
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import javax.inject.Singleton
@@ -15,7 +17,8 @@ import javax.inject.Singleton
 
 @Module(
     includes = [
-        DateTimeFormatterModule::class
+        DateTimeFormatterModule::class,
+        TimeRemoteServiceModule::class
     ]
 )
 class UtilModule
@@ -57,4 +60,10 @@ class DateTimeFormatterModule {
     fun provideDateTimeFormatter(context: Context): DateTimeFormatter {
         return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(context)
     }
+}
+
+@Module
+class TimeRemoteServiceModule {
+    @Provides
+    fun provideTimeService(retrofit: Retrofit): TimeService = retrofit.create(TimeService::class.java)
 }

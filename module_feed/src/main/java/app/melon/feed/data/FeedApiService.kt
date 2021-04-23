@@ -14,7 +14,7 @@ interface FeedApiService : ApiService {
 
     @GET("feed/list")
     fun list(
-        @Query("timestamp") time: Long,
+        @Query("timestamp") time: String,
         @Query("type") @FeedPageType type: Int,
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int

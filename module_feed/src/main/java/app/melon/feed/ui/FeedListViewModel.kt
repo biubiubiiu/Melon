@@ -1,32 +1,36 @@
 package app.melon.feed.ui
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import app.melon.data.constants.MY_ANONYMOUS_POST
-import app.melon.data.constants.MY_FAVORITE_POST
-import app.melon.data.constants.MY_POST
+import app.melon.base.framework.ReduxViewModel
+import app.melon.util.timesync.TimeSyncer
 import app.melon.data.resultentities.FeedAndAuthor
-import app.melon.feed.data.FeedRepository
+import app.melon.feed.interactors.UpdateFeedList
+import app.melon.util.base.ErrorResult
+import app.melon.util.base.Success
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 class FeedListViewModel @Inject constructor(
-    private val repo: FeedRepository
-) : ViewModel() {
+    private val timeSyncer: TimeSyncer,
+    private val updateFeedList: UpdateFeedList
+) : ReduxViewModel<FeedListViewState>(
+    initialState = FeedListViewState()
+) {
 
-    fun refresh(queryType: Int, param: Bundle?): Flow<PagingData<FeedAndAuthor>> {
-        return when (queryType) {
-            MY_POST, MY_ANONYMOUS_POST, MY_FAVORITE_POST -> {
-                val fakeUid = "6" // TODO
-                repo.getFeedsFromUser(fakeUid).cachedIn(viewModelScope)
-            }
-            else -> {
-                val timestamp = 100000L // TODO
-                repo.getFeedList(timestamp, queryType).cachedIn(viewModelScope)
+    val pagingData: Flow<PagingData<FeedAndAuthor>> = updateFeedList.observe().cachedIn(viewModelScope)
+
+    fun refresh(queryType: Int, param: Bundle?) {
+        viewModelScope.launch {
+            when (val result = timeSyncer.getServerTime()) {
+                is Success -> updateFeedList(UpdateFeedList.Params(queryType, result.get(), param))
+                is ErrorResult -> setState {
+                    copy(error = result.throwable) // fail fast if we cant get sync time with server
+                }
             }
         }
     }
