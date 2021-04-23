@@ -11,7 +11,7 @@ object EncryptUtils {
      * Encrypt with SHA-512
      */
     fun getSHA512HashOfString(toHash: String): String {
-        val hasher = Sha512()
+        val hasher = SHA512()
         val bytes = toHash.toByteArray(StandardCharsets.UTF_8)
         hasher.update(bytes)
         return hasher.digest().toHexString()

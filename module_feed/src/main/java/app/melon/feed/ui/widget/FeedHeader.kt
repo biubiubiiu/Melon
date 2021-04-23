@@ -15,7 +15,7 @@ import app.melon.location.LocationHelper
 import app.melon.util.extensions.dpInt
 import app.melon.util.formatter.MelonDateTimeFormatter
 import app.melon.util.formatter.MelonDistanceFormatter
-import app.melon.util.number.MelonNumberFormatter
+import app.melon.util.formatter.MelonNumberFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute

@@ -10,7 +10,7 @@ import app.melon.user.R
 import app.melon.user.databinding.FragmentUserProfileBinding
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.viewModelProviderFactoryOf
-import app.melon.util.number.MelonNumberFormatter
+import app.melon.util.formatter.MelonNumberFormatter
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 

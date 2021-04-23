@@ -15,7 +15,7 @@ import app.melon.feed.R
 import app.melon.data.entities.PoiInfo
 import app.melon.location.LocationHelper
 import app.melon.util.extensions.dpInt
-import app.melon.util.number.MelonNumberFormatter
+import app.melon.util.formatter.MelonNumberFormatter
 import app.melon.util.formatter.MelonDateTimeFormatter
 import app.melon.util.formatter.MelonDistanceFormatter
 import coil.load

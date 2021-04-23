@@ -1,7 +1,6 @@
 package app.melon.util.formatter
 
 import android.text.format.DateUtils
-import app.melon.util.extensions.toOffsetDateTime
 import java.time.LocalTime
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
@@ -104,5 +103,11 @@ class MelonDateTimeFormatter @Inject constructor(
             return minute.toString() + "分钟"
         }
         return second.toString() + "秒"
+    }
+
+    private inline fun String.toOffsetDateTime(
+        formatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+    ): OffsetDateTime {
+        return formatter.parse(this, OffsetDateTime::from)
     }
 }

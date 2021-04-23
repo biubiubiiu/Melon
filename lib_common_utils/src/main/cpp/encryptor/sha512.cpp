@@ -21,7 +21,7 @@ extern void sha512_compress_block(const jbyte *block, uint64_t state[STATE_LEN])
  */
 extern "C"
 JNIEXPORT jboolean JNICALL
-Java_app_melon_util_encrypt_Sha512_compress(
+Java_app_melon_util_encrypt_SHA512_compress(
         JNIEnv *env, jclass clazz,
         jlongArray stateArray, jbyteArray msg, jint off, jint len) {
     jboolean status = JNI_FALSE;

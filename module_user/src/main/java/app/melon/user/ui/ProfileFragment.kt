@@ -29,7 +29,7 @@ import app.melon.util.event.OnBackPressedHandler
 import app.melon.util.extensions.getColorCompat
 import app.melon.util.extensions.resolveTheme
 import app.melon.util.extensions.viewModelProviderFactoryOf
-import app.melon.util.number.MelonNumberFormatter
+import app.melon.util.formatter.MelonNumberFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.appbar.AppBarLayout

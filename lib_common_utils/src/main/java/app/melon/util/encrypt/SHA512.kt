@@ -3,7 +3,7 @@ package app.melon.util.encrypt
 import java.util.Arrays
 
 
-class Sha512 : BlockHasher(128) {
+class SHA512 : BlockHasher(128) {
 
     companion object {
 

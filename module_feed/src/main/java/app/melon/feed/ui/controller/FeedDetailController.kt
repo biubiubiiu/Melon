@@ -12,7 +12,7 @@ import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
 import app.melon.util.formatter.MelonDateTimeFormatter
 import app.melon.util.formatter.MelonDistanceFormatter
-import app.melon.util.number.MelonNumberFormatter
+import app.melon.util.formatter.MelonNumberFormatter
 import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

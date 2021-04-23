@@ -1,4 +1,4 @@
-package app.melon.util.number
+package app.melon.util.formatter
 
 import android.content.Context
 import androidx.core.os.ConfigurationCompat
