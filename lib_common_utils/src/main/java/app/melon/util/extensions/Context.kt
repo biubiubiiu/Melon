@@ -43,17 +43,3 @@ fun Context.resolveTheme(@AttrRes attributeResId: Int): Int {
         typedValue.data
     } else 0
 }
-
-val Context.activityContext: AppCompatActivity?
-    get() = getActivity(this)
-
-fun getActivity(context: Context): AppCompatActivity? {
-    if (context is ContextWrapper) {
-        return if (context is AppCompatActivity) {
-            context
-        } else {
-            getActivity(context.baseContext)
-        }
-    }
-    return null
-}

@@ -54,7 +54,7 @@ dependencies {
     api(Libraries.Transition.transition)
     api(Libraries.Transition.ktx)
     api(Libraries.SwipeRefreshLayout.swipeRefreshLayout)
-    api(Libraries.ImageViewer.imageViewer)
+    api(Libraries.PhotoView.photoView)
     api(Libraries.Coil.coil)
     api(Libraries.Lottie.lottie)
 

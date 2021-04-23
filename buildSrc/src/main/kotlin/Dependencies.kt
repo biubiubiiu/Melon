@@ -200,8 +200,8 @@ object Libraries {
         const val ktx = "androidx.fragment:fragment-ktx:$version"
     }
 
-    object ImageViewer {
-        private const val version = "1.0.1"
-        const val imageViewer = "com.github.stfalcon:stfalcon-imageviewer:$version"
+    object PhotoView {
+        private const val version = "2.3.0"
+        const val photoView = "com.github.chrisbanes:PhotoView:$version"
     }
 }

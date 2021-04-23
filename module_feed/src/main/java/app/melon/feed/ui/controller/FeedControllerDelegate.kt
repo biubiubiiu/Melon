@@ -1,6 +1,7 @@
 package app.melon.feed.ui.controller
 
 import android.content.Context
+import app.melon.base.ui.extensions.activityContext
 import app.melon.data.entities.Feed
 import app.melon.data.entities.PoiInfo
 import app.melon.data.resultentities.FeedAndAuthor
@@ -12,7 +13,6 @@ import app.melon.location.LocationHelper
 import app.melon.permission.helper.SaveHelper
 import app.melon.poi.api.IPoiService
 import app.melon.user.api.IUserService
-import app.melon.util.extensions.activityContext
 import app.melon.util.extensions.showToast
 import app.melon.util.formatter.MelonNumberFormatter
 import app.melon.util.formatter.MelonDateTimeFormatter

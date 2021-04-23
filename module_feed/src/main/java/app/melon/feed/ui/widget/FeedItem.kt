@@ -4,27 +4,27 @@ import android.content.Context
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.ImageViewerOverlay
 import app.melon.base.ui.ShapedFourPhotoView
 import app.melon.base.ui.TagView
+import app.melon.base.ui.gallery.GalleryActivity
 import app.melon.data.entities.Feed
+import app.melon.data.entities.PoiInfo
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.R
-import app.melon.data.entities.PoiInfo
 import app.melon.location.LocationHelper
 import app.melon.util.extensions.dpInt
-import app.melon.util.formatter.MelonNumberFormatter
 import app.melon.util.formatter.MelonDateTimeFormatter
 import app.melon.util.formatter.MelonDistanceFormatter
+import app.melon.util.formatter.MelonNumberFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.stfalcon.imageviewer.StfalconImageViewer
-import com.stfalcon.imageviewer.loader.ImageLoader
 
 
 @EpoxyModelClass
@@ -86,19 +86,13 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
             cornerRadius = 32f
             urls = item.feed.photos
             photoView.loadImage()
-            onClickListener = { urls, index, view ->
-                val loader = ImageLoader<String> { imageView, url -> imageView.load(url) }
-                StfalconImageViewer.Builder<String>(context, urls, loader)
-                    .withStartPosition(index)
-                    .withTransitionFrom(view)
-                    .withHiddenStatusBar(false)
-                    .withOverlayView(setupOverlayView(view.context, urls[index]))
-                    .withImageChangeListener { position ->
-                        overlayView?.update(urls[position])
-                    }
-                    .withDismissListener { overlayView = null }
-                    .withBackgroundColorResource(R.color.bgSecondary)
-                    .show()
+            onClickListener = { urls, index, _ ->
+                GalleryActivity.start(
+                    context,
+                    urls,
+                    startPosition = index,
+                    viewRefs = children.toList().filterIsInstance<ImageView>()
+                )
             }
         }
 

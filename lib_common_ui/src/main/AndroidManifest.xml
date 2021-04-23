@@ -2,4 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.melon.base.ui">
 
+    <application>
+        <activity android:name=".gallery.GalleryActivity" />
+    </application>
+
 </manifest>

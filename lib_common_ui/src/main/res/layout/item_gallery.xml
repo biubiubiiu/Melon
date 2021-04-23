@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <app.melon.base.ui.gallery.viewer.ImageViewerView
-        android:id="@+id/image_viewer"
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
