@@ -19,7 +19,6 @@ class MelonApplication : DaggerApplication() {
         AppHelper.init(this)
     }
 
-
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         MultiDex.install(this)
