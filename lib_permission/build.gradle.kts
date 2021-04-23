@@ -36,5 +36,4 @@ dependencies {
     compileOnly(Libraries.kotlinStdLib)
     compileOnly(Libraries.AndroidX.Core.ktx)
     compileOnly(Libraries.AndroidX.AppCompat.appCompat)
-    compileOnly("androidx.activity:activity-ktx:1.2.0-beta02")
 }

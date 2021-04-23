@@ -83,8 +83,14 @@ object Libraries {
         }
 
         object AppCompat {
-            private const val version = "1.2.0"
+            private const val version = "1.3.0-alpha02"
             const val appCompat = "androidx.appcompat:appcompat:$version"
+        }
+
+        object Activity {
+            private const val version = "1.2.0-alpha08"
+            const val activity = "androidx.activity:activity:$version"
+            const val ktx = "androidx.activity:activity-ktx:$version"
         }
     }
 
@@ -189,7 +195,7 @@ object Libraries {
     }
 
     object Fragment {
-        private const val version = "1.3.0-beta02"
+        private const val version = "1.3.0-alpha08"
         const val fragment = "androidx.fragment:fragment:$version"
         const val ktx = "androidx.fragment:fragment-ktx:$version"
     }
