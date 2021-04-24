@@ -34,9 +34,6 @@ dependencies {
     compileOnly(project(Modules.feed))
     compileOnly(project(Modules.poiApi))
 
-    implementation(Libraries.Fragment.fragment)
-    implementation(Libraries.Fragment.ktx)
-
     kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)
     kapt(Libraries.Dagger.processor)

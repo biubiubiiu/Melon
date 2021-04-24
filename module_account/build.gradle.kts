@@ -45,9 +45,6 @@ dependencies {
     compileOnly(project(Modules.baseFramework))
     compileOnly(project(Modules.dataAndroid))
 
-    implementation(Libraries.Fragment.fragment)
-    implementation(Libraries.Fragment.ktx)
-
     kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)
     kapt(Libraries.Dagger.processor)

@@ -17,7 +17,6 @@ android {
 }
 
 dependencies {
-    compileOnly(Libraries.kotlinStdLib)
     compileOnly(project(Modules.data))
     compileOnly(Libraries.Coroutine.core)
 }

@@ -93,6 +93,12 @@ object Libraries {
             const val activity = "androidx.activity:activity:$version"
             const val ktx = "androidx.activity:activity-ktx:$version"
         }
+
+        object Fragment {
+            private const val version = "1.3.0-alpha08"
+            const val fragment = "androidx.fragment:fragment:$version"
+            const val ktx = "androidx.fragment:fragment-ktx:$version"
+        }
     }
 
     object RecyclerView {
@@ -193,12 +199,6 @@ object Libraries {
         const val androidSupport = "com.google.dagger:dagger-android-support:$version"
         const val compiler = "com.google.dagger:dagger-compiler:$version"
         const val processor = "com.google.dagger:dagger-android-processor:$version"
-    }
-
-    object Fragment {
-        private const val version = "1.3.0-alpha08"
-        const val fragment = "androidx.fragment:fragment:$version"
-        const val ktx = "androidx.fragment:fragment-ktx:$version"
     }
 
     object PhotoView {

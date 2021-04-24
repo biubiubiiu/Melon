@@ -33,7 +33,6 @@ android {
 dependencies {
     compileOnly(project(Modules.commonUi))
     compileOnly(project(Modules.commonUtils))
-    compileOnly(Libraries.kotlinStdLib)
     compileOnly(Libraries.AndroidX.Core.ktx)
     compileOnly(Libraries.AndroidX.AppCompat.appCompat)
 }

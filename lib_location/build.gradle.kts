@@ -31,7 +31,6 @@ dependencies {
     api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     compileOnly(project(Modules.commonUtils))
 
-    compileOnly(Libraries.kotlinStdLib)
     compileOnly(Libraries.Dagger.dagger)
     kapt(Libraries.Dagger.compiler)
 }

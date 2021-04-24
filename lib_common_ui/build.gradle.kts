@@ -37,8 +37,6 @@ kapt {
 }
 
 dependencies {
-    compileOnly(Libraries.kotlinStdLib)
-
     compileOnly(project(Modules.data))
 
     compileOnly(Libraries.AndroidX.Core.ktx)
