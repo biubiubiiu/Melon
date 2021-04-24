@@ -33,6 +33,14 @@ object BuildPlugins {
     const val kotlinAndroidExtensions = "kotlin-android-extensions"
 }
 
+object FirebaseService {
+    const val googleServicePlugin = "com.google.gms:google-services:4.3.5"
+    const val crashlyticsPlugin = "com.google.firebase:firebase-crashlytics-gradle:2.5.2"
+
+    const val googleService = "com.google.gms.google-services"
+    const val crashlytics = "com.google.firebase.crashlytics"
+}
+
 object ScriptPlugins {
     const val infrastructure = "scripts.infrastructure"
     const val compilation = "scripts.compilation"
@@ -204,5 +212,12 @@ object Libraries {
     object PhotoView {
         private const val version = "2.3.0"
         const val photoView = "com.github.chrisbanes:PhotoView:$version"
+    }
+
+    object Firebase {
+        private const val bomVersion = "27.1.0"
+        const val bom = "com.google.firebase:firebase-bom:$bomVersion"
+        const val analytics = "com.google.firebase:firebase-analytics-ktx"
+        const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     }
 }

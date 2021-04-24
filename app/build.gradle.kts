@@ -7,6 +7,9 @@ plugins {
     id(BuildPlugins.kotlinAndroidExtensions)
     id(BuildPlugins.kotlinKapt)
 
+    // Firebase
+    id(FirebaseService.crashlytics)
+
     // Internal Script plugins
     id(ScriptPlugins.compilation)
     id(ScriptPlugins.infrastructure)
@@ -87,6 +90,12 @@ dependencies {
 
     implementation(Libraries.MultiDex.multiDex)
 
+    implementation(platform(Libraries.Firebase.bom))
+    implementation(Libraries.Firebase.analytics)
+    implementation(Libraries.Firebase.crashlytics)
+
     kapt(Libraries.Dagger.compiler)
     kapt(Libraries.Dagger.processor)
 }
+
+apply(plugin = FirebaseService.googleService)
