@@ -77,11 +77,10 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
 
         photoView.isVisible = item.feed.photos.isNotEmpty()
         photoView.takeIf { it.isVisible }?.apply {
-            itemPadding = 4.dpInt
-            cornerRadius = 32f
+            itemPadding(4.dpInt)
+            cornerRadius(32f)
             urls = item.feed.photos
-            photoView.loadImage()
-            onClickListener = { urls, index, _ ->
+            onClickListener  { urls, index, _ ->
                 GalleryActivity.start(
                     context,
                     urls,
@@ -89,6 +88,7 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
                     viewRefs = children.toList().filterIsInstance<ImageView>()
                 )
             }
+            loadImage()
         }
 
         val poiInfo = item.feed.poiInfo

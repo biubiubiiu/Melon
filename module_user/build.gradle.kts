@@ -39,6 +39,7 @@ dependencies {
     compileOnly(project(Modules.baseFramework))
     compileOnly(project(Modules.dataAndroid))
     compileOnly(project(Modules.feed))
+    compileOnly(project(Modules.gallery))
 
     compileOnly(project(Modules.userApi))
 

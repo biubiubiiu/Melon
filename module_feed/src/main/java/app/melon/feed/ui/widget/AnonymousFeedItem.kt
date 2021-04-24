@@ -3,6 +3,7 @@ package app.melon.feed.ui.widget
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.NinePhotoView
@@ -10,8 +11,8 @@ import app.melon.base.ui.TagView
 import app.melon.data.entities.Feed
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.R
+import app.melon.gallery.GalleryActivity
 import app.melon.util.extensions.dpInt
-import app.melon.util.extensions.showToast
 import app.melon.util.formatter.MelonNumberFormatter
 import app.melon.util.formatter.MelonDateTimeFormatter
 import coil.load
@@ -57,11 +58,18 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
 
             photoView.isVisible = item.feed.photos.isNotEmpty()
             photoView.takeIf { it.isVisible }?.apply {
-                itemPadding = 4.dpInt
-                cornerRadius = 24f
+                itemPadding(4.dpInt)
+                cornerRadius(24f)
                 urls = item.feed.photos
-                photoView.loadImage()
-                onClickListener = { urls, index -> context.showToast("Click item $index, urls size: ${urls.size}") }
+                onClickListener  { urls, index, _ ->
+                    GalleryActivity.start(
+                        context,
+                        urls,
+                        startPosition = index,
+                        viewRefs = children.toList().filterIsInstance<ImageView>()
+                    )
+                }
+                loadImage()
             }
         }
     }

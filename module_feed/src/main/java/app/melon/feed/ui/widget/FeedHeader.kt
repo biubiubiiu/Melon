@@ -3,6 +3,7 @@ package app.melon.feed.ui.widget
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.ShapedFourPhotoView
@@ -11,6 +12,7 @@ import app.melon.data.entities.Feed
 import app.melon.data.entities.PoiInfo
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.R
+import app.melon.gallery.GalleryActivity
 import app.melon.location.LocationHelper
 import app.melon.util.extensions.dpInt
 import app.melon.util.formatter.MelonDateTimeFormatter
@@ -97,10 +99,18 @@ abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
 
         photoView.isVisible = item.feed.photos.isNotEmpty()
         photoView.takeIf { it.isVisible }?.apply {
-            itemPadding = 4.dpInt
-            cornerRadius = 32f
+            itemPadding(4.dpInt)
+            cornerRadius(32f)
             urls = item.feed.photos
-            photoView.loadImage()
+            onClickListener { urls, index, _ ->
+                GalleryActivity.start(
+                    context,
+                    urls,
+                    startPosition = index,
+                    viewRefs = children.toList().filterIsInstance<ImageView>()
+                )
+            }
+            loadImage()
         }
 
         val poiInfo = item.feed.poiInfo

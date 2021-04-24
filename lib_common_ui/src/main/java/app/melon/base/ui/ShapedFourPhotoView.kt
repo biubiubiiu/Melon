@@ -32,17 +32,34 @@ class ShapedFourPhotoView @JvmOverloads constructor(
     var urls: List<String> = emptyList()
         @ModelProp set
 
-    var itemPadding: Int = 0
-        @ModelProp set
+    private var itemPadding: Int = 0
+    private var cornerRadius: Float = 0f
+    private var whRatio: Float = 1.74f
+    private var onClickListener: ((List<String>, Int, ImageView) -> Unit)? = null
 
-    var cornerRadius: Float = 0f
-        @ModelProp set
+    @JvmOverloads
+    @CallbackProp
+    fun onClickListener(listener: ((List<String>, Int, ImageView) -> Unit)? = null) {
+        this.onClickListener = listener
+    }
 
-    var onClickListener: ((List<String>, Int, ImageView) -> Unit)? = null
-        @CallbackProp set
+    @JvmOverloads
+    @ModelProp
+    fun itemPadding(value: Int = 0) {
+        this.itemPadding = value
+    }
 
-    var whRatio: Float = 1.74f
-        @ModelProp set
+    @JvmOverloads
+    @ModelProp
+    fun cornerRadius(value: Float = 0f) {
+        this.cornerRadius = value
+    }
+
+    @JvmOverloads
+    @ModelProp
+    fun whRatio(value: Float = 1.74f) {
+        this.whRatio = value
+    }
 
     @JvmOverloads
     @ModelProp

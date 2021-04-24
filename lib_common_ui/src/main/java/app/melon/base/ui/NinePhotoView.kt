@@ -32,20 +32,34 @@ class NinePhotoView @JvmOverloads constructor(
     var urls: List<String> = emptyList()
         @ModelProp set
 
-    var itemPadding: Int = 0
-        @ModelProp set
+    private var itemPadding: Int = 0
+    private var cornerRadius: Float = 0f
+    private var whRatio: Float = 1f
+    private var onClickListener: ((List<String>, Int, ImageView) -> Unit)? = null
 
-    var cornerRadius: Float = 0f
-        @ModelProp set
+    @JvmOverloads
+    @CallbackProp
+    fun onClickListener(listener: ((List<String>, Int, ImageView) -> Unit)? = null) {
+        this.onClickListener = listener
+    }
 
-    var whRatio: Float = 1f
-        @ModelProp set
+    @JvmOverloads
+    @ModelProp
+    fun itemPadding(value: Int = 0) {
+        this.itemPadding = value
+    }
 
-    var onClickListener: ((List<String>, Int) -> Unit)? = null
-        @CallbackProp set
+    @JvmOverloads
+    @ModelProp
+    fun cornerRadius(value: Float = 0f) {
+        this.cornerRadius = value
+    }
 
-    @DrawableRes var placeholder: Int? = null
-        @ModelProp set
+    @JvmOverloads
+    @ModelProp
+    fun whRatio(value: Float = 1f) {
+        this.whRatio = value
+    }
 
     @JvmOverloads
     @ModelProp
@@ -69,14 +83,11 @@ class NinePhotoView @JvmOverloads constructor(
         }
     }
 
-    private val enablePlaceHolder get() = placeholder != null
-
-    private val displayItemCount get() = if (enablePlaceHolder) MAX_ITEM else min(urls.size, MAX_ITEM)
-    private val row get() = if (enablePlaceHolder) MAX_ROW else min(MAX_ROW, (displayItemCount + 2) / 3)
+    private val displayItemCount get() = min(urls.size, MAX_ITEM)
+    private val row get() = min(MAX_ROW, (displayItemCount + 2) / 3)
     private val col
-        get() = when {
-            enablePlaceHolder -> MAX_COL
-            displayItemCount == 4 -> 2
+        get() = when (displayItemCount) {
+            4 -> 2
             else -> min(3, displayItemCount)
         }
 
@@ -88,20 +99,16 @@ class NinePhotoView @JvmOverloads constructor(
     }
 
     private fun getImageView(urls: List<String>, position: Int): View {
-        val url = urls.getOrNull(position)
+        val url = urls[position]
         return ShapeableImageView(context).apply {
             shapeAppearanceModel = ShapeAppearanceModel.builder()
                 .setAllCornerSizes(cornerRadius)
                 .build()
             scaleType = ImageView.ScaleType.CENTER_CROP
-            setOnClickListener { onClickListener?.invoke(urls, position) }
-            if (url != null) {
-                load(url) {
-                    allowHardware(false)
-                    placeholder(R.drawable.image_placeholder)
-                }
-            } else {
-                load(placeholder!!)
+            setOnClickListener { onClickListener?.invoke(urls, position, this) }
+            load(url) {
+                allowHardware(false)
+                placeholder(R.drawable.image_placeholder)
             }
         }
     }

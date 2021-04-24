@@ -2,6 +2,9 @@ package app.melon.user.ui.detail
 
 import android.content.Context
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.children
 import app.melon.base.ui.list.divider
 import app.melon.base.ui.list.refreshView
 import app.melon.base.ui.list.vertSpaceSmall
@@ -9,11 +12,11 @@ import app.melon.base.ui.ninePhotoView
 import app.melon.base.ui.textHeader
 import app.melon.util.extensions.dpInt
 import app.melon.util.extensions.getResourceColor
-import app.melon.util.extensions.showToast
 import app.melon.util.extensions.sp
 import app.melon.data.entities.User
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.ui.controller.FeedControllerDelegate
+import app.melon.gallery.GalleryActivity
 import app.melon.user.R
 import app.melon.user.ui.widget.schoolInfo
 import com.airbnb.epoxy.Typed3EpoxyController
@@ -66,12 +69,17 @@ class UserProfileController @AssistedInject constructor(
             ninePhotoView {
                 id("profile_photos")
                 itemPadding(4.dpInt)
-                background(R.color.bgPrimary)
                 paddingHorizontal(12.dpInt)
-                whRatio(1f)
-                onClickListener { urls, index -> context.showToast("Click item $index, urls size: ${urls.size}") }
                 cornerRadius(24f)
                 urls(urls)
+                onClickListener { urls, index, v ->
+                    GalleryActivity.start(
+                        context,
+                        urls,
+                        startPosition = index,
+                        viewRefs = (v.parent as ViewGroup).children.toList().filterIsInstance<ImageView>()
+                    )
+                }
             }
             vertSpaceSmall {
                 id("profile_photos_bottom_space")
