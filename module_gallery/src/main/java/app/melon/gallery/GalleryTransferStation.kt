@@ -1,4 +1,4 @@
-package app.melon.base.ui.gallery
+package app.melon.gallery
 
 import android.widget.ImageView
 import java.lang.ref.WeakReference

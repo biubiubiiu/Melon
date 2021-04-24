@@ -1,4 +1,4 @@
-package app.melon.base.ui.gestures.direction
+package app.melon.gallery.gestures.direction
 
 import android.content.Context
 import android.view.MotionEvent
@@ -10,7 +10,7 @@ import kotlin.math.sqrt
 /**
  * Taken from: https://github.com/stfalcon-studio/StfalconImageViewer
  */
-class SwipeDirectionDetector(
+internal class SwipeDirectionDetector(
     context: Context,
     private val onDirectionDetected: (SwipeDirection) -> Unit
 ) {
@@ -20,7 +20,7 @@ class SwipeDirectionDetector(
     private var startY: Float = 0f
     private var isDetected: Boolean = false
 
-    fun handleTouchEvent(event: MotionEvent) {
+    internal fun handleTouchEvent(event: MotionEvent) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 startX = event.x

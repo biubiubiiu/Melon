@@ -1,16 +1,14 @@
 package app.melon.feed.ui.widget
 
-import android.content.Context
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
-import app.melon.base.ui.ImageViewerOverlay
 import app.melon.base.ui.ShapedFourPhotoView
 import app.melon.base.ui.TagView
-import app.melon.base.ui.gallery.GalleryActivity
+import app.melon.gallery.GalleryActivity
 import app.melon.data.entities.Feed
 import app.melon.data.entities.PoiInfo
 import app.melon.data.resultentities.FeedAndAuthor
@@ -36,7 +34,6 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
     @EpoxyAttribute lateinit var commentClickListener: (Feed) -> Unit
     @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var moreClickListener: (Feed) -> Unit
-    @EpoxyAttribute lateinit var saveImageListener: (String) -> Unit
     @EpoxyAttribute lateinit var poiEntryClickListener: (PoiInfo) -> Unit
 
     @EpoxyAttribute lateinit var item: FeedAndAuthor
@@ -44,8 +41,6 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
     @EpoxyAttribute lateinit var numberFormatter: MelonNumberFormatter
     @EpoxyAttribute lateinit var distanceFormatter: MelonDistanceFormatter
-
-    private var overlayView: ImageViewerOverlay? = null
 
     override fun getDefaultLayout(): Int = R.layout.item_feed
 
@@ -107,16 +102,6 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
                 )
             )
         }
-    }
-
-    private fun setupOverlayView(context: Context, url: String): ImageViewerOverlay {
-        if (overlayView == null) {
-            overlayView = ImageViewerOverlay(context).apply {
-                update(url)
-                onSaveClick = { saveImageListener(it) }
-            }
-        }
-        return overlayView!!
     }
 
     class Holder : BaseEpoxyHolder() {

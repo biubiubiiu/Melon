@@ -1,4 +1,4 @@
-package app.melon.base.ui.gallery.viewer
+package app.melon.gallery.viewer
 
 import android.view.View
 import android.view.ViewGroup
@@ -81,7 +81,7 @@ internal class TransitionImageAnimator(
             TransitionManager.beginDelayedTransition(internalRoot, createTransition {
                 if (!isClosing) {
                     isAnimating = false
-                    onTransitionEnd()
+                    onTransitionEnd.invoke()
                 }
             })
 

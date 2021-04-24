@@ -1,0 +1,29 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|top"
+        android:layout_margin="@dimen/spacing_normal"
+        android:contentDescription="@string/app_common_go_back_desc"
+        android:padding="6dp"
+        android:src="@drawable/ic_round_arrow_back_24"
+        app:tint="@color/colorPrimary" />
+
+    <ImageView
+        android:id="@+id/more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:layout_margin="@dimen/spacing_normal"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/app_common_more_operation_desc"
+        android:padding="6dp"
+        android:src="@drawable/ic_round_more_vert_24"
+        app:tint="@color/colorPrimary" />
+
+</merge>

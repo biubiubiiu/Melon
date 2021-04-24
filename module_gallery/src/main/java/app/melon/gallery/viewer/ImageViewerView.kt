@@ -1,18 +1,17 @@
-package app.melon.base.ui.gallery.viewer
+package app.melon.gallery.viewer
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import app.melon.base.ui.R
 import app.melon.base.ui.extensions.animateAlpha
 import app.melon.base.ui.extensions.applyMargin
 import app.melon.base.ui.extensions.isRectVisible
@@ -21,11 +20,12 @@ import app.melon.base.ui.extensions.makeInvisible
 import app.melon.base.ui.extensions.makeVisible
 import app.melon.base.ui.extensions.registerOnPageChangeCallback
 import app.melon.base.ui.extensions.switchVisibilityWithAnimation
-import app.melon.base.ui.gallery.photos.GalleryItemViewHolder
-import app.melon.base.ui.gallery.photos.ImagesPagerAdapter
-import app.melon.base.ui.gestures.direction.SwipeDirection
-import app.melon.base.ui.gestures.direction.SwipeDirectionDetector
-import app.melon.base.ui.gestures.dismiss.SwipeToDismissHandler
+import app.melon.gallery.databinding.ViewImageViewerBinding
+import app.melon.gallery.photos.GalleryItemViewHolder
+import app.melon.gallery.photos.ImagesPagerAdapter
+import app.melon.gallery.gestures.direction.SwipeDirection
+import app.melon.gallery.gestures.direction.SwipeDirectionDetector
+import app.melon.gallery.gestures.dismiss.SwipeToDismissHandler
 import coil.load
 import kotlin.math.abs
 
@@ -33,51 +33,53 @@ import kotlin.math.abs
 /**
  * Taken from: https://github.com/stfalcon-studio/StfalconImageViewer
  */
-class ImageViewerView @JvmOverloads constructor(
+internal class ImageViewerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
-    var isSwipeToDismissAllowed = true
+    internal var isSwipeToDismissAllowed = true
 
-    var currentPosition: Int
+    internal var currentPosition: Int
         get() = imagesPager.currentItem
         set(value) {
             imagesPager.currentItem = value
         }
 
-    var onDismiss: (() -> Unit)? = null
-    var onPageChange: ((position: Int) -> Unit)? = null
+    internal var onDismiss: (() -> Unit)? = null
+    internal var onPageChange: ((position: Int) -> Unit)? = null
 
     private val isScaled
         get() = ((imagesPager.getChildAt(0) as? RecyclerView)
             ?.findViewHolderForAdapterPosition(currentPosition)
                 as? GalleryItemViewHolder)?.isScaled ?: false
 
-    var containerPadding = intArrayOf(0, 0, 0, 0)
+    internal var containerPadding = intArrayOf(0, 0, 0, 0)
 
-    var overlayView: View? = null
+    internal var overlayView: View? = null
         set(value) {
             field = value
             value?.let { rootContainer.addView(it) }
         }
 
-    private var rootContainer: ViewGroup
-    private var backgroundView: View
-    private var dismissContainer: ViewGroup
+    private val binding = ViewImageViewerBinding.inflate(LayoutInflater.from(context), this, true)
 
-    private val transitionImageContainer: FrameLayout
-    private val transitionImageView: ImageView
+    private val rootContainer get() = binding.rootContainer
+    private val backgroundView get() = binding.backgroundView
+    private val dismissContainer get() = binding.dismissContainer
+
+    private val transitionImageContainer get() = binding.transitionImageContainer
+    private val transitionImageView get() = binding.transitionImageView
     private var externalTransitionImageView: ImageView? = null
 
-    private val imagesPager: ViewPager2
+    private val imagesPager get() = binding.imagesPager
     private var imagesAdapter: ImagesPagerAdapter? = null
     private val isPagerIdle: Boolean get() = imagesPager.scrollState == ViewPager2.SCROLL_STATE_IDLE
 
-    private var directionDetector: SwipeDirectionDetector
-    private var gestureDetector: GestureDetectorCompat
-    private var scaleDetector: ScaleGestureDetector
+    private var directionDetector: SwipeDirectionDetector = createSwipeDirectionDetector()
+    private var gestureDetector: GestureDetectorCompat = createGestureDetector()
+    private var scaleDetector: ScaleGestureDetector = createScaleGestureDetector()
     private lateinit var swipeDismissHandler: SwipeToDismissHandler
 
     private var wasScaled: Boolean = false
@@ -99,16 +101,6 @@ class ImageViewerView @JvmOverloads constructor(
         get() = currentPosition == startPosition
 
     init {
-        View.inflate(context, R.layout.view_image_viewer, this)
-
-        rootContainer = findViewById(R.id.rootContainer)
-        backgroundView = findViewById(R.id.backgroundView)
-        dismissContainer = findViewById(R.id.dismissContainer)
-
-        transitionImageContainer = findViewById(R.id.transitionImageContainer)
-        transitionImageView = findViewById(R.id.transitionImageView)
-
-        imagesPager = findViewById(R.id.imagesPager)
         imagesPager.registerOnPageChangeCallback(
             onPageSelected = {
                 externalTransitionImageView?.apply {
@@ -117,10 +109,6 @@ class ImageViewerView @JvmOverloads constructor(
                 onPageChange?.invoke(it)
             }
         )
-
-        directionDetector = createSwipeDirectionDetector()
-        gestureDetector = createGestureDetector()
-        scaleDetector = createScaleGestureDetector()
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
@@ -151,10 +139,10 @@ class ImageViewerView @JvmOverloads constructor(
     }
 
     override fun setBackgroundColor(color: Int) {
-        findViewById<View>(R.id.backgroundView).setBackgroundColor(color)
+        backgroundView.setBackgroundColor(color)
     }
 
-    fun setImages(images: List<String>, startPosition: Int) {
+    internal fun setImages(images: List<String>, startPosition: Int) {
         this.images = images
         this.imagesAdapter = ImagesPagerAdapter(images)
         this.imagesPager.adapter = imagesAdapter
@@ -166,7 +154,8 @@ class ImageViewerView @JvmOverloads constructor(
         imagesPager.setCurrentItem(position, false)
     }
 
-    fun open(transitionImageView: ImageView?, animate: Boolean) {
+    @SuppressLint("ClickableViewAccessibility")
+    internal fun open(transitionImageView: ImageView?, animate: Boolean) {
         prepareViewsForTransition()
 
         externalTransitionImageView = transitionImageView
@@ -182,7 +171,7 @@ class ImageViewerView @JvmOverloads constructor(
         if (animate) animateOpen() else prepareViewsForViewer()
     }
 
-    fun close() {
+    internal fun close() {
         if (shouldDismissToBottom) {
             swipeDismissHandler.initiateDismissToBottom()
         } else {
@@ -190,7 +179,7 @@ class ImageViewerView @JvmOverloads constructor(
         }
     }
 
-    fun updateTransitionImage(imageView: ImageView?) {
+    internal fun updateTransitionImage(imageView: ImageView?) {
         externalTransitionImageView?.makeVisible()
         imageView?.makeInvisible()
 

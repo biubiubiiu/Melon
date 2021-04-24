@@ -78,6 +78,7 @@ dependencies {
     implementation(project(Modules.comment))
     implementation(project(Modules.group))
     implementation(project(Modules.poi))
+    implementation(project(Modules.gallery))
 
     implementation(project(Modules.accountApi))
     implementation(project(Modules.userApi))

@@ -1,4 +1,3 @@
-include(":module_poi_api")
 rootProject.name = "Melon"
 
 // Include all the existent modules in the project

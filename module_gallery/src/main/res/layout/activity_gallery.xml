@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <app.melon.base.ui.gallery.viewer.ImageViewerView
+    <app.melon.gallery.viewer.ImageViewerView
         android:id="@+id/image_viewer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

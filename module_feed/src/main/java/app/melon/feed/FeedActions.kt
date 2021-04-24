@@ -11,6 +11,5 @@ interface FeedActions {
     fun onCommentClick(feed: Feed)
     fun onFavorClick(id: String)
     fun onMoreClick(feed: Feed)
-    fun onSaveImage(url: String)
     fun onPoiEntryClick(info: PoiInfo)
 }

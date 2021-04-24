@@ -1,7 +1,6 @@
 package app.melon.feed.ui.controller
 
 import android.content.Context
-import app.melon.base.ui.extensions.activityContext
 import app.melon.data.entities.Feed
 import app.melon.data.entities.PoiInfo
 import app.melon.data.resultentities.FeedAndAuthor
@@ -10,7 +9,6 @@ import app.melon.feed.FeedDetailActivity
 import app.melon.feed.ui.widget.AnonymousFeedItem_
 import app.melon.feed.ui.widget.FeedItem_
 import app.melon.location.LocationHelper
-import app.melon.permission.helper.SaveHelper
 import app.melon.poi.api.IPoiService
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
@@ -33,8 +31,6 @@ class FeedControllerDelegate @AssistedInject constructor(
     private val distanceFormatter: MelonDistanceFormatter
 ) : FeedActions {
 
-    private val saveHelper by lazy { SaveHelper(context.activityContext!!) }
-
     fun buildFeedItem(
         dataProvider: () -> FeedAndAuthor,
         idProvider: () -> String = { "feed_${dataProvider.invoke().feed.id}" }
@@ -53,7 +49,6 @@ class FeedControllerDelegate @AssistedInject constructor(
             .commentClickListener { this.onCommentClick(it) }
             .favorClickListener { this.onFavorClick(it) }
             .moreClickListener { this.onMoreClick(it) }
-            .saveImageListener { this.onSaveImage(it) }
             .poiEntryClickListener { this.onPoiEntryClick(it) }
     }
 
@@ -97,10 +92,6 @@ class FeedControllerDelegate @AssistedInject constructor(
 
     override fun onMoreClick(feed: Feed) {
         context.showToast("click more")
-    }
-
-    override fun onSaveImage(url: String) {
-        saveHelper.saveImage(url)
     }
 
     override fun onPoiEntryClick(info: PoiInfo) {

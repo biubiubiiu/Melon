@@ -1,24 +1,33 @@
-package app.melon.base.ui.gallery
+package app.melon.gallery
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import app.melon.base.ui.R
-import app.melon.base.ui.gallery.viewer.ImageViewerView
+import app.melon.gallery.permission.SaveImage
+import app.melon.gallery.viewer.ImageViewerView
+import app.melon.permission.PermissionHelper
+import app.melon.util.extensions.showToast
 import java.lang.ref.WeakReference
 
 
 class GalleryActivity : AppCompatActivity(R.layout.activity_gallery) {
 
     private lateinit var viewerView: ImageViewerView
+    private lateinit var viewerOverlay: ImageViewerOverlay
 
     private val urls: Array<String> get() = intent.getStringArrayExtra(KEY_URL_LIST)!!
     private val startPosition: Int get() = intent.getIntExtra(KEY_START_POSITION, 0)
 
+    private val saveImagePermissionHelper = PermissionHelper(this, SaveImage)
+
+    private val viewModel: GalleryViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupOverlayView()
         setupViewerView()
     }
 
@@ -29,7 +38,7 @@ class GalleryActivity : AppCompatActivity(R.layout.activity_gallery) {
     private fun setupViewerView() {
         viewerView = findViewById(R.id.image_viewer)
         viewerView.apply {
-            overlayView = null
+            overlayView = viewerOverlay
             setImages(urls.asList(), startPosition)
 
             onPageChange = { position ->
@@ -37,11 +46,31 @@ class GalleryActivity : AppCompatActivity(R.layout.activity_gallery) {
             }
             onDismiss = { this@GalleryActivity.finish() }
         }
-        viewerView.open(getExternalViewAt(startPosition), true)
+        viewerView.open(transitionImageView = getExternalViewAt(startPosition), animate = true)
+    }
+
+    private fun setupOverlayView() {
+        viewerOverlay = ImageViewerOverlay(this).apply {
+            onBackClick = { this@GalleryActivity.onBackPressed() }
+            onSaveClick = {
+                val position = viewerView.currentPosition
+                saveImage(urls[position])
+            }
+        }
     }
 
     private fun getExternalViewAt(index: Int): ImageView? {
         return GalleryTransferStation.viewRefs.getOrNull(index)?.get()
+    }
+
+    private fun saveImage(url: String) {
+        saveImagePermissionHelper.checkPermissions(
+            onPermissionAllGranted = {
+                viewModel.saveImageFromInternet(url, callback = {
+                    showToast(R.string.image_saved)
+                })
+            }
+        )
     }
 
     companion object {

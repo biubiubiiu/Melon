@@ -1,4 +1,4 @@
-package app.melon.base.ui.gallery.photos
+package app.melon.gallery.photos
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

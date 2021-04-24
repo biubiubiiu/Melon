@@ -1,4 +1,4 @@
-package app.melon.base.ui.gallery.viewer
+package app.melon.gallery.viewer
 
 import android.view.GestureDetector
 import android.view.MotionEvent

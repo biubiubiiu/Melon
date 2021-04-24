@@ -1,7 +1,6 @@
 plugins {
     id(BuildPlugins.androidLibrary)
     id(BuildPlugins.kotlinAndroid)
-    id(BuildPlugins.kotlinKapt)
 
     id(ScriptPlugins.infrastructure)
 }
@@ -16,10 +15,6 @@ android {
 
         versionCode = AndroidClient.versionCode
         versionName = AndroidClient.versionName
-
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -34,24 +29,7 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-    useBuildCache = true
-}
-
 dependencies {
     compileOnly(project(Modules.baseFramework))
-    compileOnly(project(Modules.dataAndroid))
-
-    compileOnly(project(Modules.userApi))
-    compileOnly(project(Modules.poiApi))
-    compileOnly(project(Modules.comment))
-    compileOnly(project(Modules.gallery))
-
-    implementation(Libraries.Fragment.fragment)
-    implementation(Libraries.Fragment.ktx)
-
-    kapt(Libraries.Epoxy.compiler)
-    kapt(Libraries.Dagger.compiler)
-    kapt(Libraries.Dagger.processor)
+    compileOnly(project(Modules.runtimePermissions))
 }

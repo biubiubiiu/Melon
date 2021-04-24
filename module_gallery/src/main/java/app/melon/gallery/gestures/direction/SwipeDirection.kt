@@ -1,10 +1,10 @@
-package app.melon.base.ui.gestures.direction
+package app.melon.gallery.gestures.direction
 
 
 /**
  * Taken from: https://github.com/stfalcon-studio/StfalconImageViewer
  */
-enum class SwipeDirection {
+internal enum class SwipeDirection {
     NOT_DETECTED,
     UP,
     DOWN,

@@ -1,4 +1,4 @@
-package app.melon.base.ui.gestures.dismiss
+package app.melon.gallery.gestures.dismiss
 
 import android.annotation.SuppressLint
 import android.view.MotionEvent
