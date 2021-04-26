@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="composer_avatar_size">36dp</dimen>
+    <dimen name="composer_photo_height">200dp</dimen>
+    <dimen name="composer_input_length_indicator_size">20dp</dimen>
+</resources>

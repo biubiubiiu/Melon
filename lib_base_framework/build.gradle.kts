@@ -50,7 +50,7 @@ dependencies {
     api(project(Modules.runtimePermissions))
     api(project(Modules.location))
 
-    compileOnly(project(Modules.data))
+    api(project(Modules.data))
 
     api(Libraries.AndroidX.AppCompat.appCompat)
 

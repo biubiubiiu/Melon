@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+    <app.melon.composer.ui.ComposerToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_gravity="top"
+        android:background="@color/bgPrimary"
+        app:defaultButtonStyle="solid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:showCloseEntry="true"
+        app:trailingStyle="button"
+        tools:layout_height="40dp" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/bgPrimary"
+        app:layout_constraintBottom_toTopOf="@id/divider2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/spacing_conventional">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="@dimen/composer_avatar_size"
+                android:layout_height="@dimen/composer_avatar_size"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_conventional"
+                android:contentDescription="@string/app_common_avatar_desc"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/ic_round_arrow_back_24" />
+
+            <EditText
+                android:id="@+id/text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/avatar"
+                android:background="@android:color/transparent"
+                android:hint="@string/composer_input_hint"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:lineHeight="28sp"
+                android:textColor="@color/TextPrimary"
+                android:textColorHint="@color/text_input_hint"
+                android:textSize="18sp"
+                tools:text="This is only a test\nThis is only a test" />
+
+            <FrameLayout
+                android:id="@+id/photo_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_input">
+
+                <FrameLayout
+                    android:id="@+id/single_photo_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="68dp"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:visibility="gone">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:importantForAccessibility="no"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/RoundRectPhoto"
+                        tools:src="@drawable/sadface" />
+
+                    <ImageView
+                        android:id="@+id/remove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:contentDescription="@string/remove_image_desc"
+                        android:src="@drawable/ic_round_remove" />
+
+                </FrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/photos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="68dp"
+                    tools:ignore="RtlSymmetry" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/photo_container"
+                android:layout_alignStart="@id/text_input"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:drawablePadding="@dimen/spacing_micro"
+                android:gravity="center_vertical"
+                android:textColor="@color/location_text_color"
+                app:drawableStartCompat="@drawable/ic_round_place_16"
+                app:drawableTint="@color/location_icon_tint"
+                tools:text="Kings Landing" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@id/entries_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/entries_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bgPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/gallery_entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_micro"
+            android:contentDescription="@string/add_images_desc"
+            android:padding="@dimen/spacing_conventional"
+            android:src="@drawable/ic_gallery"
+            app:tint="@color/colorPrimary" />
+
+        <ImageView
+            android:id="@+id/poi_entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/add_location_info_desc"
+            android:padding="@dimen/spacing_conventional"
+            android:src="@drawable/ic_location"
+            app:tint="@color/colorPrimary" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_normal"
+            android:progress="0"
+            app:indicatorColor="@color/colorPrimary"
+            app:indicatorSize="@dimen/composer_input_length_indicator_size"
+            app:trackColor="@color/progress_indicator_background"
+            tools:progress="50"
+            tools:targetApi="lollipop" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

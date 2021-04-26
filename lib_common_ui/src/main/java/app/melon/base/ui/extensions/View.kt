@@ -24,9 +24,6 @@ val View?.hitRect: Rect
 val View?.isRectVisible: Boolean
     get() = this != null && globalVisibleRect != localVisibleRect
 
-val View?.isVisible: Boolean
-    get() = this != null && visibility == View.VISIBLE
-
 fun View.makeVisible() {
     visibility = View.VISIBLE
 }

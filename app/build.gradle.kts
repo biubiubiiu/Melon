@@ -82,11 +82,13 @@ dependencies {
     implementation(project(Modules.group))
     implementation(project(Modules.poi))
     implementation(project(Modules.gallery))
+    implementation(project(Modules.composer))
 
     implementation(project(Modules.accountApi))
     implementation(project(Modules.userApi))
     implementation(project(Modules.eventApi))
     implementation(project(Modules.poiApi))
+    implementation(project(Modules.composerApi))
 
     implementation(Libraries.MultiDex.multiDex)
 

@@ -20,16 +20,42 @@ class PoiSearchHelper @Inject constructor(
     private val context: Context
 ) {
 
-    suspend fun searchByKeyword(keyword: String) {
+    suspend fun searchByKeyword(
+        longitude: Double,
+        latitude: Double,
+        keyword: String,
+        queryRadius: Int = 1000,
+        pageSize: Int = 20,
+        pageNum: Int = 0
+    ) = searchByKeyword(
+        SimplifiedLocation(longitude, latitude),
+        keyword,
+        queryRadius,
+        pageSize,
+        pageNum
+    )
+
+    suspend fun searchByKeyword(
+        location: SimplifiedLocation,
+        keyword: String,
+        queryRadius: Int = 1000,
+        pageSize: Int = 20,
+        pageNum: Int = 0
+    ): Result<List<PoiItem>> {
         return suspendCoroutine {
             val query = PoiSearch.Query(keyword, "", "")
-            query.pageSize = 10
-            query.pageNum = 0
+            query.pageSize = pageSize
+            query.pageNum = pageNum
 
             val poiSearch = PoiSearch(context, query)
+            poiSearch.bound = PoiSearch.SearchBound(location.toLatLonPoint(), queryRadius)
             poiSearch.setOnPoiSearchListener(object : PoiSearchListenerAdapter() {
                 override fun onPoiSearched(result: PoiResult?, rCode: Int) {
-                    it.resume(Unit)
+                    if (rCode == AMapException.CODE_AMAP_SUCCESS) {
+                        it.resume(Success(result?.pois?.toList() ?: emptyList()))
+                    } else {
+                        it.resume(ErrorResult("Poi Search failed with error code: $rCode".toException()))
+                    }
                 }
             })
             poiSearch.searchPOIAsyn()

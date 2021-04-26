@@ -17,6 +17,8 @@ import app.melon.R
 import app.melon.account.api.IAccountService
 import app.melon.base.ui.navigation.setupWithNavController
 import app.melon.bookmark.BookmarkActivity
+import app.melon.composer.api.ComposerContract
+import app.melon.composer.api.ContentCreation
 import app.melon.databinding.ActivityMainBinding
 import app.melon.databinding.HomeContentMainBinding
 import app.melon.event.api.IEventService
@@ -51,6 +53,9 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
 
     private val locatePermissionHelper = PermissionHelper(this, LocateRequest)
 
+    private val gotoComposer = registerForActivityResult(ComposerContract()) {
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startLocate() // start locating ASAP
@@ -67,10 +72,8 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
         setupDrawerHeader()
         setupDrawerNavigation()
 
-
-        contentMainBinding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        contentMainBinding.fab.setOnClickListener {
+            gotoComposer.launch(ContentCreation("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3956250804,1021350931&fm=15&gp=0.jpg"))
         }
     }
 

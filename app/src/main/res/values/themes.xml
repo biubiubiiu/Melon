@@ -45,4 +45,9 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
+    <style name="Theme.Melon.BottomEnterExit" parent="Theme.Melon">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_bottom_up</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_top_down</item>
+    </style>
+
 </resources>

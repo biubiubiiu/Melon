@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="composer_post_content">TODO</string>
+    <string name="composer_post_reply">TODO</string>
+    <string name="composer_input_hint">TODO</string>
+    <string name="composer_search_location">TODO</string>
+    <string name="composer_mark_location">TODO</string>
+    <string name="label_gallery">Gallery</string>
+    <string name="label_done">TODO</string>
+    <string name="label_add_photos_with_quantity">TODO %d</string>
+
+    <string name="remove_image_desc">Remove image</string>
+    <string name="add_images_desc">Add images</string>
+    <string name="add_location_info_desc">Add location information</string>
+    <string name="take_from_camera_desc">Take photo from camera</string>
+    <string name="clear_location_desc">Clear location</string>
+
+    <string name="request_write_external_message_title">TODO</string>
+    <string name="request_write_external_message_subtitle">To add media files, we need to request the storage permission</string>
+</resources>

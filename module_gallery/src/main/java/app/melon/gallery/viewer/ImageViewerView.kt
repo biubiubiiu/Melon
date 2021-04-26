@@ -10,12 +10,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import app.melon.base.ui.extensions.animateAlpha
 import app.melon.base.ui.extensions.applyMargin
 import app.melon.base.ui.extensions.isRectVisible
-import app.melon.base.ui.extensions.isVisible
 import app.melon.base.ui.extensions.makeInvisible
 import app.melon.base.ui.extensions.makeVisible
 import app.melon.base.ui.extensions.registerOnPageChangeCallback
@@ -112,7 +112,7 @@ internal class ImageViewerView @JvmOverloads constructor(
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        if (overlayView.isVisible && overlayView?.dispatchTouchEvent(event) == true) {
+        if (overlayView?.isVisible == true && overlayView?.dispatchTouchEvent(event) == true) {
             return true
         }
 

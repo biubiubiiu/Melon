@@ -14,6 +14,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
+    <color name="cerise_red">#E0245E</color>
+    <color name="azalea">#F9D3DE</color>
+    <color name="outer_space">#2f3336</color>
+    <color name="loblolly">#C5D0D6</color>
+    <color name="rolling_stone">#7C838B</color>
+    <color name="shuttle_gray">#5B7083</color>
+    <color name="athens_gray">#EDEEF0</color>
+    <color name="woodsmoke">#121315</color>
 
     <color name="colorPrimary">#B71A43</color>
     <color name="TextPrimary">#FF262626</color>

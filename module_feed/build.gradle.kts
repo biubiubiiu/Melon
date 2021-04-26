@@ -45,6 +45,7 @@ dependencies {
 
     compileOnly(project(Modules.userApi))
     compileOnly(project(Modules.poiApi))
+    compileOnly(project(Modules.composerApi))
     compileOnly(project(Modules.comment))
     compileOnly(project(Modules.gallery))
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="app.melon.composer">
+
+    <application>
+        <activity android:name=".ComposerActivity">
+            <intent-filter>
+                <action android:name="melon.intent.action.START_COMPOSER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

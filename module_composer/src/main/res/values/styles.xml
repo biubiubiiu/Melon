@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ComposerToolbar">
+        <attr name="showCloseEntry" format="boolean" />
+        <attr name="labelText" format="string" />
+        <attr name="titleText" format="string" />
+        <attr name="trailingButtonText" format="string" />
+        <attr name="trailingText" format="string" />
+        <attr name="trailingStyle" format="enum">
+            <enum name="none" value="0" />
+            <enum name="text" value="1" />
+            <enum name="button" value="2" />
+        </attr>
+        <attr name="defaultButtonStyle" format="enum">
+            <enum name="solid" value="0" />
+            <enum name="border" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <style name="RoundRectPhoto" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+</resources>

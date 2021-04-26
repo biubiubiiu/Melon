@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="check_radio_disabled">#808080</color>
+    <color name="progress_indicator_background">@color/loblolly</color>
+    <color name="text_input_hint">@color/shuttle_gray</color>
+    <color name="location_result_pressed_background">@color/athens_gray</color>
+    <color name="location_icon_tint">@color/shuttle_gray</color>
+    <color name="location_text_color">@color/shuttle_gray</color>
+</resources>

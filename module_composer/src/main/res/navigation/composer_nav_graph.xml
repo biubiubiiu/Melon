@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/composer_nav_graph"
+    app:startDestination="@id/content_fragment">
+
+    <fragment
+        android:id="@+id/content_fragment"
+        android:name="app.melon.composer.contentedit.ContentEditFragment"
+        android:label="ContentEditFragment"
+        tools:layout="@layout/fragment_content_edit">
+        <action
+            android:id="@+id/action_content_fragment_to_gallery_grid"
+            app:destination="@id/gallery_grid_fragment"
+            app:enterAnim="@anim/slide_in_bottom_up"
+            app:popExitAnim="@anim/slide_out_top_down" />
+        <action
+            android:id="@+id/action_content_fragment_to_select_location"
+            app:destination="@id/select_location_fragment"
+            app:enterAnim="@anim/slide_in_bottom_up"
+            app:popExitAnim="@anim/slide_out_top_down" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gallery_grid_fragment"
+        android:name="app.melon.composer.gallerygrid.GalleryGridFragment"
+        android:label="GalleryGridFragment"
+        tools:layout="@layout/fragment_gallery_grid" />
+
+    <fragment
+        android:id="@+id/select_location_fragment"
+        android:name="app.melon.composer.selectlocation.SelectLocationFragment"
+        android:label="SelectLocationFragment"
+        tools:layout="@layout/fragment_select_location" />
+
+</navigation>

@@ -64,6 +64,9 @@ object Modules {
     const val comment = ":module_comment"
     const val gallery = ":module_gallery"
 
+    const val composerApi = ":module_composer_api"
+    const val composer = ":module_composer"
+
     const val poiApi = ":module_poi_api"
     const val poi = ":module_poi"
 

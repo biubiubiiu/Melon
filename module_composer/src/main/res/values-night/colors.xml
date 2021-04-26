@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="progress_indicator_background">@color/outer_space</color>
+    <color name="text_input_hint">@color/rolling_stone</color>
+    <color name="location_result_pressed_background">@color/woodsmoke</color>
+    <color name="location_icon_tint">@color/rolling_stone</color>
+    <color name="location_text_color">@color/rolling_stone</color>
+</resources>

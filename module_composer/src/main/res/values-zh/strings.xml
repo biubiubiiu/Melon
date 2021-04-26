@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="composer_post_content">发布</string>
+    <string name="composer_post_reply">回复</string>
+    <string name="composer_input_hint">有什么新鲜事？</string>
+    <string name="composer_search_location">搜索位置</string>
+    <string name="composer_mark_location">标记位置</string>
+    <string name="label_gallery">图库</string>
+    <string name="label_done">完成</string>
+    <string name="label_add_photos_with_quantity">添加%d项</string>
+
+    <string name="remove_image_desc">移除照片</string>
+    <string name="add_images_desc">添加照片</string>
+    <string name="add_location_info_desc">添加位置信息</string>
+    <string name="take_from_camera_desc">拍摄照片并添加</string>
+    <string name="clear_location_desc">删除位置信息</string>
+
+    <string name="request_write_external_message_title">提供存储权限以使用</string>
+    <string name="request_write_external_message_subtitle">要添加媒体文件，我们需要获取存储权限</string>
+</resources>
