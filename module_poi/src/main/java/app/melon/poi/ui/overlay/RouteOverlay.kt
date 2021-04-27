@@ -12,7 +12,7 @@ import com.amap.api.maps2d.model.Marker
 import com.amap.api.maps2d.model.MarkerOptions
 import com.amap.api.maps2d.model.Polyline
 import com.amap.api.maps2d.model.PolylineOptions
-import java.util.*
+import java.util.ArrayList
 
 abstract class RouteOverlay {
 

@@ -29,7 +29,7 @@ class TimeSyncer @Inject constructor(
             if (!apiResponse.isSuccess) {
                 ErrorResult<String>(apiResponse.errorMessage.toException())
             } else {
-                Success<String>(apiResponse.data!!.time)
+                Success(apiResponse.data!!.time)
             }
         } ?: ErrorResult("Server time sync time out".toException())
     }

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import app.melon.base.ui.MelonButton
 import app.melon.user.EditProfileActivity
 import app.melon.user.FollowersActivity
 import app.melon.user.FollowingActivity
@@ -153,7 +154,7 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressed
         follow.isVisible = isMyProfile.not()
 
         // testing
-        follow.setState(following = false)
+        follow.update(MelonButton.Style.BORDER, R.string.app_common_follow)
     }
 
     private fun setListeners() {
@@ -164,7 +165,7 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressed
             viewModel.toggleFollowState()
 
             // testing
-            headerBinding.follow.setState(following = true)
+            headerBinding.follow.update(MelonButton.Style.SOLID,  R.string.app_common_following)
         }
     }
 

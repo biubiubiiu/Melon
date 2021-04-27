@@ -16,10 +16,6 @@ class StorageHandler @Inject constructor(
     private val context: Context
 ) {
 
-    fun saveDrawableToGallery(drawable: Drawable) {
-        val bitmap = GraphicsUtil.drawable2Bitmap(drawable)
-    }
-
     fun copyFileToCacheDir(uri: Uri, filename: String = "cache"): File {
         val resolver = context.contentResolver
         val mediaType = resolver.getType(uri)

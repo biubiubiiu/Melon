@@ -2,11 +2,9 @@ package app.melon.home.discovery
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import app.melon.R
 import app.melon.base.event.TabReselectEvent
-import app.melon.base.framework.BaseMvRxEpoxyFragment
 import app.melon.base.lazyload.LazyFragmentPagerAdapter
 import app.melon.base.ui.databinding.FragmentCommonTabsBinding
 import app.melon.data.constants.FOLLOWING_FEED
@@ -17,7 +15,6 @@ import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getResourceString
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerFragment
-import java.lang.ref.WeakReference
 
 
 class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs) {
@@ -36,7 +33,6 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs) {
 
     private fun setupView() {
         viewPager.adapter = object : LazyFragmentPagerAdapter(childFragmentManager) {
-            private lateinit var fragmentOnScreen: WeakReference<BaseMvRxEpoxyFragment>
 
             private val pageConfig = arrayOf(
                 FeedPageConfig(RECOMMEND_FEED, "recommend_feed", false),
@@ -56,11 +52,6 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_common_tabs) {
             }
 
             override fun getCount(): Int = pages
-
-            override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
-                super.setPrimaryItem(container, position, `object`)
-                fragmentOnScreen = WeakReference(`object` as BaseMvRxEpoxyFragment)
-            }
         }
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

@@ -2,7 +2,7 @@ package app.melon.composer.common
 
 import android.net.Uri
 import androidx.recyclerview.widget.DiffUtil
-import java.util.*
+import java.util.Date
 
 /**
  * Simple data class to hold information about an image included in the device's MediaStore.

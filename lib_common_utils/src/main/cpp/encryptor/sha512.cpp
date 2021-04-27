@@ -40,7 +40,7 @@ Java_app_melon_util_encrypt_SHA512_compress(
     // Iterate over each block in msg
     auto *block = (jbyte *) env->GetPrimitiveArrayCritical(msg, nullptr);
     if (block == nullptr)
-        goto cleanup1;
+        goto cleanup;
     for (jint end = off + len; off < end; off += 128)
         sha512_compress_block(&block[off], state);
     env->ReleasePrimitiveArrayCritical(msg, block, JNI_ABORT);
@@ -49,7 +49,7 @@ Java_app_melon_util_encrypt_SHA512_compress(
     for (int i = 0; i < STATE_LEN; i++)
         stateJava[i] = (jlong) state[i];
     status = JNI_TRUE;
-cleanup1:
+cleanup:
     env->ReleaseLongArrayElements(stateArray, stateJava, 0);
     return status;
 }

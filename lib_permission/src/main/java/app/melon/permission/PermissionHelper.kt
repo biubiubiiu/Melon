@@ -18,13 +18,13 @@ class PermissionHelper(
     private val showPermissionRationale = with(activity) {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             when (it.resultCode) {
-                Activity.RESULT_OK -> requestLocatingPermission.launch(request.permissions) // proceed
+                Activity.RESULT_OK -> requestPermissions.launch(request.permissions) // proceed
                 Activity.RESULT_CANCELED -> onPermissionRequestCanceled.invoke()
             }
         }
     }
 
-    private val requestLocatingPermission = with(activity) {
+    private val requestPermissions = with(activity) {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result: Map<String, Boolean> ->
             val isAllGranted = !result.values.contains(element = false)
             if (isAllGranted) {

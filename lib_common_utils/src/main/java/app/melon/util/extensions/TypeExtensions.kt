@@ -1,6 +1,6 @@
 package app.melon.util.extensions
 
-//import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -32,27 +32,16 @@ fun TextView.setDrawableLeft(@DrawableRes drawableRes: Int, activity: Activity) 
     setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
 }
 
-//fun View.showSnackbarLong(@StringRes message: Int) =
-//    showSnackbarLong(resources.getString(message))
-//
-//fun View.showSnackbarLong(message: String) =
-//    Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
+fun View.showSnackbarLong(@StringRes message: Int) =
+    showSnackbarLong(resources.getString(message))
+
+fun View.showSnackbarLong(message: String) =
+    Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
 
 
 fun View.setVisibleIf(condition: Boolean): Boolean {
     visibility = if (condition) View.VISIBLE else View.GONE
     return condition
-}
-
-fun View.onThrottledClick(
-    throttleDelay: Long = 500L,
-    onClick: (View) -> Unit
-) {
-    setOnClickListener {
-        onClick(this)
-        isClickable = false
-        postDelayed({ isClickable = true }, throttleDelay)
-    }
 }
 
 inline fun <reified T> flatten(vararg lists: List<T>?) = lists.flatMap { it ?: emptyList() }

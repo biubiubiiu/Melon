@@ -5,7 +5,7 @@ import androidx.annotation.CallSuper
 import androidx.paging.LoadState
 import app.melon.base.databinding.FragmentEpoxyListBinding
 
-abstract class BasePagingListFragment : BaseMvRxEpoxyFragment() {
+abstract class BasePagingListFragment : BaseEpoxyListFragment() {
 
     abstract override val controller: BasePagingController<*>
 

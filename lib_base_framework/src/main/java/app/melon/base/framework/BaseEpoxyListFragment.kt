@@ -12,7 +12,7 @@ import com.airbnb.epoxy.Typed4EpoxyController
 import com.airbnb.epoxy.TypedEpoxyController
 
 
-abstract class BaseMvRxEpoxyFragment : FragmentWithBinding<FragmentEpoxyListBinding>() {
+abstract class BaseEpoxyListFragment : FragmentWithBinding<FragmentEpoxyListBinding>() {
 
     abstract val controller: EpoxyController
 

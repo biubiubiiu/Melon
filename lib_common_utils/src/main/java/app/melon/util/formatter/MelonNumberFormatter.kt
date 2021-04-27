@@ -3,7 +3,7 @@ package app.melon.util.formatter
 import android.content.Context
 import androidx.core.os.ConfigurationCompat
 import java.text.DecimalFormat
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.floor

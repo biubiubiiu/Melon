@@ -5,7 +5,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import app.melon.base.databinding.FragmentEpoxyListBinding
-import app.melon.base.framework.BaseMvRxEpoxyFragment
+import app.melon.base.framework.BaseEpoxyListFragment
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.ui.controller.FeedDetailController
 import kotlinx.coroutines.flow.collectLatest
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class FeedDetailFragment : BaseMvRxEpoxyFragment() {
+class FeedDetailFragment : BaseEpoxyListFragment() {
 
     private val cache by lazy { requireNotNull(arguments?.get(KEY_FEED_CACHE) as? FeedAndAuthor) }
 

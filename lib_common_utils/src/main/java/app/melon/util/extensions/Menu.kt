@@ -4,7 +4,7 @@ import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.view.MenuItem
-import java.util.*
+import java.util.Locale
 
 fun MenuItem.setTitleColor(color: Int) {
     val hexColor = Integer.toHexString(color).toUpperCase(Locale.getDefault()).substring(2)

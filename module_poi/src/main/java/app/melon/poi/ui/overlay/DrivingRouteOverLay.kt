@@ -15,7 +15,7 @@ import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.DrivePath
 import com.amap.api.services.route.DriveStep
 import com.amap.api.services.route.TMC
-import java.util.*
+import java.util.ArrayList
 
 class DrivingRouteOverLay constructor(
     override val mAMap: AMap,
@@ -53,9 +53,6 @@ class DrivingRouteOverLay constructor(
         }
     }
 
-    /**
-     * 添加驾车路线添加到地图上显示。
-     */
     override fun addToMap() {
         try {
             if (routeWidth == 0f) {
@@ -99,7 +96,7 @@ class DrivingRouteOverLay constructor(
         }
         for (status in tmcSection) {
             val polyline = status.polyline
-            polylineOption.color(getcolor(status.status))
+            polylineOption.color(getRouteColor(status.status))
             var lastLanLng: LatLng? = null
             for (j in 1 until polyline.size) {
                 lastLanLng = polyline[j].toLatLng()
@@ -119,7 +116,7 @@ class DrivingRouteOverLay constructor(
         mAMap.addPolyline(polylineOption)
     }
 
-    private fun getcolor(status: String): Int {
+    private fun getRouteColor(status: String): Int {
         return when (status) {
             "畅通" -> Color.GREEN
             "缓行" -> Color.YELLOW
