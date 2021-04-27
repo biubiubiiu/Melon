@@ -65,7 +65,7 @@ class ComposerActivity : AppCompatActivity(), PermissionHelperOwner, ComposerAct
             WriteExternal -> useCameraPermissionHelper.checkPermissions(
                 onPermissionAllGranted = onPermissionsGranted
             )
-            AcquireLocation -> accessGalleryPermissionHelper.checkPermissions(
+            AcquireLocation -> acquireLocationPermissionHelper.checkPermissions(
                 onPermissionAllGranted = onPermissionsGranted
             )
         }
