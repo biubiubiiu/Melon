@@ -1,4 +1,4 @@
-package app.melon
+package app.melon.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

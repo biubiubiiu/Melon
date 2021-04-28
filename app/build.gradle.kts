@@ -83,6 +83,7 @@ dependencies {
     implementation(project(Modules.poi))
     implementation(project(Modules.gallery))
     implementation(project(Modules.composer))
+    implementation(project(Modules.settings))
 
     implementation(project(Modules.accountApi))
     implementation(project(Modules.userApi))

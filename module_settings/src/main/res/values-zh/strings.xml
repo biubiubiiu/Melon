@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_theme_pref_dark_title">深色模式</string>
+    <string name="settings_theme_pref_light_title">浅色模式</string>
+    <string name="settings_theme_pref_system_title">跟随系统设置</string>
+
+
+    <string name="settings_page_title">设置</string>
+
+    <string name="settings_ui_category_title">界面设置</string>
+    <string name="settings_theme_title">主题</string>
+</resources>

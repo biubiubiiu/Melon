@@ -18,7 +18,8 @@ import javax.inject.Singleton
 @Module(
     includes = [
         DateTimeFormatterModule::class,
-        TimeRemoteServiceModule::class
+        TimeRemoteServiceModule::class,
+        StorageModule::class
     ]
 )
 class UtilModule

@@ -2,7 +2,6 @@ package app.melon.di
 
 import app.melon.MelonApplication
 import app.melon.account.di.AccountModule
-import app.melon.account.di.StorageModule
 import app.melon.base.di.NetworkModule
 import app.melon.base.scope.ApplicationScope
 import app.melon.comment.di.CommentModule
@@ -13,6 +12,7 @@ import app.melon.feed.di.FeedModule
 import app.melon.group.di.GroupBuilder
 import app.melon.home.di.HomeBuilder
 import app.melon.poi.di.PoiModule
+import app.melon.settings.di.SettingsModule
 import app.melon.splash.di.SplashBuilder
 import app.melon.user.di.UserModule
 import app.melon.util.di.UtilModule
@@ -44,8 +44,8 @@ import javax.inject.Singleton
         CommentModule::class,
         PoiModule::class,
         GroupBuilder::class,
-        StorageModule::class,
         AppSubComponents::class,
+        SettingsModule::class,
         UtilModule::class
     ]
 )

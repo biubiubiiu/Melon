@@ -63,6 +63,7 @@ object Modules {
     const val group = ":module_group"
     const val comment = ":module_comment"
     const val gallery = ":module_gallery"
+    const val settings = ":module_settings"
 
     const val composerApi = ":module_composer_api"
     const val composer = ":module_composer"
@@ -222,5 +223,10 @@ object Libraries {
         const val bom = "com.google.firebase:firebase-bom:$bomVersion"
         const val analytics = "com.google.firebase:firebase-analytics-ktx"
         const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
+    }
+
+    object Preference {
+        private const val version = "1.1.0"
+        const val preference = "androidx.preference:preference-ktx:$version"
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/settings_ui_category_title">
+
+        <ListPreference
+            android:defaultValue="@string/settings_theme_pref_system"
+            android:entries="@array/settings_theme_prefs_title"
+            android:entryValues="@array/settings_theme_prefs"
+            android:key="key_theme"
+            android:title="@string/settings_theme_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

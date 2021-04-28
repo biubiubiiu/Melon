@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="app.melon.settings">
+
+    <application>
+        <activity android:name=".SettingsActivity" />
+    </application>
+</manifest>

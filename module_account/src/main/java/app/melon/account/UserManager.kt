@@ -1,13 +1,13 @@
 package app.melon.account
 
 import app.melon.account.api.UserManager
-import app.melon.account.di.RegistrationStorage
 import app.melon.account.di.UserComponent
 import app.melon.account.login.data.LoginRepository
-import app.melon.account.storage.Storage
+import app.melon.util.storage.Storage
 import app.melon.data.entities.User
 import app.melon.util.base.Success
 import app.melon.util.network.TokenManager
+import app.melon.util.storage.RegistrationStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import javax.inject.Inject

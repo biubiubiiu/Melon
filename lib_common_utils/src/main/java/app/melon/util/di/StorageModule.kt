@@ -1,19 +1,13 @@
-package app.melon.account.di
+package app.melon.util.di
 
 import android.content.Context
-import app.melon.account.storage.SharedPreferencesStorage
-import app.melon.account.storage.Storage
+import app.melon.util.storage.ApplicationStorage
+import app.melon.util.storage.LoginStorage
+import app.melon.util.storage.RegistrationStorage
+import app.melon.util.storage.SharedPreferencesStorage
+import app.melon.util.storage.Storage
 import dagger.Module
 import dagger.Provides
-import javax.inject.Qualifier
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class RegistrationStorage
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class LoginStorage
 
 
 @Module
@@ -29,5 +23,11 @@ class StorageModule {
     @Provides
     fun provideLoginStorage(context: Context): Storage {
         return SharedPreferencesStorage("login", context)
+    }
+
+    @ApplicationStorage
+    @Provides
+    fun provideAppStorage(context: Context): Storage {
+        return SharedPreferencesStorage("app", context)
     }
 }

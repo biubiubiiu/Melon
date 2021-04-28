@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import app.melon.MainViewModel
 import app.melon.R
 import app.melon.account.api.IAccountService
 import app.melon.base.ui.navigation.setupWithNavController
@@ -27,9 +26,9 @@ import app.melon.location.LocationHelper
 import app.melon.permission.PermissionHelper
 import app.melon.permission.PermissionHelperOwner
 import app.melon.permission.PermissionRequest
+import app.melon.settings.SettingsActivity
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.reverse
-import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -174,6 +173,7 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
                 R.id.home_nav_drawer_nav_to_profile -> userService.navigateToMyProfile(this)
                 R.id.home_nav_drawer_nav_to_events -> eventService.navigateToEventList(this)
                 R.id.home_nav_drawer_nav_to_collections -> BookmarkActivity.start(this)
+                R.id.home_nav_drawer_nav_to_settings -> SettingsActivity.start(this)
                 else -> {
                 } // TODO
             }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_theme_pref_dark" translatable="false">Dark Mode</string>
+    <string name="settings_theme_pref_light" translatable="false">Light Mode</string>
+    <string name="settings_theme_pref_system" translatable="false">Follow System</string>
+
+    <string name="settings_theme_pref_dark_title">Dark Mode</string>
+    <string name="settings_theme_pref_light_title">Light Mode</string>
+    <string name="settings_theme_pref_system_title">Follow System</string>
+
+    <string name="settings_page_title">Settings</string>
+
+    <string name="settings_ui_category_title">User interface</string>
+    <string name="settings_theme_title">Theme</string>
+</resources>
