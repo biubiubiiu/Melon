@@ -3,8 +3,7 @@ package app.melon
 import android.content.Context
 import androidx.multidex.MultiDex
 import app.melon.di.DaggerAppComponent
-import app.melon.initializers.ThemeInitializer
-import app.melon.settings.theme.ThemePreferences
+import app.melon.initializers.AppInitializers
 import app.melon.util.AppHelper
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -13,7 +12,7 @@ import javax.inject.Inject
 
 class MelonApplication : DaggerApplication() {
 
-    @Inject internal lateinit var themeInitializer: ThemeInitializer
+    @Inject internal lateinit var initializer: AppInitializers
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
         DaggerAppComponent.factory().create(this)
@@ -22,7 +21,7 @@ class MelonApplication : DaggerApplication() {
         super.onCreate()
 
         AppHelper.init(this)
-        themeInitializer.init()
+        initializer.init(this)
     }
 
     override fun attachBaseContext(base: Context?) {
