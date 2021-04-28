@@ -30,16 +30,12 @@ abstract class BaseEpoxyListFragment : FragmentWithBinding<FragmentEpoxyListBind
 
     @CallSuper
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
+        binding.recyclerView.setHasFixedSize(true)
+
         if (allowModelBuildRequests) {
             binding.recyclerView.setControllerAndBuildModels(controller)
         } else {
             binding.recyclerView.setController(controller)
-        }
-    }
-
-    protected fun rebuildModel() {
-        if (allowModelBuildRequests) {
-            binding.recyclerView.requestModelBuild()
         }
     }
 }

@@ -18,7 +18,7 @@ class EventsPageController @AssistedInject constructor(
     private val dateTimeFormatter: MelonDateTimeFormatter
 ) : BasePagingController<EventAndOrganiser>(
     context,
-    sameContentIndicator = { oldItem, newItem -> oldItem.event.id == newItem.event.id }
+    sameItemIndicator = { oldItem, newItem -> oldItem.event.id == newItem.event.id }
 ) {
 
     override fun buildItemModel(currentPosition: Int, item: EventAndOrganiser?): EpoxyModel<*> {

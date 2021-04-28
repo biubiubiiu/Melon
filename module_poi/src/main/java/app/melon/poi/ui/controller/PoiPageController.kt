@@ -27,7 +27,7 @@ class PoiPageController @AssistedInject constructor(
     factory: FeedControllerDelegate.Factory
 ) : BasePagingController<FeedAndAuthor>(
     context,
-    sameContentIndicator = { oldItem, newItem -> oldItem.feed.id == newItem.feed.id }
+    sameItemIndicator = { oldItem, newItem -> oldItem.feed.id == newItem.feed.id }
 ) {
 
     var poiData: PoiStruct? = null

@@ -36,7 +36,10 @@ class FeedRemoteMediator constructor(
         const val STARTING_PAGE_INDEX = 0
     }
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, EntryWithFeedAndAuthor>): MediatorResult {
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, EntryWithFeedAndAuthor>
+    ): MediatorResult {
         return try {
             val page = when (loadType) {
                 LoadType.REFRESH -> STARTING_PAGE_INDEX
@@ -44,7 +47,8 @@ class FeedRemoteMediator constructor(
                 // first page in the list. Immediately return, reporting end of pagination.
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    val entry = state.lastItemOrNull() ?: return MediatorResult.Success(endOfPaginationReached = true)
+                    val entry =
+                        state.lastItemOrNull() ?: return MediatorResult.Success(endOfPaginationReached = true)
                     entry.entry.page + 1
                 }
             }

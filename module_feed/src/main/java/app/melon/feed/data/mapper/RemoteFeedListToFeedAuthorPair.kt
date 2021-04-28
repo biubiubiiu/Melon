@@ -1,7 +1,6 @@
 package app.melon.feed.data.mapper
 
 import app.melon.data.entities.Feed
-import app.melon.data.entities.MALE
 import app.melon.data.entities.User
 import app.melon.data.entities.isValidGender
 import app.melon.data.remote.toLocation

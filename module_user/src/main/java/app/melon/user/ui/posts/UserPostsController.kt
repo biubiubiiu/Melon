@@ -13,7 +13,7 @@ class UserPostsController @AssistedInject constructor(
     private val factory: FeedControllerDelegate.Factory
 ) : BasePagingController<FeedAndAuthor>(
     context,
-    sameContentIndicator = { oldItem, newItem -> oldItem.feed.id == newItem.feed.id }
+    sameItemIndicator = { oldItem, newItem -> oldItem.feed.id == newItem.feed.id }
 ) {
 
     private val delegate by lazy {

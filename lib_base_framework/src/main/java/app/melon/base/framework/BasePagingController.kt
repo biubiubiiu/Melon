@@ -24,13 +24,13 @@ import java.net.SocketTimeoutException
 abstract class BasePagingController<T : Any>(
     protected val context: Context,
     @Suppress("UNCHECKED_CAST")
-    sameContentIndicator: (T, T) -> Boolean = { oldItem, newItem -> oldItem == newItem }
+    sameItemIndicator: (T, T) -> Boolean = { oldItem, newItem -> oldItem == newItem }
 ) : PagingDataEpoxyController<T>(
     modelBuildingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler(),
     diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler(),
     itemDiffCallback = object : DiffUtil.ItemCallback<T>() {
-        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
-        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = sameContentIndicator.invoke(oldItem, newItem)
+        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = sameItemIndicator.invoke(oldItem, newItem)
+        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
     }
 ) {
 

@@ -29,7 +29,7 @@ class ReplyPageController @AssistedInject constructor(
     private val dateTimeFormatter: MelonDateTimeFormatter
 ) : BasePagingController<CommentAndAuthor>(
     context,
-    sameContentIndicator = { oldItem, newItem -> oldItem.comment.id == newItem.comment.id }
+    sameItemIndicator = { oldItem, newItem -> oldItem.comment.id == newItem.comment.id }
 ) {
 
     var loadingFirstComment: Boolean by observable(false, ::requestModelBuild)

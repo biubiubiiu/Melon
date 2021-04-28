@@ -16,7 +16,7 @@ class FeedPageController @AssistedInject constructor(
     private val factory: FeedControllerDelegate.Factory
 ) : BasePagingController<FeedAndAuthor>(
     context,
-    sameContentIndicator = { oldItem, newItem -> oldItem.feed.id == newItem.feed.id }
+    sameItemIndicator = { oldItem, newItem -> oldItem.feed.id == newItem.feed.id }
 ) {
 
     enum class Type {
