@@ -8,7 +8,6 @@ import com.amap.api.maps2d.AMap
 import com.amap.api.maps2d.model.BitmapDescriptorFactory
 import com.amap.api.maps2d.model.LatLng
 import com.amap.api.maps2d.model.LatLngBounds
-import com.amap.api.maps2d.model.Marker
 import com.amap.api.maps2d.model.MarkerOptions
 import com.amap.api.maps2d.model.PolylineOptions
 import com.amap.api.services.core.LatLonPoint
@@ -17,7 +16,7 @@ import com.amap.api.services.route.DriveStep
 import com.amap.api.services.route.TMC
 import java.util.ArrayList
 
-class DrivingRouteOverLay constructor(
+internal class DrivingRouteOverLay constructor(
     override val mAMap: AMap,
     private val drivePath: DrivePath,
     start: LatLonPoint,
@@ -25,8 +24,6 @@ class DrivingRouteOverLay constructor(
     private val throughPointList: List<LatLonPoint> = emptyList()
 ) : RouteOverlay() {
 
-    private val throughPointMarkerList: MutableList<Marker> = ArrayList()
-    private var throughPointMarkerVisible = true
     private val tmcs = arrayListOf<TMC>()
 
     var isColorFullLine = true
@@ -37,21 +34,9 @@ class DrivingRouteOverLay constructor(
     override val routeWidth = 12f
     override val routeColor = getResourceColor(R.color.route_overlay)
 
-    private val throughPointBitDes = BitmapDescriptorFactory.fromResource(R.drawable.amap_through)
-
     private val mLatLngsOfPath: MutableList<LatLng> = ArrayList()
 
     private val driveBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.amap_car)
-
-    override fun removeFromMap() {
-        try {
-            super.removeFromMap()
-            throughPointMarkerList.forEach { it.remove() }
-            throughPointMarkerList.clear()
-        } catch (e: Throwable) {
-            e.printStackTrace()
-        }
-    }
 
     override fun addToMap() {
         try {
@@ -69,7 +54,6 @@ class DrivingRouteOverLay constructor(
                 }
             }
             mPolylineOptions.add(endPoint)
-            addThroughPointMarker()
             if (isColorFullLine && tmcs.size > 0) {
                 colorWayUpdate(tmcs)
             } else {
@@ -146,27 +130,5 @@ class DrivingRouteOverLay constructor(
             b.include(LatLng(it.latitude, it.longitude))
         }
         return b.build()
-    }
-
-    fun setThroughPointIconVisibility(visible: Boolean) {
-        try {
-            throughPointMarkerVisible = visible
-            throughPointMarkerList.forEach { it.isVisible = visible }
-        } catch (e: Throwable) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun addThroughPointMarker() {
-        throughPointList.forEach {
-            throughPointMarkerList.add(
-                mAMap.addMarker(MarkerOptions()
-                    .position(LatLng(it.latitude, it.longitude))
-                    .visible(throughPointMarkerVisible)
-                    .icon(throughPointBitDes)
-                    .title("\u9014\u7ECF\u70B9")
-                )
-            )
-        }
     }
 }

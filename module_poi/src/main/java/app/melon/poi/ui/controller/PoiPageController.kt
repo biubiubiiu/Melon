@@ -21,7 +21,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 
-class PoiPageController @AssistedInject constructor(
+internal class PoiPageController @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val shareRoute: (SimplifiedLocation) -> Unit,
     factory: FeedControllerDelegate.Factory
@@ -30,7 +30,7 @@ class PoiPageController @AssistedInject constructor(
     sameItemIndicator = { oldItem, newItem -> oldItem.feed.id == newItem.feed.id }
 ) {
 
-    var poiData: PoiStruct? = null
+    internal var poiData: PoiStruct? = null
         set(value) {
             field = value
             requestModelBuild()

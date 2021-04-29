@@ -4,7 +4,7 @@ import android.content.Context
 import app.melon.data.entities.PoiInfo
 import app.melon.poi.api.IPoiService
 
-class PoiService : IPoiService {
+internal class PoiService : IPoiService {
     override fun navigateToPoiDetail(context: Context, info: PoiInfo) {
         PoiDetailActivity.start(context, info)
     }

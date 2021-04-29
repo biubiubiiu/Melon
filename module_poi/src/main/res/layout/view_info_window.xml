@@ -6,33 +6,44 @@
     android:background="@color/transparent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:background="@drawable/info_window_bg"
-        android:padding="@dimen/spacing_conventional"
-        tools:backgroundTint="#808080">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/name"
+        <LinearLayout
+            android:id="@+id/content_root"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/TextPrimary"
-            android:textSize="14sp"
-            tools:text="Kings Landing" />
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_conventional"
+            tools:backgroundTint="@color/gray">
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/name"
-            android:layout_marginTop="@dimen/spacing_micro"
-            android:maxWidth="210dp"
-            android:textColor="@color/TextSecondary"
-            android:textSize="12sp"
-            tools:text="This is a Address Address Address" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/TextPrimary"
+                android:textSize="14sp"
+                tools:text="Kings Landing" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_micro"
+                android:maxWidth="210dp"
+                android:textColor="@color/TextSecondary"
+                android:textSize="12sp"
+                tools:text="This is a Address Address Address" />
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/skeleton"
+            layout="@layout/view_info_window_skeleton" />
+
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/iv_triangle"
@@ -41,6 +52,6 @@
         android:layout_gravity="bottom|center_horizontal"
         android:importantForAccessibility="no"
         android:src="@drawable/bubble_spike"
-        tools:tint="#808080" />
+        tools:tint="@color/gray" />
 
 </LinearLayout>

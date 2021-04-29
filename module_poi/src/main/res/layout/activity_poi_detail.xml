@@ -41,7 +41,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/route_duration_background"
-                    android:padding="@dimen/spacing_small"
+                    android:paddingHorizontal="@dimen/spacing_normal"
+                    android:paddingVertical="@dimen/spacing_small"
                     android:textColor="@drawable/route_duration"
                     android:textSize="12sp"
                     tools:text="1 Hour 2 minutes" />
@@ -52,7 +53,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_small"
                     android:background="@drawable/route_duration_background"
-                    android:padding="@dimen/spacing_small"
+                    android:paddingHorizontal="@dimen/spacing_normal"
+                    android:paddingVertical="@dimen/spacing_small"
                     android:textColor="@drawable/route_duration"
                     android:textSize="12sp"
                     tools:text="1 Hour 2 minutes" />
@@ -60,7 +62,6 @@
             </LinearLayout>
 
         </FrameLayout>
-
 
         <Space
             android:layout_width="match_parent"
@@ -97,5 +98,12 @@
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </LinearLayout>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

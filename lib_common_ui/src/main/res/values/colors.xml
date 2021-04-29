@@ -11,6 +11,12 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
 
+    <color name="gray">#808080</color>
+    <color name="gray_20">#CC808080</color>
+    <color name="gray_50">#7f808080</color>
+    
+    <color name="malibu_50">#7F82cffb</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
@@ -22,6 +28,7 @@
     <color name="shuttle_gray">#5B7083</color>
     <color name="athens_gray">#EDEEF0</color>
     <color name="woodsmoke">#121315</color>
+    <color name="candlelight">#FACE15</color>
 
     <color name="colorPrimary">#B71A43</color>
     <color name="TextPrimary">#FF262626</color>

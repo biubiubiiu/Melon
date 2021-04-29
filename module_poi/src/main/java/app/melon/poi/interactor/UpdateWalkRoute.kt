@@ -8,7 +8,7 @@ import javax.inject.Inject
 /**
  * Just a wrapper :)
  */
-class UpdateWalkRoute @Inject constructor(
+internal class UpdateWalkRoute @Inject constructor(
     private val routeSearchHelper: RouteSearchHelper
 ) {
 

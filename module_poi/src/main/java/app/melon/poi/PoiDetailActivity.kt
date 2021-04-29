@@ -4,31 +4,34 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import app.melon.base.ui.extensions.makeGone
+import app.melon.base.ui.extensions.makeVisible
 import app.melon.data.entities.PoiInfo
 import app.melon.location.LocationHelper
 import app.melon.location.SimplifiedLocation
 import app.melon.location.toLatLng
 import app.melon.location.toLatLonPoint
+import app.melon.poi.data.location
 import app.melon.poi.databinding.ActivityPoiDetailBinding
+import app.melon.poi.databinding.ViewInfoWindowBinding
 import app.melon.poi.ui.DaggerActivityWithMapView
 import app.melon.poi.ui.PoiDetailViewModel
 import app.melon.poi.ui.PoiDetailViewState
 import app.melon.poi.ui.controller.PoiPageController
+import app.melon.poi.ui.create
 import app.melon.poi.ui.overlay.DrivingRouteOverLay
 import app.melon.poi.ui.overlay.WalkRouteOverlay
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.dpInt
+import app.melon.util.extensions.viewModelProviderFactoryOf
 import app.melon.util.formatter.MelonDateTimeFormatter
 import com.amap.api.maps2d.AMap
-import com.amap.api.maps2d.CameraUpdate
-import com.amap.api.maps2d.CameraUpdateFactory
 import com.amap.api.maps2d.MapView
 import com.amap.api.maps2d.model.BitmapDescriptorFactory
-import com.amap.api.maps2d.model.LatLngBounds
 import com.amap.api.maps2d.model.Marker
 import com.amap.api.maps2d.model.MarkerOptions
 import com.amap.api.services.route.DrivePath
@@ -39,59 +42,46 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
+internal class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
 
     private val binding: ActivityPoiDetailBinding by viewBinding()
+    private lateinit var infoWindowBinding: ViewInfoWindowBinding
 
     private val info get() = intent.getSerializableExtra(KEY_INFO) as PoiInfo
-
-    private val infoWindow by lazy {
-        layoutInflater.inflate(R.layout.view_info_window, binding.root, false)
-    }
 
     override val mapView: MapView get() = binding.mapView
 
     @Inject internal lateinit var factory: PoiPageController.Factory
     private val controller by lazy { factory.create(this, ::shareRoute) }
 
-    @Inject internal lateinit var viewModel: PoiDetailViewModel
+    @Inject internal lateinit var viewModelFactory: PoiDetailViewModel.Factory
+    private val viewModel: PoiDetailViewModel by viewModels() {
+        viewModelProviderFactoryOf {
+            viewModelFactory.create(
+                info.poiId,
+                info.location
+            )
+        }
+    }
+
     @Inject internal lateinit var locationHelper: LocationHelper
     @Inject internal lateinit var formatter: MelonDateTimeFormatter
-
-    private val poiLocation by lazy {
-        SimplifiedLocation(info.longitude, info.latitude)
-    }
-
-    private val myLocation by lazy {
-        locationHelper.lastLocation ?: SimplifiedLocation(
-            longitude = 114.419825,
-            latitude = 30.518659
-        )
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
         initDataFlow()
-        refresh()
     }
 
-    override fun getDefaultCameraPosition(): CameraUpdate? {
-        return CameraUpdateFactory.newLatLngBounds(
-            LatLngBounds(poiLocation.toLatLng(), myLocation.toLatLng()),
-            48.dpInt
-        )
-    }
+    override fun getInfoWindow(marker: Marker): View = infoWindowBinding.root
 
-    override fun getInfoWindow(marker: Marker): View = infoWindow
-
-    override fun getInfoContents(marker: Marker): View = infoWindow
+    override fun getInfoContents(marker: Marker): View = infoWindowBinding.root
 
     private fun initView() {
         initBottomSheet()
         initRecyclerView()
+        initInfoWindow()
         setupMap()
-        addMarkersToMap()
     }
 
     private fun initBottomSheet() {
@@ -106,25 +96,12 @@ class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
         binding.recyclerView.setController(controller)
     }
 
-    private fun setupMap() {
-        aMap.setInfoWindowAdapter(this)
+    private fun initInfoWindow() {
+        infoWindowBinding = ViewInfoWindowBinding.inflate(layoutInflater)
     }
 
-    private fun addMarkersToMap() {
-        myLocation.let {
-            aMap.addMarker(MarkerOptions()
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                .position(it.toLatLng())
-                .draggable(false))
-        }
-        poiLocation.let {
-            val marker = aMap.addMarker(MarkerOptions()
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                .position(it.toLatLng())
-                .title("").snippet("") // To make AMap SDK happy
-                .draggable(false))
-            marker.showInfoWindow()
-        }
+    private fun setupMap() {
+        aMap.setInfoWindowAdapter(this)
     }
 
     private fun initDataFlow() {
@@ -133,11 +110,42 @@ class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
                 controller.submitData(it)
             }
         }
+        viewModel.selectObserve(PoiDetailViewState::location).observe(this, Observer {
+            it ?: return@Observer
+            it.origin?.let { position ->
+                aMap.addMarker(
+                    MarkerOptions()
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                        .position(position.toLatLng())
+                        .draggable(false)
+                )
+            }
+            it.destination?.let { position ->
+                val marker = aMap.addMarker(
+                    MarkerOptions()
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                        .position(position.toLatLng())
+                        .title("").snippet("") // To make AMap SDK happy
+                        .draggable(false)
+                )
+                marker.showInfoWindow()
+            }
+            if (it.origin != null && it.destination != null) {
+                updateCameraPosition(it.origin, it.destination)
+            }
+        })
         viewModel.selectObserve(PoiDetailViewState::poiData).observe(this, Observer {
             controller.poiData = it
-            if (it != null) {
-                infoWindow.findViewById<TextView>(R.id.name).text = it.name
-                infoWindow.findViewById<TextView>(R.id.address).text = it.address
+            if (it == null) {
+                infoWindowBinding.skeleton.shimmerContainer.makeVisible()
+                infoWindowBinding.contentRoot.makeGone()
+                infoWindowBinding.skeleton.shimmerContainer.startShimmer()
+            } else {
+                infoWindowBinding.skeleton.shimmerContainer.stopShimmer()
+                infoWindowBinding.skeleton.shimmerContainer.makeGone()
+                infoWindowBinding.contentRoot.makeVisible()
+                infoWindowBinding.name.text = it.name
+                infoWindowBinding.address.text = it.address
             }
         })
         viewModel.selectObserve(PoiDetailViewState::walkPath).observe(this, Observer {
@@ -169,40 +177,45 @@ class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
                 binding.webView.loadUrl(url)
             }
         })
+        viewModel.selectObserve(PoiDetailViewState::refreshing).observe(this, Observer {
+            binding.progressBar.isVisible = it
+        })
     }
 
     private fun showWalkPathOverlay(walkPath: WalkPath) {
-        val walkRouteOverlay = WalkRouteOverlay(
-            aMap,
-            walkPath,
-            myLocation.toLatLonPoint(),
-            poiLocation.toLatLonPoint()
-        )
-        walkRouteOverlay.removeFromMap()
-        walkRouteOverlay.addToMap()
-        walkRouteOverlay.zoomToSpan()
+        val (myLocation, poiLocation) = viewModel.currentState().location ?: return
+        if (myLocation != null && poiLocation != null) {
+            val walkRouteOverlay = WalkRouteOverlay(
+                aMap,
+                walkPath,
+                myLocation.toLatLonPoint(),
+                poiLocation.toLatLonPoint()
+            )
+            walkRouteOverlay.removeFromMap()
+            walkRouteOverlay.addToMap()
+            walkRouteOverlay.zoomToSpan()
+        }
     }
 
     private fun showDrivePathOverlay(drivePath: DrivePath) {
-        val drivingRouteOverlay = DrivingRouteOverLay(
-            aMap,
-            drivePath,
-            myLocation.toLatLonPoint(),
-            poiLocation.toLatLonPoint()
-        )
-        drivingRouteOverlay.setNodeIconVisibility(false)
-        drivingRouteOverlay.isColorFullLine = false
-        drivingRouteOverlay.removeFromMap()
-        drivingRouteOverlay.addToMap()
-        drivingRouteOverlay.zoomToSpan()
-    }
-
-    private fun refresh() {
-        viewModel.refresh(info.poiId, myLocation, poiLocation)
+        val (myLocation, poiLocation) = viewModel.currentState().location ?: return
+        if (myLocation != null && poiLocation != null) {
+            val drivingRouteOverlay = DrivingRouteOverLay(
+                aMap,
+                drivePath,
+                myLocation.toLatLonPoint(),
+                poiLocation.toLatLonPoint()
+            )
+            drivingRouteOverlay.setNodeIconVisibility(false)
+            drivingRouteOverlay.isColorFullLine = false
+            drivingRouteOverlay.removeFromMap()
+            drivingRouteOverlay.addToMap()
+            drivingRouteOverlay.zoomToSpan()
+        }
     }
 
     private fun shareRoute(location: SimplifiedLocation) {
-        viewModel.shareRoute(myLocation, location)
+        viewModel.shareRoute(location)
     }
 
     companion object {

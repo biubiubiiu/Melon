@@ -7,9 +7,9 @@ import dagger.android.ContributesAndroidInjector
 
 
 @Module
-abstract class PoiBuilder {
+internal abstract class PoiBuilder {
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectPoiDetailActivity(): PoiDetailActivity
+    internal abstract fun injectPoiDetailActivity(): PoiDetailActivity
 }

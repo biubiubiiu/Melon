@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:shimmer_auto_start="false">
 
     <RelativeLayout
         android:id="@+id/content_root"
@@ -33,6 +34,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/TextSecondary"
+            android:textSize="16sp"
             tools:text="District / Poi Type" />
 
         <TextView
@@ -50,10 +52,6 @@
 
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+    <include layout="@layout/view_location_info_skeleton" />
 
 </FrameLayout>

@@ -8,7 +8,7 @@ import javax.inject.Inject
 /**
  * Just a wrapper :)
  */
-class UpdateDriveRoute @Inject constructor(
+internal class UpdateDriveRoute @Inject constructor(
     private val routeSearchHelper: RouteSearchHelper
 ) {
 

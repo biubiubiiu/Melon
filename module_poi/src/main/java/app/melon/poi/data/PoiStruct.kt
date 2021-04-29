@@ -2,7 +2,7 @@ package app.melon.poi.data
 
 import app.melon.location.SimplifiedLocation
 
-data class PoiStruct(
+internal data class PoiStruct(
     val name: String,
     val district: String,
     val type: String,

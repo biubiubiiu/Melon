@@ -41,8 +41,6 @@ dependencies {
 
     compileOnly(Libraries.AndroidX.Core.ktx)
 
-    api(Libraries.Navigation.fragment)
-    api(Libraries.Navigation.ui)
     api(Libraries.Navigation.fragmentKtx)
     api(Libraries.Navigation.uiKtx)
 
@@ -55,6 +53,7 @@ dependencies {
     api(Libraries.PhotoView.photoView)
     api(Libraries.Coil.coil)
     api(Libraries.Lottie.lottie)
+    api(Libraries.Shimmer.shimmer)
 
     api(Libraries.Epoxy.runtime)
     kapt(Libraries.Epoxy.compiler)

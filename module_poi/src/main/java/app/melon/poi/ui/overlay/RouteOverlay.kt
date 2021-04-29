@@ -1,11 +1,8 @@
 package app.melon.poi.ui.overlay
 
 import androidx.annotation.ColorInt
-import app.melon.poi.R
 import com.amap.api.maps2d.AMap
 import com.amap.api.maps2d.CameraUpdateFactory
-import com.amap.api.maps2d.model.BitmapDescriptor
-import com.amap.api.maps2d.model.BitmapDescriptorFactory
 import com.amap.api.maps2d.model.LatLng
 import com.amap.api.maps2d.model.LatLngBounds
 import com.amap.api.maps2d.model.Marker
@@ -14,7 +11,8 @@ import com.amap.api.maps2d.model.Polyline
 import com.amap.api.maps2d.model.PolylineOptions
 import java.util.ArrayList
 
-abstract class RouteOverlay {
+
+internal abstract class RouteOverlay {
 
     protected abstract val mAMap: AMap
 
@@ -30,17 +28,8 @@ abstract class RouteOverlay {
         PolylineOptions().color(routeColor).width(routeWidth)
     }
 
-    protected open val startBitmapDescriptor: BitmapDescriptor
-        get() = BitmapDescriptorFactory.fromResource(R.drawable.amap_start)
-
-    protected open val endBitmapDescriptor: BitmapDescriptor
-        get() = BitmapDescriptorFactory.fromResource(R.drawable.amap_end)
-
     protected val stationMarkers: MutableList<Marker> = ArrayList()
     protected val allPolyLines: MutableList<Polyline> = ArrayList()
-
-    protected var startMarker: Marker? = null
-    protected var endMarker: Marker? = null
 
     @JvmField protected var nodeIconVisible = true
 
@@ -50,23 +39,7 @@ abstract class RouteOverlay {
      * remove all markers from map
      */
     open fun removeFromMap() {
-        startMarker?.remove()
-        endMarker?.remove()
         allPolyLines.forEach { it.remove() }
-    }
-
-    protected open fun addStartAndEndMarker() {
-        startMarker = mAMap.addMarker(MarkerOptions()
-            .position(startPoint)
-            .icon(startBitmapDescriptor)
-            .title("\u8D77\u70B9")
-        )
-
-        endMarker = mAMap.addMarker(MarkerOptions()
-            .position(endPoint)
-            .icon(endBitmapDescriptor)
-            .title("\u7EC8\u70B9")
-        )
     }
 
     fun zoomToSpan() {

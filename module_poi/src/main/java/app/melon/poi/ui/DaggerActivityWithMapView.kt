@@ -2,26 +2,28 @@ package app.melon.poi.ui
 
 import android.os.Bundle
 import androidx.annotation.CallSuper
+import app.melon.location.SimplifiedLocation
+import app.melon.location.toLatLng
+import app.melon.util.extensions.dpInt
+import com.amap.api.maps2d.AMap
 import com.amap.api.maps2d.AMapOptions
-import com.amap.api.maps2d.CameraUpdate
 import com.amap.api.maps2d.CameraUpdateFactory
 import com.amap.api.maps2d.MapView
 import com.amap.api.maps2d.UiSettings
-import com.amap.api.maps2d.model.CameraPosition
+import com.amap.api.maps2d.model.LatLngBounds
 import dagger.android.support.DaggerAppCompatActivity
 
 
-abstract class DaggerActivityWithMapView : DaggerAppCompatActivity() {
+internal abstract class DaggerActivityWithMapView : DaggerAppCompatActivity() {
 
-    abstract val mapView: MapView
-    protected val aMap get() = mapView.map
+    internal abstract val mapView: MapView
+    protected val aMap: AMap get() = mapView.map
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mapView.onCreate(savedInstanceState)
         initMapViewSettings(aMap.uiSettings)
-        initCameraPosition()
     }
 
     @CallSuper
@@ -56,10 +58,11 @@ abstract class DaggerActivityWithMapView : DaggerAppCompatActivity() {
         settings.isMyLocationButtonEnabled = false
     }
 
-    private fun initCameraPosition() {
-        val cameraUpdate = getDefaultCameraPosition() ?: return
+    protected fun updateCameraPosition(myLocation: SimplifiedLocation, destLocation: SimplifiedLocation) {
+        val cameraUpdate = CameraUpdateFactory.newLatLngBounds(
+            LatLngBounds(destLocation.toLatLng(), myLocation.toLatLng()),
+            48.dpInt
+        )
         aMap.moveCamera(cameraUpdate)
     }
-
-    abstract fun getDefaultCameraPosition(): CameraUpdate?
 }

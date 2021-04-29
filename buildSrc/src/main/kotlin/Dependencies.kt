@@ -140,8 +140,6 @@ object Libraries {
 
     object Navigation {
         private const val version = "2.2.2"
-        const val fragment = "androidx.navigation:navigation-fragment:$version"
-        const val ui = "androidx.navigation:navigation-ui:$version"
         const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$version"
         const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
     }
@@ -216,6 +214,11 @@ object Libraries {
     object PhotoView {
         private const val version = "2.3.0"
         const val photoView = "com.github.chrisbanes:PhotoView:$version"
+    }
+
+    object Shimmer {
+        private const val version = "0.5.0"
+        const val shimmer = "com.facebook.shimmer:shimmer:$version"
     }
 
     object Firebase {

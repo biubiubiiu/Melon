@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class UpdatePoiDetail @Inject constructor(
+internal class UpdatePoiDetail @Inject constructor(
     private val poiSearchHelper: PoiSearchHelper
 ) : SuspendingWorkInteractor<UpdatePoiDetail.Params, Result<PoiStruct?>>() {
 
@@ -40,7 +40,7 @@ class UpdatePoiDetail @Inject constructor(
         )
     }
 
-    data class Params(
+    internal data class Params(
         val id: String
     )
 }

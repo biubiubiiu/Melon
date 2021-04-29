@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
-class UpdatePoiFeeds @Inject constructor(
+internal class UpdatePoiFeeds @Inject constructor(
     private val repo: FeedRepository
 ) : PagingInteractor<UpdatePoiFeeds.Params, FeedAndAuthor>() {
 
@@ -18,7 +18,7 @@ class UpdatePoiFeeds @Inject constructor(
         return repo.getNearbyFeeds(params.location.longitude, params.location.latitude)
     }
 
-    data class Params(
+    internal data class Params(
         val location: SimplifiedLocation,
         override val pagingConfig: PagingConfig = PAGING_CONFIG
     ) : Parameters<FeedAndAuthor>

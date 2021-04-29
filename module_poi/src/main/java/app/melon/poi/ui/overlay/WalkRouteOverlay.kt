@@ -11,7 +11,8 @@ import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.WalkPath
 import com.amap.api.services.route.WalkStep
 
-class WalkRouteOverlay constructor(
+
+internal class WalkRouteOverlay constructor(
     override val mAMap: AMap,
     private val walkPath: WalkPath,
     start: LatLonPoint,

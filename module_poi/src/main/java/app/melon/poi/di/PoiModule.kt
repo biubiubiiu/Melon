@@ -18,11 +18,11 @@ class PoiModule {
 
     @Singleton
     @Provides
-    fun providePoiService() = PoiService()
+    internal fun providePoiService() = PoiService()
 }
 
 @Module
-abstract class PoiServiceBinds {
+internal abstract class PoiServiceBinds {
     @Binds
     abstract fun bindPoiService(service: PoiService): IPoiService
 }
