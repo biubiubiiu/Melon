@@ -20,4 +20,7 @@
 
     <string name="update_profile_fail">个人资料更新失败</string>
     <string name="update_profile_success">个人资料更新完成</string>
+
+    <string name="request_write_external_message_title">提供存储权限以使用</string>
+    <string name="request_write_external_message_subtitle">要添加媒体文件，我们需要获取存储权限</string>
 </resources>

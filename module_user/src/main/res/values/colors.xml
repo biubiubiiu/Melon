@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="profile_image_preview_background">#504277</color>
+    <color name="profile_image_preview_background">@color/east_bay</color>
 </resources>

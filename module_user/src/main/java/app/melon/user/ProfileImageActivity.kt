@@ -6,47 +6,65 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import app.melon.user.ui.edit.EditHelper
+import androidx.lifecycle.lifecycleScope
+import app.melon.permission.PermissionHelper
 import app.melon.user.databinding.ActivityProfileImageBinding
-import app.melon.user.ui.image.ProfileImageViewModel
+import app.melon.user.image.ImageViewModelFactory
+import app.melon.user.image.ProfileImageViewModel
+import app.melon.user.image.TakePicture
+import app.melon.user.image.TakePictureHandler
+import app.melon.user.permission.ReadStorage
+import app.melon.user.permission.WriteExternal
+import app.melon.user.ui.edit.EditOptionsDialogFragment
 import app.melon.util.base.ErrorResult
 import app.melon.util.base.Success
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getColorCompat
 import app.melon.util.extensions.showToast
+import app.melon.util.savestate.withFactory
 import app.melon.util.storage.StorageHandler
 import coil.load
 import coil.size.OriginalSize
 import coil.size.Precision
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class ProfileImageActivity : DaggerAppCompatActivity() {
+internal class ProfileImageActivity : DaggerAppCompatActivity() {
 
     private val binding: ActivityProfileImageBinding by viewBinding()
 
     private val url: String get() = requireNotNull(intent.getStringExtra(KEY_URL))
-    private val isMyProfile: Boolean get() = requireNotNull(intent.getBooleanExtra(KEY_MY_PROFILE, false))
+    private val uid: String get() = requireNotNull(intent.getStringExtra(KEY_USER_ID))
 
-    private val editHelper = EditHelper(
-        this,
-        onReceiveTakePictureResult = { binding.edit.text = it.toString() },
-        onReceiveUriFromAlbum = { onImageSelected(it) }
-    )
+    private val readStoragePermissionHelper = PermissionHelper(this, ReadStorage)
+    private val useCameraPermissionHelper = PermissionHelper(this, WriteExternal)
 
-    @Inject internal lateinit var viewModel: ProfileImageViewModel
+    private val selectImageFromAlbum =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            handleResult(uri)
+        }
+
+    private lateinit var actionTakePicture: TakePicture
+
+    @Inject internal lateinit var viewModelFactory: ImageViewModelFactory
+    private val viewModel: ProfileImageViewModel by viewModels {
+        withFactory(viewModelFactory)
+    }
 
     @Inject internal lateinit var storageHandler: StorageHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbar()
-        viewModel.updateAvatarUrl(url)
-        observeImage()
+        actionTakePicture = TakePictureHandler(this)
+        loadAvatar()
         setupEditButton()
         observeResult()
     }
@@ -81,60 +99,117 @@ class ProfileImageActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun observeImage() {
-        viewModel.avatarUrl.observe(this, Observer {
-            binding.image.load(it) {
-                crossfade(true)
-                size(OriginalSize)
-                precision(Precision.EXACT)
-                listener(
-                    onStart = { binding.progressBar.isVisible = true },
-                    onSuccess = { _, _ -> binding.progressBar.isVisible = false },
-                    onCancel = { binding.progressBar.isVisible = false },
-                    onError = { _, throwable: Throwable ->
-                        binding.progressBar.isVisible = false
-                        throwable.localizedMessage?.let { message -> showToast(message) }
-                    }
-                )
-            }
-        })
+    private fun loadAvatar() {
+        binding.image.load(url) {
+            crossfade(true)
+            size(OriginalSize)
+            precision(Precision.EXACT)
+            listener(
+                onStart = { binding.progressBar.isVisible = true },
+                onSuccess = { _, _ -> binding.progressBar.isVisible = false },
+                onCancel = { binding.progressBar.isVisible = false },
+                onError = { _, throwable: Throwable ->
+                    binding.progressBar.isVisible = false
+                    throwable.localizedMessage?.let { message -> showToast(message) }
+                }
+            )
+        }
     }
 
     private fun setupEditButton() {
-        binding.edit.isVisible = isMyProfile
-        binding.edit.setOnClickListener { editHelper.showEditOptions() }
+        binding.edit.isVisible = viewModel.checkIsMyProfile(uid)
+        binding.edit.setOnClickListener { showEditOptions() }
+    }
+
+    private fun showEditOptions() {
+        val fragment = EditOptionsDialogFragment()
+        fragment.setListener(object : EditOptionsDialogFragment.Listener {
+            override fun onSelectOptionCamera() {
+                takePicture()
+            }
+
+            override fun onSelectOptionAlbum() {
+                readFromGallery()
+            }
+        })
+        fragment.show(supportFragmentManager, "options")
+    }
+
+    private fun takePicture() {
+        useCameraPermissionHelper.checkPermissions(
+            onPermissionAllGranted = {
+                lifecycleScope.launch {
+                    viewModel.createPhotoUri()?.let { uri ->
+                        viewModel.saveTemporarilyPhotoUri(uri)
+                        actionTakePicture.takePicture(uri) { result ->
+                            handleTakePictureResult(result)
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    private fun readFromGallery() {
+        readStoragePermissionHelper.checkPermissions(
+            onPermissionAllGranted = {
+                selectImageFromAlbum.launch("image/*")
+            }
+        )
     }
 
     private fun observeResult() {
         viewModel.updateResult.observe(this, Observer {
             when (it) {
                 is Success -> {
-                    applicationContext.showToast(R.string.update_profile_success)
-                    viewModel.updateAvatarUrl(it.get()) // TODO update local database and finish activity
+                    lifecycleScope.launch {
+                        viewModel.syncAvatarUpdateToLocal(
+                            uid,
+                            it.get()
+                        )
+                    }
                 }
                 is ErrorResult -> showToast(R.string.update_profile_fail)
             }
         })
+        viewModel.avatarChangeEvent.observe(this, Observer { event ->
+            val uri = event.getContentIfNotHandled() ?: return@Observer
+            val avatar = storageHandler.copyFileToCacheDir(uri, filename = AVATAR_CACHE_FILENAME)
+            viewModel.updateAvatar(avatar)
+        })
+        viewModel.syncResult.observe(this, Observer {
+            applicationContext.showToast(R.string.update_profile_success)
+            finish()
+        })
     }
 
-    private fun onImageSelected(uri: Uri?) {
-        binding.edit.text = uri.toString()
-        uri ?: return
-        val avatar = storageHandler.copyFileToCacheDir(uri, filename = AVATAR_CACHE_FILENAME)
-        viewModel.updateAvatar(avatar)
+    private fun handleTakePictureResult(success: Boolean) {
+        if (success) {
+            viewModel.temporaryPhotoUri?.let {
+                viewModel.avatarChanged(it)
+                viewModel.saveTemporarilyPhotoUri(null)
+            }
+        } else {
+            viewModel.deleteTemporaryUri()
+        }
+    }
+
+    private fun handleResult(uri: Uri?) {
+        if (uri != null) {
+            viewModel.avatarChanged(uri)
+        }
     }
 
     companion object {
         private const val KEY_URL = "KEY_URL"
-        private const val KEY_MY_PROFILE = "KEY_MY_PROFILE"
+        private const val KEY_USER_ID = "KEY_UESR_ID"
 
         private const val AVATAR_CACHE_FILENAME = "updated_avatar"
 
-        // TODO should parse an [uid] so we can enter this page before avatar was loaded
-        internal fun start(context: Context, url: String, isMyProfile: Boolean = false) {
+        internal fun start(context: Context, url: String, uid: String) {
             val intent = Intent(context, ProfileImageActivity::class.java).apply {
                 putExtra(KEY_URL, url)
-                putExtra(KEY_MY_PROFILE, isMyProfile)
+                putExtra(KEY_USER_ID, uid)
             }
             context.startActivity(intent)
         }

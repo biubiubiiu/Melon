@@ -38,7 +38,12 @@ class UserManagerImpl @Inject constructor(
     override val savePassword: String get() = storage.getString("$savedUsername$PASSWORD_SUFFIX")
 
     // in-memory cache of the loggedInUser object
-    override val user: Flow<User?> = emptyFlow()
+    private var currentUser: User? = null
+
+    override val user: User?
+        get() = currentUser
+
+    override fun observeUser(): Flow<User?> = emptyFlow()
 
     override fun isUserLoggedIn() = userComponent != null
 
@@ -79,5 +84,12 @@ class UserManagerImpl @Inject constructor(
 
     private fun userJustLoggedIn() {
         userComponent = userComponentFactory.create()
+    }
+
+    // TODO remove mocking code
+    init {
+        currentUser = User(
+            id = "fake_uid"
+        )
     }
 }

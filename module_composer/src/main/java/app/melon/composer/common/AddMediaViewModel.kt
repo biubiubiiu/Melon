@@ -63,7 +63,7 @@ internal class AddMediaViewModel(
 
         return withContext(Dispatchers.IO) {
             val newImage = ContentValues().apply {
-                put(MediaStore.Images.Media.DISPLAY_NAME, generateFilename("jpg"))
+                put(MediaStore.Images.Media.DISPLAY_NAME, generateFilename())
             }
 
             // This method will perform a binder transaction which is better to execute off the main thread
@@ -143,7 +143,7 @@ internal class AddMediaViewModel(
     }
 }
 
-private fun generateFilename(extension: String): String {
+private fun generateFilename(extension: String = "jpg"): String {
     val currentDateTime = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault()).format(Date())
     return "Melon_${currentDateTime}.$extension"
 }

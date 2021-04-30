@@ -9,7 +9,8 @@ abstract class UserManager {
     protected abstract val savePassword: String
 
     // in-memory cache of the loggedInUser object
-    abstract val user: Flow<User?>
+    abstract val user: User?
+    abstract fun observeUser(): Flow<User?>
 
     abstract fun isUserLoggedIn(): Boolean
 

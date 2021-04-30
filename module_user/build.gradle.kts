@@ -21,7 +21,6 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
-            proguardFiles("proguard-rules.pro")
         }
     }
 
@@ -42,6 +41,7 @@ dependencies {
     compileOnly(project(Modules.gallery))
 
     compileOnly(project(Modules.userApi))
+    compileOnly(project(Modules.accountApi))
 
     kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)

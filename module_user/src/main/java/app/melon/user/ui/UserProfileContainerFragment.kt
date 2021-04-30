@@ -37,18 +37,6 @@ class UserProfileContainerFragment : DaggerFragment(R.layout.common_fragment_con
         }
     }
 
-    companion object {
-        private const val END_FRAGMENT_TRANSITION_NAME = "posts_fragment_transition"
-
-        private val START_FRAGMENT_ROOT_ID = R.id.root
-        private val END_FRAGMENT_ROOT_ID = R.id.user_posts_root
-
-        private const val ARG_USER_ID = "arg_user_id"
-        fun newInstance(uid: String) = UserProfileContainerFragment().apply {
-            arguments = bundleOf(ARG_USER_ID to uid)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showProfileFragment()
@@ -118,5 +106,17 @@ class UserProfileContainerFragment : DaggerFragment(R.layout.common_fragment_con
             return true
         }
         return false
+    }
+
+    companion object {
+        private const val END_FRAGMENT_TRANSITION_NAME = "posts_fragment_transition"
+
+        private val START_FRAGMENT_ROOT_ID = R.id.root
+        private val END_FRAGMENT_ROOT_ID = R.id.user_posts_root
+
+        private const val ARG_USER_ID = "arg_user_id"
+        internal fun newInstance(uid: String) = UserProfileContainerFragment().apply {
+            arguments = bundleOf(ARG_USER_ID to uid)
+        }
     }
 }

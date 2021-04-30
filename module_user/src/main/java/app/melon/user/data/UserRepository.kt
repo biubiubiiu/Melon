@@ -126,7 +126,7 @@ class UserRepository @Inject constructor(
     private companion object {
         val PAGING_CONFIG = PagingConfig(
             pageSize = 10,
-            initialLoadSize = 20,
+            initialLoadSize = 15,
             prefetchDistance = 3,
             enablePlaceholders = false
         )

@@ -170,32 +170,32 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressed
     }
 
     private fun initData() {
-        viewModel.selectObserve(UserProfileViewState::user).observe(viewLifecycleOwner, Observer {
-            it ?: return@Observer
+        viewModel.selectObserve(UserProfileViewState::user).observe(viewLifecycleOwner, Observer { user ->
+            user ?: return@Observer
             with(headerBinding) {
-                background.load(it.backgroundUrl)
-                avatar.load(it.avatarUrl) {
+                background.load(user.backgroundUrl)
+                avatar.load(user.avatarUrl) {
                     transformations(CircleCropTransformation())
                 }
                 avatar.setOnClickListener { _ ->
-                    it.avatarUrl?.let { url ->
-                        ProfileImageActivity.start(requireContext(), url, isMyProfile)
+                    user.avatarUrl?.let { url ->
+                        ProfileImageActivity.start(requireContext(), url, user.id)
                     }
                 }
                 followingEntry.setOnClickListener { _ ->
-                    FollowingActivity.start(requireContext(), it.id)
+                    FollowingActivity.start(requireContext(), user.id)
                 }
                 followersEntry.setOnClickListener { _ ->
-                    FollowersActivity.start(requireContext(), it.id)
+                    FollowersActivity.start(requireContext(), user.id)
                 }
-                profileUsername.text = it.username
+                profileUsername.text = user.username
                 profileUserId.text = "todo user id" // TODO
-                profileSchoolInfo.text = it.school
-                tvFollowers.text = formatter.format(it.followerCount ?: 0)
-                tvFollowing.text = formatter.format(it.followingCount ?: 0)
+                profileSchoolInfo.text = user.school
+                tvFollowers.text = formatter.format(user.followerCount ?: 0)
+                tvFollowing.text = formatter.format(user.followingCount ?: 0)
             }
             with(binding) {
-                toolbar.title = it.username
+                toolbar.title = user.username
             }
         })
     }

@@ -10,7 +10,7 @@ import java.io.File
 import javax.inject.Inject
 
 
-class UpdateAvatar @Inject constructor(
+internal class UpdateAvatar @Inject constructor(
     private val repo: UserRepository
 ) : SuspendingWorkInteractor<UpdateAvatar.Params, Result<String>>() {
 
@@ -23,7 +23,7 @@ class UpdateAvatar @Inject constructor(
         }.also { loadingState.removeLoader() }
     }
 
-    data class Params(
+    internal data class Params(
         val file: File
     )
 }

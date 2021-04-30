@@ -19,4 +19,7 @@
 
     <string name="update_profile_fail">TODO</string>
     <string name="update_profile_success">TODO</string>
+
+    <string name="request_write_external_message_title">TODO</string>
+    <string name="request_write_external_message_subtitle">To add media files, we need to request the storage permission</string>
 </resources>
