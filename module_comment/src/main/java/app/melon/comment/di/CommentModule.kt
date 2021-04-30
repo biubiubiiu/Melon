@@ -20,18 +20,18 @@ import retrofit2.Retrofit
 class CommentModule
 
 @Module
-abstract class CommentBuilder {
+internal abstract class CommentBuilder {
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectCommentReplyActivity(): CommentReplyActivity
+    internal abstract fun injectCommentReplyActivity(): CommentReplyActivity
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun injectReplyListFragment(): ReplyListFragment
+    internal abstract fun injectReplyListFragment(): ReplyListFragment
 }
 
 @Module
 internal class RemoteServiceModule {
     @Provides
-    fun provideCommentApiService(retrofit: Retrofit) = retrofit.create(CommentApiService::class.java)
+    internal fun provideCommentApiService(retrofit: Retrofit) = retrofit.create(CommentApiService::class.java)
 }

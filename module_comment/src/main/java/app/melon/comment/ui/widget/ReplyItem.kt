@@ -21,7 +21,7 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 
 
 @EpoxyModelClass
-abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
+internal abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
 
     override fun getDefaultLayout(): Int = R.layout.item_reply
 
@@ -87,7 +87,7 @@ abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
         return ss
     }
 
-    class Holder : BaseEpoxyHolder() {
+    internal class Holder : BaseEpoxyHolder() {
         internal val avatarView: ImageView by bind(R.id.comment_user_avatar)
         internal val usernameView: TextView by bind(R.id.comment_username)
         internal val userIdView: TextView by bind(R.id.comment_user_id)

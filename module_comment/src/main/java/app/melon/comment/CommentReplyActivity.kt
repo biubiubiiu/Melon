@@ -6,19 +6,19 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.core.graphics.toColorInt
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import app.melon.comment.databinding.ActivityCommentReplyBinding
 import app.melon.comment.ui.ReplyCommentViewModel
 import app.melon.comment.ui.ReplyListFragment
 import app.melon.util.delegates.viewBinding
+import app.melon.util.extensions.getColorCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-class CommentReplyActivity : DaggerAppCompatActivity() {
+internal class CommentReplyActivity : DaggerAppCompatActivity() {
 
     private val commentId by lazy { requireNotNull(intent?.getStringExtra(KEY_COMMENT_ID)) }
 
@@ -43,7 +43,7 @@ class CommentReplyActivity : DaggerAppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun hideSystemUI() {
-        val color = "#50808080".toColorInt()
+        val color = getColorCompat(R.color.gray_50)
         window.statusBarColor = color
         window.navigationBarColor = color
     }
@@ -69,7 +69,7 @@ class CommentReplyActivity : DaggerAppCompatActivity() {
 
     private fun initContent() {
         supportFragmentManager.commit {
-            replace(R.id.detail_container, ReplyListFragment.newInstance(commentId))
+            replace(binding.fragmentContainer.id, ReplyListFragment.newInstance(commentId))
         }
         viewModel.totalCount.observe(this, Observer {
             binding.totleCommentCountTitle.text = getString(R.string.comment_total_reply_count_title, it)
@@ -83,7 +83,7 @@ class CommentReplyActivity : DaggerAppCompatActivity() {
     companion object {
         private const val KEY_COMMENT_ID = "KEY_COMMENT_ID"
 
-        fun start(context: Context, id: String) {
+        internal fun start(context: Context, id: String) {
             val intent = Intent(context, CommentReplyActivity::class.java).apply {
                 putExtra(KEY_COMMENT_ID, id)
             }

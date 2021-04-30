@@ -10,20 +10,17 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class UpdateComment @Inject constructor(
+internal class UpdateComment @Inject constructor(
     private val repo: CommentRepository
 ) : SuspendingWorkInteractor<UpdateComment.Params, Result<CommentAndAuthor>>() {
 
-    val loadingState = ObservableLoadingCounter()
-
     override suspend fun doWork(params: Params): Result<CommentAndAuthor> {
-        loadingState.addLoader()
         return withContext(Dispatchers.IO) {
             repo.getCommentDetail(params.id)
-        }.also { loadingState.removeLoader() }
+        }
     }
 
-    data class Params(
+    internal data class Params(
         val id: String
     )
 }

@@ -11,7 +11,10 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
+import app.melon.base.ui.extensions.makeGone
+import app.melon.base.ui.extensions.makeVisible
 import app.melon.comment.R
+import app.melon.data.entities.Comment
 import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.util.extensions.getResourceString
 import app.melon.util.formatter.MelonDateTimeFormatter
@@ -20,19 +23,19 @@ import coil.transform.CircleCropTransformation
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
+import com.facebook.shimmer.ShimmerFrameLayout
 
 
 @EpoxyModelClass
-abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
+internal abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
 
-    @EpoxyAttribute lateinit var avatarClickListener: () -> Unit
-    @EpoxyAttribute lateinit var shareClickListener: () -> Unit
-    @EpoxyAttribute lateinit var replyClickListener: () -> Unit
-    @EpoxyAttribute lateinit var favorClickListener: () -> Unit
+    @EpoxyAttribute lateinit var avatarClickListener: (String) -> Unit
+    @EpoxyAttribute lateinit var shareClickListener: (Comment) -> Unit
+    @EpoxyAttribute lateinit var replyClickListener: (Comment) -> Unit
+    @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var subCommentEntryClickListener: (String) -> Unit
-    @EpoxyAttribute lateinit var userEntryClickListener: (String) -> Unit
 
-    @EpoxyAttribute lateinit var item: CommentAndAuthor
+    @EpoxyAttribute var item: CommentAndAuthor? = null
     @EpoxyAttribute lateinit var formatter: MelonDateTimeFormatter
 
     @EpoxyAttribute var displayReplyCount: Boolean = true
@@ -46,37 +49,48 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
     }
 
     private fun setupContent(holder: Holder) = with(holder) {
-            containerView.setBackgroundResource(backgroundRes)
-            avatarView.load(item.author.avatarUrl) {
-                transformations(CircleCropTransformation())
-            }
-            usernameView.text = item.author.username.orEmpty()
-            userIdView.text = "TODO"
-            postTimeView.text = formatter.formatShortRelativeTime(item.comment.postTime)
-            contentView.text = item.comment.content.orEmpty()
-            favourCountView.text = item.comment.favorCount?.toString()
+            contentRoot.setBackgroundResource(backgroundRes)
+            val data = item
+            if (data != null) {
+                shimmerContainer.stopShimmer()
+                shimmerContainer.makeGone()
+                contentRoot.makeVisible()
+                avatarView.load(data.author.avatarUrl) {
+                    transformations(CircleCropTransformation())
+                }
+                usernameView.text = data.author.username.orEmpty()
+                userIdView.text = "TODO"
+                postTimeView.text = formatter.formatShortRelativeTime(data.comment.postTime)
+                contentView.text = data.comment.content.orEmpty()
+                favourCountView.text = data.comment.favorCount?.toString()
 
-            val replyCount = item.comment.replyCount
-            if (replyCount != null && replyCount > 0) {
-                moreReplyEntryView.isVisible = true
-                moreReplyEntryView.text = buildReplyEntryClickableSpan(replyCount)
-                moreReplyEntryView.movementMethod = LinkMovementMethod.getInstance()
+                val replyCount = data.comment.replyCount
+                if (replyCount != null && replyCount > 0 && displayReplyCount) {
+                    moreReplyEntryView.isVisible = true
+                    moreReplyEntryView.text = buildReplyEntryClickableSpan(data)
+                    moreReplyEntryView.movementMethod = LinkMovementMethod.getInstance()
+                } else {
+                    moreReplyEntryView.isVisible = false
+                }
             } else {
-                moreReplyEntryView.isVisible = false
+                contentRoot.makeGone()
+                shimmerContainer.makeVisible()
+                shimmerContainer.startShimmer()
             }
     }
 
-    private fun setupListeners(holder: Holder) {
-        with(holder) {
-            avatarView.setOnClickListener { avatarClickListener.invoke() }
-            shareView.setOnClickListener { shareClickListener.invoke() }
-            replyView.setOnClickListener { replyClickListener.invoke() }
-            favoriteView.setOnClickListener { favorClickListener.invoke() }
+    private fun setupListeners(holder: Holder) = with(holder) {
+        item?.let { data ->
+            avatarView.setOnClickListener { avatarClickListener.invoke(data.author.id) }
+            shareView.setOnClickListener { shareClickListener.invoke(data.comment) }
+            replyView.setOnClickListener { replyClickListener.invoke(data.comment) }
+            favoriteView.setOnClickListener { favorClickListener.invoke(data.comment.id) }
         }
     }
 
-    private fun buildReplyEntryClickableSpan(count: Long): SpannableString {
-        val ss = SpannableString(getResourceString(R.string.comment_total_reply_count, count))
+    private fun buildReplyEntryClickableSpan(item: CommentAndAuthor): SpannableString {
+        val replyCount = item.comment.replyCount
+        val ss = SpannableString(getResourceString(R.string.comment_total_reply_count, replyCount))
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
                 subCommentEntryClickListener.invoke(item.comment.id)
@@ -91,8 +105,9 @@ abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>() {
         return ss
     }
 
-    class Holder : BaseEpoxyHolder() {
-        internal val containerView: View by bind(R.id.comment_container)
+    internal class Holder : BaseEpoxyHolder() {
+        internal val shimmerContainer: ShimmerFrameLayout by bind(R.id.shimmer_container)
+        internal val contentRoot: View by bind(R.id.content_root)
         internal val avatarView: ImageView by bind(R.id.comment_user_avatar)
         internal val usernameView: TextView by bind(R.id.comment_username)
         internal val userIdView: TextView by bind(R.id.comment_user_id)

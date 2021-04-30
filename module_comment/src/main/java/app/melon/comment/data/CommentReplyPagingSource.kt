@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class CommentReplyPagingSource constructor(
+internal class CommentReplyPagingSource constructor(
     private val id: String, // feed id or comment id
     private val service: CommentApiService,
     private val pageSize: Int,

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
-class UpdateReplyList @Inject constructor(
+internal class UpdateReplyList @Inject constructor(
     private val repo: CommentRepository
 ) : PagingInteractor<UpdateReplyList.Params, CommentAndAuthor>() {
 
@@ -17,7 +17,7 @@ class UpdateReplyList @Inject constructor(
         return repo.fetchReplyList(params.id, params.pagingConfig)
     }
 
-    data class Params(
+    internal data class Params(
         val id: String,
         override val pagingConfig: PagingConfig = PAGING_CONFIG
     ) : Parameters<CommentAndAuthor>

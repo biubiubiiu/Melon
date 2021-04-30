@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmer_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:shimmer_auto_start="true"
+    app:shimmer_duration="1500">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/spacing_conventional"
+        android:paddingVertical="@dimen/spacing_small">
+
+        <View
+            android:id="@+id/avatar_placeholder"
+            android:layout_width="@dimen/comment_avatar_size"
+            android:layout_height="@dimen/comment_avatar_size"
+            android:background="@color/gray" />
+
+        <View
+            android:id="@+id/username_placeholder"
+            android:layout_width="200dp"
+            android:layout_height="20sp"
+            android:layout_marginStart="@dimen/spacing_conventional"
+            android:layout_toEndOf="@id/avatar_placeholder"
+            android:background="@color/gray" />
+
+        <View
+            android:id="@+id/line1_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:layout_below="@id/username_placeholder"
+            android:layout_alignStart="@id/username_placeholder"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:background="@color/gray" />
+
+        <View
+            android:id="@+id/line2_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:layout_below="@id/line1_placeholder"
+            android:layout_alignStart="@id/username_placeholder"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:background="@color/gray" />
+
+        <View
+            android:id="@+id/line3_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:layout_below="@id/line2_placeholder"
+            android:layout_alignStart="@id/username_placeholder"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:background="@color/gray" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/line3_placeholder"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/spacing_conventional"
+            android:background="?android:attr/listDivider" />
+
+    </RelativeLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

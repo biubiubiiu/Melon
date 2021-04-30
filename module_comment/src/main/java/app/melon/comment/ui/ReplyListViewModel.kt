@@ -13,7 +13,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
 
 
-class ReplyListViewModel @AssistedInject constructor(
+internal class ReplyListViewModel @AssistedInject constructor(
     @Assisted private val initialState: ReplyListViewState,
     private val updateComment: UpdateComment,
     private val updateReplyList: UpdateReplyList
@@ -22,11 +22,6 @@ class ReplyListViewModel @AssistedInject constructor(
 ) {
 
     init {
-        viewModelScope.launch {
-            updateComment.loadingState.observable.collectAndSetState {
-                copy(loading = it)
-            }
-        }
         viewModelScope.launch {
             updateComment.observe().collectAndSetState {
                 when (it) {
@@ -38,7 +33,7 @@ class ReplyListViewModel @AssistedInject constructor(
         refresh(initialState.id)
     }
 
-    val repliesPagingData = updateReplyList.observe()
+    internal val repliesPagingData = updateReplyList.observe()
 
     private fun refresh(id: String) {
         updateComment(UpdateComment.Params(id))
@@ -46,7 +41,7 @@ class ReplyListViewModel @AssistedInject constructor(
     }
 
     @AssistedFactory
-    interface Factory {
+    internal interface Factory {
         fun create(initialState: ReplyListViewState): ReplyListViewModel
     }
 }

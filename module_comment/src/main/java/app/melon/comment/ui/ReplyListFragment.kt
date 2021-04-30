@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class ReplyListFragment : BasePagingListFragment() {
+internal class ReplyListFragment : BasePagingListFragment() {
 
     private val id by lazy(LazyThreadSafetyMode.NONE) { arguments?.getString(KEY_COMMENT_ID)!! }
 
@@ -51,7 +51,6 @@ class ReplyListFragment : BasePagingListFragment() {
 
         viewModel.liveData.observe(viewLifecycleOwner, Observer {
             controller.firstComment = it.viewComment
-            controller.loadingFirstComment = it.loading
         })
         viewModel.liveData.observe(viewLifecycleOwner, Observer {
             if (it.viewComment != null) {
@@ -79,7 +78,7 @@ class ReplyListFragment : BasePagingListFragment() {
     companion object {
         private const val KEY_COMMENT_ID = "KEY_COMMENT_ID"
 
-        fun newInstance(id: String) = ReplyListFragment().apply {
+        internal fun newInstance(id: String) = ReplyListFragment().apply {
             arguments = bundleOf(KEY_COMMENT_ID to id)
         }
     }

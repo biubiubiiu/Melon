@@ -10,7 +10,6 @@ import app.melon.comment.ui.widget.ReplyItem_
 
 import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.user.api.IUserService
-import app.melon.util.delegates.observable
 import app.melon.util.extensions.dpInt
 import app.melon.util.extensions.getColorCompat
 import app.melon.util.extensions.showToast
@@ -22,7 +21,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 
-class ReplyPageController @AssistedInject constructor(
+internal class ReplyPageController @AssistedInject constructor(
     @Assisted context: Context,
     factory: CommentControllerDelegate.Factory,
     private val userService: IUserService,
@@ -32,14 +31,13 @@ class ReplyPageController @AssistedInject constructor(
     sameItemIndicator = { oldItem, newItem -> oldItem.comment.id == newItem.comment.id }
 ) {
 
-    var loadingFirstComment: Boolean by observable(false, ::requestModelBuild)
-    var firstComment: CommentAndAuthor? = null
+    private val delegate = factory.create(context, this)
+
+    internal var firstComment: CommentAndAuthor? = null
         set(value) {
             field = value
             requestModelBuild()
         }
-
-    private val delegate = factory.create(context, this)
 
     override fun buildItemModel(currentPosition: Int, item: CommentAndAuthor?): EpoxyModel<*> {
         return ReplyItem_()
@@ -54,8 +52,7 @@ class ReplyPageController @AssistedInject constructor(
 
     override fun addExtraModels() {
         delegate?.buildCommentList(
-            firstComment?.let { listOf(it) },
-            loading = loadingFirstComment,
+            listOf(firstComment),
             displayReplyCount = false,
             backgroundRes = R.color.bgSecondary
         )
@@ -71,7 +68,7 @@ class ReplyPageController @AssistedInject constructor(
     }
 
     @AssistedFactory
-    interface Factory {
+    internal interface Factory {
         fun create(context: Context): ReplyPageController
     }
 }

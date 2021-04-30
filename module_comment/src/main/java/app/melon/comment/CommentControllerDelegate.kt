@@ -2,9 +2,9 @@ package app.melon.comment
 
 import android.content.Context
 import androidx.annotation.ColorRes
-import app.melon.base.ui.list.loadMoreView
 import app.melon.comment.ui.widget.CommentItem_
 import app.melon.comment.ui.widget.commentItem
+import app.melon.data.entities.Comment
 import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
@@ -36,38 +36,48 @@ class CommentControllerDelegate @AssistedInject constructor(
             .formatter(dateTimeFormatter)
             .displayReplyCount(displayReplyCount)
             .backgroundRes(backgroundRes)
-            .avatarClickListener { userService.navigateToUserProfile(context, item.author.id) }
-            .shareClickListener { context.showToast("Click share") }
-            .replyClickListener { context.showToast("Click reply") }
-            .favorClickListener { context.showToast("Click favor") }
+            .avatarClickListener { onAvatarClick(it) }
+            .shareClickListener { onShareClick(it)}
+            .replyClickListener { onReplyClick(it) }
+            .favorClickListener { onFavorClick(it) }
             .subCommentEntryClickListener { onSubCommentEntryClick(it) }
     }
 
-    fun buildCommentList(
-        list: List<CommentAndAuthor>?,
-        loading: Boolean,
+    internal fun buildCommentList(
+        list: List<CommentAndAuthor?>,
         displayReplyCount: Boolean = true,
         @ColorRes backgroundRes: Int = R.color.bgPrimary
     ) = with(collector) {
-        list?.forEachIndexed { index, item ->
+        list.forEachIndexed { index, item ->
             commentItem {
                 id("comment_${index}")
                 item(item)
                 formatter(dateTimeFormatter)
                 displayReplyCount(displayReplyCount)
                 backgroundRes(backgroundRes)
-                avatarClickListener { userService.navigateToUserProfile(context, item.author.id) }
-                shareClickListener { context.showToast("Click share") }
-                replyClickListener { context.showToast("Click reply") }
-                favorClickListener { context.showToast("Click favor") }
+                avatarClickListener { onAvatarClick(it) }
+                shareClickListener { onShareClick(it) }
+                replyClickListener { onReplyClick(it) }
+                favorClickListener { onFavorClick(it) }
                 subCommentEntryClickListener { onSubCommentEntryClick(it) }
             }
         }
-        if (loading) {
-            loadMoreView {
-                id("comment_loading_more")
-            }
-        }
+    }
+
+    override fun onAvatarClick(uid: String) {
+        userService.navigateToUserProfile(context, uid)
+    }
+
+    override fun onShareClick(item: Comment) {
+        context.showToast("Click share")
+    }
+
+    override fun onReplyClick(item: Comment) {
+        context.showToast("Click reply")
+    }
+
+    override fun onFavorClick(id: String) {
+        context.showToast("Click favor")
     }
 
     override fun onSubCommentEntryClick(id: String) {
