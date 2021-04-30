@@ -221,6 +221,11 @@ object Libraries {
         const val shimmer = "com.facebook.shimmer:shimmer:$version"
     }
 
+    object Cropping {
+        private const val version = "2.2.6"
+        const val uCrop = "com.github.yalantis:ucrop:$version"
+    }
+
     object Firebase {
         private const val bomVersion = "27.1.0"
         const val bom = "com.google.firebase:firebase-bom:$bomVersion"

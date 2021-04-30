@@ -97,6 +97,8 @@ dependencies {
     implementation(Libraries.Firebase.analytics)
     implementation(Libraries.Firebase.crashlytics)
 
+    implementation(Libraries.Cropping.uCrop)
+
     kapt(Libraries.Dagger.compiler)
     kapt(Libraries.Dagger.processor)
 }

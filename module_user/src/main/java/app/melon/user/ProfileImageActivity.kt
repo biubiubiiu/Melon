@@ -1,7 +1,9 @@
 package app.melon.user
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,6 +25,7 @@ import app.melon.user.permission.WriteExternal
 import app.melon.user.ui.edit.EditOptionsDialogFragment
 import app.melon.util.base.ErrorResult
 import app.melon.util.base.Success
+import app.melon.util.contracts.GetContentWithMimeType
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getColorCompat
 import app.melon.util.extensions.showToast
@@ -31,8 +34,10 @@ import app.melon.util.storage.StorageHandler
 import coil.load
 import coil.size.OriginalSize
 import coil.size.Precision
+import com.yalantis.ucrop.UCrop
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 
@@ -46,9 +51,22 @@ internal class ProfileImageActivity : DaggerAppCompatActivity() {
     private val readStoragePermissionHelper = PermissionHelper(this, ReadStorage)
     private val useCameraPermissionHelper = PermissionHelper(this, WriteExternal)
 
-    private val selectImageFromAlbum =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+    private val actionSelectImage =
+        registerForActivityResult(GetContentWithMimeType) { uri ->
             handleResult(uri)
+        }
+
+    private val actionCropImage =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.let { data ->
+                    handleCropResult(data)
+                }
+            } else if (result.resultCode == UCrop.RESULT_ERROR) {
+                result.data?.let { data ->
+                    handleCropError(data)
+                }
+            }
         }
 
     private lateinit var actionTakePicture: TakePicture
@@ -153,7 +171,7 @@ internal class ProfileImageActivity : DaggerAppCompatActivity() {
     private fun readFromGallery() {
         readStoragePermissionHelper.checkPermissions(
             onPermissionAllGranted = {
-                selectImageFromAlbum.launch("image/*")
+                actionSelectImage.launch("image/*" to listOf("image/jpeg", "image/png"))
             }
         )
     }
@@ -174,8 +192,7 @@ internal class ProfileImageActivity : DaggerAppCompatActivity() {
         })
         viewModel.avatarChangeEvent.observe(this, Observer { event ->
             val uri = event.getContentIfNotHandled() ?: return@Observer
-            val avatar = storageHandler.copyFileToCacheDir(uri, filename = AVATAR_CACHE_FILENAME)
-            viewModel.updateAvatar(avatar)
+            startCrop(uri)
         })
         viewModel.syncResult.observe(this, Observer {
             applicationContext.showToast(R.string.update_profile_success)
@@ -200,11 +217,46 @@ internal class ProfileImageActivity : DaggerAppCompatActivity() {
         }
     }
 
+    private fun startCrop(uri: Uri) {
+        val destinationFileName = "$CROPPED_IMAGE_NAME.jpg"
+        val uCropOption = UCrop.Options().apply {
+            setCircleDimmedLayer(true)
+            setCompressionFormat(Bitmap.CompressFormat.JPEG)
+            setCompressionQuality(100)
+            setHideBottomControls(false)
+            setFreeStyleCropEnabled(true)
+            setStatusBarColor(getColorCompat(R.color.bgSecondary))
+        }
+        val uCrop = UCrop.of(uri, Uri.fromFile(File(cacheDir, destinationFileName))).apply {
+            withAspectRatio(1f, 1f)
+            withOptions(uCropOption)
+        }
+        val intent = uCrop.getIntent(this)
+        actionCropImage.launch(intent)
+    }
+
+    private fun handleCropResult(result: Intent) {
+        val resultUri = UCrop.getOutput(result)
+        if (resultUri != null) {
+            val avatar = storageHandler.copyFileToCacheDir(resultUri, filename = AVATAR_CACHE_FILENAME)
+            viewModel.updateAvatar(avatar)
+        } else {
+            showToast(R.string.toast_cannot_retrieve_cropped_image)
+        }
+    }
+
+    private fun handleCropError(result: Intent) {
+        val cropError = UCrop.getError(result)
+        val errorMessage = cropError?.message
+        showToast(errorMessage ?: getString(R.string.app_common_error_unknown_hint))
+    }
+
     companion object {
         private const val KEY_URL = "KEY_URL"
         private const val KEY_USER_ID = "KEY_UESR_ID"
 
         private const val AVATAR_CACHE_FILENAME = "updated_avatar"
+        private const val CROPPED_IMAGE_NAME = "cropped_avatar"
 
         internal fun start(context: Context, url: String, uid: String) {
             val intent = Intent(context, ProfileImageActivity::class.java).apply {

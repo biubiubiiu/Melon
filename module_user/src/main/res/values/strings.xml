@@ -22,4 +22,6 @@
 
     <string name="request_write_external_message_title">TODO</string>
     <string name="request_write_external_message_subtitle">To add media files, we need to request the storage permission</string>
+
+    <string name="toast_cannot_retrieve_cropped_image">Cannot retrieve cropped image</string>
 </resources>

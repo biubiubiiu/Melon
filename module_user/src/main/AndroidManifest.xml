@@ -8,6 +8,9 @@
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".FollowersActivity" />
         <activity android:name=".FollowingActivity" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -23,4 +23,6 @@
 
     <string name="request_write_external_message_title">提供存储权限以使用</string>
     <string name="request_write_external_message_subtitle">要添加媒体文件，我们需要获取存储权限</string>
+
+    <string name="toast_cannot_retrieve_cropped_image">无法访问裁剪结果</string>
 </resources>

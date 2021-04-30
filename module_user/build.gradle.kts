@@ -16,6 +16,8 @@ android {
 
         versionCode = AndroidClient.versionCode
         versionName = AndroidClient.versionName
+
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -42,6 +44,8 @@ dependencies {
 
     compileOnly(project(Modules.userApi))
     compileOnly(project(Modules.accountApi))
+
+    compileOnly(Libraries.Cropping.uCrop)
 
     kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)

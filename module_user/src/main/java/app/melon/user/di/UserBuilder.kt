@@ -16,7 +16,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class UserBuilder {
+internal abstract class UserBuilder {
 
     @FragmentScope
     @ContributesAndroidInjector
@@ -36,7 +36,7 @@ abstract class UserBuilder {
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectProfileImageActivity(): ProfileImageActivity
+    internal abstract fun injectProfileImageActivity(): ProfileImageActivity
 
     @FragmentScope
     @ContributesAndroidInjector
