@@ -22,13 +22,23 @@ class LocateSuccess(
     /**
      * point of interest name
      */
-    val poiName: String
+    val poiName: String,
+
+    /**
+     * this UTC time of this locate
+     */
+    val time: Long
 ) : LocateResult() {
+
+    val location: SimplifiedLocation
+        get() = SimplifiedLocation(this.longitude, this.latitude)
+
     override fun toString(): String {
         return "[longitude]: $longitude;" +
                 "[latitude]: $latitude;" +
                 "[accuracy]: $accuracy;" +
-                "[poiName]: $poiName"
+                "[poiName]: $poiName;" +
+                "[time]: $time"
     }
 }
 

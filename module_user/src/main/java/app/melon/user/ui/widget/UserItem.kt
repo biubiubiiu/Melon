@@ -42,13 +42,12 @@ abstract class UserItem : EpoxyModelWithHolder<UserItem.Holder>() {
         userDescriptionView.text = user.description.orEmpty()
         schoolView.text = user.school.orEmpty()
 
-        val lastLocation = locationHelper.lastLocation
         val userLocation = user.location
-        if (lastLocation != null && userLocation != null) {
+        if (userLocation != null) {
             distance.isVisible = true
             distance.text = formatter.formatDistance(
-                distance = locationHelper.calculateDistance(
-                    lastLocation.longitude, lastLocation.latitude, userLocation.longitude, userLocation.latitude
+                distance = locationHelper.getMyDistanceTo(
+                    userLocation.longitude, userLocation.latitude
                 )
             )
         } else {

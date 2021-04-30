@@ -42,6 +42,8 @@ class LocationHelper @Inject constructor(
     var lastLocation: SimplifiedLocation? = null
         private set
 
+    private var lastSuccessfulLocate: LocateSuccess? = null
+
     init {
         initLocation()
     }
@@ -67,6 +69,23 @@ class LocationHelper @Inject constructor(
         }
     }
 
+    suspend fun getLocation(useHistoryLocation: Boolean = true): SimplifiedLocation? {
+        lastSuccessfulLocate?.let {
+            if (useHistoryLocation && !isLocateResultOutdated(it.time)) {
+                return it.location
+            }
+        }
+        return when (val locateResult = tryLocate()) {
+            is LocateSuccess -> locateResult.location
+            is LocateFail -> null
+        }
+    }
+
+    private fun isLocateResultOutdated(lastLocateTime: Long): Boolean {
+        val gap = System.currentTimeMillis() - lastLocateTime
+        return gap >= 0 && gap <= 1800 * 1000
+    }
+
     suspend fun tryLocate(
         accuracyThreshold: Float = 100f,
         timeoutMillis: Long = 5000L
@@ -75,7 +94,7 @@ class LocationHelper @Inject constructor(
             locationClient.setLocationListener {
                 val result = it.toLocateResult()
                 if (result is LocateSuccess) {
-                    lastLocation = SimplifiedLocation(result.longitude, result.latitude)
+                    recordSuccessfulLocate(result)
                     if (result.accuracy > accuracyThreshold) {
                         return@setLocationListener // wait until next locating
                     }
@@ -87,6 +106,11 @@ class LocationHelper @Inject constructor(
         } ?: LocateFail(CUSTOM_ERROR_CODE, "Locate timeout").also {
             locationClient.stopLocation() // make sure it stops locating after timeout
         }
+    }
+
+    private fun recordSuccessfulLocate(locate: LocateSuccess) {
+        lastSuccessfulLocate = locate
+        lastLocation = SimplifiedLocation(locate.longitude, locate.latitude)
     }
 
     fun calculateDistance(
@@ -129,7 +153,8 @@ class LocationHelper @Inject constructor(
                 longitude = this.longitude,
                 latitude = this.latitude,
                 accuracy = this.accuracy,
-                poiName = this.poiName
+                poiName = this.poiName,
+                time = this.time
             )
         }
     }
