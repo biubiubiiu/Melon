@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.OnApplyWindowInsetsListener
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -87,6 +90,14 @@ internal class GalleryGridFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val insetsListener = OnApplyWindowInsetsListener { v, insets ->
+            val type = WindowInsetsCompat.Type.systemBars()
+            val typeInsets = insets.getInsets(type)
+            v.setPadding(typeInsets.left, typeInsets.top, typeInsets.right, typeInsets.bottom)
+            WindowInsetsCompat.CONSUMED
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root, insetsListener)
 
         binding.gallery.also { v ->
             v.setHasFixedSize(true)

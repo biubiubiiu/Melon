@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.OnApplyWindowInsetsListener
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -50,6 +53,14 @@ internal class SelectLocationFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val insetsListener = OnApplyWindowInsetsListener { v, insets ->
+            val type = WindowInsetsCompat.Type.systemBars()
+            val typeInsets = insets.getInsets(type)
+            v.setPadding(typeInsets.left, typeInsets.top, typeInsets.right, typeInsets.bottom)
+            WindowInsetsCompat.CONSUMED
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root, insetsListener)
 
         binding.toolbar.onTrailingAreaClicked = { leavePage() }
 

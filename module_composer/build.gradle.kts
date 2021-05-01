@@ -30,9 +30,12 @@ kapt {
 
 dependencies {
     compileOnly(project(Modules.baseFramework))
+    compileOnly(project(Modules.commonAnimation))
 
     compileOnly(project(Modules.composerApi))
     compileOnly(project(Modules.runtimePermissions))
+
+    compileOnly(Libraries.AndroidX.Core.ktx)
 
     kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)

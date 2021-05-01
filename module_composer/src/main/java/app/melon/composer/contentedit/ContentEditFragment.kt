@@ -6,6 +6,9 @@ import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsAnimationCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -19,6 +22,8 @@ import app.melon.base.ui.decoration.SpaceItemDecoration
 import app.melon.base.ui.extensions.makeInvisible
 import app.melon.base.ui.extensions.makeVisible
 import app.melon.base.ui.extensions.navigateUpOrFinish
+import app.melon.base.ui.insetanimation.RootViewDeferringInsetsCallback
+import app.melon.base.ui.insetanimation.TranslateDeferringInsetsAnimationCallback
 import app.melon.composer.ComposerViewModel
 import app.melon.composer.R
 import app.melon.composer.common.MediaStoreImage
@@ -60,6 +65,22 @@ internal class ContentEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
+            persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+            deferredInsetTypes = WindowInsetsCompat.Type.ime()
+        )
+        ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
+        ViewCompat.setWindowInsetsAnimationCallback(
+            binding.entriesContainer,
+            TranslateDeferringInsetsAnimationCallback(
+                view = binding.entriesContainer,
+                persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime(),
+                dispatchMode = WindowInsetsAnimationCompat.Callback.DISPATCH_MODE_CONTINUE_ON_SUBTREE
+            )
+        )
 
         binding.toolbar.onClose = { findNavController().navigateUpOrFinish(requireActivity()) }
         binding.toolbar.onTrailingAreaClicked = {

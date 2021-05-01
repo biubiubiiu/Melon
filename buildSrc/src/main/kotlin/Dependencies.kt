@@ -55,6 +55,7 @@ object Modules {
     const val userApi = ":module_user_api"
 
     const val commonUi = ":lib_common_ui"
+    const val commonAnimation = ":lib_common_animation"
     const val commonUtils = ":lib_common_utils"
     const val runtimePermissions = ":lib_permission"
     const val location = ":lib_location"
@@ -91,7 +92,7 @@ object Libraries {
 
     object AndroidX {
         object Core {
-            private const val version = "1.2.0"
+            private const val version = "1.5.0-rc01"
             const val ktx = "androidx.core:core-ktx:$version"
         }
 

@@ -73,6 +73,7 @@ kapt {
 
 dependencies {
     implementation(project(Modules.baseFramework))
+    implementation(project(Modules.commonAnimation))
     implementation(project(Modules.dataAndroid))
     implementation(project(Modules.user))
     implementation(project(Modules.account))
@@ -92,6 +93,8 @@ dependencies {
     implementation(project(Modules.composerApi))
 
     implementation(Libraries.MultiDex.multiDex)
+
+    implementation(Libraries.AndroidX.Core.ktx)
 
     implementation(platform(Libraries.Firebase.bom))
     implementation(Libraries.Firebase.analytics)

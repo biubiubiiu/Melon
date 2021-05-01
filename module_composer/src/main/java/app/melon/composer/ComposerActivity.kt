@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
 import app.melon.composer.api.ComposerManager
 import app.melon.composer.api.ComposerOption
@@ -43,9 +44,8 @@ class ComposerActivity : AppCompatActivity(), PermissionHelperOwner, ComposerAct
 
         actionTakePicture = TakePictureHandler(this)
 
-        when (val option = composerOption) {
-            is ContentCreation -> viewModel.updateAvatarUrl(option.accountAvatarUrl)
-        }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        displayAvatar()
     }
 
     override fun onDestroy() {
@@ -73,5 +73,11 @@ class ComposerActivity : AppCompatActivity(), PermissionHelperOwner, ComposerAct
 
     override fun takePicture(uri: Uri, callback: (Boolean) -> Unit) {
         actionTakePicture.takePicture(uri, callback)
+    }
+
+    private fun displayAvatar() {
+        when (val option = composerOption) {
+            is ContentCreation -> viewModel.updateAvatarUrl(option.accountAvatarUrl)
+        }
     }
 }

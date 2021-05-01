@@ -39,8 +39,6 @@ kapt {
 dependencies {
     compileOnly(project(Modules.data))
 
-    compileOnly(Libraries.AndroidX.Core.ktx)
-
     api(Libraries.Navigation.fragmentKtx)
     api(Libraries.Navigation.uiKtx)
 

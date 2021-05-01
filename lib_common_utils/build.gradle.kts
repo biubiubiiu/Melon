@@ -54,11 +54,10 @@ kapt {
 
 dependencies {
     compileOnly(project(Modules.data))
-    implementation(Libraries.MultiDex.multiDex)
 
     coreLibraryDesugaring(Libraries.JavaSDK.Desugar.desugar)
 
-    api(Libraries.AndroidX.Core.ktx)
+    compileOnly(Libraries.AndroidX.Core.ktx)
 
     api(Libraries.Retrofit.retrofit)
     api(Libraries.Coroutine.core)
