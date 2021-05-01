@@ -25,6 +25,10 @@
         <item name="drawerArrowStyle">@style/ToolbarArrow</item>
     </style>
 
+    <style name="Theme.Melon.Dark" parent="Theme.Melon">
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+
     <style name="Theme.Melon.Splash" parent="Theme.Melon">
         <item name="android:statusBarColor" tools:targetApi="lollipop">@color/transparent</item>
         <item name="android:windowFullscreen">true</item>

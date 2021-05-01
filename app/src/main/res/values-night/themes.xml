@@ -18,4 +18,9 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/bgPrimary</item>
     </style>
+
+    <style name="Theme.Melon.Dark" parent="Theme.Melon">
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+
 </resources>
