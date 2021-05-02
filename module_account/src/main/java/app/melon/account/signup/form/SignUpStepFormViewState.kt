@@ -2,7 +2,7 @@ package app.melon.account.signup.form
 
 import app.melon.account.signup.data.SignUpForm
 
-data class SignUpStepFormViewState(
+internal data class SignUpStepFormViewState(
     val username: String? = null,
     val phoneOrEmail: String? = null,
     val birthDate: String? = null,

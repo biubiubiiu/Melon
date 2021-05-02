@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import app.melon.data.daos.base.EntityDao
 import app.melon.data.entities.User
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -11,6 +12,9 @@ abstract class UserDao : EntityDao<User>() {
 
     @Query("SELECT * FROM users WHERE user_id = :id")
     abstract suspend fun getUserWithId(id: String): User?
+
+    @Query("SELECT * FROM users WHERE user_id = :id")
+    abstract fun getUserWithIdFlow(id: String): Flow<User?>
 
     suspend fun getUserWithIdOrThrow(id: String): User {
         return getUserWithId(id) ?: throw IllegalArgumentException("No user with id $id in database")

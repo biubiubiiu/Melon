@@ -23,7 +23,7 @@ import javax.inject.Inject
  * uses to keep user's input data.
  */
 @ActivityScope
-class SignUpStepFormViewModel @Inject constructor(
+internal class SignUpStepFormViewModel @Inject constructor(
     private val validateUsername: ValidateUsername,
     private val validatePhone: ValidatePhone,
     private val validateEmail: ValidateEmail,
@@ -112,7 +112,7 @@ class SignUpStepFormViewModel @Inject constructor(
         }
     }
 
-    fun formDataChanged(
+    internal fun formDataChanged(
         username: String,
         phoneOrEmail: String,
         birthDate: String,
@@ -126,7 +126,7 @@ class SignUpStepFormViewModel @Inject constructor(
         }
     }
 
-    fun updateContactInputType() {
+    internal fun updateContactInputType() {
         if (currentState().inputType != ContactInputType.PHONE_OR_EMAIL) {
             return
         }
@@ -136,7 +136,7 @@ class SignUpStepFormViewModel @Inject constructor(
         }
     }
 
-    fun toggleInputType() {
+    internal fun toggleInputType() {
         viewModelScope.launch {
             val nextState = when (currentState().inputType) {
                 ContactInputType.PHONE -> ContactInputType.EMAIL
@@ -147,7 +147,7 @@ class SignUpStepFormViewModel @Inject constructor(
     }
 }
 
-class ValidateUsername @Inject constructor() : SuspendingWorkInteractor<String, Int?>() {
+internal class ValidateUsername @Inject constructor() : SuspendingWorkInteractor<String, Int?>() {
 
     companion object {
         private const val USERNAME_MAX_LENGTH = 30
@@ -164,7 +164,7 @@ class ValidateUsername @Inject constructor() : SuspendingWorkInteractor<String, 
     }
 }
 
-class ValidatePhone @Inject constructor() : SuspendingWorkInteractor<String, Int?>() {
+internal class ValidatePhone @Inject constructor() : SuspendingWorkInteractor<String, Int?>() {
 
     companion object {
         private const val PHONE_PATTERN =
@@ -183,7 +183,7 @@ class ValidatePhone @Inject constructor() : SuspendingWorkInteractor<String, Int
     }
 }
 
-class ValidateEmail @Inject constructor() : SuspendingWorkInteractor<String, Int?>() {
+internal class ValidateEmail @Inject constructor() : SuspendingWorkInteractor<String, Int?>() {
 
     override suspend fun doWork(params: String): Int? {
         return withContext(Dispatchers.Default) {
@@ -196,7 +196,7 @@ class ValidateEmail @Inject constructor() : SuspendingWorkInteractor<String, Int
     }
 }
 
-class ValidatePassword @Inject constructor() : SuspendingWorkInteractor<String, Int?>() {
+internal class ValidatePassword @Inject constructor() : SuspendingWorkInteractor<String, Int?>() {
     companion object {
         private const val PASSWORD_PATTERN =
             "^((?=.*[\\d])(?=.*[a-z])|(?=.*[A-Z])(?=.*[a-z])|(?=.*[\\d])(?=.*[A-Z])).{6,16}\$"

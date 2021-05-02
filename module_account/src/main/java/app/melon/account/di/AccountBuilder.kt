@@ -9,16 +9,16 @@ import dagger.android.ContributesAndroidInjector
 
 
 @Module
-abstract class AccountBuilder {
+internal abstract class AccountBuilder {
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectLoginActivity(): LoginActivity
+    internal abstract fun injectLoginActivity(): LoginActivity
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectSignUpBasicFormActivity(): SignUpStepFormActivity
+    internal abstract fun injectSignUpBasicFormActivity(): SignUpStepFormActivity
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectSignUpReviewStepActivity(): SignUpReviewStepActivity
+    internal abstract fun injectSignUpReviewStepActivity(): SignUpReviewStepActivity
 }

@@ -19,7 +19,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-class SignUpReviewStepActivity : DaggerAppCompatActivity(R.layout.activity_sign_up_step_review) {
+internal class SignUpReviewStepActivity : DaggerAppCompatActivity(R.layout.activity_sign_up_step_review) {
 
     private val form: SignUpForm by lazy(LazyThreadSafetyMode.NONE) { intent.getParcelableExtra<SignUpForm>(KEY_FORM)!! }
 

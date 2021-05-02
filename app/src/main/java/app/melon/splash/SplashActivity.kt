@@ -3,10 +3,8 @@ package app.melon.splash
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import app.melon.account.api.IAccountService
-import app.melon.account.api.UserManager
 import app.melon.databinding.ActivitySplashBinding
 import app.melon.home.MainActivity
 import app.melon.location.LocationHelper
@@ -24,7 +22,6 @@ class SplashActivity : DaggerAppCompatActivity() {
     private var _binding: ActivitySplashBinding? = null
     private val binding: ActivitySplashBinding get() = _binding!!
 
-    @Inject internal lateinit var userManager: UserManager
     @Inject internal lateinit var locationHelper: LocationHelper
     @Inject internal lateinit var accountService: IAccountService
 
@@ -45,7 +42,7 @@ class SplashActivity : DaggerAppCompatActivity() {
 
     private fun init() {
         lifecycleScope.launch {
-            val loginTask = async { userManager.loginUser() }
+            val loginTask = async { accountService.loginUser() }
             val locateTask = if (hasLocatePermission) async { locationHelper.tryLocate() } else null
             val deferreds = listOfNotNull(loginTask, locateTask)
 

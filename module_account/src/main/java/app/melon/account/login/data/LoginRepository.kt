@@ -1,5 +1,6 @@
 package app.melon.account.login.data
 
+import app.melon.account.signup.data.SignUpDataSource
 import javax.inject.Inject
 import app.melon.util.base.Result
 import kotlinx.coroutines.Dispatchers
@@ -11,18 +12,27 @@ import javax.inject.Singleton
  * maintains an in-memory cache of login status and user credentials information.
  */
 @Singleton
-class LoginRepository @Inject constructor(
-    private val dataSource: LoginDataSource
+internal class LoginRepository @Inject constructor(
+    private val loginDataSource: LoginDataSource,
+    private val signUpDataSource: SignUpDataSource
 ) {
 
-    suspend fun logout() {
-        dataSource.logout()
+    internal suspend fun logout() {
+        loginDataSource.logout()
     }
 
-    suspend fun login(username: String, password: String): Result<String> {
-        // handle login
+    internal suspend fun login(username: String, password: String): Result<String> {
         return withContext(Dispatchers.IO) {
-            dataSource.login(username, password)
+            loginDataSource.login(username, password)
+        }
+    }
+
+    internal suspend fun signUp(username: String, password: String): Result<Boolean> {
+        return withContext(Dispatchers.IO) {
+            signUpDataSource.signUp(
+                username = username,
+                password = password
+            )
         }
     }
 }

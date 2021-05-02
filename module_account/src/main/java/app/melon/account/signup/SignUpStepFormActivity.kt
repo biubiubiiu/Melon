@@ -20,7 +20,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class SignUpStepFormActivity : DaggerAppCompatActivity() {
+internal class SignUpStepFormActivity : DaggerAppCompatActivity() {
 
     @Inject internal lateinit var viewModel: SignUpStepFormViewModel
 
@@ -29,6 +29,13 @@ class SignUpStepFormActivity : DaggerAppCompatActivity() {
     private var hasFocusedOnUsername = false
     private var hasFocusedOnPassword = false
     private var hasFocusedOnContact = false
+
+    companion object {
+        const val RESULT_FOCUS_ON_USERNAME = 100
+        const val RESULT_FOCUS_ON_PASSWORD = 101
+        const val RESULT_FOCUS_ON_PHONE_OR_EMAIL = 102
+        const val RESULT_FOCUS_ON_BIRTH_DATE = 103
+    }
 
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -39,14 +46,6 @@ class SignUpStepFormActivity : DaggerAppCompatActivity() {
                 RESULT_FOCUS_ON_BIRTH_DATE -> binding.signUpInputBirthDateContent.requestFocus()
             }
         }
-
-    companion object {
-        const val RESULT_FOCUS_ON_USERNAME = 100
-        const val RESULT_FOCUS_ON_PASSWORD = 101
-        const val RESULT_FOCUS_ON_PHONE_OR_EMAIL = 102
-        const val RESULT_FOCUS_ON_BIRTH_DATE = 103
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

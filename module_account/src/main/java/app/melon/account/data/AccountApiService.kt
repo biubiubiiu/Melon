@@ -1,12 +1,14 @@
-package app.melon.account.service
+package app.melon.account.data
 
+import app.melon.account.data.remote.UserDetailResponse
+import app.melon.data.dto.BaseApiResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface AccountApiService {
+internal interface AccountApiService {
 
     @Headers("Content-Type: application/json")
     @POST("user/register")
@@ -26,4 +28,7 @@ interface AccountApiService {
 
     @GET("user/logout")
     fun logout(): Call<AccountResponse>
+
+    @GET("user/details")
+    fun fetchUserDetail(): Call<BaseApiResponse<UserDetailResponse>>
 }

@@ -53,6 +53,7 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
     private val locatePermissionHelper = PermissionHelper(this, LocateRequest)
 
     private val gotoComposer = registerForActivityResult(ComposerContract()) {
+        // TODO
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

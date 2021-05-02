@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 
-data class SignUpForm(
+internal data class SignUpForm(
     val username: String,
     val phone: String,
     val email: String,

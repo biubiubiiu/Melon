@@ -44,7 +44,6 @@ import javax.inject.Singleton
         CommentModule::class,
         PoiModule::class,
         GroupBuilder::class,
-        AppSubComponents::class,
         SettingsModule::class,
         UtilModule::class
     ]

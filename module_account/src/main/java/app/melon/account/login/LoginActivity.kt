@@ -21,7 +21,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-class LoginActivity : DaggerAppCompatActivity() {
+internal class LoginActivity : DaggerAppCompatActivity() {
 
     private val presetUsername get() = intent.getStringExtra(KEY_USERNAME)
     private val presetPassword get() = intent.getStringExtra(KEY_PASSWORD)

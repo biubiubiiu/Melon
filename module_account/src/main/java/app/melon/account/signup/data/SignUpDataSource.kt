@@ -1,19 +1,11 @@
 package app.melon.account.signup.data
 
-import app.melon.account.service.AccountApiService
-import app.melon.account.signup.state.SignUpResult
-import app.melon.util.base.ErrorResult
+import app.melon.account.data.AccountApiService
 import app.melon.util.base.Result
 import app.melon.util.base.Success
-import app.melon.util.encrypt.EncryptUtils
-import app.melon.util.extensions.executeWithRetry
-import app.melon.util.extensions.toResult
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 import javax.inject.Inject
 
-class SignUpDataSource @Inject constructor(
+internal class SignUpDataSource @Inject constructor(
     private val service: AccountApiService
 ) {
 
