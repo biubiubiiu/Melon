@@ -6,4 +6,8 @@
 
     <string name="feed_repost_count">转发</string>
     <string name="feed_like_count">喜欢</string>
+
+    <string name="post_feed_notification_title">正在发布动态</string>
+    <string name="post_feed_success_notification_title">发布成功</string>
+    <string name="post_feed_fail_notification_title">发布失败</string>
 </resources>

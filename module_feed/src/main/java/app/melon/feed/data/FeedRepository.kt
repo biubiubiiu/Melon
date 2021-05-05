@@ -1,5 +1,6 @@
 package app.melon.feed.data
 
+import android.net.Uri
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -8,6 +9,7 @@ import androidx.paging.map
 import app.melon.data.MelonDatabase
 import app.melon.data.constants.FeedPageType
 import app.melon.data.entities.Feed
+import app.melon.data.entities.PoiInfo
 import app.melon.data.entities.User
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.data.util.mergeFeed
@@ -111,6 +113,23 @@ class FeedRepository @Inject constructor(
                 )
             }
         ).flow
+    }
+
+    suspend fun postFeed(content: String, images: List<Uri>, location: PoiInfo?): Result<Boolean> {
+        return try {
+            val apiResponse = withContext(Dispatchers.IO) {
+                service.postFeed(content, images.map { it.toString() }, location.toString())
+                    .executeWithRetry()
+                    .toResult()
+                    .getOrThrow()
+            }
+            when {
+                !apiResponse.isSuccess -> ErrorResult(apiResponse.errorMessage.toException())
+                else -> Success(true)
+            }
+        } catch (e: Exception) {
+            ErrorResult(e)
+        }
     }
 
     private companion object {

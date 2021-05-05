@@ -6,7 +6,10 @@ import app.melon.data.services.ApiService
 import app.melon.feed.data.remote.FeedDetailResponse
 import app.melon.feed.data.remote.FeedListItemResponse
 import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -39,4 +42,12 @@ interface FeedApiService : ApiService {
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
     ): Call<BaseApiResponse<List<FeedListItemResponse>>>
+
+    @FormUrlEncoded
+    @POST("feed/post")
+    fun postFeed(
+        @Field("content") content: String,
+        @Field("images") images: List<String>,
+        @Field("location") location: String
+    ): Call<BaseApiResponse<Boolean>>
 }

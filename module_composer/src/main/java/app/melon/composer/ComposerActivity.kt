@@ -1,13 +1,17 @@
 package app.melon.composer
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import app.melon.composer.api.ComposerManager
 import app.melon.composer.api.ComposerOption
+import app.melon.composer.api.ComposerResult
 import app.melon.composer.api.ContentCreation
 import app.melon.composer.common.ComposerActionsExecutor
 import app.melon.composer.databinding.ActivityComposerBinding
@@ -46,6 +50,24 @@ class ComposerActivity : AppCompatActivity(), PermissionHelperOwner, ComposerAct
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         displayAvatar()
+
+        viewModel.actionSubmit.observe(this, Observer {
+            val composerResult = ComposerResult(
+                textContent = viewModel.textContent.value ?: "",
+                images = viewModel.images.value?.map { it.contentUri } ?: emptyList(),
+                location = viewModel.locationInfo.value
+            )
+            val result = Intent().apply {
+                putExtra(ComposerManager.EXTRA_COMPOSER_RESULT, composerResult)
+            }
+            setResult(Activity.RESULT_OK, result)
+            finish()
+        })
+
+        viewModel.actionLeave.observe(this, Observer {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        })
     }
 
     override fun onDestroy() {

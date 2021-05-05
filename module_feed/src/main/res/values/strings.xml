@@ -6,4 +6,8 @@
 
     <string name="feed_repost_count">TODO</string>
     <string name="feed_like_count">TODO</string>
+
+    <string name="post_feed_notification_title">TODO</string>
+    <string name="post_feed_success_notification_title">TODO</string>
+    <string name="post_feed_fail_notification_title">TODO</string>
 </resources>

@@ -1,12 +1,8 @@
 package app.melon.feed.di
 
-import app.melon.base.scope.FragmentScope
-import app.melon.feed.ui.CommonFeedFragment
 import app.melon.feed.data.FeedApiService
-import app.melon.feed.ui.FeedDetailFragment
 import dagger.Module
 import dagger.Provides
-import dagger.android.ContributesAndroidInjector
 import retrofit2.Retrofit
 
 @Module(
@@ -16,18 +12,6 @@ import retrofit2.Retrofit
     ]
 )
 class FeedModule
-
-@Module
-abstract class FeedBuilder {
-
-    @FragmentScope
-    @ContributesAndroidInjector
-    abstract fun injectCommonFeedListFragment(): CommonFeedFragment
-
-    @FragmentScope
-    @ContributesAndroidInjector
-    abstract fun injectFeedDetailFragment(): FeedDetailFragment
-}
 
 @Module
 internal class RemoteServiceModule {

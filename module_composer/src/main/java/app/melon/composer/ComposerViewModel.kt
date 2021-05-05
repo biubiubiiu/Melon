@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.map
+import app.melon.base.framework.SingleEvent
 import app.melon.composer.common.MediaStoreImage
 import app.melon.data.entities.PoiInfo
 import app.melon.util.extensions.or
@@ -16,6 +17,20 @@ internal class ComposerViewModel(
     application: Application,
     private val savedStateHandle: SavedStateHandle
 ) : AndroidViewModel(application) {
+
+    private val _actionSubmit = MutableLiveData<SingleEvent<Unit>>()
+    internal val actionSubmit: LiveData<SingleEvent<Unit>> = _actionSubmit
+
+    internal fun submitAndLeave() {
+        _actionSubmit.postValue(SingleEvent(Unit))
+    }
+
+    private val _actionLeave = MutableLiveData<SingleEvent<Unit>>()
+    internal val actionLeave: LiveData<SingleEvent<Unit>> = _actionLeave
+
+    internal fun leave() {
+        _actionLeave.postValue(SingleEvent(Unit))
+    }
 
     private val _avatarUrl = MutableLiveData<String>()
     val avatarUrl: LiveData<String> get() = _avatarUrl
@@ -45,6 +60,8 @@ internal class ComposerViewModel(
     }
 
     private val _textContent = MutableLiveData<String>("")
+    internal val textContent: LiveData<String> = _textContent
+
     val textInputProgress = _textContent.map {
         if (it.isBlank()) {
             0

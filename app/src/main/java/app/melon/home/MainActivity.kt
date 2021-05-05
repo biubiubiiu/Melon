@@ -21,6 +21,7 @@ import app.melon.composer.api.ContentCreation
 import app.melon.databinding.ActivityMainBinding
 import app.melon.databinding.HomeContentMainBinding
 import app.melon.event.api.IEventService
+import app.melon.feed.PostFeedService
 import app.melon.home.nearby.LocateRequest
 import app.melon.location.LocationHelper
 import app.melon.permission.PermissionHelper
@@ -53,7 +54,8 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
     private val locatePermissionHelper = PermissionHelper(this, LocateRequest)
 
     private val gotoComposer = registerForActivityResult(ComposerContract()) {
-        // TODO
+        val (content, images, location) = it ?: return@registerForActivityResult
+        PostFeedService.postFeed(this, content, ArrayList(images), location)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

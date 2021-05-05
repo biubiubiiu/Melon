@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import app.melon.base.ui.decoration.SpaceItemDecoration
 import app.melon.base.ui.extensions.makeInvisible
 import app.melon.base.ui.extensions.makeVisible
-import app.melon.base.ui.extensions.navigateUpOrFinish
 import app.melon.base.ui.insetanimation.RootViewDeferringInsetsCallback
 import app.melon.base.ui.insetanimation.TranslateDeferringInsetsAnimationCallback
 import app.melon.composer.ComposerViewModel
@@ -36,6 +35,7 @@ import app.melon.util.extensions.dpInt
 import app.melon.util.extensions.getResourceColor
 import coil.load
 import coil.transform.CircleCropTransformation
+
 
 internal class ContentEditFragment : Fragment() {
 
@@ -82,10 +82,8 @@ internal class ContentEditFragment : Fragment() {
             )
         )
 
-        binding.toolbar.onClose = { findNavController().navigateUpOrFinish(requireActivity()) }
-        binding.toolbar.onTrailingAreaClicked = {
-            // TODO
-        }
+        binding.toolbar.onClose = { composerViewModel.leave() }
+        binding.toolbar.onTrailingAreaClicked = { composerViewModel.submitAndLeave() }
         binding.toolbar.trailingButtonText = getString(R.string.composer_post_content)
 
         binding.photos.also { v ->
