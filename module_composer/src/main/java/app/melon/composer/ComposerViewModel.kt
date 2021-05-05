@@ -35,8 +35,8 @@ internal class ComposerViewModel(
     private val _avatarUrl = MutableLiveData<String>()
     val avatarUrl: LiveData<String> get() = _avatarUrl
 
-    fun updateAvatarUrl(url: String) {
-        _avatarUrl.postValue(url)
+    fun updateAvatarUrl(url: String?) {
+        _avatarUrl.takeIf { url != null }?.postValue(url)
     }
 
     private val _images = MutableLiveData<List<MediaStoreImage>>(emptyList())

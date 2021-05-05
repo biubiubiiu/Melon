@@ -2,14 +2,16 @@ package app.melon.home.nearby
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.distinctUntilChanged
 import app.melon.R
-import app.melon.base.ui.databinding.CommonFragmentContainerBinding
+import app.melon.databinding.FragmentNearbyBinding
+import app.melon.home.MainViewModel
 import app.melon.location.LocateFail
 import app.melon.location.LocateSuccess
-import app.melon.location.LocationHelper
 import app.melon.user.api.IUserService
 import app.melon.user.api.NearbyUserList
 import app.melon.util.delegates.viewBinding
@@ -18,14 +20,14 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class NearbyFragment : DaggerFragment(R.layout.common_fragment_container) {
+class NearbyFragment : DaggerFragment(R.layout.fragment_nearby) {
 
-    private val binding: CommonFragmentContainerBinding by viewBinding()
+    private val binding: FragmentNearbyBinding by viewBinding()
+
+    private val mainViewModel: MainViewModel by activityViewModels()
+    @Inject internal lateinit var viewModel: NearbyViewModel
 
     @Inject internal lateinit var userService: IUserService
-    @Inject internal lateinit var locationHelper: LocationHelper
-
-    @Inject internal lateinit var viewModel: NearbyViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +39,24 @@ class NearbyFragment : DaggerFragment(R.layout.common_fragment_container) {
         viewModel.locateResult.distinctUntilChanged().observe(viewLifecycleOwner, Observer {
             when (it) {
                 is LocateSuccess -> showNearbyUsers(it.longitude, it.latitude)
-                is LocateFail -> Snackbar.make(binding.root, it.errorMessage, Snackbar.LENGTH_LONG)
+                is LocateFail -> Snackbar.make(binding.root, it.errorMessage, Snackbar.LENGTH_LONG).show()
             }
         })
+        if (savedInstanceState == null) {
+            setupView()
+        }
+    }
+
+    private fun setupView() {
+        setupToolbar()
+    }
+
+    private fun setupToolbar() {
+        val activity = requireActivity() as AppCompatActivity
+        activity.setSupportActionBar(binding.toolbar)
+        binding.toolbar.setNavigationOnClickListener {
+            mainViewModel.openDrawer()
+        }
     }
 
     private fun showNearbyUsers(longitude: Double, latitude: Double) {
@@ -48,7 +65,7 @@ class NearbyFragment : DaggerFragment(R.layout.common_fragment_container) {
         }
         childFragmentManager.commit {
             add(
-                R.id.fragment_container,
+                binding.backbone.fragmentContainer.id,
                 userService.buildUserListFragment(
                     NearbyUserList(
                         listItemIdPrefix = "nearby_user",

@@ -10,7 +10,7 @@
 
     <include
         android:id="@+id/main_screen"
-        layout="@layout/home_app_bar_main" />
+        layout="@layout/content_main" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/home_nav_view"
@@ -20,4 +20,5 @@
         android:background="@color/bgSecondary"
         app:headerLayout="@layout/home_nav_drawer_header"
         app:menu="@menu/home_menu_drawer" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

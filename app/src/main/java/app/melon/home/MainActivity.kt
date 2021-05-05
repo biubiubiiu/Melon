@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -16,12 +17,10 @@ import app.melon.R
 import app.melon.account.api.IAccountService
 import app.melon.base.ui.navigation.setupWithNavController
 import app.melon.bookmark.BookmarkActivity
-import app.melon.composer.api.ComposerContract
-import app.melon.composer.api.ContentCreation
+import app.melon.composer.api.ComposerOption
+import app.melon.composer.api.ComposerResult
 import app.melon.databinding.ActivityMainBinding
-import app.melon.databinding.HomeContentMainBinding
 import app.melon.event.api.IEventService
-import app.melon.feed.PostFeedService
 import app.melon.home.nearby.LocateRequest
 import app.melon.location.LocationHelper
 import app.melon.permission.PermissionHelper
@@ -35,15 +34,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
+class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner, ComposerEntry {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private lateinit var contentMainBinding: HomeContentMainBinding
 
     private var currentNavController: LiveData<NavController>? = null
 
-    @Inject internal lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
 
     @Inject internal lateinit var accountService: IAccountService
     @Inject internal lateinit var userService: IUserService
@@ -53,10 +51,7 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
 
     private val locatePermissionHelper = PermissionHelper(this, LocateRequest)
 
-    private val gotoComposer = registerForActivityResult(ComposerContract()) {
-        val (content, images, location) = it ?: return@registerForActivityResult
-        PostFeedService.postFeed(this, content, ArrayList(images), location)
-    }
+    private lateinit var actionLaunchComposer: ComposerEntry
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,19 +59,16 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        contentMainBinding = HomeContentMainBinding.bind(binding.mainScreen.coordinator)
 
-        setupToolbar()
+        actionLaunchComposer = ComposerEntryHandler(this)
+
+        setupDrawer()
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         } // Else, need to wait for onRestoreInstanceState
 
         setupDrawerHeader()
         setupDrawerNavigation()
-
-        contentMainBinding.fab.setOnClickListener {
-            gotoComposer.launch(ContentCreation("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3956250804,1021350931&fm=15&gp=0.jpg"))
-        }
     }
 
     override fun onDestroy() {
@@ -110,17 +102,22 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
         }
     }
 
+    override fun launchComposer(option: ComposerOption, callback: (ComposerResult?) -> Unit) {
+        actionLaunchComposer.launchComposer(option, callback)
+    }
+
     private fun startLocate() {
         lifecycleScope.launch {
             locationHelper.tryLocate()
         }
     }
 
-    private fun setupToolbar() {
-        setSupportActionBar(binding.mainScreen.toolbar)
-        binding.mainScreen.toolbar.setNavigationOnClickListener {
-            binding.homeDrawerLayout.openDrawer(GravityCompat.START)
-        }
+    private fun setupDrawer() {
+        viewModel.actionOpenDrawer.observe(this, Observer {
+            if (!it.hasBeenHandled) {
+                binding.homeDrawerLayout.openDrawer(GravityCompat.START)
+            }
+        })
     }
 
     /**
@@ -133,7 +130,7 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner {
         val controller = binding.mainScreen.homeBottomNavigation.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
-            containerId = R.id.nav_host_container,
+            containerId = binding.mainScreen.navHostContainer.id,
             intent = intent
         )
 
