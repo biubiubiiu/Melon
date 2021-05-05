@@ -92,19 +92,24 @@ internal class UserManagerImpl @Inject constructor(
         currentUserIdFlow.tryEmit(null)
     }
 
+    // TODO fail fast when network is not available
     private suspend fun fetchUserDetail(): User? {
-        val response = withContext(Dispatchers.IO) {
-            service.fetchUserDetail()
-                .executeWithRetry()
-                .toResult()
-                .getOrThrow()
-        }
-        if (!response.isSuccess) {
-            return null
-        }
-        val data = response.data ?: return null
-        return withContext(Dispatchers.Default) {
-            mapper.map(data)
+        return try {
+            val response = withContext(Dispatchers.IO) {
+                service.fetchUserDetail()
+                    .executeWithRetry()
+                    .toResult()
+                    .getOrThrow()
+            }
+            if (!response.isSuccess) {
+                return null
+            }
+            val data = response.data ?: return null
+            return withContext(Dispatchers.Default) {
+                mapper.map(data)
+            }
+        } catch (e: Exception) {
+            null
         }
     }
 }
