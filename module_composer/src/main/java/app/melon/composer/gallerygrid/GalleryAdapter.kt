@@ -29,7 +29,7 @@ internal class GalleryItemAdapter(
         val mediaStoreImage = item.image
         holder.rootView.tag = item
         holder.imageView.load(mediaStoreImage.contentUri)
-        holder.checkView.setChecked(item.isSelected)
+        holder.checkView.checked = item.isSelected
         holder.enableCheck = !item.reachMaxSelection
     }
 
