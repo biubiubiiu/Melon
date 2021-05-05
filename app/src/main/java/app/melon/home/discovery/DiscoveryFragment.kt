@@ -1,10 +1,7 @@
 package app.melon.home.discovery
 
-import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import app.melon.R
 import app.melon.account.api.UserManager
 import app.melon.base.event.TabReselectEvent
@@ -18,35 +15,28 @@ import app.melon.feed.FeedPageConfig
 import app.melon.feed.PostFeedService
 import app.melon.feed.ui.CommonFeedFragment
 import app.melon.home.ComposerEntry
-import app.melon.home.MainViewModel
+import app.melon.home.base.HomepageToolbarFragment
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getResourceString
 import com.google.android.material.tabs.TabLayout
-import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class DiscoveryFragment : DaggerFragment(R.layout.fragment_discovery) {
+class DiscoveryFragment : HomepageToolbarFragment(R.layout.fragment_discovery) {
 
     private val binding: FragmentDiscoveryBinding by viewBinding()
+
+    override val toolbar: Toolbar
+        get() = binding.toolbar
 
     private val viewPager get() = binding.backbone.viewpager
     private val tabLayout get() = binding.backbone.tabLayout
 
-    private val viewModel: MainViewModel by activityViewModels()
-
     @Inject internal lateinit var userManager: UserManager
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
-            setupView()
-        }
-    }
-
-    private fun setupView() {
+    override fun setupView() {
+        super.setupView()
         setupFab()
-        setupToolbar()
         setupViewPager()
     }
 
@@ -56,14 +46,6 @@ class DiscoveryFragment : DaggerFragment(R.layout.fragment_discovery) {
             (activity as? ComposerEntry)?.launchComposer(ContentCreation(user.avatarUrl)) { result ->
                 handleComposerResult(result)
             }
-        }
-    }
-
-    private fun setupToolbar() {
-        val activity = requireActivity() as AppCompatActivity
-        activity.setSupportActionBar(binding.toolbar)
-        binding.toolbar.setNavigationOnClickListener {
-            viewModel.openDrawer()
         }
     }
 
