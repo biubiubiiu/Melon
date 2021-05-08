@@ -17,7 +17,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-class EditProfileActivity : DaggerAppCompatActivity(), EditProfileController.Action {
+internal class EditProfileActivity : DaggerAppCompatActivity(), EditProfileController.Action {
 
     private val binding: ActivityEditProfileBinding by viewBinding()
 

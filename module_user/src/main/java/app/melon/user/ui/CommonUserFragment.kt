@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class CommonUserFragment : BasePagingListFragment() {
+internal class CommonUserFragment : BasePagingListFragment() {
 
     private val pageConfig by lazy { requireArguments().getSerializable(KEY_PAGE_CONFIG) as UserListConfig }
 

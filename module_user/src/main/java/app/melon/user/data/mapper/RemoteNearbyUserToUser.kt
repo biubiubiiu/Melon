@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class RemoteNearbyUserToUser @Inject constructor() : Mapper<NearbyUserStruct, User> {
+internal class RemoteNearbyUserToUser @Inject constructor() : Mapper<NearbyUserStruct, User> {
     override suspend fun map(from: NearbyUserStruct): User {
         return User(
             id = from.id,

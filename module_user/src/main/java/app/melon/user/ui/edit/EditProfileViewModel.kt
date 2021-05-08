@@ -8,13 +8,13 @@ import app.melon.base.framework.ReduxViewModel
 import app.melon.data.entities.User
 import javax.inject.Inject
 
-class EditProfileViewModel @Inject constructor(
+internal class EditProfileViewModel @Inject constructor(
 ) : ReduxViewModel<EditProfileViewState>(
     initialState = EditProfileViewState()
 ) {
 
     private val _user = MutableLiveData<User>()
-    val user: LiveData<User> = _user
+    internal val user: LiveData<User> = _user
 
     init {
         _user.value = User(
@@ -55,41 +55,41 @@ class EditProfileViewModel @Inject constructor(
         }
     }
 
-    fun save() {
+    internal fun save() {
         Log.d("raymond", "save with ${currentState().pageUser}")
     }
 
-    fun hometownChanged(hometown: String) {
+    internal fun hometownChanged(hometown: String) {
         updatePageUser {
             copy(hometown = hometown)
         }
     }
 
-    fun collegeChanged(college: String) {
+    internal fun collegeChanged(college: String) {
         updatePageUser {
             copy(college = college)
         }
     }
 
-    fun majorChanged(major: String) {
+    internal fun majorChanged(major: String) {
         updatePageUser {
             copy(major = major)
         }
     }
 
-    fun degreeChanged(degree: String) {
+    internal fun degreeChanged(degree: String) {
         updatePageUser {
             copy(degree = degree)
         }
     }
 
-    fun descriptionChanged(bio: String) {
+    internal fun descriptionChanged(bio: String) {
         updatePageUser {
             copy(description = bio)
         }
     }
 
-    fun photoListChanged(list: List<String>) {
+    internal fun photoListChanged(list: List<String>) {
         updatePageUser {
             copy(photos = list)
         }

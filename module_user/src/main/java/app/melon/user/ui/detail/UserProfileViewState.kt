@@ -5,7 +5,7 @@ import app.melon.base.framework.SingleEvent
 import app.melon.data.entities.User
 import app.melon.data.resultentities.FeedAndAuthor
 
-data class UserProfileViewState(
+internal data class UserProfileViewState(
     val uid: String = "",
     val user: User? = null,
     val pageItems: List<FeedAndAuthor>? = null,

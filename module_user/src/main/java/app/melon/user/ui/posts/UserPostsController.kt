@@ -8,7 +8,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
-class UserPostsController @AssistedInject constructor(
+internal class UserPostsController @AssistedInject constructor(
     @Assisted context: Context,
     private val factory: FeedControllerDelegate.Factory
 ) : BasePagingController<FeedAndAuthor>(
@@ -27,7 +27,7 @@ class UserPostsController @AssistedInject constructor(
         )
 
     @AssistedFactory
-    interface Factory {
+    internal interface Factory {
         fun create(context: Context): UserPostsController
     }
 }

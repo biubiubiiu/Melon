@@ -39,7 +39,7 @@ import javax.inject.Inject
 import kotlin.math.min
 
 
-class ProfileFragment : BaseFragment<FragmentProfileBinding>(), OnBackPressedHandler {
+internal class ProfileFragment : BaseFragment<FragmentProfileBinding>(), OnBackPressedHandler {
 
     private val headerBinding: ContentProfileHeaderBinding get() = binding.header
 
@@ -210,7 +210,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), OnBackPressedHan
     companion object {
         private const val KEY_USER_ID = "KEY_USER_ID"
 
-        fun newInstance(uid: String): ProfileFragment {
+        internal fun newInstance(uid: String): ProfileFragment {
             return ProfileFragment().apply {
                 arguments = bundleOf(KEY_USER_ID to uid)
             }

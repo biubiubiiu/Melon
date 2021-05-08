@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class RemoteUserDetailToUser @Inject constructor() : Mapper<UserDetailResponse, User> {
+internal class RemoteUserDetailToUser @Inject constructor() : Mapper<UserDetailResponse, User> {
     override suspend fun map(from: UserDetailResponse): User {
         return User(
             id = from.id,

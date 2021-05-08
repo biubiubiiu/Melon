@@ -5,7 +5,7 @@ import android.os.Build
 import app.melon.permission.PermissionRequest
 import app.melon.permission.R
 
-object UseCamera : PermissionRequest(
+internal object UseCamera : PermissionRequest(
     permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         arrayOf(Manifest.permission.CAMERA)
     } else {

@@ -2,6 +2,6 @@ package app.melon.user
 
 import app.melon.data.entities.User
 
-interface UserActions {
+internal interface UserActions {
     fun onHolderClick(user: User)
 }

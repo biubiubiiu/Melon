@@ -14,7 +14,7 @@ import java.util.Date
 import java.util.Locale
 
 
-class EditHelper(
+internal class EditHelper(
     private val activity: AppCompatActivity,
     private val onReceiveTakePictureResult: ((Boolean) -> Unit)? = null,
     private val onReceiveUriFromAlbum: ((Uri?) -> Unit)? = null
@@ -42,7 +42,7 @@ class EditHelper(
         }
     }
 
-    fun showEditOptions() {
+    internal fun showEditOptions() {
         val fragment = EditOptionsDialogFragment().also { it.setListener(this) }
         fragment.show(activity.supportFragmentManager, "options")
     }

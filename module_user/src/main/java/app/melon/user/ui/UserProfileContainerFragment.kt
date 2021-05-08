@@ -22,7 +22,7 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class UserProfileContainerFragment : DaggerFragment(R.layout.common_fragment_container), OnBackPressedHandler {
+internal class UserProfileContainerFragment : DaggerFragment(R.layout.common_fragment_container), OnBackPressedHandler {
 
     private val uid: String get() = arguments?.getString(ARG_USER_ID) ?: ""
 

@@ -20,19 +20,19 @@ internal abstract class UserBuilder {
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun injectUserListFragment(): CommonUserFragment
+    internal abstract fun injectUserListFragment(): CommonUserFragment
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun injectProfileContainerFragment(): UserProfileContainerFragment
+    internal abstract fun injectProfileContainerFragment(): UserProfileContainerFragment
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun injectProfileFragment(): ProfileFragment
+    internal abstract fun injectProfileFragment(): ProfileFragment
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectEditProfileActivity(): EditProfileActivity
+    internal abstract fun injectEditProfileActivity(): EditProfileActivity
 
     @ActivityScope
     @ContributesAndroidInjector
@@ -40,21 +40,21 @@ internal abstract class UserBuilder {
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun provideProfileFragment(): UserProfileFragment
+    internal abstract fun provideProfileFragment(): UserProfileFragment
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun providePostsFragment(): UserPostsFragment
+    internal abstract fun providePostsFragment(): UserPostsFragment
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun injectMyProfileTabFragment(): MyProfileTabFragment
+    internal abstract fun injectMyProfileTabFragment(): MyProfileTabFragment
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectFollowersActivity(): FollowersActivity
+    internal abstract fun injectFollowersActivity(): FollowersActivity
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectFollowingActivity(): FollowingActivity
+    internal abstract fun injectFollowingActivity(): FollowingActivity
 }

@@ -18,7 +18,7 @@ import app.melon.util.extensions.getResourceString
 import com.google.android.material.tabs.TabLayout
 
 
-class MyProfileTabFragment : BaseFragment<FragmentCommonTabsBinding>() {
+internal class MyProfileTabFragment : BaseFragment<FragmentCommonTabsBinding>() {
 
     private val viewPager get() = binding.viewpager
     private val tabLayout get() = binding.tabLayout

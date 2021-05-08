@@ -14,7 +14,7 @@ import app.melon.util.delegates.viewBinding
 import app.melon.util.event.OnBackPressedHandler
 
 
-class ProfileActivity : AppCompatActivity() {
+internal class ProfileActivity : AppCompatActivity() {
 
     private val binding: CommonFragmentContainerBinding by viewBinding()
 

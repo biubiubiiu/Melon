@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 
-class UserPostsFragment : BaseFragment<FragmentUserPostsBinding>() {
+internal class UserPostsFragment : BaseFragment<FragmentUserPostsBinding>() {
 
     private val transitionName by lazy { requireArguments().getString(KEY_TRANSITION_NAME, "") }
 
@@ -81,7 +81,7 @@ class UserPostsFragment : BaseFragment<FragmentUserPostsBinding>() {
         private const val KEY_USER_ID = "KEY_USER_ID"
         private const val KEY_TRANSITION_NAME = "KEY_TRANSITION_NAME"
 
-        fun newInstance(
+        internal fun newInstance(
             uid: String,
             transitionName: String
         ): UserPostsFragment =

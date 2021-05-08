@@ -12,67 +12,57 @@ import app.melon.feed.data.FeedApiService
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAndAuthor
 import app.melon.user.data.mapper.RemoteNearbyUserToUser
 import app.melon.user.data.mapper.RemoteUserDetailToUser
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Result
-import app.melon.util.base.Success
-import app.melon.util.extensions.executeWithRetry
-import app.melon.util.extensions.toException
-import app.melon.util.extensions.toResult
 import app.melon.util.mappers.toListMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlin.Result
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
-class UserRepository @Inject constructor(
+internal class UserRepository @Inject constructor(
     private val feedApiService: FeedApiService,
-    private val userService: UserApiService,
+    private val userApiService: UserApiService,
     private val database: MelonDatabase,
     private val listItemMapper: RemoteFeedListToFeedAndAuthor,
     private val detailItemMapper: RemoteUserDetailToUser,
     private val userListItemMapper: RemoteNearbyUserToUser
 ) {
 
-    suspend fun getUserDetail(uid: String): Result<User> {
-        return try {
-            val apiResponse = withContext(Dispatchers.IO) {
-                userService.detail(uid)
-                    .executeWithRetry()
-                    .toResult()
-                    .getOrThrow()
-            }
-            if (!apiResponse.isSuccess) {
-                return ErrorResult(apiResponse.errorMessage.toException())
-            }
+    @WorkerThread
+    internal suspend fun getUserDetail(uid: String): UserStatus<User> {
+        return runCatching {
+            val response = userApiService.detail(uid).getOrThrow()
             val user = withContext(Dispatchers.Default) {
-                detailItemMapper.map(apiResponse.data!!)
+                detailItemMapper.map(response)
             }
             val result = database.runWithTransaction {
                 val localUser = database.userDao().getUserWithId(user.id) ?: User()
                 database.userDao().insertOrUpdate(mergeUser(localUser, user))
                 database.userDao().getUserWithId(uid)
             }
-            Success(result!!)
-        } catch (e: Exception) {
-            ErrorResult(e)
-        }
+            result!!
+        }.fold(
+            onSuccess = { data ->
+                UserStatus.Success(data)
+            },
+            onFailure = { throwable ->
+                UserStatus.Error.Generic(throwable)
+            }
+        )
     }
 
-    fun getNearbyUser(longitude: Double, latitude: Double): Flow<PagingData<User>> {
+    internal fun getNearbyUser(longitude: Double, latitude: Double): Flow<PagingData<User>> {
         return Pager(
             config = PAGING_CONFIG,
             pagingSourceFactory = {
                 NearbyUserPagingSource(
                     longitude,
                     latitude,
-                    userService,
+                    userApiService,
                     PAGING_CONFIG.pageSize,
                     userListItemMapper
                 )
@@ -81,7 +71,7 @@ class UserRepository @Inject constructor(
     }
 
     @WorkerThread
-    suspend fun getFirstPageUserFeeds(uid: String): kotlin.Result<List<FeedAndAuthor>> {
+    internal suspend fun getFirstPageUserFeeds(uid: String): Result<List<FeedAndAuthor>> {
         return feedApiService.feedsFromUser(uid, 0, 5).fold(
             onSuccess = {
                 // At here, we don't need to store feeds and user information,
@@ -89,36 +79,26 @@ class UserRepository @Inject constructor(
                 val result = withContext(Dispatchers.Default) {
                     listItemMapper.toListMapper().invoke(it)
                 }
-                kotlin.Result.success(result)
+                Result.success(result)
             },
             onFailure = {
-                kotlin.Result.failure(it)
+                Result.failure(it)
             }
         )
     }
 
-    suspend fun updateAvatar(file: File): Result<String> {
-        return try {
-            val body = MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart(
-                    name = "file",
-                    filename = file.name,
-                    body = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
-                )
-                .build()
-            val apiResponse = UserApiService.testInstance()
-                .updateAvatar(body.parts)
-                .executeWithRetry()
-                .toResult()
-                .getOrThrow()
-            if (!apiResponse.isSuccess) {
-                return ErrorResult(apiResponse.errorMessage.toException())
+    @WorkerThread
+    internal suspend fun updateAvatar(file: File): Result<String> {
+        return runCatching {
+            val response = userApiService.updateAvatar(file).getOrThrow()
+            response.avatarUrl!!
+        }.fold(
+            onSuccess = {
+                Result.success(it)
+            }, onFailure = {
+                Result.failure(it)
             }
-            Success(apiResponse.data!!.avatarUrl!!)
-        } catch (e: Exception) {
-            ErrorResult(e)
-        }
+        )
     }
 
     private companion object {

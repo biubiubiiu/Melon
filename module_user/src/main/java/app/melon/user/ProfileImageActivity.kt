@@ -26,8 +26,6 @@ import app.melon.user.image.TakePictureHandler
 import app.melon.user.permission.ReadStorage
 import app.melon.user.permission.WriteExternal
 import app.melon.user.ui.edit.EditOptionsDialogFragment
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Success
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getColorCompat
 import app.melon.util.extensions.showToast
@@ -170,16 +168,15 @@ internal class ProfileImageActivity : DaggerAppCompatActivity() {
 
     private fun observeResult() {
         viewModel.updateResult.observe(this, Observer {
-            when (it) {
-                is Success -> {
-                    lifecycleScope.launch {
-                        viewModel.syncAvatarUpdateToLocal(
-                            uid,
-                            it.get()
-                        )
-                    }
+            it.onSuccess { url ->
+                lifecycleScope.launch {
+                    viewModel.syncAvatarUpdateToLocal(
+                        uid,
+                        url
+                    )
                 }
-                is ErrorResult -> showToast(R.string.update_profile_fail)
+            }.onFailure {
+                showToast(R.string.update_profile_fail)
             }
         })
         viewModel.avatarChangeEvent.observe(this, Observer { event ->

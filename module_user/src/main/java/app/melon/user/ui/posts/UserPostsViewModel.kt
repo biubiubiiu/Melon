@@ -6,12 +6,12 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
-class UserPostsViewModel @AssistedInject constructor(
+internal class UserPostsViewModel @AssistedInject constructor(
     @Assisted private val initialState: UserFeedsViewState,
     private val updateUserFeeds: UpdateUserFeeds
 ) : ReduxViewModel<UserFeedsViewState>(initialState) {
 
-    val pagingData = updateUserFeeds.observe()
+    internal val pagingData = updateUserFeeds.observe()
 
     init {
         selectSubscribeDistinct(UserFeedsViewState::uid) {

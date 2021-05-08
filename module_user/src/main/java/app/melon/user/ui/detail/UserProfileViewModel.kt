@@ -4,10 +4,9 @@ import android.view.View
 import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ReduxViewModel
 import app.melon.base.framework.SingleEvent
+import app.melon.user.data.UserStatus
 import app.melon.user.interactor.UpdateFirstPageUserFeeds
 import app.melon.user.interactor.UpdateUserDetail
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -15,7 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 
-class UserProfileViewModel @AssistedInject constructor(
+internal class UserProfileViewModel @AssistedInject constructor(
     @Assisted private val initialState: UserProfileViewState,
     private val updateUserDetail: UpdateUserDetail,
     private val updateFirstPageUserFeeds: UpdateFirstPageUserFeeds
@@ -35,8 +34,8 @@ class UserProfileViewModel @AssistedInject constructor(
         viewModelScope.launch {
             updateUserDetail.observe().collectAndSetState {
                 when (it) {
-                    is Success -> copy(user = it.get())
-                    is ErrorResult -> copy(error = it.throwable)
+                    is UserStatus.Success -> copy(user = it.data)
+                    is UserStatus.Error -> copy(error = it.throwable)
                 }
             }
         }
@@ -66,13 +65,13 @@ class UserProfileViewModel @AssistedInject constructor(
         }
     }
 
-    fun viewMorePosts(view: View) {
+    internal fun viewMorePosts(view: View) {
         viewModelScope.launchSetState {
             copy(enterMorePosts = SingleEvent(view))
         }
     }
 
-    fun toggleFollowState() {
+    internal fun toggleFollowState() {
         viewModelScope.launch {
             // TODO update follow state
         }

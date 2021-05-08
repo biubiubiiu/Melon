@@ -14,7 +14,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-class FollowingActivity: DaggerAppCompatActivity() {
+internal class FollowingActivity: DaggerAppCompatActivity() {
 
     private val binding: ActivityCommonFragmentWithToolbarBinding by viewBinding()
 

@@ -10,7 +10,7 @@ import app.melon.user.databinding.FragmentEditOptionsBinding
 import app.melon.util.delegates.viewBinding
 
 
-class EditOptionsDialogFragment : DialogFragment(R.layout.fragment_edit_options) {
+internal class EditOptionsDialogFragment : DialogFragment(R.layout.fragment_edit_options) {
 
     private val binding: FragmentEditOptionsBinding by viewBinding()
 

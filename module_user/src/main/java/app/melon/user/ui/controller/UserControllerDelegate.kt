@@ -13,14 +13,14 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 
-class UserControllerDelegate @AssistedInject constructor(
+internal class UserControllerDelegate @AssistedInject constructor(
     @Assisted private val context: Context,
     private val userService: IUserService,
     private val locationHelper: LocationHelper,
     private val distanceFormatter: MelonDistanceFormatter
 ) : UserActions {
 
-    fun buildUserItem(
+    internal fun buildUserItem(
         dataProvider: () -> User,
         idProvider: () -> String = { "user_${dataProvider.invoke().id}" },
         showFollowButton: Boolean // TODO unused now
@@ -39,7 +39,7 @@ class UserControllerDelegate @AssistedInject constructor(
     }
 
     @AssistedFactory
-    interface Factory {
+    internal interface Factory {
         fun create(context: Context): UserControllerDelegate
     }
 }

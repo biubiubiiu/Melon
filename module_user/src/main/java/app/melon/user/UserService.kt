@@ -11,8 +11,6 @@ import javax.inject.Singleton
 class UserService : IUserService {
 
     override fun navigateToUserProfile(context: Context, uid: String) {
-        // TODO add business logic here
-//        UserProfileActivity.start(context, uid)
         ProfileActivity.start(context, uid)
     }
 

@@ -3,7 +3,7 @@ package app.melon.user.data.remote
 import app.melon.data.remote.LocationStruct
 import com.google.gson.annotations.SerializedName
 
-data class UserDetailResponse(
+internal data class UserDetailResponse(
     @SerializedName("id") val id: String = "",
     @SerializedName("username") val username: String = "",
     @SerializedName("avatarURL") val avatarUrl: String? = null,

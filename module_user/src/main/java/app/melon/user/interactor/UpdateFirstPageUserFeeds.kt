@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class UpdateFirstPageUserFeeds @Inject constructor(
+internal class UpdateFirstPageUserFeeds @Inject constructor(
     private val repository: UserRepository
 ) : SuspendingWorkInteractor<UpdateFirstPageUserFeeds.Params, Result<List<FeedAndAuthor>>>() {
 
@@ -22,5 +22,5 @@ class UpdateFirstPageUserFeeds @Inject constructor(
         }.also { loadingState.removeLoader() }
     }
 
-    data class Params(val uid: String)
+    internal data class Params(val uid: String)
 }

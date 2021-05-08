@@ -2,7 +2,7 @@ package app.melon.user.di
 
 import app.melon.user.UserService
 import app.melon.user.api.IUserService
-import app.melon.user.data.UserApiService
+import app.melon.user.data.UserApi
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,17 +20,17 @@ class UserModule {
 
     @Singleton
     @Provides
-    fun provideUserService() = UserService()
+    internal fun provideUserService() = UserService()
 }
 
 @Module
-abstract class UserServiceBinds {
+internal abstract class UserServiceBinds {
     @Binds
-    abstract fun bindUserService(service: UserService): IUserService
+    internal abstract fun bindUserService(service: UserService): IUserService
 }
 
 @Module
 internal class RemoteServiceModule {
     @Provides
-    fun provideUserApiService(retrofit: Retrofit) = retrofit.create(UserApiService::class.java)
+    internal fun provideUserApiService(retrofit: Retrofit) = retrofit.create(UserApi::class.java)
 }

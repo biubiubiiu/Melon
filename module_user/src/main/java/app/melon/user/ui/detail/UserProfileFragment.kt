@@ -15,7 +15,7 @@ import app.melon.util.formatter.MelonNumberFormatter
 import javax.inject.Inject
 
 
-class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
+internal class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
 
     @Inject internal lateinit var viewModelFactory: UserProfileViewModel.Factory
     @Inject internal lateinit var controllerFactory: UserProfileController.Factory
@@ -61,7 +61,7 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
 
     companion object {
         private const val KEY_USER_ID = "arg_user_id"
-        fun newInstance(uid: String): UserProfileFragment =
+        internal fun newInstance(uid: String): UserProfileFragment =
             UserProfileFragment().apply {
                 arguments = bundleOf(KEY_USER_ID to uid)
             }

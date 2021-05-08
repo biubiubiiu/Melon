@@ -9,15 +9,15 @@ import kotlinx.coroutines.flow.emptyFlow
 import javax.inject.Inject
 
 
-class UserListViewModel @Inject constructor(
+internal class UserListViewModel @Inject constructor(
     private val repo: UserRepository
 ) : ViewModel() {
 
-    fun refresh(): Flow<PagingData<User>> {
+    internal fun refresh(): Flow<PagingData<User>> {
         return emptyFlow() // TODO
     }
 
-    fun fetchNearbyUser(longitude: Double, latitude: Double): Flow<PagingData<User>> {
+    internal fun fetchNearbyUser(longitude: Double, latitude: Double): Flow<PagingData<User>> {
         return repo.getNearbyUser(longitude, latitude)
     }
 }

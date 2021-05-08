@@ -14,7 +14,7 @@ import app.melon.util.extensions.dpInt
 import com.airbnb.epoxy.TypedEpoxyController
 
 
-class EditProfileController(
+internal class EditProfileController(
     private val action: Action? = null
 ) : TypedEpoxyController<User>() {
 
@@ -77,7 +77,7 @@ class EditProfileController(
         }
     }
 
-    interface Action {
+    internal interface Action {
         fun onClickEditAvatar()
         fun onClickEditBackground()
         fun afterHometownChanged(content: String)

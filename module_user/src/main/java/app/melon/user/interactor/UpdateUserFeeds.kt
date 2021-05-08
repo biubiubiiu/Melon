@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
-class UpdateUserFeeds @Inject constructor(
+internal class UpdateUserFeeds @Inject constructor(
     private val repository: FeedRepository
 ) : PagingInteractor<UpdateUserFeeds.Params, FeedAndAuthor>() {
 
@@ -19,7 +19,7 @@ class UpdateUserFeeds @Inject constructor(
         return repository.getFeedsFromUser(params.uid)
     }
 
-    data class Params(
+    internal data class Params(
         val uid: String,
         override val pagingConfig: PagingConfig = PAGING_CONFIG
     ) : Parameters<FeedAndAuthor>

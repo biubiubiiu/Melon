@@ -15,8 +15,8 @@ import app.melon.account.api.UserManager
 import app.melon.base.framework.SingleEvent
 import app.melon.user.interactor.SyncAvatarUpdate
 import app.melon.user.interactor.UpdateAvatar
-import app.melon.util.base.Result
 import kotlinx.coroutines.Dispatchers
+import kotlin.Result
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -94,8 +94,8 @@ internal class ProfileImageViewModel constructor(
 
     init {
         viewModelScope.launch {
-            updateAvatar.observe().collectLatest {
-                _updateResult.postValue(it)
+            updateAvatar.observe().collectLatest { result ->
+                _updateResult.postValue(result)
             }
         }
     }

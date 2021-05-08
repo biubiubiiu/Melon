@@ -25,7 +25,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
-class UserProfileController @AssistedInject constructor(
+internal class UserProfileController @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val action: Action,
     private val factory: FeedControllerDelegate.Factory
@@ -134,12 +134,12 @@ class UserProfileController @AssistedInject constructor(
         }
     }
 
-    interface Action {
+    internal interface Action {
         fun onShowMoreButtonClick(view: View)
     }
 
     @AssistedFactory
-    interface Factory {
+    internal interface Factory {
         fun create(context: Context, action: Action): UserProfileController
     }
 }

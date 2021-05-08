@@ -9,7 +9,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 
-class UserPageController @AssistedInject constructor(
+internal class UserPageController @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val idProvider: (User?, Int) -> String,
     @Assisted private val showFollowButton: Boolean,
@@ -30,7 +30,7 @@ class UserPageController @AssistedInject constructor(
     }
 
     @AssistedFactory
-    interface Factory {
+    internal interface Factory {
         fun create(
             context: Context,
             idProvider: (User?, Int) -> String,
