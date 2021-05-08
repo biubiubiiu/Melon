@@ -60,6 +60,8 @@ object Modules {
     const val runtimePermissions = ":lib_permission"
     const val location = ":lib_location"
 
+
+    const val im = ":module_im"
     const val feed = ":module_feed"
     const val group = ":module_group"
     const val comment = ":module_comment"

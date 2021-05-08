@@ -35,6 +35,9 @@ android {
         }
 
         manifestPlaceholders["amap_api_key"] = gradleLocalProperties(rootDir).getProperty("amap_api_key")
+        manifestPlaceholders["JPUSH_PKGNAME"] = AndroidClient.appId
+        manifestPlaceholders["JPUSH_APPKEY"] = gradleLocalProperties(rootDir).getProperty("jpush_api_key")
+        manifestPlaceholders["JPUSH_CHANNEL"] = "developer-default"
     }
 
     buildTypes {
@@ -79,6 +82,7 @@ dependencies {
     implementation(project(Modules.account))
     implementation(project(Modules.event))
     implementation(project(Modules.feed))
+    implementation(project(Modules.im))
     implementation(project(Modules.comment))
     implementation(project(Modules.group))
     implementation(project(Modules.poi))

@@ -11,6 +11,7 @@ import app.melon.event.di.EventModule
 import app.melon.feed.di.FeedModule
 import app.melon.group.di.GroupBuilder
 import app.melon.home.di.HomeBuilder
+import app.melon.im.di.IMModule
 import app.melon.poi.di.PoiModule
 import app.melon.settings.di.SettingsModule
 import app.melon.splash.di.SplashBuilder
@@ -38,6 +39,7 @@ import javax.inject.Singleton
         HomeBuilder::class,
         ComposerModule::class,
         UserModule::class,
+        IMModule::class,
         EventModule::class,
         AccountModule::class,
         FeedModule::class,
