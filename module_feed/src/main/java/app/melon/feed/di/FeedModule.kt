@@ -1,6 +1,6 @@
 package app.melon.feed.di
 
-import app.melon.feed.data.FeedApiService
+import app.melon.feed.data.FeedApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -17,5 +17,5 @@ class FeedModule
 internal class RemoteServiceModule {
 
     @Provides
-    fun provideFeedService(retrofit: Retrofit) = retrofit.create(FeedApiService::class.java)
+    fun provideFeedService(retrofit: Retrofit) = retrofit.create(FeedApi::class.java)
 }

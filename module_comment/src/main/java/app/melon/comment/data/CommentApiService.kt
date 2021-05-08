@@ -3,13 +3,12 @@ package app.melon.comment.data
 import app.melon.comment.data.remote.CommentStruct
 import app.melon.data.dto.BaseApiResponse
 
-import app.melon.data.services.ApiService
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface CommentApiService : ApiService {
+interface CommentApiService {
 
     @GET("comment/{id}/list")
     fun list(

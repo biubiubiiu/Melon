@@ -7,7 +7,10 @@ import androidx.lifecycle.lifecycleScope
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BaseEpoxyListFragment
 import app.melon.data.resultentities.FeedAndAuthor
+import app.melon.feed.R
 import app.melon.feed.ui.controller.FeedDetailController
+import app.melon.feed.ui.state.FeedDetailViewState
+import app.melon.util.extensions.showSnackbarLong
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,8 +42,12 @@ class FeedDetailFragment : BaseEpoxyListFragment() {
                 controller.submitData(it)
             }
         }
-        viewModel.liveData.observe(viewLifecycleOwner, Observer {
-            controller.item = it.pageItem
+        viewModel.selectObserve(FeedDetailViewState::pageItem).observe(viewLifecycleOwner, Observer {
+            controller.item = it
+        })
+        viewModel.selectObserve(FeedDetailViewState::error).observe(viewLifecycleOwner, Observer {
+            it ?: return@Observer
+            binding.root.showSnackbarLong(it.message ?: getString(R.string.app_common_error_unknown_hint))
         })
     }
 

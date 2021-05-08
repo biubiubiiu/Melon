@@ -1,5 +1,6 @@
 package app.melon.user.data
 
+import androidx.annotation.WorkerThread
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -31,7 +32,7 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepository @Inject constructor(
-    private val feedService: FeedApiService,
+    private val feedApiService: FeedApiService,
     private val userService: UserApiService,
     private val database: MelonDatabase,
     private val listItemMapper: RemoteFeedListToFeedAndAuthor,
@@ -79,24 +80,21 @@ class UserRepository @Inject constructor(
         ).flow
     }
 
-    suspend fun getFirstPageUserFeeds(uid: String): Result<List<FeedAndAuthor>> {
-        return try {
-            val apiResponse = feedService.feedsFromUser(uid, 0, 5)
-                .executeWithRetry()
-                .toResult()
-                .getOrThrow()
-            if (!apiResponse.isSuccess) {
-                return ErrorResult(apiResponse.errorMessage.toException())
+    @WorkerThread
+    suspend fun getFirstPageUserFeeds(uid: String): kotlin.Result<List<FeedAndAuthor>> {
+        return feedApiService.feedsFromUser(uid, 0, 5).fold(
+            onSuccess = {
+                // At here, we don't need to store feeds and user information,
+                // so we just return what we got from remote
+                val result = withContext(Dispatchers.Default) {
+                    listItemMapper.toListMapper().invoke(it)
+                }
+                kotlin.Result.success(result)
+            },
+            onFailure = {
+                kotlin.Result.failure(it)
             }
-            // At here, we don't need to store feeds and user information,
-            // so we just return what we got from remote
-            val result = withContext(Dispatchers.Default) {
-                listItemMapper.toListMapper().invoke(apiResponse.data ?: emptyList())
-            }
-            return Success(result)
-        } catch (e: Exception) {
-            ErrorResult(e)
-        }
+        )
     }
 
     suspend fun updateAvatar(file: File): Result<String> {

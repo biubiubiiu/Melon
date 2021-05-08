@@ -1,6 +1,7 @@
 package app.melon.feed.data
 
 import android.net.Uri
+import androidx.annotation.WorkerThread
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -17,16 +18,11 @@ import app.melon.data.util.mergeUser
 import app.melon.feed.data.mapper.RemoteFeedDetailToFeedAndAuthor
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAndAuthor
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAuthorPair
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Result
-import app.melon.util.base.Success
-import app.melon.util.extensions.executeWithRetry
-import app.melon.util.extensions.toException
-import app.melon.util.extensions.toResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kotlin.runCatching
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,27 +30,19 @@ import javax.inject.Singleton
 @Singleton
 @OptIn(ExperimentalPagingApi::class)
 class FeedRepository @Inject constructor(
-    private val service: FeedApiService,
+    private val feedApiService: FeedApiService,
     private val database: MelonDatabase,
     private val itemMapper: RemoteFeedListToFeedAndAuthor,
     private val listItemMapper: RemoteFeedListToFeedAuthorPair,
     private val detailItemMapper: RemoteFeedDetailToFeedAndAuthor
 ) {
 
-    // TODO too long
-    suspend fun getFeedDetail(id: String): Result<FeedAndAuthor> {
-        return try {
-            val apiResponse = withContext(Dispatchers.IO) {
-                service.detail(id)
-                    .executeWithRetry()
-                    .toResult()
-                    .getOrThrow()
-            }
-            if (!apiResponse.isSuccess) {
-                return ErrorResult(apiResponse.errorMessage.toException())
-            }
+    @WorkerThread
+    suspend fun getFeedDetail(id: String): FeedStatus<FeedAndAuthor> {
+        return runCatching {
+            val response = feedApiService.detail(id).getOrThrow()
             val (feed, user) = withContext(Dispatchers.Default) {
-                detailItemMapper.map(apiResponse.data!!)
+                detailItemMapper.map(response)
             }
             database.runWithTransaction {
                 val localFeed = database.feedDao().getFeedWithId(feed.id) ?: Feed()
@@ -65,10 +53,15 @@ class FeedRepository @Inject constructor(
             val result = withContext(Dispatchers.IO) {
                 database.feedDao().getFeedAndAuthorWithId(id)
             }
-            Success(result!!)
-        } catch (e: Exception) {
-            ErrorResult(e)
-        }
+            result!!
+        }.fold(
+            onSuccess = { data ->
+                FeedStatus.Success(data)
+            },
+            onFailure = { throwable ->
+                FeedStatus.Error.Generic(throwable)
+            }
+        )
     }
 
     fun getFeedList(timestamp: String, @FeedPageType queryType: Int): Flow<PagingData<FeedAndAuthor>> {
@@ -77,7 +70,7 @@ class FeedRepository @Inject constructor(
             remoteMediator = FeedRemoteMediator(
                 timestamp,
                 queryType,
-                service,
+                feedApiService,
                 database,
                 listItemMapper
             ),
@@ -94,7 +87,7 @@ class FeedRepository @Inject constructor(
             config = PAGING_CONFIG,
             pagingSourceFactory = {
                 FeedPagingSource(
-                    fetcher = { page -> service.feedsFromUser(uid, page, PAGING_CONFIG.pageSize) },
+                    fetcher = { page -> feedApiService.feedsFromUser(uid, page, PAGING_CONFIG.pageSize) },
                     pageSize = PAGING_CONFIG.pageSize,
                     listItemMapper = itemMapper
                 )
@@ -107,7 +100,7 @@ class FeedRepository @Inject constructor(
             config = PAGING_CONFIG,
             pagingSourceFactory = {
                 FeedPagingSource(
-                    fetcher = { page -> service.nearby(longitude, latitude, page, PAGING_CONFIG.pageSize) },
+                    fetcher = { page -> feedApiService.nearby(longitude, latitude, page, PAGING_CONFIG.pageSize) },
                     pageSize = PAGING_CONFIG.pageSize,
                     listItemMapper = itemMapper
                 )
@@ -115,21 +108,9 @@ class FeedRepository @Inject constructor(
         ).flow
     }
 
+    @WorkerThread
     suspend fun postFeed(content: String, images: List<Uri>, location: PoiInfo?): Result<Boolean> {
-        return try {
-            val apiResponse = withContext(Dispatchers.IO) {
-                service.postFeed(content, images.map { it.toString() }, location.toString())
-                    .executeWithRetry()
-                    .toResult()
-                    .getOrThrow()
-            }
-            when {
-                !apiResponse.isSuccess -> ErrorResult(apiResponse.errorMessage.toException())
-                else -> Success(true)
-            }
-        } catch (e: Exception) {
-            ErrorResult(e)
-        }
+        return feedApiService.postFeed(content, images.map { it.toString() }, location.toString())
     }
 
     private companion object {

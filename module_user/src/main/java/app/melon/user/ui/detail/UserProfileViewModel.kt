@@ -41,11 +41,11 @@ class UserProfileViewModel @AssistedInject constructor(
             }
         }
         viewModelScope.launch {
-            updateFirstPageUserFeeds.observe().collectAndSetState {
-                when (it) {
-                    is Success -> copy(pageItems = it.get())
-                    is ErrorResult -> copy(error = it.throwable)
-                }
+            updateFirstPageUserFeeds.observe().collectAndSetState { result ->
+                result.fold(
+                    onSuccess = { copy(pageItems = it) },
+                    onFailure = { copy(error = it) }
+                )
             }
         }
         selectSubscribeDistinct(UserProfileViewState::uid) {

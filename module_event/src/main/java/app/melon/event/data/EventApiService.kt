@@ -2,13 +2,12 @@ package app.melon.event.data
 
 import app.melon.data.constants.EventPageType
 import app.melon.data.dto.BaseApiResponse
-import app.melon.data.services.ApiService
 import app.melon.event.data.remote.EventStruct
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface EventApiService : ApiService {
+interface EventApiService {
 
     @GET("events")
     fun events(

@@ -11,8 +11,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import app.melon.data.entities.PoiInfo
 import app.melon.feed.data.FeedRepository
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Success
 import dagger.android.AndroidInjection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -55,9 +53,10 @@ class PostFeedService : JobIntentService() {
     private fun handleActionPostFeed(content: String, images: ArrayList<Uri>, location: PoiInfo?) {
         ioScope.launch {
             sendPostingNotification()
-            when (val result = repo.postFeed(content, images, location)) {
-                is Success -> sendPostSuccessNotification()
-                is ErrorResult -> sendPostFailNotification(result.throwable.localizedMessage ?: "")
+            repo.postFeed(content, images, location).onSuccess {
+                sendPostSuccessNotification()
+            }.onFailure { throwable ->
+                sendPostFailNotification(throwable.localizedMessage ?: "")
             }
         }
     }

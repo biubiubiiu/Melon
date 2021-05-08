@@ -4,10 +4,9 @@ import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ReduxViewModel
 import app.melon.comment.interactor.UpdateCommentList
 import app.melon.data.resultentities.FeedAndAuthor
+import app.melon.feed.data.FeedStatus
 import app.melon.feed.interactors.UpdateFeedDetail
 import app.melon.feed.ui.state.FeedDetailViewState
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Success
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,8 +29,9 @@ class FeedDetailViewModel @Inject constructor(
         viewModelScope.launch {
             updateFeedDetail.observe().collectAndSetState {
                 when (it) {
-                    is Success -> copy(pageItem = it.get())
-                    is ErrorResult -> copy(error = it.throwable)
+                    is FeedStatus.Success -> copy(pageItem = it.data)
+                    is FeedStatus.Error -> copy(error = it.throwable)
+                    else -> copy() // TODO complete logic
                 }
             }
         }

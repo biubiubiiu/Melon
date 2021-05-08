@@ -1,53 +1,71 @@
 package app.melon.feed.data
 
+import app.melon.base.network.ApiBaseException
+import app.melon.base.network.MelonApiService
 import app.melon.data.constants.FeedPageType
-import app.melon.data.dto.BaseApiResponse
-import app.melon.data.services.ApiService
 import app.melon.feed.data.remote.FeedDetailResponse
 import app.melon.feed.data.remote.FeedListItemResponse
-import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface FeedApiService : ApiService {
 
-    @GET("feed/list")
-    fun list(
-        @Query("timestamp") time: String,
-        @Query("type") @FeedPageType type: Int,
-        @Query("page") page: Int,
-        @Query("page_size") pageSize: Int
-    ): Call<BaseApiResponse<List<FeedListItemResponse>>>
+@Singleton
+class FeedApiService @Inject constructor(
+    private val api: FeedApi
+) : MelonApiService() {
 
-    @GET("feed/detail/{id}")
-    fun detail(
-        @Path("id") id: String
-    ): Call<BaseApiResponse<FeedDetailResponse>>
+    suspend fun list(
+        time: String,
+        @FeedPageType type: Int,
+        page: Int,
+        pageSize: Int
+    ): Result<List<FeedListItemResponse>> {
+        return call {
+            api.list(time, type, page, pageSize)
+        }
+    }
 
-    @GET("user/{id}/posts")
-    fun feedsFromUser(
-        @Path("id") id: String,
-        @Query("page") page: Int,
-        @Query("page_size") pageSize: Int
-    ): Call<BaseApiResponse<List<FeedListItemResponse>>>
+    suspend fun detail(
+        id: String
+    ): Result<FeedDetailResponse> {
+        return call {
+            api.detail(id)
+        }
+    }
 
-    @GET("feed/list/nearby")
-    fun nearby(
-        @Query("longitude") longitude: Double,
-        @Query("latitude") latitude: Double,
-        @Query("page") page: Int,
-        @Query("page_size") pageSize: Int
-    ): Call<BaseApiResponse<List<FeedListItemResponse>>>
+    suspend fun feedsFromUser(
+        id: String,
+        page: Int,
+        pageSize: Int
+    ): Result<List<FeedListItemResponse>> {
+        return call {
+            api.feedsFromUser(id, page, pageSize)
+        }
+    }
 
-    @FormUrlEncoded
-    @POST("feed/post")
-    fun postFeed(
-        @Field("content") content: String,
-        @Field("images") images: List<String>,
-        @Field("location") location: String
-    ): Call<BaseApiResponse<Boolean>>
+    suspend fun nearby(
+        longitude: Double,
+        latitude: Double,
+        page: Int,
+        pageSize: Int
+    ): Result<List<FeedListItemResponse>> {
+        return call {
+            api.nearby(longitude, latitude, page, pageSize)
+        }
+    }
+
+    suspend fun postFeed(
+        content: String,
+        images: List<String>,
+        location: String
+    ): Result<Boolean> {
+        return call {
+            api.postFeed(content, images, location)
+        }
+    }
+
+    // TODO define custom error
+    override fun mapApiThrowable(message: String, code: Int): ApiBaseException {
+        return super.mapApiThrowable(message, code)
+    }
 }

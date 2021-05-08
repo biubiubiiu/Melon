@@ -13,21 +13,16 @@ import app.melon.data.resultentities.EntryWithFeedAndAuthor
 import app.melon.data.util.mergeFeed
 import app.melon.data.util.mergeUser
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAuthorPair
-import app.melon.util.extensions.executeWithRetry
-import app.melon.util.extensions.toException
-import app.melon.util.extensions.toResult
 import app.melon.util.mappers.toListMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
-import java.io.IOException
 
 
 @OptIn(ExperimentalPagingApi::class)
-class FeedRemoteMediator constructor(
+class FeedRemoteMediator(
     private val timestamp: String,
     @FeedPageType private val queryType: Int,
-    private val service: FeedApiService,
+    private val feedApiService: FeedApiService,
     private val database: MelonDatabase,
     private val listItemMapper: RemoteFeedListToFeedAuthorPair
 ) : RemoteMediator<Int, EntryWithFeedAndAuthor>() {
@@ -53,17 +48,12 @@ class FeedRemoteMediator constructor(
                 }
             }
 
-            val apiResponse = withContext(Dispatchers.IO) {
-                service.list(timestamp, queryType, page, state.config.pageSize)
-                    .executeWithRetry()
-                    .toResult()
+            val response = withContext(Dispatchers.IO) {
+                feedApiService.list(timestamp, queryType, page, state.config.pageSize)
                     .getOrThrow()
             }
-            if (!apiResponse.isSuccess) {
-                return MediatorResult.Error(apiResponse.errorMessage.toException())
-            }
             val items = withContext(Dispatchers.Default) {
-                listItemMapper.toListMapper().invoke(apiResponse.data ?: emptyList())
+                listItemMapper.toListMapper().invoke(response)
             }
             val entries = items.mapIndexed { index, (feed, _) ->
                 FeedEntry(
@@ -86,9 +76,7 @@ class FeedRemoteMediator constructor(
                 database.feedEntryDao().insertAll(entries)
             }
             MediatorResult.Success(endOfPaginationReached = items.isEmpty())
-        } catch (exception: IOException) {
-            MediatorResult.Error(exception)
-        } catch (exception: HttpException) {
+        } catch (exception: Exception) {
             MediatorResult.Error(exception)
         }
     }

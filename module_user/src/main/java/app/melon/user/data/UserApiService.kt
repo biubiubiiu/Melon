@@ -1,7 +1,6 @@
 package app.melon.user.data
 
 import app.melon.data.dto.BaseApiResponse
-import app.melon.data.services.ApiService
 import app.melon.user.data.remote.NearbyUserStruct
 import app.melon.user.data.remote.UpdateAvatarResponse
 import app.melon.user.data.remote.UserDetailResponse
@@ -20,7 +19,7 @@ import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 
-interface UserApiService : ApiService {
+interface UserApiService {
 
     @GET("nearby_user")
     fun nearby(
