@@ -7,11 +7,12 @@ import app.melon.account.api.IAccountService
 import app.melon.account.login.LoginActivity
 import app.melon.account.login.data.LoginRepository
 import app.melon.account.signup.SignUpStepFormActivity
-import app.melon.util.base.Success
 import app.melon.util.encrypt.EncryptUtils
 import app.melon.util.network.TokenManager
 import app.melon.util.storage.RegistrationStorage
 import app.melon.util.storage.Storage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -47,15 +48,18 @@ internal class AccountService @Inject constructor(
     }
 
     override suspend fun loginUser(username: String, password: String): Boolean {
-        val result = repo.login(username, password)
-        return if (result is Success) {
-            tokenManager.updateToken(token = result.get())
-            notifyLoginSuccess()
-            true
-        } else {
-            notifyLoginFailure()
-            false
-        }
+        return withContext(Dispatchers.IO) {
+            repo.login(username, password)
+        }.fold(
+            onSuccess = {
+                tokenManager.updateToken(token = it)
+                notifyLoginSuccess()
+                true
+            }, onFailure = {
+                notifyLoginFailure()
+                false
+            }
+        )
     }
 
     override suspend fun logout() {
@@ -65,13 +69,15 @@ internal class AccountService @Inject constructor(
 
     override suspend fun registerUser(username: String, password: String): Boolean {
         val encryptedPassword = EncryptUtils.getSHA512HashOfString(password)
-        val result = repo.signUp(username, encryptedPassword)
-        return if (result is Success) {
-            saveUser(username, encryptedPassword)
-            true
-        } else {
-            false
-        }
+        return withContext(Dispatchers.IO) {
+            repo.signUp(username, encryptedPassword)
+        }.fold(
+            onSuccess = {
+                saveUser(username, encryptedPassword)
+                true
+            },
+            onFailure = { false }
+        )
     }
 
     private fun saveUser(username: String, password: String) {

@@ -1,31 +1,28 @@
 package app.melon.account.signup.data
 
-import app.melon.account.data.AccountApiService
-import app.melon.util.base.Result
-import app.melon.util.base.Success
+import androidx.annotation.WorkerThread
+import app.melon.account.AccountApiService
+import app.melon.util.encrypt.EncryptUtils
 import javax.inject.Inject
+import kotlin.runCatching
+
 
 internal class SignUpDataSource @Inject constructor(
-    private val service: AccountApiService
+    private val accountApiService: AccountApiService
 ) {
 
-    suspend fun signUp(username: String, password: String): Result<Boolean> {
-//        return try {
-//            val response = withContext(Dispatchers.IO) {
-//                service.register(
-//                    username = username,
-//                    password = EncryptUtils.getSHA512HashOfString(password)
-//                )
-//                    .executeWithRetry()
-//            }
-//            when {
-//                response.isSuccessful && response.body()?.code == 200 -> Success(true)
-//                else -> ErrorResult(HttpException(response))
-//            }
-//        } catch (e: Exception) {
-//            ErrorResult(e)
-//        }
-
-        return Success(true)
+    @WorkerThread
+    internal suspend fun signUp(username: String, password: String): Result<Boolean> {
+        return Result.success(true) // TODO remove this line
+        return runCatching {
+            val response = accountApiService.register(username, password).getOrThrow()
+        }.fold(
+            onSuccess = {
+                Result.success(true)
+            },
+            onFailure = {
+                Result.failure(it)
+            }
+        )
     }
 }

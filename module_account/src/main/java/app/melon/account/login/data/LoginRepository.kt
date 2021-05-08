@@ -2,7 +2,6 @@ package app.melon.account.login.data
 
 import app.melon.account.signup.data.SignUpDataSource
 import javax.inject.Inject
-import app.melon.util.base.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Singleton

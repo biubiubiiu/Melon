@@ -2,14 +2,12 @@ package app.melon.account
 
 import app.melon.account.api.IAccountService
 import app.melon.account.api.UserManager
-import app.melon.account.data.AccountApiService
 import app.melon.account.data.mapper.RemoteUserDetailToUser
 import app.melon.data.MelonDatabase
 import app.melon.data.entities.User
 import app.melon.data.util.mergeUser
-import app.melon.util.extensions.executeWithRetry
-import app.melon.util.extensions.toResult
 import kotlinx.coroutines.Dispatchers
+import kotlin.runCatching
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.BufferOverflow
@@ -30,7 +28,7 @@ import javax.inject.Singleton
 
 @Singleton
 internal class UserManagerImpl @Inject constructor(
-    private val service: AccountApiService,
+    private val accountApiService: AccountApiService,
     private val mapper: RemoteUserDetailToUser,
     private val database: MelonDatabase
 ) : UserManager(), IAccountService.Observer {
@@ -93,23 +91,19 @@ internal class UserManagerImpl @Inject constructor(
     }
 
     // TODO fail fast when network is not available
+
     private suspend fun fetchUserDetail(): User? {
-        return try {
+        return runCatching {
             val response = withContext(Dispatchers.IO) {
-                service.fetchUserDetail()
-                    .executeWithRetry()
-                    .toResult()
-                    .getOrThrow()
+                accountApiService.fetchUserDetail().getOrThrow()
             }
-            if (!response.isSuccess) {
-                return null
+            val result = withContext(Dispatchers.Default) {
+                mapper.map(response)
             }
-            val data = response.data ?: return null
-            return withContext(Dispatchers.Default) {
-                mapper.map(data)
-            }
-        } catch (e: Exception) {
-            null
-        }
+            result
+        }.fold(
+            onSuccess = { it },
+            onFailure = { null }
+        )
     }
 }

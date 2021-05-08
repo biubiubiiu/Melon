@@ -1,49 +1,43 @@
 package app.melon.account.login.data
 
-import app.melon.account.data.AccountApiService
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Result
-import app.melon.util.base.Success
-import java.io.IOException
+import androidx.annotation.WorkerThread
+import app.melon.account.AccountApiService
+import kotlin.runCatching
 import javax.inject.Inject
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 internal class LoginDataSource @Inject constructor(
-    private val service: AccountApiService
+    private val accountApiService: AccountApiService
 ) {
 
+    @WorkerThread
     suspend fun login(username: String, password: String): Result<String> {
-        return try {
-//            val response = withContext(Dispatchers.IO) {
-//                service.login(
-//                    username = username,
-//                    password = EncryptUtils.getSHA512HashOfString(password)
-//                ).execute()
-//            }
-//            when {
-//                response.isSuccessful && response.body()?.code == 200 -> {
-//                    val token = response.body()?.result?.token
-//                    if (token != null) {
-//                        Success(token)
-//                    } else {
-//                        ErrorResult(HttpException(response))
-//                    }
-//                }
-//                else -> return ErrorResult(HttpException(response))
-//            }
-            Success("Fake Token")
-        } catch (e: Throwable) {
-            ErrorResult(IOException("Error logging in", e))
-        }
+        return Result.success("Fake Token") // TODO remove this line
+        return runCatching {
+            val response = accountApiService.login(username, password).getOrThrow()
+            response.result!!.token!!
+        }.fold(
+            onSuccess = {
+                Result.success(it)
+            }, onFailure = {
+                Result.failure(it)
+            }
+        )
     }
 
+    @WorkerThread
     suspend fun logout(): Result<Any> {
         // TODO: revoke authentication
-//        return withContext(Dispatchers.IO) {
-//            service.logout()
-//        }
-        return Success(Any())
+        return Result.success(Any()) // TODO remove this line
+        return accountApiService.logout().fold(
+            onSuccess = {
+                Result.success(Any())
+            },
+            onFailure = {
+                Result.failure(it)
+            }
+        )
     }
 }
