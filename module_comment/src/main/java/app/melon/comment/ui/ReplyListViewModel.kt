@@ -2,11 +2,10 @@ package app.melon.comment.ui
 
 import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ReduxViewModel
+import app.melon.comment.data.CommentStatus
 import app.melon.comment.interactor.UpdateComment
 import app.melon.comment.interactor.UpdateReplyList
 import app.melon.comment.ui.state.ReplyListViewState
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -25,8 +24,8 @@ internal class ReplyListViewModel @AssistedInject constructor(
         viewModelScope.launch {
             updateComment.observe().collectAndSetState {
                 when (it) {
-                    is Success -> copy(viewComment = it.get())
-                    is ErrorResult -> copy(error = it.throwable)
+                    is CommentStatus.Success -> copy(viewComment = it.data)
+                    is CommentStatus.Error -> copy(error = it.throwable)
                 }
             }
         }

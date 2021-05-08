@@ -3,7 +3,7 @@ package app.melon.comment.di
 import app.melon.base.scope.ActivityScope
 import app.melon.base.scope.FragmentScope
 import app.melon.comment.CommentReplyActivity
-import app.melon.comment.data.CommentApiService
+import app.melon.comment.data.CommentApi
 import app.melon.comment.ui.ReplyListFragment
 import dagger.Module
 import dagger.Provides
@@ -33,5 +33,5 @@ internal abstract class CommentBuilder {
 @Module
 internal class RemoteServiceModule {
     @Provides
-    internal fun provideCommentApiService(retrofit: Retrofit) = retrofit.create(CommentApiService::class.java)
+    internal fun provideCommentApiService(retrofit: Retrofit) = retrofit.create(CommentApi::class.java)
 }

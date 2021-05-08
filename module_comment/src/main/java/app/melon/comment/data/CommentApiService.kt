@@ -1,31 +1,41 @@
 package app.melon.comment.data
 
+import app.melon.base.network.MelonApiService
 import app.melon.comment.data.remote.CommentStruct
-import app.melon.data.dto.BaseApiResponse
+import javax.inject.Inject
+import javax.inject.Singleton
 
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
 
-interface CommentApiService {
+@Singleton
+class CommentApiService @Inject constructor(
+    private val api: CommentApi
+) : MelonApiService() {
 
-    @GET("comment/{id}/list")
-    fun list(
-        @Path("id") id: String,
-        @Query("page") page: Int,
-        @Query("page_size") pageSize: Int
-    ): Call<BaseApiResponse<List<CommentStruct>>>
+    internal suspend fun list(
+        id: String,
+        page: Int,
+        pageSize: Int
+    ): Result<List<CommentStruct>> {
+        return call {
+            api.list(id, page, pageSize)
+        }
+    }
 
-    @GET("comment/{id}/detail")
-    fun detail(
-        @Path("id") id: String
-    ): Call<BaseApiResponse<CommentStruct>>
+    suspend fun detail(
+        id: String
+    ): Result<CommentStruct> {
+        return call {
+            api.detail(id)
+        }
+    }
 
-    @GET("comment/{id}/replies")
-    fun reply(
-        @Path("id") id: String,
-        @Query("page") page: Int,
-        @Query("page_size") pageSize: Int
-    ): Call<BaseApiResponse<List<CommentStruct>>>
+    suspend fun reply(
+        id: String,
+        page: Int,
+        pageSize: Int
+    ): Result<List<CommentStruct>> {
+        return call {
+            api.reply(id, page, pageSize)
+        }
+    }
 }

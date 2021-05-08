@@ -1,16 +1,12 @@
 package app.melon.comment.data
 
+import androidx.annotation.WorkerThread
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.melon.comment.data.mapper.RemoteCommentToCommentAndAuthor
 import app.melon.data.resultentities.CommentAndAuthor
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Result
-import app.melon.util.base.Success
-import app.melon.util.extensions.executeWithRetry
-import app.melon.util.extensions.toException
-import app.melon.util.extensions.toResult
+import kotlin.runCatching
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -24,7 +20,7 @@ class CommentRepository @Inject constructor(
     private val itemMapper: RemoteCommentToCommentAndAuthor
 ) {
 
-    fun fetchCommentList(id: String, config: PagingConfig): Flow<PagingData<CommentAndAuthor>> {
+    internal fun fetchCommentList(id: String, config: PagingConfig): Flow<PagingData<CommentAndAuthor>> {
         return Pager(
             config = config,
             pagingSourceFactory = {
@@ -33,7 +29,7 @@ class CommentRepository @Inject constructor(
         ).flow
     }
 
-    fun fetchReplyList(id: String, config: PagingConfig): Flow<PagingData<CommentAndAuthor>> {
+    internal fun fetchReplyList(id: String, config: PagingConfig): Flow<PagingData<CommentAndAuthor>> {
         return Pager(
             config = config,
             pagingSourceFactory = {
@@ -42,23 +38,21 @@ class CommentRepository @Inject constructor(
         ).flow
     }
 
-    suspend fun getCommentDetail(id: String): Result<CommentAndAuthor> {
-        return try {
-            val apiResponse = withContext(Dispatchers.IO) {
-                service.detail(id)
-                    .executeWithRetry()
-                    .toResult()
-                    .getOrThrow()
-            }
-            if (!apiResponse.isSuccess) {
-                return ErrorResult(apiResponse.errorMessage.toException())
-            }
+    @WorkerThread
+    internal suspend fun getCommentDetail(id: String): CommentStatus<CommentAndAuthor> {
+        return runCatching {
+            val response = service.detail(id).getOrThrow()
             val item = withContext(Dispatchers.Default) {
-                itemMapper.map(apiResponse.data!!)
+                itemMapper.map(response)
             }
-            Success(item)
-        } catch (e: Exception) {
-            ErrorResult(e)
-        }
+            item
+        }.fold(
+            onSuccess = {
+                CommentStatus.Success(it)
+            },
+            onFailure = {
+                CommentStatus.Error.Generic(it)
+            }
+        )
     }
 }
