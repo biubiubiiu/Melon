@@ -1,5 +1,8 @@
 package app.melon.home.discovery
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import app.melon.R
@@ -16,15 +19,12 @@ import app.melon.feed.PostFeedService
 import app.melon.feed.ui.CommonFeedFragment
 import app.melon.home.ComposerEntry
 import app.melon.home.base.HomepageToolbarFragment
-import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getResourceString
 import com.google.android.material.tabs.TabLayout
 import javax.inject.Inject
 
 
-class DiscoveryFragment : HomepageToolbarFragment(R.layout.fragment_discovery) {
-
-    private val binding: FragmentDiscoveryBinding by viewBinding()
+class DiscoveryFragment : HomepageToolbarFragment<FragmentDiscoveryBinding>() {
 
     override val toolbar: Toolbar
         get() = binding.toolbar
@@ -33,6 +33,12 @@ class DiscoveryFragment : HomepageToolbarFragment(R.layout.fragment_discovery) {
     private val tabLayout get() = binding.backbone.tabLayout
 
     @Inject internal lateinit var userManager: UserManager
+
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = FragmentDiscoveryBinding.inflate(inflater, container, false)
 
     override fun setupView() {
         super.setupView()

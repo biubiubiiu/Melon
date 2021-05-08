@@ -1,5 +1,8 @@
 package app.melon.home.anonymous
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import app.melon.R
@@ -17,15 +20,12 @@ import app.melon.feed.PostFeedService
 import app.melon.feed.ui.CommonFeedFragment
 import app.melon.home.ComposerEntry
 import app.melon.home.base.HomepageToolbarFragment
-import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getResourceString
 import com.google.android.material.tabs.TabLayout
 import javax.inject.Inject
 
 
-class ForumFragment : HomepageToolbarFragment(R.layout.fragment_forum) {
-
-    private val binding: FragmentForumBinding by viewBinding()
+class ForumFragment : HomepageToolbarFragment<FragmentForumBinding>() {
 
     override val toolbar: Toolbar
         get() = binding.toolbar
@@ -34,6 +34,12 @@ class ForumFragment : HomepageToolbarFragment(R.layout.fragment_forum) {
     private val tabLayout get() = binding.backbone.tabLayout
 
     @Inject internal lateinit var userManager: UserManager
+
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = FragmentForumBinding.inflate(inflater, container, false)
 
     override fun setupView() {
         super.setupView()

@@ -4,20 +4,19 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import app.melon.base.framework.BaseFragment
 import app.melon.base.ui.decoration.SpaceItemDecoration
 import app.melon.base.ui.extensions.makeInvisible
 import app.melon.base.ui.extensions.makeVisible
@@ -37,14 +36,17 @@ import coil.load
 import coil.transform.CircleCropTransformation
 
 
-internal class ContentEditFragment : Fragment() {
-
-    private var _binding: FragmentContentEditBinding? = null
-    private val binding get() = _binding!!
+internal class ContentEditFragment : BaseFragment<FragmentContentEditBinding>() {
 
     private val composerViewModel: ComposerViewModel by activityViewModels()
 
     private val photosAdapter = PhotoAdapter(::removePhoto)
+
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = FragmentContentEditBinding.inflate(inflater, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,18 +56,8 @@ internal class ContentEditFragment : Fragment() {
         })
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentContentEditBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onViewCreated(binding: FragmentContentEditBinding, savedInstanceState: Bundle?) {
+        super.onViewCreated(binding, savedInstanceState)
         val deferringInsetsListener = RootViewDeferringInsetsCallback(
             persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
             deferredInsetTypes = WindowInsetsCompat.Type.ime()
@@ -148,11 +140,6 @@ internal class ContentEditFragment : Fragment() {
                 binding.location.makeInvisible()
             }
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun showPhotos(images: List<MediaStoreImage>) {

@@ -1,23 +1,21 @@
 package app.melon.user.ui.detail
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import app.melon.user.R
+import app.melon.base.framework.BaseFragment
 import app.melon.user.databinding.FragmentUserProfileBinding
-import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.viewModelProviderFactoryOf
 import app.melon.util.formatter.MelonNumberFormatter
-import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
-
-    private val binding: FragmentUserProfileBinding by viewBinding()
+class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
 
     @Inject internal lateinit var viewModelFactory: UserProfileViewModel.Factory
     @Inject internal lateinit var controllerFactory: UserProfileController.Factory
@@ -44,8 +42,14 @@ class UserProfileFragment : DaggerFragment(R.layout.fragment_user_profile) {
         )
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = FragmentUserProfileBinding.inflate(inflater, container, false)
+
+    override fun onViewCreated(binding: FragmentUserProfileBinding, savedInstanceState: Bundle?) {
+        super.onViewCreated(binding, savedInstanceState)
 
         binding.userProfileContent.userProfileList.setController(controller)
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import app.melon.base.databinding.FragmentEpoxyListBinding
+import app.melon.base.lazyload.LazyLoadFragment
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.Typed2EpoxyController
 import com.airbnb.epoxy.Typed3EpoxyController
@@ -12,7 +13,7 @@ import com.airbnb.epoxy.Typed4EpoxyController
 import com.airbnb.epoxy.TypedEpoxyController
 
 
-abstract class BaseEpoxyListFragment : FragmentWithBinding<FragmentEpoxyListBinding>() {
+abstract class BaseEpoxyListFragment : LazyLoadFragment<FragmentEpoxyListBinding>() {
 
     abstract val controller: EpoxyController
 

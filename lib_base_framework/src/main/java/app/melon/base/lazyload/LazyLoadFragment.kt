@@ -1,13 +1,11 @@
 package app.melon.base.lazyload
 
-import androidx.annotation.CallSuper
-import androidx.annotation.LayoutRes
-import dagger.android.support.DaggerFragment
+import androidx.viewbinding.ViewBinding
+import app.melon.base.framework.BaseFragment
+import app.melon.base.framework.lifecycle.FragmentLifecycleObserver
 
 
-open class LazyLoadFragment(
-    @LayoutRes contentLayoutId: Int = 0
-) : DaggerFragment(contentLayoutId), IFragmentVisibility {
+abstract class LazyLoadFragment<V : ViewBinding> : BaseFragment<V>(), IFragmentVisibility {
 
     // if the fragment is visible to the user.
     private var mIsFragmentVisible = false
@@ -17,44 +15,9 @@ open class LazyLoadFragment(
 
     override val isVisibleToUser: Boolean get() = mIsFragmentVisible
 
-    @CallSuper
-    override fun onResume() {
-        super.onResume()
-        determineFragmentVisible()
-    }
-
-    @CallSuper
-    override fun onPause() {
-        super.onPause()
-        determineFragmentInvisible()
-    }
-
-    @CallSuper
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-
-        if (hidden) {
-            determineFragmentInvisible()
-        } else {
-            determineFragmentVisible()
-        }
-    }
-
-    @CallSuper
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        @Suppress("DEPRECATION")
-        super.setUserVisibleHint(isVisibleToUser)
-
-        if (isVisibleToUser) {
-            determineFragmentVisible()
-        } else {
-            determineFragmentInvisible()
-        }
-    }
-
     private fun determineFragmentVisible() {
         val parent = parentFragment
-        if (parent != null && parent is LazyLoadFragment) {
+        if (parent != null && parent is LazyLoadFragment<*>) {
             if (!parent.isVisibleToUser) {
                 // Regard this fragment as invisible when its Parent Fragment is invisible
                 return
@@ -85,7 +48,7 @@ open class LazyLoadFragment(
 
     private fun determineChildFragmentVisible() {
         childFragmentManager.fragments.forEach {
-            if (it is LazyLoadFragment) {
+            if (it is LazyLoadFragment<*>) {
                 it.determineFragmentVisible()
             }
         }
@@ -93,9 +56,39 @@ open class LazyLoadFragment(
 
     private fun determineChildFragmentInvisible() {
         childFragmentManager.fragments.forEach {
-            if (it is LazyLoadFragment) {
+            if (it is LazyLoadFragment<*>) {
                 it.determineFragmentInvisible()
             }
         }
+    }
+
+    inner class LazyLoadObserver : FragmentLifecycleObserver {
+        override fun onResume() {
+            determineFragmentVisible()
+        }
+
+        override fun onPause() {
+            determineFragmentInvisible()
+        }
+
+        override fun onHiddenChanged(hidden: Boolean) {
+            if (hidden) {
+                determineFragmentInvisible()
+            } else {
+                determineFragmentVisible()
+            }
+        }
+
+        override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+            if (isVisibleToUser) {
+                determineFragmentVisible()
+            } else {
+                determineFragmentInvisible()
+            }
+        }
+    }
+
+    init {
+        registerObserver(LazyLoadObserver())
     }
 }

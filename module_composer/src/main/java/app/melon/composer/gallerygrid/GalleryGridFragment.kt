@@ -2,12 +2,10 @@ package app.melon.composer.gallerygrid
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MediatorLiveData
@@ -16,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
+import app.melon.base.framework.BaseFragment
 import app.melon.composer.ComposerViewModel
 import app.melon.composer.R
 import app.melon.composer.common.AddMediaViewModel
@@ -28,10 +27,7 @@ import app.melon.permission.PermissionHelperOwner
 import kotlinx.coroutines.launch
 
 
-internal class GalleryGridFragment : Fragment() {
-
-    private var _binding: FragmentGalleryGridBinding? = null
-    private val binding get() = _binding!!
+internal class GalleryGridFragment : BaseFragment<FragmentGalleryGridBinding>() {
 
     private val viewModel: GalleryGridViewModel by viewModels()
     private val addMediaViewModel: AddMediaViewModel by viewModels()
@@ -41,6 +37,12 @@ internal class GalleryGridFragment : Fragment() {
 
     private val galleryAdapter = GalleryItemAdapter(::updateSelection)
     private val cameraAdapter = CameraAdapter(::takePicture)
+
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = FragmentGalleryGridBinding.inflate(inflater, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,17 +81,8 @@ internal class GalleryGridFragment : Fragment() {
         })
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentGalleryGridBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated(binding: FragmentGalleryGridBinding, savedInstanceState: Bundle?) {
+        super.onViewCreated(binding, savedInstanceState)
 
         val insetsListener = OnApplyWindowInsetsListener { v, insets ->
             val type = WindowInsetsCompat.Type.systemBars()
@@ -121,11 +114,6 @@ internal class GalleryGridFragment : Fragment() {
                 else -> return@Observer
             }
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun takePicture() {

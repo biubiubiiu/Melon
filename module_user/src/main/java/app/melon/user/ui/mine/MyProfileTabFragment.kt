@@ -1,9 +1,11 @@
 package app.melon.user.ui.mine
 
 import android.os.Bundle
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import app.melon.base.event.TabReselectEvent
+import app.melon.base.framework.BaseFragment
 import app.melon.base.lazyload.LazyFragmentPagerAdapter
 import app.melon.base.ui.databinding.FragmentCommonTabsBinding
 import app.melon.data.constants.MY_ANONYMOUS_POST
@@ -12,21 +14,23 @@ import app.melon.data.constants.MY_POST
 import app.melon.feed.FeedPageConfig
 import app.melon.feed.ui.CommonFeedFragment
 import app.melon.user.R
-import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getResourceString
 import com.google.android.material.tabs.TabLayout
-import dagger.android.support.DaggerFragment
 
 
-class MyProfileTabFragment : DaggerFragment(R.layout.fragment_common_tabs) {
-
-    private val binding: FragmentCommonTabsBinding by viewBinding()
+class MyProfileTabFragment : BaseFragment<FragmentCommonTabsBinding>() {
 
     private val viewPager get() = binding.viewpager
     private val tabLayout get() = binding.tabLayout
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = FragmentCommonTabsBinding.inflate(inflater, container, false)
+
+    override fun onViewCreated(binding: FragmentCommonTabsBinding, savedInstanceState: Bundle?) {
+        super.onViewCreated(binding, savedInstanceState)
 
         viewPager.adapter = object : LazyFragmentPagerAdapter(childFragmentManager) {
 

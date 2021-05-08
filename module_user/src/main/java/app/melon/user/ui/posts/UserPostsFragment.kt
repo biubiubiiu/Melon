@@ -1,30 +1,29 @@
 package app.melon.user.ui.posts
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
-import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import app.melon.base.framework.BaseFragment
 import app.melon.user.R
 import app.melon.user.databinding.FragmentUserPostsBinding
-import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.ifNotEmpty
 import app.melon.util.extensions.viewModelProviderFactoryOf
-import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
-class UserPostsFragment : DaggerFragment(R.layout.fragment_user_posts) {
+
+class UserPostsFragment : BaseFragment<FragmentUserPostsBinding>() {
 
     private val transitionName by lazy { requireArguments().getString(KEY_TRANSITION_NAME, "") }
 
     @Inject internal lateinit var viewModelFactory: UserPostsViewModel.Factory
     @Inject internal lateinit var controllerFactory: UserPostsController.Factory
-
-    private val binding: FragmentUserPostsBinding by viewBinding()
 
     private val viewModel: UserPostsViewModel by viewModels {
         viewModelProviderFactoryOf {
@@ -39,6 +38,12 @@ class UserPostsFragment : DaggerFragment(R.layout.fragment_user_posts) {
         controllerFactory.create(requireContext())
     }
 
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = FragmentUserPostsBinding.inflate(inflater, container, false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,9 +55,9 @@ class UserPostsFragment : DaggerFragment(R.layout.fragment_user_posts) {
         setHasOptionsMenu(true)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        transitionName.ifNotEmpty { ViewCompat.setTransitionName(view, it) }
+    override fun onViewCreated(binding: FragmentUserPostsBinding, savedInstanceState: Bundle?) {
+        super.onViewCreated(binding, savedInstanceState)
+        transitionName.ifNotEmpty { ViewCompat.setTransitionName(binding.root, it) }
 
         binding.recyclerView.setController(controller)
         setupToolbar()

@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
-import app.melon.base.lazyload.LazyLoadFragment
+import dagger.android.support.DaggerFragment
 
 
-abstract class FragmentWithBinding<V : ViewBinding> : LazyLoadFragment() {
+abstract class FragmentWithBinding<V : ViewBinding> : DaggerFragment() {
 
     private var _binding: V? = null
     protected val binding get() = _binding!!

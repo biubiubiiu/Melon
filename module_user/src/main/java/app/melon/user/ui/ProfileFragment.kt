@@ -3,8 +3,9 @@ package app.melon.user.ui
 import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import app.melon.base.framework.BaseFragment
 import app.melon.base.ui.MelonButton
 import app.melon.user.EditProfileActivity
 import app.melon.user.FollowersActivity
@@ -25,7 +27,6 @@ import app.melon.user.ui.detail.UserProfileViewModel
 import app.melon.user.ui.detail.UserProfileViewState
 import app.melon.user.ui.detail.create
 import app.melon.user.ui.mine.MyProfileTabFragment
-import app.melon.util.delegates.viewBinding
 import app.melon.util.event.OnBackPressedHandler
 import app.melon.util.extensions.getColorCompat
 import app.melon.util.extensions.resolveTheme
@@ -34,14 +35,12 @@ import app.melon.util.formatter.MelonNumberFormatter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.appbar.AppBarLayout
-import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import kotlin.math.min
 
 
-class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressedHandler {
+class ProfileFragment : BaseFragment<FragmentProfileBinding>(), OnBackPressedHandler {
 
-    private val binding: FragmentProfileBinding by viewBinding()
     private val headerBinding: ContentProfileHeaderBinding get() = binding.header
 
     private val uid: String get() = arguments?.getString(KEY_USER_ID) ?: ""
@@ -62,8 +61,14 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressed
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = FragmentProfileBinding.inflate(inflater, container, false)
+
+    override fun onViewCreated(binding: FragmentProfileBinding, savedInstanceState: Bundle?) {
+        super.onViewCreated(binding, savedInstanceState)
         if (savedInstanceState == null) {
             val fragment = if (isMyProfile) {
                 MyProfileTabFragment()
@@ -113,8 +118,10 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressed
     private fun setupAnimation() {
         val backgroundHeight = resources.getDimensionPixelSize(R.dimen.my_profile_background_height)
         val actionBarHeight =
-            TypedValue.complexToDimensionPixelSize(requireContext().resolveTheme(android.R.attr.actionBarSize),
-                resources.displayMetrics)
+            TypedValue.complexToDimensionPixelSize(
+                requireContext().resolveTheme(android.R.attr.actionBarSize),
+                resources.displayMetrics
+            )
         val triggerEdge = backgroundHeight - actionBarHeight
 
         val avatarSize = resources.getDimensionPixelSize(R.dimen.my_profile_avatar_size)
@@ -165,7 +172,7 @@ class ProfileFragment : DaggerFragment(R.layout.fragment_profile), OnBackPressed
             viewModel.toggleFollowState()
 
             // testing
-            headerBinding.follow.update(MelonButton.Style.SOLID,  R.string.app_common_following)
+            headerBinding.follow.update(MelonButton.Style.SOLID, R.string.app_common_following)
         }
     }
 

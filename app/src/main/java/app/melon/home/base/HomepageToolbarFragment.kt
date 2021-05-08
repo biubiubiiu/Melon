@@ -1,26 +1,24 @@
 package app.melon.home.base
 
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.CallSuper
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.viewbinding.ViewBinding
+import app.melon.base.framework.BaseFragment
 import app.melon.home.MainViewModel
-import dagger.android.support.DaggerFragment
 
-abstract class HomepageToolbarFragment(
-    @LayoutRes contentLayoutId: Int
-) : DaggerFragment(contentLayoutId) {
+
+abstract class HomepageToolbarFragment<V : ViewBinding> : BaseFragment<V>() {
 
     abstract val toolbar: Toolbar
 
     private val mainViewModel: MainViewModel by activityViewModels()
 
     @CallSuper
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated(binding: V, savedInstanceState: Bundle?) {
+        super.onViewCreated(binding, savedInstanceState)
         if (savedInstanceState == null) {
             setupView()
         }

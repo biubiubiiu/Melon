@@ -1,26 +1,23 @@
 package app.melon.home.nearby
 
 import android.os.Bundle
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.distinctUntilChanged
-import app.melon.R
 import app.melon.databinding.FragmentNearbyBinding
 import app.melon.home.base.HomepageToolbarFragment
 import app.melon.location.LocateFail
 import app.melon.location.LocateSuccess
 import app.melon.user.api.IUserService
 import app.melon.user.api.NearbyUserList
-import app.melon.util.delegates.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 
-class NearbyFragment : HomepageToolbarFragment(R.layout.fragment_nearby) {
-
-    private val binding: FragmentNearbyBinding by viewBinding()
+class NearbyFragment : HomepageToolbarFragment<FragmentNearbyBinding>() {
 
     override val toolbar: Toolbar
         get() = binding.toolbar
@@ -29,13 +26,19 @@ class NearbyFragment : HomepageToolbarFragment(R.layout.fragment_nearby) {
 
     @Inject internal lateinit var userService: IUserService
 
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = FragmentNearbyBinding.inflate(inflater, container, false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.tryLocate()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated(binding: FragmentNearbyBinding, savedInstanceState: Bundle?) {
+        super.onViewCreated(binding, savedInstanceState)
         viewModel.locateResult.distinctUntilChanged().observe(viewLifecycleOwner, Observer {
             when (it) {
                 is LocateSuccess -> showNearbyUsers(it.longitude, it.latitude)
