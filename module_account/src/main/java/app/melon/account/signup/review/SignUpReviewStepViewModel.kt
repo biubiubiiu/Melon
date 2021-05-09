@@ -10,8 +10,6 @@ import app.melon.account.api.IAccountService
 import app.melon.account.signup.data.SignUpForm
 import app.melon.account.signup.state.SignUpResult
 import app.melon.base.scope.ActivityScope
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Success
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -37,11 +35,11 @@ internal class SignUpReviewStepViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
-            signUpUser.observe().collect {
-                if (it is Success) {
+            signUpUser.observe().collect { result ->
+                result.onSuccess {
                     _signUpResult.value = SignUpResult(success = true)
-                } else if (it is ErrorResult) {
-                    val errorMessage = determineFailReason(it.throwable)
+                }.onFailure {
+                    val errorMessage = determineFailReason(it)
                     _signUpResult.value = SignUpResult(success = false, error = errorMessage)
                 }
             }

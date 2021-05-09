@@ -1,7 +1,6 @@
 package app.melon.util.timesync
 
-import app.melon.util.extensions.executeWithRetry
-import app.melon.util.extensions.toResult
+import app.melon.util.extensions.fetchBodyWithRetry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
@@ -19,10 +18,7 @@ class TimeSyncer @Inject constructor(
         return runCatching {
             withTimeout(5000L) {
                 val response = withContext(Dispatchers.IO) {
-                    service.serverTime()
-                        .executeWithRetry()
-                        .toResult()
-                        .getOrThrow()
+                    service.serverTime().fetchBodyWithRetry()
                 }
                 response.data!!.time
             }

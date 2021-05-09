@@ -4,8 +4,6 @@ import androidx.lifecycle.viewModelScope
 import app.melon.base.framework.ReduxViewModel
 import app.melon.data.resultentities.EventAndOrganiser
 import app.melon.event.interactor.UpdateEventDetail
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -27,11 +25,11 @@ class EventDetailViewModel @AssistedInject constructor(
             }
         }
         viewModelScope.launch {
-            updateEventDetail.observe().collectAndSetState {
-                when (it) {
-                    is Success -> copy(pageItem = it.get())
-                    is ErrorResult -> copy(error = it.throwable)
-                }
+            updateEventDetail.observe().collectAndSetState { result ->
+                result.fold(
+                    onSuccess = { copy(pageItem = it) },
+                    onFailure = { copy(error = it) }
+                )
             }
         }
         viewModelScope.launch {

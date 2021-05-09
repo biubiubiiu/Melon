@@ -1,8 +1,5 @@
 package app.melon.util.extensions
 
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Result
-import app.melon.util.base.Success
 import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.HttpException
@@ -70,35 +67,4 @@ inline fun defaultShouldRetry(exception: Exception) = when (exception) {
     is HttpException -> exception.code() == 429
     is IOException -> true
     else -> false
-}
-
-inline fun <T> Response<T>.toResultUnit(): Result<Unit> = try {
-    if (isSuccessful) {
-        Success(data = Unit)
-    } else {
-        ErrorResult(toException())
-    }
-} catch (e: Exception) {
-    ErrorResult(e)
-}
-
-inline fun <T> Response<T>.toResult(): Result<T> = try {
-    if (isSuccessful) {
-        Success(data = bodyOrThrow())
-    } else {
-        ErrorResult(toException())
-    }
-} catch (e: Exception) {
-    ErrorResult(e)
-}
-
-@Suppress("REDUNDANT_INLINE_SUSPEND_FUNCTION_TYPE")
-suspend fun <T, E> Response<T>.toResult(mapper: suspend (T) -> E): Result<E> = try {
-    if (isSuccessful) {
-        Success(data = mapper(bodyOrThrow()))
-    } else {
-        ErrorResult(toException())
-    }
-} catch (e: Exception) {
-    ErrorResult(e)
 }

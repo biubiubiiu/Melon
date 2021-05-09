@@ -13,29 +13,29 @@ import dagger.android.ContributesAndroidInjector
 
 
 @Module
-abstract class EventBuilder {
+internal abstract class EventBuilder {
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectEventActivity(): NearbyEventsActivity
+    internal abstract fun injectEventActivity(): NearbyEventsActivity
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectEventDetailActivity(): EventDetailActivity
+    internal abstract fun injectEventDetailActivity(): EventDetailActivity
 
     @ActivityScope
     @ContributesAndroidInjector
-    abstract fun injectMyEventsActivity(): MyEventsActivity
+    internal abstract fun injectMyEventsActivity(): MyEventsActivity
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun injectEventListFragment(): NearbyEventsFragment
+    internal abstract fun injectEventListFragment(): NearbyEventsFragment
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun injectOrganisedEventsFragment(): OrganisedEventsFragment
+    internal abstract fun injectOrganisedEventsFragment(): OrganisedEventsFragment
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun injectJoiningEventsFragment(): JoiningEventsFragment
+    internal abstract fun injectJoiningEventsFragment(): JoiningEventsFragment
 }

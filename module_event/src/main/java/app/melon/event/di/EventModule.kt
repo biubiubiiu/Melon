@@ -2,7 +2,7 @@ package app.melon.event.di
 
 import app.melon.event.EventService
 import app.melon.event.api.IEventService
-import app.melon.event.data.EventApiService
+import app.melon.event.data.EventApi
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -25,13 +25,13 @@ class EventModule {
 }
 
 @Module
-abstract class EventServiceBinds {
+internal abstract class EventServiceBinds {
     @Binds
-    abstract fun bindEventService(service: EventService): IEventService
+    internal abstract fun bindEventService(service: EventService): IEventService
 }
 
 @Module
 internal class RemoteServiceModule {
     @Provides
-    fun provideEventApiService(retrofit: Retrofit) = retrofit.create(EventApiService::class.java)
+    internal fun provideEventApiService(retrofit: Retrofit) = retrofit.create(EventApi::class.java)
 }

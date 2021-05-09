@@ -12,9 +12,8 @@ import app.melon.data.entities.User
 import app.melon.data.resultentities.EntryWithEventAndOrganiser
 import app.melon.data.util.mergeEvent
 import app.melon.data.util.mergeUser
+import app.melon.event.EventApiService
 import app.melon.event.data.mapper.RemoteEventListToEventOrganiserPair
-import app.melon.util.extensions.executeWithRetry
-import app.melon.util.extensions.toResult
 import app.melon.util.mappers.toListMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -34,7 +33,10 @@ internal class EventRemoteMediator(
         const val STARTING_PAGE_INDEX = 0
     }
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, EntryWithEventAndOrganiser>): MediatorResult {
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, EntryWithEventAndOrganiser>
+    ): MediatorResult {
         return try {
             val page = when (loadType) {
                 LoadType.REFRESH -> STARTING_PAGE_INDEX
@@ -42,19 +44,15 @@ internal class EventRemoteMediator(
                 // first page in the list. Immediately return, reporting end of pagination.
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    val entry = state.lastItemOrNull() ?: return MediatorResult.Success(endOfPaginationReached = true)
+                    val entry =
+                        state.lastItemOrNull() ?: return MediatorResult.Success(endOfPaginationReached = true)
                     entry.entry.page + 1
                 }
             }
 
-            val apiResponse = withContext(Dispatchers.IO) {
-                service.events(queryType, page, state.config.pageSize)
-                    .executeWithRetry()
-                    .toResult()
-                    .getOrThrow()
-            }
+            val data = service.events(queryType, page, state.config.pageSize).getOrThrow()
             val items = withContext(Dispatchers.Default) {
-                listItemMapper.toListMapper().invoke(apiResponse.data ?: emptyList())
+                listItemMapper.toListMapper().invoke(data)
             }
             val entries = items.mapIndexed { index, (event, _) ->
                 EventEntry(

@@ -2,9 +2,7 @@ package app.melon.account.signup.data
 
 import androidx.annotation.WorkerThread
 import app.melon.account.AccountApiService
-import app.melon.util.encrypt.EncryptUtils
 import javax.inject.Inject
-import kotlin.runCatching
 
 
 internal class SignUpDataSource @Inject constructor(

@@ -7,7 +7,6 @@ import app.melon.data.MelonDatabase
 import app.melon.data.entities.User
 import app.melon.data.util.mergeUser
 import kotlinx.coroutines.Dispatchers
-import kotlin.runCatching
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.BufferOverflow
