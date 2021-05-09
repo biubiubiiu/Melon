@@ -8,14 +8,14 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import app.melon.base.framework.BaseFragment
+import app.melon.base.framework.BaseDaggerFragment
 import app.melon.user.databinding.FragmentUserProfileBinding
 import app.melon.util.extensions.viewModelProviderFactoryOf
 import app.melon.util.formatter.MelonNumberFormatter
 import javax.inject.Inject
 
 
-internal class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
+internal class UserProfileFragment : BaseDaggerFragment<FragmentUserProfileBinding>() {
 
     @Inject internal lateinit var viewModelFactory: UserProfileViewModel.Factory
     @Inject internal lateinit var controllerFactory: UserProfileController.Factory

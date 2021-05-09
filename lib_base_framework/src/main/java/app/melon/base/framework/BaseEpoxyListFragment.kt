@@ -31,6 +31,7 @@ abstract class BaseEpoxyListFragment : LazyLoadFragment<FragmentEpoxyListBinding
 
     @CallSuper
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
+        super.onViewCreated(binding, savedInstanceState)
         binding.recyclerView.setHasFixedSize(true)
 
         if (allowModelBuildRequests) {

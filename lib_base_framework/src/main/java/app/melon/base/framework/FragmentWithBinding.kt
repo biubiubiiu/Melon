@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import dagger.android.support.DaggerFragment
 
 
-abstract class FragmentWithBinding<V : ViewBinding> : DaggerFragment() {
+abstract class FragmentWithBinding<V : ViewBinding> : Fragment() {
 
     private var _binding: V? = null
     protected val binding get() = _binding!!

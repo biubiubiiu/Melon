@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.viewbinding.ViewBinding
-import app.melon.base.framework.BaseFragment
+import app.melon.base.framework.BaseDaggerFragment
 import app.melon.home.MainViewModel
 
 
-abstract class HomepageToolbarFragment<V : ViewBinding> : BaseFragment<V>() {
+abstract class HomepageToolbarFragment<V : ViewBinding> : BaseDaggerFragment<V>() {
 
     abstract val toolbar: Toolbar
 

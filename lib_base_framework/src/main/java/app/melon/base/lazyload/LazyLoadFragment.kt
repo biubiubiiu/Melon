@@ -1,11 +1,12 @@
 package app.melon.base.lazyload
 
 import androidx.viewbinding.ViewBinding
+import app.melon.base.framework.BaseDaggerFragment
 import app.melon.base.framework.BaseFragment
 import app.melon.base.framework.lifecycle.FragmentLifecycleObserver
 
 
-abstract class LazyLoadFragment<V : ViewBinding> : BaseFragment<V>(), IFragmentVisibility {
+abstract class LazyLoadFragment<V : ViewBinding> : BaseDaggerFragment<V>(), IFragmentVisibility {
 
     // if the fragment is visible to the user.
     private var mIsFragmentVisible = false

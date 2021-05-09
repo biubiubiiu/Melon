@@ -9,7 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import app.melon.base.framework.BaseFragment
+import app.melon.base.framework.BaseDaggerFragment
 import app.melon.user.R
 import app.melon.user.databinding.FragmentUserPostsBinding
 import app.melon.util.extensions.ifNotEmpty
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 
-internal class UserPostsFragment : BaseFragment<FragmentUserPostsBinding>() {
+internal class UserPostsFragment : BaseDaggerFragment<FragmentUserPostsBinding>() {
 
     private val transitionName by lazy { requireArguments().getString(KEY_TRANSITION_NAME, "") }
 
