@@ -4,7 +4,6 @@ import app.melon.base.domain.SuspendingWorkInteractor
 import app.melon.base.framework.ObservableLoadingCounter
 import app.melon.location.RouteShareHelper
 import app.melon.location.SimplifiedLocation
-import app.melon.util.base.Result
 import javax.inject.Inject
 
 

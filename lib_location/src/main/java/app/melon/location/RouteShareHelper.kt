@@ -1,9 +1,6 @@
 package app.melon.location
 
 import android.content.Context
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Result
-import app.melon.util.base.Success
 import app.melon.util.extensions.toException
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.share.ShareSearch
@@ -39,9 +36,9 @@ class RouteShareHelper @Inject constructor(
 
     private fun handleShareResult(continuation: Continuation<Result<String?>>, url: String?, errorCode: Int) {
         if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
-            continuation.resume(Success(url))
+            continuation.resume(Result.success(url))
         } else {
-            continuation.resume(ErrorResult("Share Fail with error code: $errorCode".toException()))
+            continuation.resume(Result.failure("Share Fail with error code: $errorCode".toException()))
         }
     }
 }

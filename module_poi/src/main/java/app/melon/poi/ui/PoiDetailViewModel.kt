@@ -10,8 +10,6 @@ import app.melon.poi.interactor.UpdateDriveRoute
 import app.melon.poi.interactor.UpdatePoiDetail
 import app.melon.poi.interactor.UpdatePoiFeeds
 import app.melon.poi.interactor.UpdateWalkRoute
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -46,19 +44,19 @@ internal class PoiDetailViewModel @AssistedInject constructor(
             }
         }
         viewModelScope.launch {
-            updatePoiDetail.observe().collectAndSetState {
-                when (it) {
-                    is Success -> copy(poiData = it.get())
-                    is ErrorResult -> copy(error = it.throwable)
-                }
+            updatePoiDetail.observe().collectAndSetState { result ->
+                result.fold(
+                    onSuccess = { copy(poiData = it) },
+                    onFailure = { copy(error = it) }
+                )
             }
         }
         viewModelScope.launch {
-            shareRoute.observe().collectAndSetState {
-                when (it) {
-                    is Success -> copy(shareRoute = SingleEvent(it.get()))
-                    is ErrorResult -> copy(error = it.throwable)
-                }
+            shareRoute.observe().collectAndSetState { result ->
+                result.fold(
+                    onSuccess = { copy(shareRoute = SingleEvent(it)) },
+                    onFailure = { copy(error = it) }
+                )
             }
         }
         viewModelScope.launch {
@@ -87,25 +85,23 @@ internal class PoiDetailViewModel @AssistedInject constructor(
 
     private fun updateAndObserveDriveRoute(origin: SimplifiedLocation, destination: SimplifiedLocation) {
         viewModelScope.launch {
-            updateDriveRoute.search(origin, destination)
-                .collectAndSetState { result ->
-                    when (result) {
-                        is Success -> copy(drivePath = result.get())
-                        is ErrorResult -> copy(error = result.throwable)
-                    }
-                }
+            updateDriveRoute.search(origin, destination).collectAndSetState { result ->
+                result.fold(
+                    onSuccess = { copy(drivePath = it) },
+                    onFailure = { copy(error = it) }
+                )
+            }
         }
     }
 
     private fun updateAndObserveWalkRoute(origin: SimplifiedLocation, destination: SimplifiedLocation) {
         viewModelScope.launch {
-            updateWalkRoute.search(origin, destination)
-                .collectAndSetState { result ->
-                    when (result) {
-                        is Success -> copy(walkPath = result.get())
-                        is ErrorResult -> copy(error = result.throwable)
-                    }
-                }
+            updateWalkRoute.search(origin, destination).collectAndSetState { result ->
+                result.fold(
+                    onSuccess = { copy(walkPath = it) },
+                    onFailure = { copy(error = it) }
+                )
+            }
         }
     }
 

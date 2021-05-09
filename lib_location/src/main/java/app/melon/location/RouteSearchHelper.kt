@@ -1,9 +1,6 @@
 package app.melon.location
 
 import android.content.Context
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Result
-import app.melon.util.base.Success
 import app.melon.util.extensions.toException
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.route.BusRouteResult
@@ -79,10 +76,9 @@ class RouteSearchHelper @Inject constructor(
         val callback = object : RouteSearchListenerAdapter() {
             override fun onWalkRouteSearched(result: WalkRouteResult?, errorCode: Int) {
                 if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
-                    offer(Success(result?.paths?.getOrNull(0)))
+                    offer(Result.success(result?.paths?.getOrNull(0)))
                 } else {
-                    @Suppress("ThrowableNotThrown")
-                    offer(ErrorResult("Search Route Error, error code: $errorCode".toException()))
+                    offer(Result.failure("Search Route Error, error code: $errorCode".toException()))
                 }
             }
         }
@@ -95,10 +91,9 @@ class RouteSearchHelper @Inject constructor(
         val callback = object : RouteSearchListenerAdapter() {
             override fun onDriveRouteSearched(result: DriveRouteResult?, errorCode: Int) {
                 if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
-                    offer(Success(result?.paths?.getOrNull(0)))
+                    offer(Result.success(result?.paths?.getOrNull(0)))
                 } else {
-                    @Suppress("ThrowableNotThrown")
-                    offer(ErrorResult("Search Route Error, error code: $errorCode".toException()))
+                    offer(Result.failure("Search Route Error, error code: $errorCode".toException()))
                 }
             }
         }

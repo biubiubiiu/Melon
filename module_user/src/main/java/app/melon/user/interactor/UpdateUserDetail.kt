@@ -5,7 +5,6 @@ import app.melon.base.domain.SuspendingWorkInteractor
 import app.melon.base.framework.ObservableLoadingCounter
 import app.melon.user.data.UserRepository
 import app.melon.user.data.UserStatus
-import app.melon.util.base.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

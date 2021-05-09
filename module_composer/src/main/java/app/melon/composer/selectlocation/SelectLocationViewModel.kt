@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.melon.data.entities.PoiInfo
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Success
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -40,10 +38,12 @@ internal class SelectLocationViewModel @Inject constructor(
         val searchResult = withContext(Dispatchers.IO) {
             repo.getSearchResult(query)
         }
-        when (searchResult) {
-            is Success -> currentQueryResult = searchResult.data.also { emit(it) }
-            is ErrorResult -> _searchError.value = searchResult.throwable.message
+        searchResult.onSuccess {
+            currentQueryResult = it.also { emit(it) }
+        }.onFailure {
+            _searchError.value = it.message
         }
+
         _refreshing.value = false
     }
 }

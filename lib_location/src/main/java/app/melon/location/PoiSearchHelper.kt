@@ -1,9 +1,6 @@
 package app.melon.location
 
 import android.content.Context
-import app.melon.util.base.ErrorResult
-import app.melon.util.base.Result
-import app.melon.util.base.Success
 import app.melon.util.extensions.toException
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.PoiItem
@@ -52,9 +49,9 @@ class PoiSearchHelper @Inject constructor(
             poiSearch.setOnPoiSearchListener(object : PoiSearchListenerAdapter() {
                 override fun onPoiSearched(result: PoiResult?, rCode: Int) {
                     if (rCode == AMapException.CODE_AMAP_SUCCESS) {
-                        it.resume(Success(result?.pois?.toList() ?: emptyList()))
+                        it.resume(Result.success(result?.pois?.toList() ?: emptyList()))
                     } else {
-                        it.resume(ErrorResult("Poi Search failed with error code: $rCode".toException()))
+                        it.resume(Result.failure("Poi Search failed with error code: $rCode".toException()))
                     }
                 }
             })
@@ -68,9 +65,9 @@ class PoiSearchHelper @Inject constructor(
             poiSearch.setOnPoiSearchListener(object : PoiSearchListenerAdapter() {
                 override fun onPoiItemSearched(item: PoiItem?, rCode: Int) {
                     if (rCode == AMapException.CODE_AMAP_SUCCESS) {
-                        it.resume(Success(item))
+                        it.resume(Result.success(item))
                     } else {
-                        it.resume(ErrorResult("Poi Search failed with error code: $rCode".toException()))
+                        it.resume(Result.failure("Poi Search failed with error code: $rCode".toException()))
                     }
                 }
             })
