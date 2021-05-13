@@ -24,7 +24,7 @@ import app.melon.user.image.SelectPhotoHandler
 import app.melon.user.image.TakePicture
 import app.melon.user.image.TakePictureHandler
 import app.melon.user.permission.ReadStorage
-import app.melon.user.permission.WriteExternal
+import app.melon.user.permission.UseCamera
 import app.melon.user.ui.edit.EditOptionsDialogFragment
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getColorCompat
@@ -49,7 +49,7 @@ internal class ProfileImageActivity : DaggerAppCompatActivity() {
     private val uid: String get() = requireNotNull(intent.getStringExtra(KEY_USER_ID))
 
     private val readStoragePermissionHelper = PermissionHelper(this, ReadStorage)
-    private val useCameraPermissionHelper = PermissionHelper(this, WriteExternal)
+    private val useCameraPermissionHelper = PermissionHelper(this, UseCamera)
 
     private lateinit var actionTakePicture: TakePicture
     private lateinit var actionSelectPhoto: SelectPhoto

@@ -3,14 +3,17 @@ package app.melon.permission
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import app.melon.permission.databinding.ActivityPermissionRequestBinding
 
-class PermissionRequestActivity : AppCompatActivity() {
+
+internal class PermissionRequestActivity : AppCompatActivity() {
 
     private var _binding: ActivityPermissionRequestBinding? = null
     private val binding get() = _binding!!
@@ -54,6 +57,11 @@ class PermissionRequestActivity : AppCompatActivity() {
             finish()
         }
         binding.positive.setOnClickListener {
+            if (action is PermissionDenial) {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.parse("package:$packageName")
+                startActivity(intent)
+            }
             setResult(Activity.RESULT_OK)
             finish()
         }
@@ -84,7 +92,7 @@ class PermissionRequestActivity : AppCompatActivity() {
     companion object {
         private const val KEY_ACTION = "KEY_ACTION"
 
-        fun prepareIntent(context: Context, action: PermissionActions): Intent {
+        internal fun prepareIntent(context: Context, action: PermissionActions): Intent {
             return Intent(context, PermissionRequestActivity::class.java).apply {
                 putExtra(KEY_ACTION, action)
             }
