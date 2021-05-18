@@ -10,7 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import app.melon.base.ui.extensions.makeGone
 import app.melon.base.ui.extensions.makeVisible
+import app.melon.composer.api.ComposerEntry
+import app.melon.composer.api.ComposerOption
+import app.melon.composer.api.ComposerResult
 import app.melon.data.entities.PoiInfo
+import app.melon.framework.DefaultComposerEntryHandler
 import app.melon.location.LocationHelper
 import app.melon.location.SimplifiedLocation
 import app.melon.location.toLatLng
@@ -42,7 +46,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-internal class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter {
+internal class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowAdapter, ComposerEntry {
 
     private val binding: ActivityPoiDetailBinding by viewBinding()
     private lateinit var infoWindowBinding: ViewInfoWindowBinding
@@ -55,7 +59,7 @@ internal class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowA
     private val controller by lazy { factory.create(this, ::shareRoute) }
 
     @Inject internal lateinit var viewModelFactory: PoiDetailViewModel.Factory
-    private val viewModel: PoiDetailViewModel by viewModels() {
+    private val viewModel: PoiDetailViewModel by viewModels {
         viewModelProviderFactoryOf {
             viewModelFactory.create(
                 info.poiId,
@@ -67,8 +71,11 @@ internal class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowA
     @Inject internal lateinit var locationHelper: LocationHelper
     @Inject internal lateinit var formatter: MelonDateTimeFormatter
 
+    private lateinit var actionLaunchComposer: ComposerEntry
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        actionLaunchComposer = DefaultComposerEntryHandler(this)
         initView()
         initDataFlow()
     }
@@ -76,6 +83,10 @@ internal class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowA
     override fun getInfoWindow(marker: Marker): View = infoWindowBinding.root
 
     override fun getInfoContents(marker: Marker): View = infoWindowBinding.root
+
+    override fun launchComposer(option: ComposerOption, callback: (ComposerResult?) -> Unit) {
+        actionLaunchComposer.launchComposer(option, callback)
+    }
 
     private fun initView() {
         initBottomSheet()

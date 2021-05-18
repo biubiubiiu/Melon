@@ -4,18 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import app.melon.R
 import app.melon.base.ui.databinding.ActivityCommonFragmentWithToolbarBinding
 import app.melon.data.constants.BOOKMARK_FEEDS
 import app.melon.feed.FeedPageConfig
 import app.melon.feed.ui.CommonFeedFragment
+import app.melon.framework.ComposerEntryActivity
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getColorCompat
 
 
-class BookmarkActivity : AppCompatActivity() {
+class BookmarkActivity : ComposerEntryActivity() {
 
     private val binding: ActivityCommonFragmentWithToolbarBinding by viewBinding()
 

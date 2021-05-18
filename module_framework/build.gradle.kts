@@ -1,9 +1,6 @@
 plugins {
     id(BuildPlugins.androidLibrary)
     id(BuildPlugins.kotlinAndroid)
-    id(BuildPlugins.kotlinKapt)
-
-    id(ScriptPlugins.infrastructure)
 }
 
 android {
@@ -17,26 +14,9 @@ android {
         versionCode = AndroidClient.versionCode
         versionName = AndroidClient.versionName
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
-}
-
-kapt {
-    correctErrorTypes = true
-    useBuildCache = true
 }
 
 dependencies {
     compileOnly(project(Modules.baseFramework))
-    compileOnly(project(Modules.dataAndroid))
-    compileOnly(project(Modules.feed))
-    compileOnly(project(Modules.poiApi))
-    compileOnly(project(Modules.framework))
     compileOnly(project(Modules.composerApi))
-
-    kapt(Libraries.Epoxy.compiler)
-    kapt(Libraries.Dagger.compiler)
-    kapt(Libraries.Dagger.processor)
 }

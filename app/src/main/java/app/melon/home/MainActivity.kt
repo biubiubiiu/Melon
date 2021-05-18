@@ -17,12 +17,9 @@ import app.melon.R
 import app.melon.account.api.IAccountService
 import app.melon.base.ui.navigation.setupWithNavController
 import app.melon.bookmark.BookmarkActivity
-import app.melon.composer.api.ComposerEntry
-import app.melon.composer.api.ComposerOption
-import app.melon.composer.api.ComposerResult
-import app.melon.composer.api.DefaultComposerEntryHandler
 import app.melon.databinding.ActivityMainBinding
 import app.melon.event.api.IEventService
+import app.melon.framework.ComposerEntryActivity
 import app.melon.home.nearby.LocateRequest
 import app.melon.location.LocationHelper
 import app.melon.permission.PermissionHelper
@@ -31,12 +28,19 @@ import app.melon.permission.PermissionRequest
 import app.melon.settings.SettingsActivity
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.reverse
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner, ComposerEntry {
+class MainActivity : ComposerEntryActivity(), PermissionHelperOwner, HasAndroidInjector {
+
+    @Inject
+    @JvmField
+    var androidInjector: DispatchingAndroidInjector<Any>? = null
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -53,16 +57,15 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner, ComposerE
 
     private val locatePermissionHelper = PermissionHelper(this, LocateRequest)
 
-    private lateinit var actionLaunchComposer: ComposerEntry
+    override fun androidInjector(): AndroidInjector<Any> = androidInjector!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         startLocate() // start locating ASAP
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        actionLaunchComposer = DefaultComposerEntryHandler(this)
 
         setupDrawer()
         if (savedInstanceState == null) {
@@ -102,10 +105,6 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner, ComposerE
                 onPermissionAllGranted = onPermissionsGranted
             )
         }
-    }
-
-    override fun launchComposer(option: ComposerOption, callback: (ComposerResult?) -> Unit) {
-        actionLaunchComposer.launchComposer(option, callback)
     }
 
     private fun startLocate() {

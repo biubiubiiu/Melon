@@ -45,6 +45,7 @@ dependencies {
     compileOnly(project(Modules.accountApi))
     compileOnly(project(Modules.userApi))
     compileOnly(project(Modules.composerApi))
+    compileOnly(project(Modules.framework))
 
     kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)

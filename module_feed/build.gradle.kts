@@ -49,6 +49,7 @@ dependencies {
     compileOnly(project(Modules.composerApi))
     compileOnly(project(Modules.comment))
     compileOnly(project(Modules.gallery))
+    compileOnly(project(Modules.framework))
 
     kapt(Libraries.Epoxy.compiler)
     kapt(Libraries.Dagger.compiler)

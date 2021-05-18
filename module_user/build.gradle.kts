@@ -44,6 +44,8 @@ dependencies {
 
     compileOnly(project(Modules.userApi))
     compileOnly(project(Modules.accountApi))
+    compileOnly(project(Modules.framework))
+    compileOnly(project(Modules.composerApi))
 
     compileOnly(Libraries.Cropping.uCrop)
 

@@ -11,14 +11,22 @@ import androidx.lifecycle.Observer
 import app.melon.comment.databinding.ActivityCommentReplyBinding
 import app.melon.comment.ui.ReplyCommentViewModel
 import app.melon.comment.ui.ReplyListFragment
+import app.melon.framework.ComposerEntryActivity
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getColorCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
 
-internal class CommentReplyActivity : DaggerAppCompatActivity() {
+internal class CommentReplyActivity : ComposerEntryActivity(), HasAndroidInjector {
+
+    @Inject
+    @JvmField
+    var androidInjector: DispatchingAndroidInjector<Any>? = null
 
     private val commentId by lazy { requireNotNull(intent?.getStringExtra(KEY_COMMENT_ID)) }
 
@@ -27,7 +35,10 @@ internal class CommentReplyActivity : DaggerAppCompatActivity() {
     @Inject internal lateinit var viewModel: ReplyCommentViewModel
     @Inject internal lateinit var factory: CommentControllerDelegate.Factory
 
+    override fun androidInjector(): AndroidInjector<Any> = androidInjector!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         initContent()
         initBottomSheetBehavior()

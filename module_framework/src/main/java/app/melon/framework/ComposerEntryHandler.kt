@@ -1,4 +1,4 @@
-package app.melon.composer.api
+package app.melon.framework
 
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultCallback
@@ -6,6 +6,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import app.melon.composer.api.ComposerContract
+import app.melon.composer.api.ComposerEntry
+import app.melon.composer.api.ComposerOption
+import app.melon.composer.api.ComposerResult
 
 class DefaultComposerEntryHandler(
     private val activity: ComponentActivity

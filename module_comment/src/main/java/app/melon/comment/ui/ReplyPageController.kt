@@ -14,7 +14,6 @@ import app.melon.comment.ui.widget.ReplyItem_
 import app.melon.composer.api.ComposerEntry
 import app.melon.composer.api.Reply
 import app.melon.data.entities.Comment
-
 import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.dpInt
@@ -55,7 +54,7 @@ internal class ReplyPageController @AssistedInject constructor(
             .formatter(dateTimeFormatter)
             .favorClickListener { onFavorClick(it) }
             .shareClickListener { onShareClick(it) }
-            .replyEntryClickListener { context.showToast("click reply") }
+            .replyEntryClickListener { onReplyClick(it) }
             .profileEntryClickListener { onProfileEntryClick(it) }
     }
 
@@ -85,7 +84,7 @@ internal class ReplyPageController @AssistedInject constructor(
         context.showToast("click share")
     }
 
-    override fun onReplyClick(item: Comment) {
+    override fun onReplyClick(id: String) {
         val user = userManager.user ?: return
         (context.activityContext as? ComposerEntry)?.launchComposer(
             option = Reply(
@@ -93,7 +92,7 @@ internal class ReplyPageController @AssistedInject constructor(
             ),
             callback = { result ->
                 val (content, _, _) = result ?: return@launchComposer
-                commentService.postReply(context, item.id, content)
+                commentService.postReply(context, id, content)
             }
         )
     }

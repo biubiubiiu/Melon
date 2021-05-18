@@ -4,15 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.databinding.ActivityFeedDetailBinding
 import app.melon.feed.ui.FeedDetailFragment
+import app.melon.framework.ComposerEntryActivity
 import app.melon.util.delegates.viewBinding
 
 
-class FeedDetailActivity : AppCompatActivity() {
+class FeedDetailActivity : ComposerEntryActivity() {
 
     private val cache by lazy { requireNotNull(intent.getSerializableExtra(KEY_CACHE_FEED) as FeedAndAuthor) }
 
@@ -48,7 +48,7 @@ class FeedDetailActivity : AppCompatActivity() {
     companion object {
         private const val KEY_CACHE_FEED = "KEY_CACHE_FEED"
 
-        fun prepareIntent(context: Context, feed: FeedAndAuthor): Intent {
+        internal fun prepareIntent(context: Context, feed: FeedAndAuthor): Intent {
             return Intent(context, FeedDetailActivity::class.java).apply {
                 putExtra(KEY_CACHE_FEED, feed)
             }

@@ -5,16 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import app.melon.base.ui.databinding.CommonFragmentContainerBinding
+import app.melon.framework.ComposerEntryActivity
 import app.melon.user.ui.UserProfileContainerFragment
 import app.melon.util.delegates.viewBinding
 import app.melon.util.event.OnBackPressedHandler
 
 
-internal class ProfileActivity : AppCompatActivity() {
+internal class ProfileActivity : ComposerEntryActivity() {
 
     private val binding: CommonFragmentContainerBinding by viewBinding()
 
@@ -69,7 +69,7 @@ internal class ProfileActivity : AppCompatActivity() {
     companion object {
         private const val KEY_USER_ID = "KEY_USER_ID"
 
-        fun start(context: Context, uid: String = "fake_uid") {
+        internal fun start(context: Context, uid: String = "fake_uid") {
             val intent = Intent(context, ProfileActivity::class.java).apply {
                 putExtra(KEY_USER_ID, uid)
             }
