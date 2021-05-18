@@ -20,6 +20,7 @@ import app.melon.bookmark.BookmarkActivity
 import app.melon.composer.api.ComposerEntry
 import app.melon.composer.api.ComposerOption
 import app.melon.composer.api.ComposerResult
+import app.melon.composer.api.DefaultComposerEntryHandler
 import app.melon.databinding.ActivityMainBinding
 import app.melon.event.api.IEventService
 import app.melon.home.nearby.LocateRequest
@@ -61,7 +62,7 @@ class MainActivity : DaggerAppCompatActivity(), PermissionHelperOwner, ComposerE
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        actionLaunchComposer = ComposerEntryHandler(this)
+        actionLaunchComposer = DefaultComposerEntryHandler(this)
 
         setupDrawer()
         if (savedInstanceState == null) {

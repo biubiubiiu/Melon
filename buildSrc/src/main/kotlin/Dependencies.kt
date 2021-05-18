@@ -114,6 +114,11 @@ object Libraries {
             const val fragment = "androidx.fragment:fragment:$version"
             const val ktx = "androidx.fragment:fragment-ktx:$version"
         }
+
+        object Lifecycle {
+            private const val version = "2.2.0"
+            const val common = "androidx.lifecycle:lifecycle-common-java8:$version"
+        }
     }
 
     object RecyclerView {
