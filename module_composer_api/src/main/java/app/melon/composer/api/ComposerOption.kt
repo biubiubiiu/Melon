@@ -7,3 +7,5 @@ sealed class ComposerOption : Serializable
 data class ContentCreation(
     val accountAvatarUrl: String?
 ) : ComposerOption()
+
+object AnonymousPost : ComposerOption()

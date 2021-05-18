@@ -12,7 +12,6 @@ import androidx.navigation.findNavController
 import app.melon.composer.api.ComposerManager
 import app.melon.composer.api.ComposerOption
 import app.melon.composer.api.ComposerResult
-import app.melon.composer.api.ContentCreation
 import app.melon.composer.common.ComposerActionsExecutor
 import app.melon.composer.databinding.ActivityComposerBinding
 import app.melon.composer.gallerygrid.TakePicture
@@ -49,7 +48,7 @@ class ComposerActivity : AppCompatActivity(), PermissionHelperOwner, ComposerAct
         actionTakePicture = TakePictureHandler(this)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        displayAvatar()
+        viewModel.updateLaunchOption(composerOption)
 
         viewModel.actionSubmit.observe(this, Observer {
             val composerResult = ComposerResult(
@@ -95,11 +94,5 @@ class ComposerActivity : AppCompatActivity(), PermissionHelperOwner, ComposerAct
 
     override fun takePicture(uri: Uri, callback: (Boolean) -> Unit) {
         actionTakePicture.takePicture(uri, callback)
-    }
-
-    private fun displayAvatar() {
-        when (val option = composerOption) {
-            is ContentCreation -> viewModel.updateAvatarUrl(option.accountAvatarUrl)
-        }
     }
 }

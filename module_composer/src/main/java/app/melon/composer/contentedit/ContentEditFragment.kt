@@ -24,6 +24,9 @@ import app.melon.base.ui.insetanimation.RootViewDeferringInsetsCallback
 import app.melon.base.ui.insetanimation.TranslateDeferringInsetsAnimationCallback
 import app.melon.composer.ComposerViewModel
 import app.melon.composer.R
+import app.melon.composer.api.AnonymousPost
+import app.melon.composer.api.ComposerOption
+import app.melon.composer.api.ContentCreation
 import app.melon.composer.common.MediaStoreImage
 import app.melon.composer.databinding.FragmentContentEditBinding
 import app.melon.composer.permission.AccessGallery
@@ -33,6 +36,7 @@ import app.melon.util.extensions.afterTextChanged
 import app.melon.util.extensions.dpInt
 import app.melon.util.extensions.getResourceColor
 import coil.load
+import coil.loadAny
 import coil.transform.CircleCropTransformation
 
 
@@ -117,15 +121,13 @@ internal class ContentEditFragment : BaseFragment<FragmentContentEditBinding>() 
             )
         }
 
-        composerViewModel.textInputProgress.observe(viewLifecycleOwner, Observer { progress ->
-            binding.progress.setProgressCompat(progress, true)
+        composerViewModel.launchOption.observe(viewLifecycleOwner, Observer { option ->
+            updateAvatar(option)
+            updateInputHint(option)
         })
 
-        composerViewModel.avatarUrl.observe(viewLifecycleOwner, Observer { url ->
-            binding.avatar.load(url) {
-                crossfade(true)
-                transformations(CircleCropTransformation())
-            }
+        composerViewModel.textInputProgress.observe(viewLifecycleOwner, Observer { progress ->
+            binding.progress.setProgressCompat(progress, true)
         })
 
         composerViewModel.inputValid.observe(viewLifecycleOwner, Observer { isValid ->
@@ -161,5 +163,24 @@ internal class ContentEditFragment : BaseFragment<FragmentContentEditBinding>() 
 
     private fun removePhoto(image: MediaStoreImage) {
         composerViewModel.deselectImage(image)
+    }
+
+    private fun updateAvatar(option: ComposerOption) {
+        val avatar: Any? = when (option) {
+            is ContentCreation -> option.accountAvatarUrl
+            is AnonymousPost -> R.drawable.ic_avatar_anonymous
+        }
+        binding.avatar.loadAny(avatar) {
+            crossfade(true)
+            transformations(CircleCropTransformation())
+        }
+    }
+
+    private fun updateInputHint(option: ComposerOption) {
+        val hint = when (option) {
+            is ContentCreation -> R.string.composer_input_hint
+            is AnonymousPost -> R.string.composer_input_hint_2
+        }
+        binding.textInput.setHint(hint)
     }
 }

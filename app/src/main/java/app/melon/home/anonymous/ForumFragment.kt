@@ -9,8 +9,8 @@ import app.melon.R
 import app.melon.account.api.UserManager
 import app.melon.base.event.TabReselectEvent
 import app.melon.base.lazyload.LazyFragmentPagerAdapter
+import app.melon.composer.api.AnonymousPost
 import app.melon.composer.api.ComposerResult
-import app.melon.composer.api.ContentCreation
 import app.melon.data.constants.ANONYMOUS_ALL_FEED
 import app.melon.data.constants.ANONYMOUS_SCHOOL_FEED
 import app.melon.data.constants.ANONYMOUS_TRENDING_FEED
@@ -49,8 +49,8 @@ class ForumFragment : HomepageToolbarFragment<FragmentForumBinding>() {
 
     private fun setupFab() {
         binding.fab.setOnClickListener {
-            val user = userManager.user ?: return@setOnClickListener
-            (activity as? ComposerEntry)?.launchComposer(ContentCreation(user.avatarUrl)) { result ->
+            userManager.user ?: return@setOnClickListener
+            (activity as? ComposerEntry)?.launchComposer(AnonymousPost) { result ->
                 handleComposerResult(result)
             }
         }

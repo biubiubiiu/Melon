@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.map
 import app.melon.base.framework.SingleEvent
+import app.melon.composer.api.ComposerOption
 import app.melon.composer.common.MediaStoreImage
 import app.melon.data.entities.PoiInfo
 import app.melon.util.extensions.or
@@ -32,11 +33,18 @@ internal class ComposerViewModel(
         _actionLeave.postValue(SingleEvent(Unit))
     }
 
-    private val _avatarUrl = MutableLiveData<String>()
-    val avatarUrl: LiveData<String> get() = _avatarUrl
+    private val _launchOption = MutableLiveData<ComposerOption>()
+    val launchOption: LiveData<ComposerOption> get() = _launchOption
 
-    fun updateAvatarUrl(url: String?) {
-        _avatarUrl.takeIf { url != null }?.postValue(url)
+    fun updateLaunchOption(option: ComposerOption) {
+        _launchOption.postValue(option)
+    }
+
+    private val _avatar = MutableLiveData<Any>()
+    val avatar: LiveData<Any> get() = _avatar
+
+    fun updateAvatar(url: Any?) {
+        _avatar.takeIf { url != null }?.postValue(url)
     }
 
     private val _images = MutableLiveData<List<MediaStoreImage>>(emptyList())

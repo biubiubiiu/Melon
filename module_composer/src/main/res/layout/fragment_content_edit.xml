@@ -53,7 +53,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/avatar"
                 android:background="@android:color/transparent"
-                android:hint="@string/composer_input_hint"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:lineHeight="28sp"
