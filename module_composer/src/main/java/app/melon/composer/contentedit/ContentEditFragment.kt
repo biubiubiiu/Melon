@@ -25,6 +25,7 @@ import app.melon.base.ui.insetanimation.TranslateDeferringInsetsAnimationCallbac
 import app.melon.composer.ComposerViewModel
 import app.melon.composer.R
 import app.melon.composer.api.AnonymousPost
+import app.melon.composer.api.Commentary
 import app.melon.composer.api.ComposerOption
 import app.melon.composer.api.ContentCreation
 import app.melon.composer.common.MediaStoreImage
@@ -124,6 +125,7 @@ internal class ContentEditFragment : BaseFragment<FragmentContentEditBinding>() 
         composerViewModel.launchOption.observe(viewLifecycleOwner, Observer { option ->
             updateAvatar(option)
             updateInputHint(option)
+            updateEntry(option)
         })
 
         composerViewModel.textInputProgress.observe(viewLifecycleOwner, Observer { progress ->
@@ -169,6 +171,7 @@ internal class ContentEditFragment : BaseFragment<FragmentContentEditBinding>() 
         val avatar: Any? = when (option) {
             is ContentCreation -> option.accountAvatarUrl
             is AnonymousPost -> R.drawable.ic_avatar_anonymous
+            is Commentary -> option.accountAvatarUrl
         }
         binding.avatar.loadAny(avatar) {
             crossfade(true)
@@ -180,7 +183,21 @@ internal class ContentEditFragment : BaseFragment<FragmentContentEditBinding>() 
         val hint = when (option) {
             is ContentCreation -> R.string.composer_input_hint
             is AnonymousPost -> R.string.composer_input_hint_2
+            is Commentary -> R.string.composer_input_hint_comment
         }
         binding.textInput.setHint(hint)
+    }
+
+    private fun updateEntry(option: ComposerOption) {
+        val showGalleryEntry = when (option) {
+            is Commentary -> false
+            else -> true
+        }
+        val showPoiEntry = when (option) {
+            is Commentary -> false
+            else -> true
+        }
+        binding.galleryEntry.isVisible = showGalleryEntry
+        binding.poiEntry.isVisible = showPoiEntry
     }
 }

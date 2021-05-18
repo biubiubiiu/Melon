@@ -7,12 +7,10 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import app.melon.composer.api.ComposerContract
+import app.melon.composer.api.ComposerEntry
 import app.melon.composer.api.ComposerOption
 import app.melon.composer.api.ComposerResult
 
-internal interface ComposerEntry {
-    fun launchComposer(option: ComposerOption, callback: (ComposerResult?) -> Unit)
-}
 
 internal class ComposerEntryHandler(
     private val activity: ComponentActivity

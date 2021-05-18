@@ -31,7 +31,7 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
     @EpoxyAttribute lateinit var holderClickListener: (FeedAndAuthor) -> Unit
     @EpoxyAttribute lateinit var avatarClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var shareClickListener: (Feed) -> Unit
-    @EpoxyAttribute lateinit var commentClickListener: (Feed) -> Unit
+    @EpoxyAttribute lateinit var commentClickListener: (FeedAndAuthor) -> Unit
     @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var moreClickListener: (Feed) -> Unit
     @EpoxyAttribute lateinit var poiEntryClickListener: (PoiInfo) -> Unit
@@ -53,7 +53,7 @@ abstract class FeedItem : EpoxyModelWithHolder<FeedItem.Holder>() {
         containerView.setOnClickListener { holderClickListener.invoke(item) }
         avatarView.setOnClickListener { avatarClickListener.invoke(item.author.id) }
         shareView.setOnClickListener { shareClickListener.invoke(item.feed) }
-        commentView.setOnClickListener { commentClickListener.invoke(item.feed) }
+        commentView.setOnClickListener { commentClickListener.invoke(item) }
         favoriteView.setOnClickListener { favorClickListener.invoke(item.feed.id) }
         moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed) }
         locationTag.setOnClickListener {

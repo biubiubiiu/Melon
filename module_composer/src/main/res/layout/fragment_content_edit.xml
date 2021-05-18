@@ -45,7 +45,7 @@
                 android:layout_marginEnd="@dimen/spacing_conventional"
                 android:contentDescription="@string/app_common_avatar_desc"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/ic_round_arrow_back_24" />
+                tools:src="@drawable/ic_avatar_anonymous" />
 
             <EditText
                 android:id="@+id/text_input"
@@ -142,6 +142,7 @@
         android:layout_height="wrap_content"
         android:background="@color/bgPrimary"
         android:gravity="center_vertical"
+        android:minHeight="40dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -17,6 +17,7 @@ import app.melon.R
 import app.melon.account.api.IAccountService
 import app.melon.base.ui.navigation.setupWithNavController
 import app.melon.bookmark.BookmarkActivity
+import app.melon.composer.api.ComposerEntry
 import app.melon.composer.api.ComposerOption
 import app.melon.composer.api.ComposerResult
 import app.melon.databinding.ActivityMainBinding

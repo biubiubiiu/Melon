@@ -1,6 +1,11 @@
 package app.melon.feed.ui.controller
 
 import android.content.Context
+import app.melon.account.api.UserManager
+import app.melon.base.ui.extensions.activityContext
+import app.melon.comment.ICommentService
+import app.melon.composer.api.Commentary
+import app.melon.composer.api.ComposerEntry
 import app.melon.data.entities.Feed
 import app.melon.data.entities.PoiInfo
 import app.melon.data.resultentities.FeedAndAuthor
@@ -25,6 +30,8 @@ class FeedControllerDelegate @AssistedInject constructor(
     @Assisted private val context: Context,
     private val userService: IUserService,
     private val poiService: IPoiService,
+    private val commentService: ICommentService,
+    private val userManager: UserManager,
     private val locationHelper: LocationHelper,
     private val dateTimeFormatter: MelonDateTimeFormatter,
     private val numberFormatter: MelonNumberFormatter,
@@ -82,8 +89,19 @@ class FeedControllerDelegate @AssistedInject constructor(
         context.showToast("click share")
     }
 
-    override fun onCommentClick(feed: Feed) {
-        context.showToast("click comment")
+    override fun onCommentClick(item: FeedAndAuthor) {
+        val user = userManager.user ?: return
+        (context.activityContext as? ComposerEntry)?.launchComposer(
+            option = Commentary(
+                authorUid = item.author.id,
+                authorUsername = item.author.username.orEmpty(),
+                accountAvatarUrl = user.avatarUrl
+            ),
+            callback = { result ->
+                val (content, _, _) = result ?: return@launchComposer
+                commentService.postComment(context, item.feed.id, content)
+            }
+        )
     }
 
     override fun onFavorClick(id: String) {

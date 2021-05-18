@@ -38,4 +38,13 @@ class CommentApiService @Inject constructor(
             api.reply(id, page, pageSize)
         }
     }
+
+    suspend fun post(
+        feedId: String,
+        content: String
+    ): Result<Boolean> {
+        return call {
+            api.postComment(feedId, content)
+        }
+    }
 }

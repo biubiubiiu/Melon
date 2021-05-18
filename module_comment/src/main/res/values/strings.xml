@@ -3,4 +3,8 @@
     <string name="comment_total_reply_count">%d more replies</string>
     <string name="comment_total_reply_count_title">Replies(%d)</string>
     <string name="comment_all_replies">All replies</string>
+
+    <string name="post_comment_notification_title">TODO</string>
+    <string name="post_comment_success_notification_title">TODO</string>
+    <string name="post_comment_fail_notification_title">TODO</string>
 </resources>

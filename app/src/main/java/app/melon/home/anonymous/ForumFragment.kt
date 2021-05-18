@@ -10,6 +10,7 @@ import app.melon.account.api.UserManager
 import app.melon.base.event.TabReselectEvent
 import app.melon.base.lazyload.LazyFragmentPagerAdapter
 import app.melon.composer.api.AnonymousPost
+import app.melon.composer.api.ComposerEntry
 import app.melon.composer.api.ComposerResult
 import app.melon.data.constants.ANONYMOUS_ALL_FEED
 import app.melon.data.constants.ANONYMOUS_SCHOOL_FEED
@@ -18,7 +19,6 @@ import app.melon.databinding.FragmentForumBinding
 import app.melon.feed.FeedPageConfig
 import app.melon.feed.PostFeedService
 import app.melon.feed.ui.CommonFeedFragment
-import app.melon.home.ComposerEntry
 import app.melon.home.base.HomepageToolbarFragment
 import app.melon.util.extensions.getResourceString
 import com.google.android.material.tabs.TabLayout

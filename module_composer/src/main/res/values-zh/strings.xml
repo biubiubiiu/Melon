@@ -4,6 +4,7 @@
     <string name="composer_post_reply">回复</string>
     <string name="composer_input_hint">有什么新鲜事？</string>
     <string name="composer_input_hint_2">[匿名] 有什么想说的？</string>
+    <string name="composer_input_hint_comment">发布评论</string>
     <string name="composer_search_location">搜索位置</string>
     <string name="composer_mark_location">标记位置</string>
     <string name="label_gallery">图库</string>

@@ -9,3 +9,9 @@ data class ContentCreation(
 ) : ComposerOption()
 
 object AnonymousPost : ComposerOption()
+
+data class Commentary(
+    val authorUid: String,
+    val authorUsername: String,
+    val accountAvatarUrl: String?
+) : ComposerOption()

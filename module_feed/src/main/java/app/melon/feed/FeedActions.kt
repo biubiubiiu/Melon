@@ -8,7 +8,7 @@ interface FeedActions {
     fun onHolderClick(feed: FeedAndAuthor)
     fun onAvatarClick(uid: String)
     fun onShareClick(feed: Feed)
-    fun onCommentClick(feed: Feed)
+    fun onCommentClick(item: FeedAndAuthor)
     fun onFavorClick(id: String)
     fun onMoreClick(feed: Feed)
     fun onPoiEntryClick(info: PoiInfo)

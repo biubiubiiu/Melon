@@ -27,7 +27,7 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
 
     @EpoxyAttribute lateinit var holderClickListener: (FeedAndAuthor) -> Unit
     @EpoxyAttribute lateinit var shareClickListener: (Feed) -> Unit
-    @EpoxyAttribute lateinit var commentClickListener: (Feed) -> Unit
+    @EpoxyAttribute lateinit var commentClickListener: (FeedAndAuthor) -> Unit
     @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var moreClickListener: (Feed) -> Unit
 
@@ -78,7 +78,7 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
         with(holder) {
             containerView.setOnClickListener { holderClickListener.invoke(item) }
             shareView.setOnClickListener { shareClickListener.invoke(item.feed) }
-            commentView.setOnClickListener { commentClickListener.invoke(item.feed) }
+            commentView.setOnClickListener { commentClickListener.invoke(item) }
             favoriteView.setOnClickListener { favorClickListener.invoke(item.feed.id) }
             moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed) }
         }

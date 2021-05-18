@@ -3,4 +3,8 @@
     <string name="comment_total_reply_count">%d条回复 ></string>
     <string name="comment_total_reply_count_title">回复（%d）</string>
     <string name="comment_all_replies">全部回复</string>
+
+    <string name="post_comment_notification_title">正在发布评论</string>
+    <string name="post_comment_success_notification_title">发布成功</string>
+    <string name="post_comment_fail_notification_title">发布失败</string>
 </resources>
