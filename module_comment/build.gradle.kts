@@ -42,6 +42,7 @@ dependencies {
     compileOnly(project(Modules.baseFramework))
     compileOnly(project(Modules.dataAndroid))
 
+    compileOnly(project(Modules.accountApi))
     compileOnly(project(Modules.userApi))
     compileOnly(project(Modules.composerApi))
 

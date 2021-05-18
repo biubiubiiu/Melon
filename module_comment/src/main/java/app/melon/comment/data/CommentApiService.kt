@@ -39,12 +39,21 @@ class CommentApiService @Inject constructor(
         }
     }
 
-    suspend fun post(
+    suspend fun postComment(
         feedId: String,
         content: String
     ): Result<Boolean> {
         return call {
             api.postComment(feedId, content)
+        }
+    }
+
+    suspend fun postReply(
+        commentId: String,
+        content: String
+    ): Result<Boolean> {
+        return call {
+            api.postReply(commentId, content)
         }
     }
 }

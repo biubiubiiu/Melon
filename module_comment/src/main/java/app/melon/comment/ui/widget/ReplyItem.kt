@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.comment.R
+import app.melon.data.entities.Comment
 import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.util.formatter.MelonDateTimeFormatter
 import coil.load
@@ -26,7 +27,7 @@ internal abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
     override fun getDefaultLayout(): Int = R.layout.item_reply
 
     @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
-    @EpoxyAttribute lateinit var shareClickListener: (String) -> Unit
+    @EpoxyAttribute lateinit var shareClickListener: (Comment) -> Unit
     @EpoxyAttribute lateinit var replyEntryClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var profileEntryClickListener: (String) -> Unit
 
@@ -65,7 +66,7 @@ internal abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
     private fun setupListeners(holder: Holder) {
         with(holder) {
             avatarView.setOnClickListener { profileEntryClickListener.invoke(item.author.id) }
-            shareView.setOnClickListener { shareClickListener.invoke(item.comment.id) }
+            shareView.setOnClickListener { shareClickListener.invoke(item.comment) }
             replyView.setOnClickListener { replyEntryClickListener.invoke(item.comment.id) }
             favoriteView.setOnClickListener { favorClickListener.invoke(item.comment.id) }
         }

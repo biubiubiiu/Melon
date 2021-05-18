@@ -2,11 +2,18 @@ package app.melon.comment.ui
 
 import android.content.Context
 import android.graphics.Typeface
+import app.melon.account.api.UserManager
 import app.melon.base.framework.BasePagingController
+import app.melon.base.ui.extensions.activityContext
 import app.melon.base.ui.textHeader
 import app.melon.comment.CommentControllerDelegate
+import app.melon.comment.ICommentService
 import app.melon.comment.R
+import app.melon.comment.ReplyActions
 import app.melon.comment.ui.widget.ReplyItem_
+import app.melon.composer.api.ComposerEntry
+import app.melon.composer.api.Reply
+import app.melon.data.entities.Comment
 
 import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.user.api.IUserService
@@ -25,8 +32,10 @@ internal class ReplyPageController @AssistedInject constructor(
     @Assisted context: Context,
     factory: CommentControllerDelegate.Factory,
     private val userService: IUserService,
+    private val commentService: ICommentService,
+    private val userManager: UserManager,
     private val dateTimeFormatter: MelonDateTimeFormatter
-) : BasePagingController<CommentAndAuthor>(
+) : ReplyActions, BasePagingController<CommentAndAuthor>(
     context,
     sameItemIndicator = { oldItem, newItem -> oldItem.comment.id == newItem.comment.id }
 ) {
@@ -44,10 +53,10 @@ internal class ReplyPageController @AssistedInject constructor(
             .id("reply_$currentPosition")
             .item(item!!)
             .formatter(dateTimeFormatter)
-            .favorClickListener { context.showToast("click favor") }
-            .shareClickListener { context.showToast("click share") }
+            .favorClickListener { onFavorClick(it) }
+            .shareClickListener { onShareClick(it) }
             .replyEntryClickListener { context.showToast("click reply") }
-            .profileEntryClickListener { userService.navigateToUserProfile(context, it) }
+            .profileEntryClickListener { onProfileEntryClick(it) }
     }
 
     override fun addExtraModels() {
@@ -70,5 +79,30 @@ internal class ReplyPageController @AssistedInject constructor(
     @AssistedFactory
     internal interface Factory {
         fun create(context: Context): ReplyPageController
+    }
+
+    override fun onShareClick(item: Comment) {
+        context.showToast("click share")
+    }
+
+    override fun onReplyClick(item: Comment) {
+        val user = userManager.user ?: return
+        (context.activityContext as? ComposerEntry)?.launchComposer(
+            option = Reply(
+                accountAvatarUrl = user.avatarUrl
+            ),
+            callback = { result ->
+                val (content, _, _) = result ?: return@launchComposer
+                commentService.postReply(context, item.id, content)
+            }
+        )
+    }
+
+    override fun onFavorClick(id: String) {
+        context.showToast("click favor")
+    }
+
+    override fun onProfileEntryClick(id: String) {
+        userService.navigateToUserProfile(context, id)
     }
 }

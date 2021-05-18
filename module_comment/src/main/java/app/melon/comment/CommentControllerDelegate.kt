@@ -2,8 +2,12 @@ package app.melon.comment
 
 import android.content.Context
 import androidx.annotation.ColorRes
+import app.melon.account.api.UserManager
+import app.melon.base.ui.extensions.activityContext
 import app.melon.comment.ui.widget.CommentItem_
 import app.melon.comment.ui.widget.commentItem
+import app.melon.composer.api.ComposerEntry
+import app.melon.composer.api.Reply
 import app.melon.data.entities.Comment
 import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.user.api.IUserService
@@ -20,6 +24,8 @@ class CommentControllerDelegate @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val collector: ModelCollector,
     private val userService: IUserService,
+    private val commentService: ICommentService,
+    private val userManager: UserManager,
     private val dateTimeFormatter: MelonDateTimeFormatter
 ) : CommentActions {
 
@@ -73,7 +79,16 @@ class CommentControllerDelegate @AssistedInject constructor(
     }
 
     override fun onReplyClick(item: Comment) {
-        context.showToast("Click reply")
+        val user = userManager.user ?: return
+        (context.activityContext as? ComposerEntry)?.launchComposer(
+            option = Reply(
+                accountAvatarUrl = user.avatarUrl
+            ),
+            callback = { result ->
+                val (content, _, _) = result ?: return@launchComposer
+                commentService.postReply(context, item.id, content)
+            }
+        )
     }
 
     override fun onFavorClick(id: String) {

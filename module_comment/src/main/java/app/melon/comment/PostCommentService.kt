@@ -41,6 +41,11 @@ class PostCommentService : JobIntentService() {
                 val content = intent.getStringExtra(EXTRA_PARAM_CONTENT) ?: return
                 handleActionPostComment(feedId, content)
             }
+            ACTION_POST_REPLY -> {
+                val commentId = intent.getStringExtra(EXTRA_PARAM_COMMENT_ID) ?: return
+                val content = intent.getStringExtra(EXTRA_PARAM_CONTENT) ?: return
+                handleActionPostReply(commentId, content)
+            }
         }
     }
 
@@ -48,6 +53,17 @@ class PostCommentService : JobIntentService() {
         ioScope.launch {
             sendPostingNotification()
             repo.postComment(feedId, content).onSuccess {
+                sendPostSuccessNotification()
+            }.onFailure { throwable ->
+                sendPostFailNotification(throwable.localizedMessage ?: "")
+            }
+        }
+    }
+
+    private fun handleActionPostReply(commentId: String, content: String) {
+        ioScope.launch {
+            sendPostingNotification()
+            repo.postReply(commentId, content).onSuccess {
                 sendPostSuccessNotification()
             }.onFailure { throwable ->
                 sendPostFailNotification(throwable.localizedMessage ?: "")
@@ -115,8 +131,10 @@ class PostCommentService : JobIntentService() {
         private const val NOTIFICATION_ID = 101
 
         private const val ACTION_POST_COMMENT = "app.melon.comment.action.post"
+        private const val ACTION_POST_REPLY = "app.melon.comment.action.reply"
 
         private const val EXTRA_PARAM_FEED_ID = "app.melon.comment.extra.feedId"
+        private const val EXTRA_PARAM_COMMENT_ID = "app.melon.comment.extra.commentId"
         private const val EXTRA_PARAM_CONTENT = "app.melon.comment.extra.content"
 
         fun postComment(
@@ -127,6 +145,19 @@ class PostCommentService : JobIntentService() {
             val intent = Intent(context, PostCommentService::class.java).apply {
                 action = ACTION_POST_COMMENT
                 putExtra(EXTRA_PARAM_FEED_ID, feedId)
+                putExtra(EXTRA_PARAM_CONTENT, content)
+            }
+            enqueueWork(context, PostCommentService::class.java, JOB_ID, intent)
+        }
+
+        fun postReply(
+            context: Context,
+            commentId: String,
+            content: String
+        ) {
+            val intent = Intent(context, PostCommentService::class.java).apply {
+                action = ACTION_POST_REPLY
+                putExtra(EXTRA_PARAM_COMMENT_ID, commentId)
                 putExtra(EXTRA_PARAM_CONTENT, content)
             }
             enqueueWork(context, PostCommentService::class.java, JOB_ID, intent)

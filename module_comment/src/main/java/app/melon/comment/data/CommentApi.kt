@@ -38,4 +38,11 @@ interface CommentApi {
         @Field("id") feedId: String,
         @Field("content") content: String
     ): Response<BaseApiResponse<Boolean>>
+
+    @FormUrlEncoded
+    @POST("comment/reply")
+    suspend fun postReply(
+        @Field("id") commentId: String,
+        @Field("content") content: String
+    ): Response<BaseApiResponse<Boolean>>
 }

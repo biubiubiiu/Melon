@@ -28,6 +28,7 @@ import app.melon.composer.api.AnonymousPost
 import app.melon.composer.api.Commentary
 import app.melon.composer.api.ComposerOption
 import app.melon.composer.api.ContentCreation
+import app.melon.composer.api.Reply
 import app.melon.composer.common.MediaStoreImage
 import app.melon.composer.databinding.FragmentContentEditBinding
 import app.melon.composer.permission.AccessGallery
@@ -172,6 +173,7 @@ internal class ContentEditFragment : BaseFragment<FragmentContentEditBinding>() 
             is ContentCreation -> option.accountAvatarUrl
             is AnonymousPost -> R.drawable.ic_avatar_anonymous
             is Commentary -> option.accountAvatarUrl
+            is Reply -> option.accountAvatarUrl
         }
         binding.avatar.loadAny(avatar) {
             crossfade(true)
@@ -184,17 +186,18 @@ internal class ContentEditFragment : BaseFragment<FragmentContentEditBinding>() 
             is ContentCreation -> R.string.composer_input_hint
             is AnonymousPost -> R.string.composer_input_hint_2
             is Commentary -> R.string.composer_input_hint_comment
+            is Reply -> R.string.composer_input_hint_reply
         }
         binding.textInput.setHint(hint)
     }
 
     private fun updateEntry(option: ComposerOption) {
         val showGalleryEntry = when (option) {
-            is Commentary -> false
+            is Commentary, is Reply -> false
             else -> true
         }
         val showPoiEntry = when (option) {
-            is Commentary -> false
+            is Commentary, is Reply -> false
             else -> true
         }
         binding.galleryEntry.isVisible = showGalleryEntry

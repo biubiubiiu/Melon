@@ -57,6 +57,11 @@ class CommentRepository @Inject constructor(
 
     @WorkerThread
     suspend fun postComment(feedId: String, content: String): Result<Boolean> {
-        return service.post(feedId, content)
+        return service.postComment(feedId, content)
+    }
+
+    @WorkerThread
+    suspend fun postReply(commentId: String, content: String): Result<Boolean> {
+        return service.postReply(commentId, content)
     }
 }

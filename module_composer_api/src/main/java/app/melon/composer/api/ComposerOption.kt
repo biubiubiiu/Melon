@@ -15,3 +15,7 @@ data class Commentary(
     val authorUsername: String,
     val accountAvatarUrl: String?
 ) : ComposerOption()
+
+data class Reply(
+    val accountAvatarUrl: String?
+) : ComposerOption()
