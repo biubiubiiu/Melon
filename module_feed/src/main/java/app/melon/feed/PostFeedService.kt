@@ -129,6 +129,20 @@ class PostFeedService : JobIntentService() {
         fun postFeed(
             context: Context,
             content: String = "",
+            images: ArrayList<String> = arrayListOf(),
+            location: PoiInfo? = null
+        ) {
+            postFeedWithUri(
+                context,
+                content,
+                ArrayList(images.map { Uri.parse(it) }),
+                location
+            )
+        }
+
+        fun postFeedWithUri(
+            context: Context,
+            content: String = "",
             images: ArrayList<Uri> = arrayListOf(),
             location: PoiInfo? = null
         ) {

@@ -21,6 +21,21 @@ android {
 
     ndkVersion = AndroidSDK.ndkVersion
 
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file(gradleLocalProperties(rootDir).getProperty("keystore.debug.filename"))
+            storePassword = gradleLocalProperties(rootDir).getProperty("keystore.debug.storePassword")
+            keyAlias = gradleLocalProperties(rootDir).getProperty("keystore.debug.keyAlias")
+            keyPassword = gradleLocalProperties(rootDir).getProperty("keystore.debug.keyPassword")
+        }
+        create("release") {
+            storeFile = file(gradleLocalProperties(rootDir).getProperty("keystore.release.filename"))
+            storePassword = gradleLocalProperties(rootDir).getProperty("keystore.release.storePassword")
+            keyAlias = gradleLocalProperties(rootDir).getProperty("keystore.release.keyAlias")
+            keyPassword = gradleLocalProperties(rootDir).getProperty("keystore.release.keyPassword")
+        }
+    }
+
     defaultConfig {
         minSdkVersion(AndroidSDK.min)
         targetSdkVersion(AndroidSDK.target)
@@ -44,22 +59,11 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles("proguard-rules.pro")
         }
-    }
-
-    signingConfigs {
         getByName("debug") {
-            storeFile = file(gradleLocalProperties(rootDir).getProperty("keystore.debug.filename"))
-            storePassword = gradleLocalProperties(rootDir).getProperty("keystore.debug.storePassword")
-            keyAlias = gradleLocalProperties(rootDir).getProperty("keystore.debug.keyAlias")
-            keyPassword = gradleLocalProperties(rootDir).getProperty("keystore.debug.keyPassword")
-        }
-        create("release") {
-            storeFile = file(gradleLocalProperties(rootDir).getProperty("keystore.release.filename"))
-            storePassword = gradleLocalProperties(rootDir).getProperty("keystore.release.storePassword")
-            keyAlias = gradleLocalProperties(rootDir).getProperty("keystore.release.keyAlias")
-            keyPassword = gradleLocalProperties(rootDir).getProperty("keystore.release.keyPassword")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 

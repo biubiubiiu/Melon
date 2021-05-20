@@ -20,6 +20,8 @@ android {
         versionName = AndroidClient.versionName
 
         multiDexEnabled = true
+
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     compileOptions {
@@ -32,7 +34,6 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
-            proguardFiles("proguard-rules.pro")
         }
     }
 

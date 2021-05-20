@@ -29,6 +29,12 @@ abstract class HomepageToolbarFragment<V : ViewBinding> : BaseDaggerFragment<V>(
         setupToolbar()
     }
 
+    @CallSuper
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        setupToolbar()
+    }
+
     private fun setupToolbar() {
         val activity = requireActivity() as AppCompatActivity
         activity.setSupportActionBar(toolbar)

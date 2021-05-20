@@ -19,12 +19,13 @@ android {
 
         versionCode = AndroidClient.versionCode
         versionName = AndroidClient.versionName
+
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
-            proguardFiles("proguard-rules.pro")
         }
     }
 

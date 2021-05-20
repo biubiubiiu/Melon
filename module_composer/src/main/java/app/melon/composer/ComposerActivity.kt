@@ -53,7 +53,7 @@ class ComposerActivity : AppCompatActivity(), PermissionHelperOwner, ComposerAct
         viewModel.actionSubmit.observe(this, Observer {
             val composerResult = ComposerResult(
                 textContent = viewModel.textContent.value ?: "",
-                images = viewModel.images.value?.map { it.contentUri } ?: emptyList(),
+                images = viewModel.images.value?.map { it.contentUri.toString() } ?: emptyList(),
                 location = viewModel.locationInfo.value
             )
             val result = Intent().apply {
