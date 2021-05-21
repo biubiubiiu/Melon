@@ -99,7 +99,9 @@ class FeedRepository @Inject constructor(
             config = PAGING_CONFIG,
             pagingSourceFactory = {
                 FeedPagingSource(
-                    fetcher = { page -> feedApiService.nearby(longitude, latitude, page, PAGING_CONFIG.pageSize) },
+                    fetcher = { page ->
+                        feedApiService.nearby(longitude, latitude, page, PAGING_CONFIG.pageSize)
+                    },
                     pageSize = PAGING_CONFIG.pageSize,
                     listItemMapper = itemMapper
                 )
@@ -110,6 +112,21 @@ class FeedRepository @Inject constructor(
     @WorkerThread
     suspend fun postFeed(content: String, images: List<Uri>, location: PoiInfo?): Result<Boolean> {
         return feedApiService.postFeed(content, images.map { it.toString() }, location.toString())
+    }
+
+    @WorkerThread
+    suspend fun addFeedToCollection(id: String): Result<Boolean> {
+        val result = feedApiService.collect(id)
+        result.onSuccess {
+            database.runWithTransaction {
+                val feed = database.feedDao().getFeedWithId(id)
+                if (feed != null) {
+                    val updated = feed.copy(isCollected = feed.isCollected.not())
+                    database.feedDao().update(updated)
+                }
+            }
+        }
+        return result
     }
 
     private companion object {

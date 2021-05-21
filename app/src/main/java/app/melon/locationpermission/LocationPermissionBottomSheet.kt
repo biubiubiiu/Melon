@@ -32,7 +32,7 @@ class LocationPermissionBottomSheet : BottomSheetDialogFragment() {
         return dialog
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = FragmentLocationRequestRationaleBinding.inflate(inflater, container, false)
         binding.action.setOnClickListener {
             (activity as? LocationPermissionActivity)?.requestLocatePermission()

@@ -11,6 +11,6 @@ interface FeedDetailActions {
     fun onCommentClick(item: FeedAndAuthor)
     fun onFavorClick(id: String)
     fun onShareClick(feed: Feed)
-    fun onMoreClick(id: String)
+    fun onMoreClick(feed: Feed)
     fun onPoiEntryClick(item: PoiInfo)
 }

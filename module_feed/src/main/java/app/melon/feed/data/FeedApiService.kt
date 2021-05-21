@@ -64,6 +64,14 @@ class FeedApiService @Inject constructor(
         }
     }
 
+    suspend fun collect(
+        id: String
+    ): Result<Boolean> {
+        return call {
+            api.collect(id)
+        }
+    }
+
     // TODO define custom error
     override fun mapApiThrowable(message: String, code: Int): ApiBaseException {
         return super.mapApiThrowable(message, code)

@@ -34,7 +34,7 @@ abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
     @EpoxyAttribute lateinit var commentClickListener: (FeedAndAuthor) -> Unit
     @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
     @EpoxyAttribute lateinit var shareClickListener: (Feed) -> Unit
-    @EpoxyAttribute lateinit var moreClickListener: (String) -> Unit
+    @EpoxyAttribute lateinit var moreClickListener: (Feed) -> Unit
     @EpoxyAttribute lateinit var poiEntryClickListener: (PoiInfo) -> Unit
 
     @EpoxyAttribute lateinit var item: FeedAndAuthor
@@ -55,7 +55,7 @@ abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
         shareView.setOnClickListener { shareClickListener.invoke(item.feed) }
         commentView.setOnClickListener { commentClickListener.invoke(item) }
         favoriteView.setOnClickListener { favorClickListener.invoke(item.feed.id) }
-        moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed.id) }
+        moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed) }
         repostCountView.setOnClickListener { repostEntryClickListener.invoke(item.feed.id) }
         repostLabel.setOnClickListener { repostEntryClickListener.invoke(item.feed.id) }
         favorCountView.setOnClickListener { favorEntryClickListener.invoke(item.feed.id) }

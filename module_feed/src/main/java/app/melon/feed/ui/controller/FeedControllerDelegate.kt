@@ -10,16 +10,18 @@ import app.melon.data.entities.Feed
 import app.melon.data.entities.PoiInfo
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.FeedActions
+import app.melon.feed.FeedActionsFragment
 import app.melon.feed.FeedDetailActivity
+import app.melon.feed.IFeedService
 import app.melon.feed.ui.widget.AnonymousFeedItem_
 import app.melon.feed.ui.widget.FeedItem_
 import app.melon.location.LocationHelper
 import app.melon.poi.api.IPoiService
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.showToast
-import app.melon.util.formatter.MelonNumberFormatter
 import app.melon.util.formatter.MelonDateTimeFormatter
 import app.melon.util.formatter.MelonDistanceFormatter
+import app.melon.util.formatter.MelonNumberFormatter
 import com.airbnb.epoxy.EpoxyModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -28,6 +30,7 @@ import dagger.assisted.AssistedInject
 
 class FeedControllerDelegate @AssistedInject constructor(
     @Assisted private val context: Context,
+    private val feedService: IFeedService,
     private val userService: IUserService,
     private val poiService: IPoiService,
     private val commentService: ICommentService,
@@ -109,7 +112,13 @@ class FeedControllerDelegate @AssistedInject constructor(
     }
 
     override fun onMoreClick(feed: Feed) {
-        context.showToast("click more")
+        context.activityContext?.let { activity ->
+            val dialog = FeedActionsFragment.newInstance(feed)
+            dialog.onCollectListener = {
+                feedService.collect(feed.id)
+            }
+            dialog.show(activity.supportFragmentManager, "actions")
+        }
     }
 
     override fun onPoiEntryClick(info: PoiInfo) {

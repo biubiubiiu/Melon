@@ -23,6 +23,8 @@ data class Feed(
     @ColumnInfo(name = "photo_list") val photos: List<String> = emptyList(),
     @ColumnInfo(name = "poi_info") val poiInfo: PoiInfo? = null,
     @ColumnInfo(name = "post_time") val postTime: String? = null,
+    @ColumnInfo(name = "is_collected") val isCollected: Boolean = false,
+    @ColumnInfo(name = "is_favored") val isFavored: Boolean = false,
     @ColumnInfo(name = "repost_count") val repostCount: Long? = null,
     @ColumnInfo(name = "reply_count") val replyCount: Long? = null,
     @ColumnInfo(name = "favor_count") val favouriteCount: Long? = null

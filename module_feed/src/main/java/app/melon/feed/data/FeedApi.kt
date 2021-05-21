@@ -49,4 +49,10 @@ interface FeedApi {
         @Field("images") images: List<String>,
         @Field("location") location: String
     ): Response<BaseApiResponse<Boolean>>
+
+    @FormUrlEncoded
+    @POST("feed/collect")
+    suspend fun collect(
+        @Field("id") id: String
+    ): Response<BaseApiResponse<Boolean>>
 }

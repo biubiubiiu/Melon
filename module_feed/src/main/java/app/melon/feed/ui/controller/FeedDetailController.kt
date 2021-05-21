@@ -12,7 +12,9 @@ import app.melon.data.entities.Feed
 import app.melon.data.entities.PoiInfo
 import app.melon.data.resultentities.CommentAndAuthor
 import app.melon.data.resultentities.FeedAndAuthor
+import app.melon.feed.FeedActionsFragment
 import app.melon.feed.FeedDetailActions
+import app.melon.feed.IFeedService
 import app.melon.feed.ui.widget.feedHeader
 import app.melon.location.LocationHelper
 import app.melon.poi.api.IPoiService
@@ -30,6 +32,7 @@ import dagger.assisted.AssistedInject
 class FeedDetailController @AssistedInject constructor(
     @Assisted context: Context,
     commentControllerFactory: CommentControllerDelegate.Factory,
+    private val feedService: IFeedService,
     private val userService: IUserService,
     private val poiService: IPoiService,
     private val commentService: ICommentService,
@@ -43,7 +46,7 @@ class FeedDetailController @AssistedInject constructor(
     sameItemIndicator = { oldItem, newItem -> oldItem.comment.id == newItem.comment.id }
 ) {
 
-    var item: FeedAndAuthor? = null
+    internal var item: FeedAndAuthor? = null
         set(value) {
             field = value
             requestModelBuild()
@@ -113,8 +116,14 @@ class FeedDetailController @AssistedInject constructor(
         context.showToast("Click share")
     }
 
-    override fun onMoreClick(id: String) {
-        context.showToast("Click more")
+    override fun onMoreClick(feed: Feed) {
+        context.activityContext?.let { activity ->
+            val dialog = FeedActionsFragment.newInstance(feed)
+            dialog.onCollectListener = {
+                feedService.collect(feed.id)
+            }
+            dialog.show(activity.supportFragmentManager, "actions")
+        }
     }
 
     override fun onPoiEntryClick(item: PoiInfo) {
