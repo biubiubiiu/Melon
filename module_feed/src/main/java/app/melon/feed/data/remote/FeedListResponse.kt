@@ -12,6 +12,7 @@ data class FeedListItemResponse(
     @SerializedName("location") val location: LocationStruct? = null,
     @SerializedName("likeNum") val favorCount: Long? = null,
     @SerializedName("remarkNum") val replyCount: Long? = null,
+    @SerializedName("isCollected") val isCollected: Boolean = false,
     @SerializedName("like") val isFavor: Boolean = false,
     @SerializedName("postTimestamp") val postTime: String? = null,
     @SerializedName("lastUpdateTimestamp") val lastUpdateTime: String? = null

@@ -22,6 +22,8 @@ class RemoteFeedListToFeedAndAuthor @Inject constructor() : Mapper<FeedListItemR
             content = from.content,
             photos = from.photos,
             poiInfo = from.location?.toPoiInfo(),
+            isFavored = from.isFavor,
+            isCollected = from.isCollected,
             postTime = from.postTime,
             replyCount = from.replyCount,
             favouriteCount = from.favorCount

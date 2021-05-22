@@ -8,9 +8,8 @@ import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.ShapedFourPhotoView
 import app.melon.base.ui.TagView
-import app.melon.data.entities.Feed
-import app.melon.data.entities.PoiInfo
 import app.melon.data.resultentities.FeedAndAuthor
+import app.melon.feed.FeedActions
 import app.melon.feed.R
 import app.melon.gallery.GalleryActivity
 import app.melon.location.LocationHelper
@@ -28,14 +27,7 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 @EpoxyModelClass
 abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
 
-    @EpoxyAttribute lateinit var avatarClickListener: (String) -> Unit
-    @EpoxyAttribute lateinit var repostEntryClickListener: (String) -> Unit
-    @EpoxyAttribute lateinit var favorEntryClickListener: (String) -> Unit
-    @EpoxyAttribute lateinit var commentClickListener: (FeedAndAuthor) -> Unit
-    @EpoxyAttribute lateinit var favorClickListener: (String) -> Unit
-    @EpoxyAttribute lateinit var shareClickListener: (Feed) -> Unit
-    @EpoxyAttribute lateinit var moreClickListener: (Feed) -> Unit
-    @EpoxyAttribute lateinit var poiEntryClickListener: (PoiInfo) -> Unit
+    @EpoxyAttribute lateinit var actions: FeedActions
 
     @EpoxyAttribute lateinit var item: FeedAndAuthor
     @EpoxyAttribute lateinit var locationHelper: LocationHelper
@@ -51,18 +43,18 @@ abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
     }
 
     private fun setupContent(holder: Holder) = with(holder) {
-        avatarView.setOnClickListener { avatarClickListener.invoke(item.author.id) }
-        shareView.setOnClickListener { shareClickListener.invoke(item.feed) }
-        commentView.setOnClickListener { commentClickListener.invoke(item) }
-        favoriteView.setOnClickListener { favorClickListener.invoke(item.feed.id) }
-        moreOperationView.setOnClickListener { moreClickListener.invoke(item.feed) }
-        repostCountView.setOnClickListener { repostEntryClickListener.invoke(item.feed.id) }
-        repostLabel.setOnClickListener { repostEntryClickListener.invoke(item.feed.id) }
-        favorCountView.setOnClickListener { favorEntryClickListener.invoke(item.feed.id) }
-        favorLabel.setOnClickListener { favorEntryClickListener.invoke(item.feed.id) }
+        avatarView.setOnClickListener { actions.onAvatarClick(item.author.id) }
+        shareView.setOnClickListener { actions.onShareClick(item.feed) }
+        commentView.setOnClickListener { actions.onCommentClick(item) }
+        favoriteView.setOnClickListener { actions.onFavorClick(item.feed.id) }
+        moreOperationView.setOnClickListener { actions.onMoreClick(item.feed) }
+        repostCountView.setOnClickListener { actions.onRepostClick(item.feed) }
+        repostLabel.setOnClickListener { actions.onRepostClick(item.feed) }
+        favorCountView.setOnClickListener { actions.onFavorClick(item.feed.id) }
+        favorLabel.setOnClickListener { actions.onFavorClick(item.feed.id) }
         locationTag.setOnClickListener {
             item.feed.poiInfo?.let {
-                poiEntryClickListener.invoke(it)
+                actions.onPoiEntryClick(it)
             }
         }
     }

@@ -9,22 +9,20 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 
-class FeedPageController @AssistedInject constructor(
+class FeedPageController @AssistedInject internal constructor(
     @Assisted context: Context,
     @Assisted private val type: Type, // TODO move this field to [Feed]
     @Assisted private val idProvider: (FeedAndAuthor?, Int) -> String,
-    private val factory: FeedControllerDelegate.Factory
+    factory: FeedControllerDelegate.Factory
 ) : BasePagingController<FeedAndAuthor>(
     context,
     sameItemIndicator = { oldItem, newItem -> oldItem.feed.id == newItem.feed.id }
 ) {
 
+    private val delegate = factory.create(context)
+
     enum class Type {
         NORMAL, ANONYMOUS
-    }
-
-    private val delegate by lazy {
-        factory.create(context)
     }
 
     override fun buildItemModel(currentPosition: Int, item: FeedAndAuthor?): EpoxyModel<*> =
@@ -41,7 +39,7 @@ class FeedPageController @AssistedInject constructor(
 
 
     @AssistedFactory
-    interface Factory {
+    internal interface Factory {
         fun create(
             context: Context,
             idProvider: (FeedAndAuthor?, Int) -> String,
