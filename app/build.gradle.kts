@@ -60,6 +60,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
+            isDebuggable = true
             proguardFiles("proguard-rules.pro")
         }
         getByName("debug") {
@@ -75,7 +76,6 @@ android {
 kapt {
     correctErrorTypes = true
     useBuildCache = true
-    generateStubs = true
 }
 
 dependencies {
@@ -115,4 +115,5 @@ dependencies {
     kapt(Libraries.Dagger.processor)
 }
 
+apply(plugin = BuildPlugins.benchmarkPlugin)
 apply(plugin = FirebaseService.googleService)

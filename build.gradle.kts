@@ -9,6 +9,8 @@ buildscript {
         classpath(BuildPlugins.androidGradlePlugin)
         classpath(BuildPlugins.kotlinGradlePlugin)
 
+        classpath(BuildPlugins.benchmark)
+
         classpath(FirebaseService.googleServicePlugin)
         classpath(FirebaseService.crashlyticsPlugin)
     }

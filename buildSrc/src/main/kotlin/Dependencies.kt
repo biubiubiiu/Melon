@@ -21,6 +21,7 @@ object BuildPlugins {
     object Versions {
         const val buildToolsVersion = "4.1.2"
         const val gradleVersion = "6.5.0"
+        const val benchmarkVersion = "1.0.0"
     }
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.buildToolsVersion}"
@@ -31,6 +32,8 @@ object BuildPlugins {
     const val kotlinAndroid = "kotlin-android"
     const val kotlinKapt = "kotlin-kapt"
     const val kotlinAndroidExtensions = "kotlin-android-extensions"
+    const val benchmark = "androidx.benchmark:benchmark-gradle-plugin:${Versions.benchmarkVersion}"
+    const val benchmarkPlugin = "androidx.benchmark"
 }
 
 object FirebaseService {
@@ -245,5 +248,10 @@ object Libraries {
     object Preference {
         private const val version = "1.1.0"
         const val preference = "androidx.preference:preference-ktx:$version"
+    }
+
+    object Benchmark {
+        private const val version = "1.0.0"
+
     }
 }
