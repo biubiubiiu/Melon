@@ -26,7 +26,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/bgSecondary"
+                android:background="@color/bgPrimary"
                 app:menu="@menu/menu_edit_profile"
                 app:navigationContentDescription="@string/home_toolbar_nav_button_desc"
                 app:navigationIcon="@drawable/ic_round_arrow_back_24"

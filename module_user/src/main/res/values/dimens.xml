@@ -2,6 +2,8 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
+    <dimen name="item_user_avatar_size">48dp</dimen>
+
     <dimen name="user_profile_avatar_size">100dp</dimen>
     <dimen name="user_profile_avatar_size_half_negative">-50dp</dimen>
 

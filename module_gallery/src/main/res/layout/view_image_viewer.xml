@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alpha="0"
-        android:background="@color/bgSecondary" />
+        android:background="@color/bgPrimary" />
 
     <FrameLayout
         android:id="@+id/dismissContainer"

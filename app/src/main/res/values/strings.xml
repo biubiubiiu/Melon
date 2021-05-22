@@ -10,4 +10,8 @@
     <string name="meet_nearby_people_rationale">TODO</string>
 
     <string name="bookmark_label">Bookmark</string>
+
+    <string name="home_tab_recommend">For You</string>
+    <string name="home_tab_following">Follow</string>
+    <string name="home_tab_nearby">Nearby</string>
 </resources>

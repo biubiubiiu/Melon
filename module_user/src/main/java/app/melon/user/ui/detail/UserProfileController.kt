@@ -11,7 +11,6 @@ import app.melon.base.ui.list.vertSpaceSmall
 import app.melon.base.ui.ninePhotoView
 import app.melon.base.ui.textHeader
 import app.melon.util.extensions.dpInt
-import app.melon.util.extensions.getResourceColor
 import app.melon.util.extensions.sp
 import app.melon.data.entities.User
 import app.melon.data.resultentities.FeedAndAuthor
@@ -19,11 +18,13 @@ import app.melon.feed.ui.controller.FeedControllerDelegate
 import app.melon.gallery.GalleryActivity
 import app.melon.user.R
 import app.melon.user.ui.widget.schoolInfo
+import app.melon.util.extensions.getColorCompat
 import com.airbnb.epoxy.Typed3EpoxyController
 import com.airbnb.epoxy.group
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+
 
 internal class UserProfileController @AssistedInject constructor(
     @Assisted private val context: Context,
@@ -61,7 +62,7 @@ internal class UserProfileController @AssistedInject constructor(
             textHeader {
                 id("profile_photos_header")
                 content(R.string.user_profile_photos)
-                color(getResourceColor(R.color.TextPrimary))
+                color(context.getColorCompat(R.color.TextPrimary))
                 textSize(15.sp)
                 padding(intArrayOf(12.dpInt, 12.dpInt))
                 background(R.color.bgPrimary)
@@ -96,16 +97,13 @@ internal class UserProfileController @AssistedInject constructor(
             context(context)
             user(user)
         }
-        vertSpaceSmall {
-            id("profile_info_bottom_space")
-        }
     }
 
     private fun buildFeeds(items: List<FeedAndAuthor>?) {
         textHeader {
             id("profile_feeds_header")
             content(R.string.user_profile_posts)
-            color(getResourceColor(R.color.TextPrimary))
+            color(context.getColorCompat(R.color.TextPrimary))
             textSize(15.sp)
             padding(intArrayOf(12.dpInt, 12.dpInt))
             background(R.color.bgPrimary)
@@ -125,7 +123,7 @@ internal class UserProfileController @AssistedInject constructor(
         textHeader {
             id("profile_load_more_posts")
             content(R.string.user_profile_show_more)
-            color(getResourceColor(R.color.colorPrimary))
+            color(context.getColorCompat(R.color.colorPrimary))
             textSize(15.sp)
             padding(intArrayOf(12.dpInt, 16.dpInt))
             background(R.color.bgPrimary)

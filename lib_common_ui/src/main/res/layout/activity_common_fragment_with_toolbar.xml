@@ -7,7 +7,8 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize" />
+        android:layout_height="?actionBarSize"
+        android:background="@color/bgPrimary" />
 
     <FrameLayout
         android:id="@+id/fragment_container"

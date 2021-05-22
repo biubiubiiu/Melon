@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="nav_header_vertical_spacing_medium">8dp</dimen>
-    <dimen name="nav_header_vertical_spacing_large">16dp</dimen>
     <dimen name="nav_header_inner_spacing_horizontal">24dp</dimen>
     <dimen name="nav_header_inner_spacing_vertical">18dp</dimen>
     <dimen name="home_nav_header_avatar_size">48dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="app_consistent_text_vertical_spacing">2dp</dimen>
     <dimen name="app_consistent_text_horizontal_spacing_small">6dp</dimen>
-    <dimen name="app_consistent_text_horizontal_spacing_medium">12dp</dimen>
-
-    <dimen name="nearby_avatar_size">48dp</dimen>
 
     <dimen name="spacing_xlarge">48dp</dimen>
     <dimen name="spacing_large">24dp</dimen>

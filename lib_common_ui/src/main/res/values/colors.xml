@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#B71A43</color>
-    <color name="TextPrimary">#FF262626</color>
-    <color name="TextSecondary">#FF999999</color>
-    <color name="bgPrimary">#FFFFFF</color>
-    <color name="bgSecondary">#FAFAFA</color>
+    <color name="colorPrimary">@color/cardinal</color>
+    <color name="TextPrimary">@color/mine_shaft</color>
+    <color name="TextSecondary">@color/dusty_gray</color>
+    <color name="bgPrimary">@color/white</color>
+    <color name="bgSecondary">@color/alabaster</color>
 
-    <color name="divider">#FFEEEEEE</color>
+    <color name="divider">@color/gallery</color>
+    <color name="listDivider">@color/iron_50</color>
 </resources>

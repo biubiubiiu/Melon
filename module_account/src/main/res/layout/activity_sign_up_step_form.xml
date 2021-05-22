@@ -18,6 +18,7 @@
             style="@style/AccountMenuTextAppearance"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/bgPrimary"
             app:navigationIcon="@drawable/ic_round_arrow_back_24"
             app:navigationIconTint="?attr/colorPrimary"
             tools:layout_height="48dp" />

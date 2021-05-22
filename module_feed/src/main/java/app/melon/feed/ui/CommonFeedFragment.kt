@@ -3,12 +3,15 @@ package app.melon.feed.ui
 import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.event.TabReselectEvent
 import app.melon.base.framework.BasePagingListFragment
 import app.melon.data.constants.FeedPageType
 import app.melon.feed.FeedPageConfig
+import app.melon.feed.R
 import app.melon.feed.ui.controller.FeedPageController
+import app.melon.util.extensions.getDrawableCompat
 import app.melon.util.extensions.showToast
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -69,7 +72,14 @@ class CommonFeedFragment : BasePagingListFragment() {
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
         super.onViewCreated(binding, savedInstanceState)
         if (savedInstanceState == null) {
-            binding.recyclerView.setItemSpacingDp(8)
+            binding.recyclerView.also { v ->
+                val itemDecorator = DividerItemDecoration(v.context, DividerItemDecoration.VERTICAL)
+                val drawable = v.context.getDrawableCompat(R.drawable.divider)
+                if (drawable != null) {
+                    itemDecorator.setDrawable(drawable)
+                }
+                v.addItemDecoration(itemDecorator)
+            }
         }
         lifecycleScope.launch {
             viewModel.pagingData.collectLatest {

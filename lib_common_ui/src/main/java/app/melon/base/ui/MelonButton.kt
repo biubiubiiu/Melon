@@ -37,18 +37,16 @@ class MelonButton @JvmOverloads constructor(
 
     fun update(style: Style, text: String) {
         this.text = text
-        setBackgroundResource(
-            when (style) {
-                Style.SOLID -> R.drawable.round_rect
-                Style.BORDER -> R.drawable.round_rect_border
+        when (style) {
+            Style.SOLID -> {
+                setBackgroundResource(R.drawable.round_rect)
+                setTextColor(ContextCompat.getColorStateList(context, R.color.text_color_selector))
             }
-        )
-        setTextColor(
-            when (style) {
-                Style.SOLID -> ContextCompat.getColor(context, R.color.white)
-                Style.BORDER -> ContextCompat.getColor(context, R.color.colorPrimary)
+            Style.BORDER -> {
+                setBackgroundResource(R.drawable.round_rect_border)
+                setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
             }
-        )
+        }
     }
 
     enum class Style {

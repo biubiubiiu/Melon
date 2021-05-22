@@ -3,9 +3,6 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
-    <color name="amber_300">#FFD54F</color>
-    <color name="amber_500">#FFC107</color>
-    <color name="amber_700">#FFA000</color>
     <color name="light_red">#EF9A9A</color>
     <color name="dark_red">#B71A43</color>
     <color name="teal_200">#FF03DAC5</color>
@@ -15,13 +12,31 @@
     <color name="gray_20">#CC808080</color>
     <color name="gray_50">#7f808080</color>
 
+    <color name="white">#FFFFFFFF</color>
     <color name="white_70">#4CFFFFFF</color>
 
     <color name="malibu_50">#7F82cffb</color>
 
+    <color name="crimson">#C41442</color>
+    <color name="crimson_70">#4CC41442</color>
+
+    <color name="iron">#C9CED2</color>
+    <color name="iron_50">#7FC9CED2</color>
+
+    <color name="ebony">#303133</color>
+    <color name="ebony_25">#BF303133</color>
+
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
+    <color name="shark">#1D1E20</color>
+    <color name="sea_pink">#EF9A9A</color>
+    <color name="cardinal">#B71A43</color>
+    <color name="mine_shaft">#262626</color>
+    <color name="dusty_gray">#999999</color>
+    <color name="alto">#D8D8D8</color>
+    <color name="gallery">#EEEEEE</color>
+    <color name="alabaster">#FAFAFA</color>
+
     <color name="cerise_red">#E0245E</color>
     <color name="azalea">#F9D3DE</color>
     <color name="outer_space">#2f3336</color>
@@ -30,6 +45,7 @@
     <color name="shuttle_gray">#5B7083</color>
     <color name="athens_gray">#EDEEF0</color>
     <color name="woodsmoke">#121315</color>
+    <color name="cab_sav">#440717</color>
     <color name="candlelight">#FACE15</color>
     <color name="east_bay">#504277</color>
 </resources>

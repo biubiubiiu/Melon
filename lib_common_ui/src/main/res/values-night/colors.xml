@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#EF9A9A</color>
-    <color name="TextPrimary">#D8D8D8</color>
-    <color name="TextSecondary">#898989</color>
-    <color name="bgPrimary">#1D1E20</color>
-    <color name="bgSecondary">#000</color>
+    <color name="colorPrimary">@color/sea_pink</color>
+    <color name="TextPrimary">@color/alto</color>
+    <color name="TextSecondary">@color/gray</color>
+    <color name="bgPrimary">@color/black</color>
+    <color name="bgSecondary">@color/shark</color>
+
+    <color name="divider">@color/shark</color>
+    <color name="listDivider">@color/ebony_25</color>
 </resources>

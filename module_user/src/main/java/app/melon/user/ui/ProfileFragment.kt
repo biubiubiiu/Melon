@@ -144,7 +144,7 @@ internal class ProfileFragment : BaseDaggerFragment<FragmentProfileBinding>(), O
                     binding.toolbar.setBackgroundColor(Color.TRANSPARENT)
                 }
                 if (triggerEdge + verticalOffset <= 0) {
-                    binding.toolbar.setBackgroundColor(requireContext().getColorCompat(R.color.bgSecondary))
+                    binding.toolbar.setBackgroundColor(requireContext().getColorCompat(R.color.bgPrimary))
                     binding.toolbar.setTitleTextColor(appBarLayout.context.getColorCompat(R.color.TextPrimary))
                     isShow = true
                 } else if (isShow) {

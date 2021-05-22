@@ -14,11 +14,11 @@ abstract class BasePagingListFragment : BaseEpoxyListFragment() {
         super.onViewCreated(binding, savedInstanceState)
         controller.addLoadStateListener {
             binding.swipeRefreshLayout.post {
-                binding.swipeRefreshLayout.isRefreshing = it.refresh is LoadState.Loading
+                binding.swipeRefreshLayout.isRefreshing = it.refresh !is LoadState.NotLoading
             }
         }
         binding.swipeRefreshLayout.setOnRefreshListener {
-            controller.takeIf { !it.isRefreshing }?.refresh()
+            controller.refresh()
         }
     }
 }

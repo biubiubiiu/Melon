@@ -5,9 +5,9 @@
         <item name="colorPrimary">@color/dark_red</item>
         <item name="colorPrimaryVariant">@color/dark_red</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorAccent">#C41442</item>
+        <item name="colorAccent">@color/crimson</item>
         <item name="colorSwitchThumbNormal">#F3D5DD</item>
-        <item name="colorButtonNormal">#50C41442</item>
+        <item name="colorButtonNormal">@color/crimson_70</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -17,11 +17,11 @@
         <item name="android:textColorPrimary">@color/TextPrimary</item>
         <item name="android:textColorSecondary">@color/TextSecondary</item>
 
-        <item name="android:statusBarColor" tools:targetApi="l">@color/bgSecondary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/alabaster</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/alabaster</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/bgPrimary</item>
 
-        <item name="android:listDivider">@color/divider</item>
+        <item name="android:listDivider">@color/listDivider</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
     </style>
 

@@ -45,7 +45,7 @@ class FeedPageController @AssistedInject constructor(
         fun create(
             context: Context,
             idProvider: (FeedAndAuthor?, Int) -> String,
-            type: Type = Type.NORMAL // TODO we don't need this as it should decide from Feed.type
+            type: Type = Type.NORMAL // TODO we don't need this as it should be retrieved from Feed.type
         ): FeedPageController
     }
 }

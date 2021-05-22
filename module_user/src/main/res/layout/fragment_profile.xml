@@ -22,9 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/bgSecondary"
+            app:contentScrim="@color/bgPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:statusBarScrim="@color/bgSecondary"
+            app:statusBarScrim="@color/bgPrimary"
             app:titleEnabled="false">
 
             <include
@@ -32,11 +32,11 @@
                 layout="@layout/content_profile_header"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed" />
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/bgSecondary"
+                android:background="@color/bgPrimary"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_round_arrow_back_24"
                 app:title=" " />

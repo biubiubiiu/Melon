@@ -10,7 +10,7 @@ import app.melon.gallery.permission.SaveImage
 import app.melon.gallery.viewer.ImageViewerView
 import app.melon.permission.PermissionHelper
 import app.melon.util.extensions.showToast
-import java.lang.ref.WeakReference
+import app.melon.util.extensions.weakRef
 
 
 class GalleryActivity : AppCompatActivity(R.layout.activity_gallery) {
@@ -87,7 +87,7 @@ class GalleryActivity : AppCompatActivity(R.layout.activity_gallery) {
                 putExtra(KEY_URL_LIST, urls.toTypedArray())
                 putExtra(KEY_START_POSITION, startPosition)
             }
-            GalleryTransferStation.viewRefs = viewRefs.map { WeakReference(it) }
+            GalleryTransferStation.viewRefs = viewRefs.map { it.weakRef() }
             context.startActivity(intent)
         }
     }

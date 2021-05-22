@@ -118,7 +118,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
     <include layout="@layout/common_ui_divider" />

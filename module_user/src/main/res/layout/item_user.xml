@@ -5,13 +5,14 @@
     android:id="@+id/container_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/bgPrimary"
     android:paddingHorizontal="@dimen/spacing_small"
     android:paddingVertical="@dimen/spacing_conventional">
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="@dimen/nearby_avatar_size"
-        android:layout_height="@dimen/nearby_avatar_size"
+        android:layout_width="@dimen/item_user_avatar_size"
+        android:layout_height="@dimen/item_user_avatar_size"
         android:contentDescription="@string/app_common_avatar_desc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

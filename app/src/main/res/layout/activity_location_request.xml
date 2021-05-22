@@ -32,12 +32,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:importantForAccessibility="no"
-        android:src="@drawable/ic_locate"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.21"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_1" />
+        app:layout_constraintTop_toBottomOf="@id/guideline_1"
+        app:srcCompat="@drawable/ic_location_request" />
 
     <TextView
         android:id="@+id/label"

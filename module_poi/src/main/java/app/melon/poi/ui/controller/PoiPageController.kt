@@ -12,7 +12,7 @@ import app.melon.poi.R
 import app.melon.poi.data.PoiStruct
 import app.melon.poi.ui.widget.locationInfo
 import app.melon.util.extensions.dpInt
-import app.melon.util.extensions.getResourceColor
+import app.melon.util.extensions.getColorCompat
 import app.melon.util.extensions.sp
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.group
@@ -67,7 +67,7 @@ internal class PoiPageController @AssistedInject constructor(
         textHeader {
             id("all_posts_header")
             background(R.color.bgPrimary)
-            color(getResourceColor(R.color.TextPrimary))
+            color(context.getColorCompat(R.color.TextPrimary))
             textSize(15.sp)
             content(R.string.poi_all_posts)
             padding(intArrayOf(12.dpInt, 16.dpInt))

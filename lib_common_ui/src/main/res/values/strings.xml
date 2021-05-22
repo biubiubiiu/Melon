@@ -15,10 +15,6 @@
     <string name="home_nav_drawer_menu_registration">Create a new account</string>
     <string name="home_nav_drawer_menu_login">Add an existing account</string>
 
-    <string name="home_tab_recommend">For You</string>
-    <string name="home_tab_following">Follow</string>
-    <string name="home_tab_nearby">Nearby</string>
-
     <string name="home_bottom_menu_posts">Posts</string>
     <string name="home_bottom_menu_nearby">Nearby</string>
     <string name="home_bottom_menu_anonymous">Anonymous</string>
