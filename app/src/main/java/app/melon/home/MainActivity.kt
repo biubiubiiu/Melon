@@ -21,6 +21,7 @@ import app.melon.databinding.ActivityMainBinding
 import app.melon.event.api.IEventService
 import app.melon.framework.ComposerEntryActivity
 import app.melon.home.nearby.LocateRequest
+import app.melon.im.IIMService
 import app.melon.location.LocationHelper
 import app.melon.permission.PermissionHelper
 import app.melon.permission.PermissionHelperOwner
@@ -52,6 +53,7 @@ class MainActivity : ComposerEntryActivity(), PermissionHelperOwner, HasAndroidI
     @Inject internal lateinit var accountService: IAccountService
     @Inject internal lateinit var userService: IUserService
     @Inject internal lateinit var eventService: IEventService
+    @Inject internal lateinit var imService: IIMService
 
     @Inject internal lateinit var locationHelper: LocationHelper
 
@@ -173,6 +175,7 @@ class MainActivity : ComposerEntryActivity(), PermissionHelperOwner, HasAndroidI
                 R.id.home_nav_drawer_nav_to_registration -> accountService.startRegister(this)
                 R.id.home_nav_drawer_nav_to_profile -> userService.navigateToMyProfile(this)
                 R.id.home_nav_drawer_nav_to_events -> eventService.navigateToEventList(this)
+                R.id.home_nav_drawer_nav_to_messages -> imService.navigateToMessageActivity(this)
                 R.id.home_nav_drawer_nav_to_collections -> BookmarkActivity.start(this)
                 R.id.home_nav_drawer_nav_to_settings -> SettingsActivity.start(this)
                 else -> {

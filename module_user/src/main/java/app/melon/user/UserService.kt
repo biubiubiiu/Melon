@@ -2,13 +2,18 @@ package app.melon.user
 
 import android.content.Context
 import androidx.fragment.app.Fragment
+import app.melon.account.api.UserManager
 import app.melon.user.api.IUserService
 import app.melon.user.api.UserListConfig
 import app.melon.user.ui.CommonUserFragment
+import javax.inject.Inject
 import javax.inject.Singleton
 
+
 @Singleton
-class UserService : IUserService {
+class UserService @Inject constructor(
+    private val userManager: UserManager
+) : IUserService {
 
     override fun navigateToUserProfile(context: Context, uid: String) {
         ProfileActivity.start(context, uid)
@@ -23,7 +28,7 @@ class UserService : IUserService {
     }
 
     override fun navigateToMyProfile(context: Context) {
-        ProfileActivity.start(context)
+        ProfileActivity.start(context, userManager.user!!.id)
     }
 
     override fun buildUserListFragment(config: UserListConfig): Fragment {

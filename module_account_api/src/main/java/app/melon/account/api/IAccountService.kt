@@ -7,7 +7,7 @@ interface IAccountService {
     val isLogin: Boolean
 
     val savedUsername: String
-    val savePassword: String
+    val savedPassword: String
 
     fun startLogin(context: Context)
 

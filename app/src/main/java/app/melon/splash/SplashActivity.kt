@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import app.melon.account.api.IAccountService
+import app.melon.account.api.UserManager
 import app.melon.databinding.ActivitySplashBinding
 import app.melon.home.MainActivity
 import app.melon.location.LocationHelper
@@ -24,6 +25,7 @@ class SplashActivity : DaggerAppCompatActivity() {
 
     @Inject internal lateinit var locationHelper: LocationHelper
     @Inject internal lateinit var accountService: IAccountService
+    @Inject internal lateinit var userManager: UserManager
 
     private val hasLocatePermission get() = hasPermissions(*LocationHelper.requiredPermissions)
 
@@ -56,7 +58,7 @@ class SplashActivity : DaggerAppCompatActivity() {
                         if (locateSuccess) {
                             navigateToHomepage()
                         } else {
-                            navigateToPermissionRequestPage()
+                            navigateToPermissionRequestPage() // Locate permission is not granted
                         }
                     }
                 })

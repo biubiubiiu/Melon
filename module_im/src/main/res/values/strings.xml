@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="message_label">Message</string>
+
+    <string name="message_type_image">[Image]</string>
+    <string name="message_type_audio">[Audio]</string>
+    <string name="message_type_location">[Location]</string>
+    <string name="message_type_file">[File]</string>
+    <string name="message_type_video">[Video]</string>
+    <string name="message_type_event_notification">[Event Notification]</string>
+
+    <string name="message_input_hint">Type a message</string>
+</resources>

@@ -33,7 +33,7 @@ internal class AccountService @Inject constructor(
     private val mObservers: MutableList<Observer> = ArrayList()
 
     override val savedUsername: String get() = storage.getString(REGISTERED_USER)
-    override val savePassword: String get() = storage.getString("$savedUsername${PASSWORD_SUFFIX}")
+    override val savedPassword: String get() = storage.getString("$savedUsername${PASSWORD_SUFFIX}")
 
     override fun startLogin(context: Context) {
         context.startActivity(Intent(context, LoginActivity::class.java))
@@ -44,7 +44,7 @@ internal class AccountService @Inject constructor(
     }
 
     override suspend fun loginUser(): Boolean {
-        return loginUser(savedUsername, savePassword)
+        return loginUser(savedUsername, savedPassword)
     }
 
     override suspend fun loginUser(username: String, password: String): Boolean {

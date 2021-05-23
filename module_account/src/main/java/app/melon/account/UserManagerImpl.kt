@@ -6,6 +6,8 @@ import app.melon.account.data.mapper.RemoteUserDetailToUser
 import app.melon.data.MelonDatabase
 import app.melon.data.entities.User
 import app.melon.data.util.mergeUser
+import app.melon.util.storage.ApplicationStorage
+import app.melon.util.storage.Storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.GlobalScope
@@ -29,8 +31,13 @@ import javax.inject.Singleton
 internal class UserManagerImpl @Inject constructor(
     private val accountApiService: AccountApiService,
     private val mapper: RemoteUserDetailToUser,
-    private val database: MelonDatabase
+    private val database: MelonDatabase,
+    @ApplicationStorage private val storage: Storage
 ) : UserManager(), IAccountService.Observer {
+
+    companion object {
+        private const val KEY_LAST_UID = "last_uid"
+    }
 
     private val currentUserIdFlow = MutableSharedFlow<String?>(
         replay = 1,
@@ -68,6 +75,15 @@ internal class UserManagerImpl @Inject constructor(
                 currentUser = user
             }
         }
+        GlobalScope.launch {
+            currentUserIdFlow.collectLatest { id ->
+                id?.let { saveUid(it) }
+            }
+        }
+    }
+
+    private fun saveUid(id: String) {
+        storage.setString(KEY_LAST_UID, id)
     }
 
     override suspend fun onLoginSuccess() {
@@ -76,20 +92,22 @@ internal class UserManagerImpl @Inject constructor(
             val localUser = database.userDao().getUserWithId(user.id) ?: User()
             database.userDao().insertOrUpdate(mergeUser(localUser, user))
         }
-        currentUserIdFlow.tryEmit(user.id)
+        currentUserIdFlow.emit(user.id)
     }
 
     override suspend fun onLoginCancel() {
     }
 
     override suspend fun onLoginFailure() {
+        val uid = storage.getString(KEY_LAST_UID)
+        if (uid.isNotEmpty()) {
+            currentUserIdFlow.emit(uid)
+        }
     }
 
     override suspend fun onLogout() {
-        currentUserIdFlow.tryEmit(null)
+        currentUserIdFlow.emit("")
     }
-
-    // TODO fail fast when network is not available
 
     private suspend fun fetchUserDetail(): User? {
         return runCatching {

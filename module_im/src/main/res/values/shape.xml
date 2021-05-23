@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--ShapeAppearanceOverlay for chat bubbles which increase corner size -->
+    <style name="ShapeAppearanceOverlay.ChatBubble.Self" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/spacing_normal</item>
+        <item name="cornerSizeTopRight">@dimen/spacing_nano</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.ChatBubble.Other" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/spacing_normal</item>
+        <item name="cornerSizeTopLeft">@dimen/spacing_nano</item>
+    </style>
+</resources>

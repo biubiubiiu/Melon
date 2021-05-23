@@ -2,6 +2,8 @@ plugins {
     // Library Specific Plugins
     id(BuildPlugins.androidLibrary)
     id(BuildPlugins.kotlinAndroid)
+
+    id(ScriptPlugins.infrastructure)
 }
 
 android {
@@ -18,5 +20,6 @@ android {
 }
 
 dependencies {
-    compileOnly(Libraries.AndroidX.Core.ktx)
+    implementation(Libraries.AndroidX.Core.ktx)
+    api(Libraries.DynamicAnimation.animation)
 }

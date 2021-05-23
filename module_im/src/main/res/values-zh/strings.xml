@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="message_label">消息</string>
+
+    <string name="message_type_image">[图片]</string>
+    <string name="message_type_audio">[语音]</string>
+    <string name="message_type_location">[位置]</string>
+    <string name="message_type_file">[文件]</string>
+    <string name="message_type_video">[视频]</string>
+    <string name="message_type_event_notification">[群组消息]</string>
+
+    <string name="message_input_hint">输入内容</string>
+</resources>

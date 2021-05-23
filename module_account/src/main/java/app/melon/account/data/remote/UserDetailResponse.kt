@@ -9,5 +9,5 @@ internal data class UserDetailResponse(
     @SerializedName("school") val school: String? = null,
     @SerializedName("age") val age: Int? = null,
     @SerializedName("gender") val gender: String? = null,
-    @SerializedName("avatarUrl") val avatarUrl: String? = null
+    @SerializedName("avatarURL") val avatarUrl: String? = null
 )

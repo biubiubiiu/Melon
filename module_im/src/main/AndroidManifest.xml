@@ -3,4 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="app.melon.im">
 
+    <application>
+        <activity android:name=".message.MessageActivity" />
+        <activity android:name=".chat.ChatActivity" />
+    </application>
+
 </manifest>

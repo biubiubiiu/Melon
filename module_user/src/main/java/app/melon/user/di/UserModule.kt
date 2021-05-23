@@ -1,5 +1,6 @@
 package app.melon.user.di
 
+import app.melon.account.api.UserManager
 import app.melon.user.UserService
 import app.melon.user.api.IUserService
 import app.melon.user.data.UserApi
@@ -20,7 +21,7 @@ class UserModule {
 
     @Singleton
     @Provides
-    internal fun provideUserService() = UserService()
+    internal fun provideUserService(userManager: UserManager) = UserService(userManager)
 }
 
 @Module

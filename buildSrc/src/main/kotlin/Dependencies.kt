@@ -162,6 +162,11 @@ object Libraries {
         const val ktx = "androidx.transition:transition-ktx:$version"
     }
 
+    object DynamicAnimation {
+        private const val version = "1.0.0-alpha03"
+        const val animation ="androidx.dynamicanimation:dynamicanimation-ktx:$version"
+    }
+
     object Coil {
         private const val version = "1.1.1"
         const val coil = "io.coil-kt:coil:$version"
@@ -248,10 +253,5 @@ object Libraries {
     object Preference {
         private const val version = "1.1.0"
         const val preference = "androidx.preference:preference-ktx:$version"
-    }
-
-    object Benchmark {
-        private const val version = "1.0.0"
-
     }
 }

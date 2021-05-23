@@ -60,7 +60,6 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
-            isDebuggable = true
             proguardFiles("proguard-rules.pro")
         }
         getByName("debug") {
@@ -94,6 +93,7 @@ dependencies {
     implementation(project(Modules.composer))
     implementation(project(Modules.settings))
     implementation(project(Modules.framework))
+    implementation(project(Modules.commonAnimation))
 
     implementation(project(Modules.accountApi))
     implementation(project(Modules.userApi))

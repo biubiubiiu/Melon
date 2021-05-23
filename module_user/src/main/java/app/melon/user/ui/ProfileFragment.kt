@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import app.melon.account.api.UserManager
 import app.melon.base.framework.BaseDaggerFragment
 import app.melon.base.ui.MelonButton
 import app.melon.user.EditProfileActivity
@@ -44,7 +45,7 @@ internal class ProfileFragment : BaseDaggerFragment<FragmentProfileBinding>(), O
     private val headerBinding: ContentProfileHeaderBinding get() = binding.header
 
     private val uid: String get() = arguments?.getString(KEY_USER_ID) ?: ""
-    private val isMyProfile get() = uid == "fake_uid" // TODO use UserManager instead
+    private val isMyProfile get() = uid == userManager.user!!.id
 
     private val fragmentContainerId get() = binding.container.id
     private val currentFragment: Fragment?
@@ -52,6 +53,8 @@ internal class ProfileFragment : BaseDaggerFragment<FragmentProfileBinding>(), O
 
     @Inject internal lateinit var viewModelFactory: UserProfileViewModel.Factory
     @Inject internal lateinit var formatter: MelonNumberFormatter
+
+    @Inject internal lateinit var userManager: UserManager
 
     private val viewModel: UserProfileViewModel by viewModels(::requireActivity) {
         viewModelProviderFactoryOf {

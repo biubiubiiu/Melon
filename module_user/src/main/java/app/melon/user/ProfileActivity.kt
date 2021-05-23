@@ -69,7 +69,7 @@ internal class ProfileActivity : ComposerEntryActivity() {
     companion object {
         private const val KEY_USER_ID = "KEY_USER_ID"
 
-        internal fun start(context: Context, uid: String = "fake_uid") {
+        internal fun start(context: Context, uid: String) {
             val intent = Intent(context, ProfileActivity::class.java).apply {
                 putExtra(KEY_USER_ID, uid)
             }

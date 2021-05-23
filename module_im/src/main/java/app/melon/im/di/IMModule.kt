@@ -5,7 +5,8 @@ import dagger.Module
 
 @Module(
     includes = [
-        IMInitModule::class
+        IMInitModule::class,
+        IMServiceBinds::class
     ]
 )
 class IMModule

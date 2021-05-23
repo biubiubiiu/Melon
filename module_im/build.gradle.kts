@@ -24,6 +24,10 @@ android {
         }
 
         consumerProguardFiles("consumer-rules.pro")
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -46,8 +50,13 @@ dependencies {
     api("cn.jiguang.sdk:jmessage:2.9.2")
     api("cn.jiguang.sdk:jcore:2.3.0")
 
+    implementation(Libraries.AndroidX.Core.ktx)
+
     compileOnly(project(Modules.baseFramework))
     compileOnly(project(Modules.runtimePermissions))
+    compileOnly(project(Modules.commonAnimation))
+
+    compileOnly(project(Modules.accountApi))
 
     kapt(Libraries.Dagger.compiler)
     kapt(Libraries.Dagger.processor)

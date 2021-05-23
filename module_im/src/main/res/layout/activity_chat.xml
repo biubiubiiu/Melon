@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.melon.im.ui.InsetsAnimationLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgPrimary"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        android:layout_width="match_parent"
+        android:background="@color/bgPrimary"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:menu="@menu/menu_chat">
+
+        <ImageView
+            android:importantForAccessibility="no"
+            android:id="@+id/avatar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="@dimen/spacing_small" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/conversation_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/spacing_small"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:reverseLayout="true"
+        tools:itemCount="20"
+        tools:listitem="@layout/message_bubble_other" />
+
+    <LinearLayout
+        android:id="@+id/message_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/spacing_small">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_micro"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/message_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/message_input_hint" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:padding="@dimen/spacing_normal"
+            app:srcCompat="@drawable/ic_send"
+            app:tint="?attr/colorPrimary" />
+
+    </LinearLayout>
+
+</app.melon.im.ui.InsetsAnimationLinearLayout>
