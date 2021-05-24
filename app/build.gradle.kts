@@ -9,6 +9,7 @@ plugins {
 
     // Firebase
     id(FirebaseService.crashlytics)
+    id(BuildPlugins.AndResGuardPlugin)
 
     // Internal Script plugins
     id(ScriptPlugins.compilation)
@@ -113,6 +114,45 @@ dependencies {
 
     kapt(Libraries.Dagger.compiler)
     kapt(Libraries.Dagger.processor)
+}
+
+andResGuard {
+    mappingFile = null
+    use7zip = true
+    useSign = true
+    keepRoot = false
+    fixedResName = "arg"
+    mergeDuplicatedRes = true
+    whiteList = listOf(
+        "R.drawable.jpush_notification_icon",
+        "R.bool.com.crashlytics.useFirebaseAppId",
+        "R.string.com.crashlytics.useFirebaseAppId",
+        "R.string.google_app_id",
+        "R.bool.com.crashlytics.CollectDeviceIdentifiers",
+        "R.string.com.crashlytics.CollectDeviceIdentifiers",
+        "R.bool.com.crashlytics.CollectUserIdentifiers",
+        "R.string.com.crashlytics.CollectUserIdentifiers",
+        "R.string.com.crashlytics.ApiEndpoint",
+        "R.string.io.fabric.android.build_id",
+        "R.string.com.crashlytics.android.build_id",
+        "R.bool.com.crashlytics.RequireBuildId",
+        "R.string.com.crashlytics.RequireBuildId",
+        "R.bool.com.crashlytics.CollectCustomLogs",
+        "R.string.com.crashlytics.CollectCustomLogs",
+        "R.bool.com.crashlytics.Trace",
+        "R.string.com.crashlytics.Trace",
+        "R.string.com.crashlytics.CollectCustomKeys"
+    )
+    compressFilePattern = arrayListOf(
+        "*.png",
+        "*.jpg",
+        "*.jpeg"
+    )
+    sevenzip {
+        artifact = "com.tencent.mm:SevenZip:1.2.21"
+    }
+
+    digestalg = "SHA-256"
 }
 
 apply(plugin = BuildPlugins.benchmarkPlugin)

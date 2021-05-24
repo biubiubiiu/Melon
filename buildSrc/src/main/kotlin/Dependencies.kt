@@ -22,6 +22,7 @@ object BuildPlugins {
         const val buildToolsVersion = "4.1.2"
         const val gradleVersion = "6.5.0"
         const val benchmarkVersion = "1.0.0"
+        const val AndResGuardVersion = "1.2.21"
     }
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.buildToolsVersion}"
@@ -34,6 +35,8 @@ object BuildPlugins {
     const val kotlinAndroidExtensions = "kotlin-android-extensions"
     const val benchmark = "androidx.benchmark:benchmark-gradle-plugin:${Versions.benchmarkVersion}"
     const val benchmarkPlugin = "androidx.benchmark"
+    const val AndResGuard = "com.tencent.mm:AndResGuard-gradle-plugin:${Versions.AndResGuardVersion}"
+    const val AndResGuardPlugin = "AndResGuard"
 }
 
 object FirebaseService {

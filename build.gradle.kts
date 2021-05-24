@@ -10,6 +10,7 @@ buildscript {
         classpath(BuildPlugins.kotlinGradlePlugin)
 
         classpath(BuildPlugins.benchmark)
+        classpath(BuildPlugins.AndResGuard)
 
         classpath(FirebaseService.googleServicePlugin)
         classpath(FirebaseService.crashlyticsPlugin)
