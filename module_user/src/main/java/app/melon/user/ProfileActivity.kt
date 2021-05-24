@@ -19,7 +19,6 @@ internal class ProfileActivity : ComposerEntryActivity() {
     private val binding: CommonFragmentContainerBinding by viewBinding()
 
     private val uid: String get() = intent.getStringExtra(KEY_USER_ID) ?: ""
-    private val isMyProfile get() = uid == "fake_uid" // TODO use UserManager instead
 
     private val fragmentContainerId get() = binding.fragmentContainer.id
     private val currentFragment: Fragment?
@@ -36,12 +35,8 @@ internal class ProfileActivity : ComposerEntryActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return if (isMyProfile) {
-            super.onCreateOptionsMenu(menu)
-        } else {
-            menuInflater.inflate(R.menu.menu_user_profile, menu)
-            true
-        }
+        menuInflater.inflate(R.menu.menu_user_profile, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

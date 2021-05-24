@@ -22,7 +22,6 @@ object BuildPlugins {
         const val buildToolsVersion = "4.1.2"
         const val gradleVersion = "6.5.0"
         const val benchmarkVersion = "1.0.0"
-        const val AndResGuardVersion = "1.2.21"
     }
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.buildToolsVersion}"
@@ -35,8 +34,20 @@ object BuildPlugins {
     const val kotlinAndroidExtensions = "kotlin-android-extensions"
     const val benchmark = "androidx.benchmark:benchmark-gradle-plugin:${Versions.benchmarkVersion}"
     const val benchmarkPlugin = "androidx.benchmark"
-    const val AndResGuard = "com.tencent.mm:AndResGuard-gradle-plugin:${Versions.AndResGuardVersion}"
-    const val AndResGuardPlugin = "AndResGuard"
+
+    object AndResGuard {
+        private const val version  ="1.2.21"
+        const val AndResGuard = "com.tencent.mm:AndResGuard-gradle-plugin:$version"
+        const val AndResGuardPlugin = "AndResGuard"
+    }
+
+    object ByteX {
+        private const val version = "0.2.7"
+        const val byteX = "com.bytedance.android.byteX:base-plugin:$version"
+        const val byteX_const_inline = "com.bytedance.android.byteX:const-inline-plugin:$version"
+        const val byteXPlugin = "bytex"
+        const val byteXConstInlinePlugin = "bytex.const_inline"
+    }
 }
 
 object FirebaseService {

@@ -9,7 +9,13 @@ plugins {
 
     // Firebase
     id(FirebaseService.crashlytics)
-    id(BuildPlugins.AndResGuardPlugin)
+
+    // AndResGuard
+    id(BuildPlugins.AndResGuard.AndResGuardPlugin)
+
+    // ByteX
+    id(BuildPlugins.ByteX.byteXPlugin)
+    id(BuildPlugins.ByteX.byteXConstInlinePlugin)
 
     // Internal Script plugins
     id(ScriptPlugins.compilation)
@@ -153,6 +159,23 @@ andResGuard {
     }
 
     digestalg = "SHA-256"
+}
+
+ByteX {
+    enable(true)
+    enableInDebug(false)
+    logLevel("DEBUG")
+}
+
+const_inline {
+    enable(true)
+    enableInDebug(true)
+    logLevel("INFO")
+    isAutoFilterReflectionField = true
+    isSkipWithRuntimeAnnotation = true
+    skipWithAnnotations = hashSetOf(
+        "android/support/annotation/Keep"
+    )
 }
 
 apply(plugin = BuildPlugins.benchmarkPlugin)
