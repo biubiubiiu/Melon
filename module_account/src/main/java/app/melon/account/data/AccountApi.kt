@@ -2,28 +2,27 @@ package app.melon.account.data
 
 import app.melon.account.data.remote.UserDetailResponse
 import app.melon.data.dto.BaseApiResponse
-import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.POST
-import retrofit2.http.Query
+
 
 internal interface AccountApi {
 
-    @Headers("Content-Type: application/json")
+    @FormUrlEncoded
     @POST("user/register")
     suspend fun register(
-        @Query("username") username: String,
-        @Query("password") password: String
-        // TODO use @Body jsonBody: JsonObject in project
+        @Field("username") username: String,
+        @Field("password") password: String
     ): Response<AccountResponse>
 
-    @Headers("Content-Type: application/json")
+    @FormUrlEncoded
     @POST("user/login")
     suspend fun login(
-        @Query("username") username: String,
-        @Query("password") password: String
+        @Field("username") username: String,
+        @Field("password") password: String
     ): Response<AccountResponse>
 
     @GET("user/logout")

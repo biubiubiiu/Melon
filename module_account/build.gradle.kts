@@ -40,6 +40,7 @@ kapt {
 
 dependencies {
     compileOnly(project(Modules.accountApi))
+    compileOnly(project(Modules.homeApi))
 
     compileOnly(project(Modules.baseFramework))
     compileOnly(project(Modules.dataAndroid))

@@ -21,7 +21,7 @@ internal class RemoteUserDetailToUser @Inject constructor() : Mapper<UserDetailR
             location = from.lastLocation.toLocation(),
             description = from.description,
             avatarUrl = from.avatarUrl,
-            photos = from.photos,
+            photos = from.photos ?: emptyList(),
             backgroundUrl = from.backgroundUrl,
             followingCount = from.followingCount,
             followerCount = from.followerCount

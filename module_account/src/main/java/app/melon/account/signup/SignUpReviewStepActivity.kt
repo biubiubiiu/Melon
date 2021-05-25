@@ -68,7 +68,6 @@ internal class SignUpReviewStepActivity : DaggerAppCompatActivity(R.layout.activ
             if (it.error != null) {
                 showSignUpFailed(it.error)
             } else if (it.success) {
-                viewModel.saveUser(form)
                 val intent = LoginActivity.prepareIntent(this, form.username, form.password)
                     .clearTask()
                     .newTask()

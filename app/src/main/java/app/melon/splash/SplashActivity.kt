@@ -64,7 +64,7 @@ class SplashActivity : DaggerAppCompatActivity() {
                 })
                 binding.splash.playAnimation()
             } else {
-                accountService.startLogin(this@SplashActivity)
+                routeToLogin()
             }
         }
     }
@@ -76,6 +76,11 @@ class SplashActivity : DaggerAppCompatActivity() {
 
     private fun navigateToPermissionRequestPage() {
         LocationPermissionActivity.start(this)
+        finish()
+    }
+
+    private fun routeToLogin() {
+        accountService.startLogin(this@SplashActivity)
         finish()
     }
 }

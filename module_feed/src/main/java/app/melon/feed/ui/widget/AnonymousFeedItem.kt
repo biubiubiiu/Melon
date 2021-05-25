@@ -48,11 +48,10 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
 
     private fun setupContent(holder: Holder) {
         with(holder) {
-            avatarView.load(item.author.avatarUrl) {
-                transformations(CircleCropTransformation()) // TODO add interceptor here
+            avatarView.load(R.drawable.ic_avatar_anonymous) {
+                transformations(CircleCropTransformation())
             }
-            usernameView.text = item.author.username
-            userIdView.text = "TODO"
+            usernameView.text = "Random name"
             userSchoolView.text = item.author.school
             postTimeView.text = formatter.formatShortRelativeTime(item.feed.postTime)
             titleView.text = item.feed.title

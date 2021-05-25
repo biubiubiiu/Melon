@@ -97,7 +97,6 @@ internal class ProfileFragment : BaseDaggerFragment<FragmentProfileBinding>(), O
         return super.onOptionsItemSelected(item)
     }
 
-
     override fun onBackPressed(): Boolean {
         return (currentFragment as? OnBackPressedHandler)?.onBackPressed() ?: false
     }

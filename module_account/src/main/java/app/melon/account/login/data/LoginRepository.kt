@@ -1,9 +1,9 @@
 package app.melon.account.login.data
 
-import app.melon.account.signup.data.SignUpDataSource
+import androidx.annotation.WorkerThread
+import app.melon.account.AccountApiService
+import app.melon.account.data.LoginStatus
 import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Singleton
 
 /**
@@ -12,26 +12,50 @@ import javax.inject.Singleton
  */
 @Singleton
 internal class LoginRepository @Inject constructor(
-    private val loginDataSource: LoginDataSource,
-    private val signUpDataSource: SignUpDataSource
+    private val accountApiService: AccountApiService
 ) {
 
+    @WorkerThread
     internal suspend fun logout() {
-        loginDataSource.logout()
+        // TODO: revoke authentication
+//        return accountApiService.logout().fold(
+//            onSuccess = {
+//                Result.success(Any())
+//            },
+//            onFailure = {
+//                Result.failure(it)
+//            }
+//        )
     }
 
-    internal suspend fun login(username: String, password: String): Result<String> {
-        return withContext(Dispatchers.IO) {
-            loginDataSource.login(username, password)
-        }
+    @WorkerThread
+    internal suspend fun login(username: String, password: String): LoginStatus<String> {
+        return runCatching {
+            val response = accountApiService.login(username, password).getOrThrow()
+            response
+        }.fold(
+            onSuccess = { response ->
+                if (response.code == 200) {
+                    LoginStatus.Success(response.result!!.token!!)
+                } else {
+                    LoginStatus.Failure
+                }
+            }, onFailure = { throwable ->
+                LoginStatus.Error.Generic(throwable)
+            }
+        )
     }
 
     internal suspend fun signUp(username: String, password: String): Result<Boolean> {
-        return withContext(Dispatchers.IO) {
-            signUpDataSource.signUp(
-                username = username,
-                password = password
-            )
-        }
+        return runCatching {
+            accountApiService.register(username, password).getOrThrow()
+        }.fold(
+            onSuccess = {
+                Result.success(true)
+            },
+            onFailure = {
+                Result.failure(it)
+            }
+        )
     }
 }

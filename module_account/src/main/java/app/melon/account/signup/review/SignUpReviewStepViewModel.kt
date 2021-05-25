@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.melon.account.R
-import app.melon.account.api.IAccountService
 import app.melon.account.signup.data.SignUpForm
 import app.melon.account.signup.state.SignUpResult
 import app.melon.base.scope.ActivityScope
@@ -18,7 +17,6 @@ import javax.inject.Inject
 
 @ActivityScope
 internal class SignUpReviewStepViewModel @Inject constructor(
-    private val accountService: IAccountService,
     private val signUpUser: SignUpUser
 ) : ViewModel() {
 
@@ -49,15 +47,6 @@ internal class SignUpReviewStepViewModel @Inject constructor(
     internal fun signUp(form: SignUpForm) {
         viewModelScope.launch {
             signUpUser(SignUpUser.Params(form.username, form.password))
-        }
-    }
-
-    internal fun saveUser(form: SignUpForm) {
-        viewModelScope.launch {
-            accountService.registerUser(
-                username = form.username,
-                password = form.password
-            )
         }
     }
 

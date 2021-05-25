@@ -8,6 +8,7 @@ import app.melon.account.R
 import app.melon.account.api.IAccountService
 import app.melon.account.login.state.LoginFormState
 import app.melon.account.login.state.LoginResult
+import app.melon.base.framework.ObservableLoadingCounter
 import app.melon.base.scope.ActivityScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,15 +25,19 @@ internal class LoginViewModel @Inject constructor(
     private val _loginResult = MutableLiveData<LoginResult>()
     internal val loginResult: LiveData<LoginResult> = _loginResult
 
+    internal val loggingIn = ObservableLoadingCounter()
+
     internal fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
         viewModelScope.launch {
+            loggingIn.addLoader()
             val result = accountService.loginUser(username, password)
             _loginResult.value = if (result) {
                 LoginResult(success = true)
             } else {
                 LoginResult(error = R.string.login_failed)
             }
+            loggingIn.removeLoader()
         }
     }
 

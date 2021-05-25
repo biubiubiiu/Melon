@@ -86,6 +86,8 @@ object Modules {
     const val settings = ":module_settings"
     const val framework = ":module_framework"
 
+    const val homeApi = ":module_home_api"
+
     const val composerApi = ":module_composer_api"
     const val composer = ":module_composer"
 

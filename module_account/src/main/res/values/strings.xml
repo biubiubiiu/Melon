@@ -44,6 +44,8 @@
     <string name="account_error_hint_not_found">HTTP 404 Service Not Found</string>
     <string name="account_error_hint_unknown_error">Unknown Error</string>
 
+    <string name="account_login_success">Login Success</string>
+
     <string name="account_sign_up_desc">Sign up</string>
     <string name="account_sign_up">Sign up</string>
 </resources>

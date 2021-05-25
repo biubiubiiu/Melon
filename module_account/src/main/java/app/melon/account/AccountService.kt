@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import app.melon.account.api.IAccountService.Observer
 import app.melon.account.api.IAccountService
+import app.melon.account.data.LoginStatus
 import app.melon.account.login.LoginActivity
 import app.melon.account.login.data.LoginRepository
 import app.melon.account.signup.SignUpStepFormActivity
@@ -44,22 +45,34 @@ internal class AccountService @Inject constructor(
     }
 
     override suspend fun loginUser(): Boolean {
-        return loginUser(savedUsername, savedPassword)
+        return loginUser(savedUsername, savedPassword, encrypt = false)
     }
 
     override suspend fun loginUser(username: String, password: String): Boolean {
-        return withContext(Dispatchers.IO) {
-            repo.login(username, password)
-        }.fold(
-            onSuccess = {
-                tokenManager.updateToken(token = it)
+        return loginUser(username, password, encrypt = true)
+    }
+
+    private suspend fun loginUser(username: String, password: String, encrypt: Boolean): Boolean {
+        val encryptedPassword = if (encrypt) {
+            EncryptUtils.getSHA512HashOfString(password)
+        } else {
+            password // password has been encrypted
+        }
+        val result = withContext(Dispatchers.IO) {
+            repo.login(username, encryptedPassword)
+        }
+        return when (result) {
+            is LoginStatus.Success -> {
+                tokenManager.updateToken(result.token)
+                saveUser(username, encryptedPassword)
                 notifyLoginSuccess()
                 true
-            }, onFailure = {
+            }
+            else -> {
                 notifyLoginFailure()
                 false
             }
-        )
+        }
     }
 
     override suspend fun logout() {
@@ -72,10 +85,7 @@ internal class AccountService @Inject constructor(
         return withContext(Dispatchers.IO) {
             repo.signUp(username, encryptedPassword)
         }.fold(
-            onSuccess = {
-                saveUser(username, encryptedPassword)
-                true
-            },
+            onSuccess = { true },
             onFailure = { false }
         )
     }

@@ -1,23 +1,25 @@
 package app.melon.account.login
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import app.melon.account.R
 import app.melon.account.databinding.ActivityLoginBinding
 import app.melon.account.signup.SignUpStepFormActivity
+import app.melon.home.api.IHomeService
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.afterTextChanged
+import app.melon.util.extensions.showToast
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -41,10 +43,17 @@ internal class LoginActivity : DaggerAppCompatActivity() {
     }
 
     @Inject internal lateinit var loginViewModel: LoginViewModel
+    @Inject internal lateinit var homeService: IHomeService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbar()
+
+        lifecycleScope.launch {
+            loginViewModel.loggingIn.observable.collectLatest {
+                binding.loginLoading.isVisible = it
+            }
+        }
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             // disable login button unless both username / password is valid
@@ -53,7 +62,6 @@ internal class LoginActivity : DaggerAppCompatActivity() {
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer { result ->
             result ?: return@Observer
-            binding.loginLoading.isVisible = false
             result.error?.let { showLoginFailed(it) }
             if (result.success) {
                 onLoginSuccess()
@@ -87,8 +95,9 @@ internal class LoginActivity : DaggerAppCompatActivity() {
             }
 
             binding.login.setOnClickListener {
-                binding.loginLoading.visibility = View.VISIBLE
-                loginViewModel.login(binding.loginCredential.text.toString(), binding.loginPassword.text.toString())
+                val credential = binding.loginCredential.text.toString()
+                val password = binding.loginPassword.text.toString()
+                loginViewModel.login(credential, password)
             }
         }
 
@@ -103,14 +112,13 @@ internal class LoginActivity : DaggerAppCompatActivity() {
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+        applicationContext.showToast(errorString)
     }
 
     private fun onLoginSuccess() {
-        setResult(Activity.RESULT_OK)
+        applicationContext.showToast(R.string.account_login_success)
 
-        //Complete and destroy login activity once successful
-        finish()
+        homeService.routeToHomepage(this, true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

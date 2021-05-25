@@ -107,6 +107,7 @@ dependencies {
     implementation(project(Modules.eventApi))
     implementation(project(Modules.poiApi))
     implementation(project(Modules.composerApi))
+    implementation(project(Modules.homeApi))
 
     implementation(Libraries.MultiDex.multiDex)
 
@@ -169,7 +170,7 @@ ByteX {
 
 const_inline {
     enable(true)
-    enableInDebug(true)
+    enableInDebug(false)
     logLevel("INFO")
     isAutoFilterReflectionField = true
     isSkipWithRuntimeAnnotation = true

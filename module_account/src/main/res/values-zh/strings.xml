@@ -32,6 +32,8 @@
     <string name="account_error_hint_invalid_email">请输入有效的邮件地址</string>
     <string name="account_error_hint_invalid_password">你的密码需包含字母、数字和特殊字符中的两项，且长度需在6–16位之间</string>
 
+    <string name="account_login_success">登录成功</string>
+
     <string name="account_sign_up">注册</string>
     <string name="account_prompt_forgot_password">忘记密码？</string>
 </resources>
