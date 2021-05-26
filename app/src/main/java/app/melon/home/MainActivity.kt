@@ -57,7 +57,7 @@ class MainActivity : ComposerEntryActivity(), PermissionHelperOwner, HasAndroidI
 
     @Inject internal lateinit var locationHelper: LocationHelper
 
-    private val locatePermissionHelper = PermissionHelper(this, LocateRequest)
+    private val locatePermissionHelper = PermissionHelper(this, LocateRequest) // TODO remove this
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector!!
 

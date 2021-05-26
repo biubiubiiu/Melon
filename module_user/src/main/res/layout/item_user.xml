@@ -5,7 +5,6 @@
     android:id="@+id/container_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bgPrimary"
     android:paddingHorizontal="@dimen/spacing_small"
     android:paddingVertical="@dimen/spacing_conventional">
 
@@ -46,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_micro"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="1"
         android:textAppearance="@style/Melon.TextAppearance.Info"
         app:layout_constraintEnd_toStartOf="@id/distance"
         app:layout_constraintStart_toStartOf="@id/username"

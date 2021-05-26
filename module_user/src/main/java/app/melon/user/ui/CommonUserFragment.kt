@@ -16,13 +16,13 @@ import javax.inject.Inject
 
 internal class CommonUserFragment : BasePagingListFragment() {
 
-    private val pageConfig by lazy { requireArguments().getSerializable(KEY_PAGE_CONFIG) as UserListConfig }
+    private val listItemPrefix = "todo" // TODO
 
     @Inject internal lateinit var controllerFactory: UserPageController.Factory
     override val controller by lazy {
         controllerFactory.create(
             context = requireContext(),
-            idProvider = { _, position -> "${pageConfig.listItemIdPrefix}_$position" },
+            idProvider = { _, position -> "${listItemPrefix}_$position" },
             showFollowButton = false
         )
     }
@@ -34,13 +34,7 @@ internal class CommonUserFragment : BasePagingListFragment() {
     private fun refresh() {
         fetchJob?.cancel()
         fetchJob = lifecycleScope.launch {
-            val dataFlow = when (val config = pageConfig) {
-                is NearbyUserList -> viewModel.fetchNearbyUser(
-                    config.longitude,
-                    config.latitude
-                )
-                else -> viewModel.refresh()
-            }
+            val dataFlow = viewModel.refresh()
             dataFlow.collectLatest {
                 controller.submitData(it)
             }

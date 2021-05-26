@@ -27,7 +27,7 @@
 
     <style name="Melon.TextAppearance.Info" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">?android:textColorSecondary</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="Melon.TextAppearance.Content" parent="Base.TextAppearance.AppCompat">

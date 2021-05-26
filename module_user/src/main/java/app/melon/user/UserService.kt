@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import app.melon.account.api.UserManager
 import app.melon.user.api.IUserService
+import app.melon.user.api.NearbyUserList
 import app.melon.user.api.UserListConfig
+import app.melon.user.nearby.NearbyUserListFragment
 import app.melon.user.ui.CommonUserFragment
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,6 +34,9 @@ class UserService @Inject constructor(
     }
 
     override fun buildUserListFragment(config: UserListConfig): Fragment {
-        return CommonUserFragment.newInstance(config)
+        return when (config) {
+            NearbyUserList -> NearbyUserListFragment.newInstance()
+            else -> CommonUserFragment.newInstance(config)
+        }
     }
 }

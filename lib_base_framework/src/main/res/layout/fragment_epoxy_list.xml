@@ -4,12 +4,14 @@
     android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgSecondary"
+    android:background="@color/bgPrimary"
     app:swipeRefreshLayoutProgressSpinnerBackgroundColor="?attr/colorAccent">
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
