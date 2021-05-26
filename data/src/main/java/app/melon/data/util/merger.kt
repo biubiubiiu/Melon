@@ -23,6 +23,7 @@ fun mergeFeed(local: Feed, remote: Feed) = local.copy(
 fun mergeUser(local: User, remote: User) = local.copy(
     id = remote.id,
     username = remote.username ?: local.username,
+    customId = remote.customId ?: local.customId,
     gender = remote.gender ?: local.gender,
     age = remote.age ?: local.age,
     hometown = remote.hometown ?: local.hometown,

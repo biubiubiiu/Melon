@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 internal data class UserDetailResponse(
     @SerializedName("id") val id: String = "",
     @SerializedName("username") val username: String = "",
+    @SerializedName("customId") val customId: String? = null,
     @SerializedName("avatarUrl") val avatarUrl: String? = null,
     @SerializedName("backgroundUrl") val backgroundUrl: String? = null,
     @SerializedName("school") val school: String? = null,

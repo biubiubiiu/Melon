@@ -29,6 +29,7 @@ class RemoteFeedDetailToFeedAndAuthor @Inject constructor() : Mapper<FeedDetailR
         val user = User(
             id = from.user?.id ?: "",
             username = from.user?.username,
+            customId = from.user?.customId,
             gender = if (from.user?.gender?.isValidGender() == true) from.user.gender else null,
             age = from.user?.age,
             school = from.user?.school,

@@ -15,6 +15,7 @@ internal class RemoteUserDetailToUser @Inject constructor() : Mapper<UserDetailR
         return User(
             id = from.id,
             username = from.username,
+            customId = from.customId,
             gender = if (from.gender?.isValidGender() == true) from.gender else null,
             age = from.age,
             school = from.school,

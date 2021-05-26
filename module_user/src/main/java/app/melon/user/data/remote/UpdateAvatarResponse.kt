@@ -3,5 +3,5 @@ package app.melon.user.data.remote
 import com.google.gson.annotations.SerializedName
 
 internal data class UpdateAvatarResponse(
-    @SerializedName("avatarURL") val avatarUrl: String? = null
+    @SerializedName("avatarUrl") val avatarUrl: String? = null
 )

@@ -34,6 +34,7 @@
         android:layout_marginHorizontal="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_small"
         android:textAppearance="@style/Melon.TextAppearance.Head"
+        android:textSize="20sp"
         tools:text="Sandor Clegane" />
 
     <TextView
@@ -59,6 +60,17 @@
         tools:text="Cambridge University" />
 
     <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_school_info"
+        android:layout_marginHorizontal="@dimen/spacing_normal"
+        android:layout_marginVertical="@dimen/spacing_conventional"
+        android:textColor="@color/TextPrimary"
+        android:textSize="16sp"
+        tools:text="This is a long long long long text." />
+
+    <TextView
         android:id="@+id/edit_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,21 +89,20 @@
 
     <app.melon.base.ui.MelonButton
         android:id="@+id/follow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/background"
         android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/following_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_school_info"
+        android:layout_below="@+id/description"
         android:layout_alignStart="@id/profile_username"
-        android:layout_marginTop="@dimen/spacing_normal"
         android:orientation="horizontal">
 
         <TextView
@@ -118,9 +129,8 @@
         android:id="@+id/followers_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_school_info"
+        android:layout_below="@+id/description"
         android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_marginTop="@dimen/spacing_normal"
         android:layout_toEndOf="@id/following_entry"
         android:orientation="horizontal">
 

@@ -13,6 +13,7 @@ data class User(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "user_id") override val id: String = "",
     @ColumnInfo(name = "username") val username: String? = null,
+    @ColumnInfo(name = "custom_id") val customId: String? = null,
     @ColumnInfo(name = "gender") @Gender val gender: String? = null,
     @ColumnInfo(name = "age") val age: Int? = null,
     @ColumnInfo(name = "hometown") val hometown: String? = null,

@@ -21,7 +21,8 @@ data class FeedListItemResponse(
 data class FeedListUserStruct(
     @SerializedName("id") val id: String = "",
     @SerializedName("username") val username: String? = null,
-    @SerializedName("avatarURL") val avatarUrl: String? = null,
+    @SerializedName("customId") val customId: String? = null,
+    @SerializedName("avatarUrl") val avatarUrl: String? = null,
     @SerializedName("school") val school: String? = null,
     @SerializedName("age") val age: Int? = null,
     @SerializedName("gender") val gender: String? = null,

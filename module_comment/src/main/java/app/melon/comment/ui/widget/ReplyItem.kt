@@ -1,5 +1,6 @@
 package app.melon.comment.ui.widget
 
+import android.annotation.SuppressLint
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -39,26 +40,25 @@ internal abstract class ReplyItem : EpoxyModelWithHolder<ReplyItem.Holder>() {
         setupListeners(holder)
     }
 
-    private fun setupContent(holder: Holder) {
-        with(holder) {
-            avatarView.load(item.author.avatarUrl) {
-                transformations(CircleCropTransformation())
-            }
-            usernameView.text = item.author.username.orEmpty()
-            userIdView.text = "TODO"
-            postTimeView.text = formatter.formatShortRelativeTime(item.comment.postTime)
-            contentView.text = item.comment.content.orEmpty()
-            favourCountView.text = item.comment.favorCount?.toString()
+    @SuppressLint("SetTextI18n")
+    private fun setupContent(holder: Holder) = with(holder) {
+        avatarView.load(item.author.avatarUrl) {
+            transformations(CircleCropTransformation())
+        }
+        usernameView.text = item.author.username.orEmpty()
+        userIdView.text = "@${item.author.customId}"
+        postTimeView.text = formatter.formatShortRelativeTime(item.comment.postTime)
+        contentView.text = item.comment.content.orEmpty()
+        favourCountView.text = item.comment.favorCount?.toString()
 
-            val quote = item.quote
-            quoteContainer.isVisible = quote != null
-            if (quote != null) {
-                val username = quote.author.username
-                val content = quote.comment.content
-                if (username != null && content != null) {
-                    quoteContent.text = buildReplyClickableSpan(username, content)
-                    quoteContent.movementMethod = LinkMovementMethod.getInstance()
-                }
+        val quote = item.quote
+        quoteContainer.isVisible = quote != null
+        if (quote != null) {
+            val username = quote.author.username
+            val content = quote.comment.content
+            if (username != null && content != null) {
+                quoteContent.text = buildReplyClickableSpan(username, content)
+                quoteContent.movementMethod = LinkMovementMethod.getInstance()
             }
         }
     }

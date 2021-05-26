@@ -1,5 +1,6 @@
 package app.melon.comment.ui.widget
 
+import android.annotation.SuppressLint
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -48,35 +49,36 @@ internal abstract class CommentItem : EpoxyModelWithHolder<CommentItem.Holder>()
         setupListeners(holder)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupContent(holder: Holder) = with(holder) {
-            contentRoot.setBackgroundResource(backgroundRes)
-            val data = item
-            if (data != null) {
-                shimmerContainer.stopShimmer()
-                shimmerContainer.makeGone()
-                contentRoot.makeVisible()
-                avatarView.load(data.author.avatarUrl) {
-                    transformations(CircleCropTransformation())
-                }
-                usernameView.text = data.author.username.orEmpty()
-                userIdView.text = "TODO"
-                postTimeView.text = formatter.formatShortRelativeTime(data.comment.postTime)
-                contentView.text = data.comment.content.orEmpty()
-                favourCountView.text = data.comment.favorCount?.toString()
-
-                val replyCount = data.comment.replyCount
-                if (replyCount != null && replyCount > 0 && displayReplyCount) {
-                    moreReplyEntryView.isVisible = true
-                    moreReplyEntryView.text = buildReplyEntryClickableSpan(data)
-                    moreReplyEntryView.movementMethod = LinkMovementMethod.getInstance()
-                } else {
-                    moreReplyEntryView.isVisible = false
-                }
-            } else {
-                contentRoot.makeGone()
-                shimmerContainer.makeVisible()
-                shimmerContainer.startShimmer()
+        contentRoot.setBackgroundResource(backgroundRes)
+        val data = item
+        if (data != null) {
+            shimmerContainer.stopShimmer()
+            shimmerContainer.makeGone()
+            contentRoot.makeVisible()
+            avatarView.load(data.author.avatarUrl) {
+                transformations(CircleCropTransformation())
             }
+            usernameView.text = data.author.username.orEmpty()
+            userIdView.text = "@${data.author.customId}"
+            postTimeView.text = formatter.formatShortRelativeTime(data.comment.postTime)
+            contentView.text = data.comment.content.orEmpty()
+            favourCountView.text = data.comment.favorCount?.toString()
+
+            val replyCount = data.comment.replyCount
+            if (replyCount != null && replyCount > 0 && displayReplyCount) {
+                moreReplyEntryView.isVisible = true
+                moreReplyEntryView.text = buildReplyEntryClickableSpan(data)
+                moreReplyEntryView.movementMethod = LinkMovementMethod.getInstance()
+            } else {
+                moreReplyEntryView.isVisible = false
+            }
+        } else {
+            contentRoot.makeGone()
+            shimmerContainer.makeVisible()
+            shimmerContainer.startShimmer()
+        }
     }
 
     private fun setupListeners(holder: Holder) = with(holder) {

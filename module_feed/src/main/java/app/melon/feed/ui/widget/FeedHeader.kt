@@ -1,5 +1,6 @@
 package app.melon.feed.ui.widget
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -59,12 +60,13 @@ abstract class FeedHeader : EpoxyModelWithHolder<FeedHeader.Holder>() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupListeners(holder: Holder) = with(holder) {
         avatarView.load(item.author.avatarUrl) {
             transformations(CircleCropTransformation())
         }
         usernameView.text = item.author.username
-        userIdView.text = "TODO"
+        userIdView.text = "@${item.author.customId}"
         userSchoolView.text = item.author.school
         postTimeView.text = formatter.formatMediumDateTime(item.feed.postTime)
         contentView.text = item.feed.content

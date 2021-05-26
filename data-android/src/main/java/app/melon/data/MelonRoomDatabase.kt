@@ -27,7 +27,7 @@ import app.melon.data.entities.User
         GroupEntry::class,
         JoinGroup::class
     ],
-    version = 16,
+    version = 17,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

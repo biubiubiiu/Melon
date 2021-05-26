@@ -182,10 +182,20 @@ internal class ProfileFragment : BaseDaggerFragment<FragmentProfileBinding>(), O
         viewModel.selectObserve(UserProfileViewState::user).observe(viewLifecycleOwner, Observer { user ->
             user ?: return@Observer
             with(headerBinding) {
-                background.load(user.backgroundUrl)
+                background.load(user.backgroundUrl) {
+                    crossfade(true)
+                }
                 avatar.load(user.avatarUrl) {
                     transformations(CircleCropTransformation())
                 }
+
+                profileUsername.text = user.username
+                profileUserId.text = getString(R.string.user_custom_id, user.customId)
+                profileSchoolInfo.text = user.school
+                tvFollowers.text = formatter.format(user.followerCount ?: 0)
+                tvFollowing.text = formatter.format(user.followingCount ?: 0)
+                description.text = user.description.orEmpty()
+
                 avatar.setOnClickListener { _ ->
                     user.avatarUrl?.let { url ->
                         ProfileImageActivity.start(requireContext(), url, user.id)
@@ -197,11 +207,6 @@ internal class ProfileFragment : BaseDaggerFragment<FragmentProfileBinding>(), O
                 followersEntry.setOnClickListener { _ ->
                     FollowersActivity.start(requireContext(), user.id)
                 }
-                profileUsername.text = user.username
-                profileUserId.text = "todo user id" // TODO
-                profileSchoolInfo.text = user.school
-                tvFollowers.text = formatter.format(user.followerCount ?: 0)
-                tvFollowing.text = formatter.format(user.followingCount ?: 0)
             }
             with(binding) {
                 toolbar.title = user.username

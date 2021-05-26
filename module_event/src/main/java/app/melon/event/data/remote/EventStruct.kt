@@ -18,5 +18,6 @@ data class EventStruct(
 data class EventListUserStruct(
     @SerializedName("id") val id: String? = null,
     @SerializedName("username") val username: String? = null,
-    @SerializedName("avatarURL") val avatarUrl: String? = null
+    @SerializedName("customId") val customId: String? = null,
+    @SerializedName("avatarUrl") val avatarUrl: String? = null
 )
