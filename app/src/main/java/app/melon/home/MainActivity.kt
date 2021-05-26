@@ -20,12 +20,8 @@ import app.melon.bookmark.BookmarkActivity
 import app.melon.databinding.ActivityMainBinding
 import app.melon.event.api.IEventService
 import app.melon.framework.ComposerEntryActivity
-import app.melon.home.nearby.LocateRequest
 import app.melon.im.IIMService
 import app.melon.location.LocationHelper
-import app.melon.permission.PermissionHelper
-import app.melon.permission.PermissionHelperOwner
-import app.melon.permission.PermissionRequest
 import app.melon.settings.SettingsActivity
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.reverse
@@ -37,7 +33,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class MainActivity : ComposerEntryActivity(), PermissionHelperOwner, HasAndroidInjector {
+class MainActivity : ComposerEntryActivity(), HasAndroidInjector {
 
     @Inject
     @JvmField
@@ -56,8 +52,6 @@ class MainActivity : ComposerEntryActivity(), PermissionHelperOwner, HasAndroidI
     @Inject internal lateinit var imService: IIMService
 
     @Inject internal lateinit var locationHelper: LocationHelper
-
-    private val locatePermissionHelper = PermissionHelper(this, LocateRequest) // TODO remove this
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector!!
 
@@ -99,14 +93,6 @@ class MainActivity : ComposerEntryActivity(), PermissionHelperOwner, HasAndroidI
 
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController?.value?.navigateUp() ?: false
-    }
-
-    override fun checkPermission(request: PermissionRequest, onPermissionsGranted: () -> Unit) {
-        if (request == LocateRequest) {
-            locatePermissionHelper.checkPermissions(
-                onPermissionAllGranted = onPermissionsGranted
-            )
-        }
     }
 
     private fun startLocate() {
