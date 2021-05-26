@@ -3,7 +3,6 @@ package app.melon.user.nearby
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.framework.BaseEpoxyListFragment
@@ -33,6 +32,15 @@ internal class NearbyUserListFragment : BaseEpoxyListFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.refresh()
+
+        viewModel.dataFlow.observe(this, Observer { dataFlow ->
+            job?.cancel()
+            job = lifecycleScope.launch {
+                dataFlow.collectLatest { data ->
+                    controller.submitData(data)
+                }
+            }
+        })
     }
 
     override fun onViewCreated(binding: FragmentEpoxyListBinding, savedInstanceState: Bundle?) {
@@ -41,11 +49,6 @@ internal class NearbyUserListFragment : BaseEpoxyListFragment() {
             v.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
-        controller.addLoadStateListener {
-            binding.swipeRefreshLayout.post {
-                binding.swipeRefreshLayout.isRefreshing = it.refresh !is LoadState.NotLoading
-            }
-        }
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
         }
@@ -56,14 +59,6 @@ internal class NearbyUserListFragment : BaseEpoxyListFragment() {
         }
         viewModel.locateFail.observe(viewLifecycleOwner, Observer { errorMessage ->
             Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).show()
-        })
-        viewModel.dataFlow.observe(viewLifecycleOwner, Observer { dataFlow ->
-            job?.cancel()
-            job = lifecycleScope.launch {
-                dataFlow.collectLatest { data ->
-                    controller.submitData(data)
-                }
-            }
         })
     }
 
