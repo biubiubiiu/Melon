@@ -36,21 +36,42 @@ class FeedApiService @Inject constructor(
     suspend fun feedsFromUser(
         id: String,
         page: Int,
-        pageSize: Int
+        pageSize: Int,
+        isAnonymous: Boolean
     ): Result<List<FeedListItemResponse>> {
+        val type = if (isAnonymous) 1 else 0
         return call {
-            api.feedsFromUser(id, page, pageSize)
+            api.feedsFromUser(id, page, pageSize, type)
         }
     }
 
-    suspend fun nearby(
-        longitude: Double,
-        latitude: Double,
+    suspend fun favorsOfUser(
+        id: String,
         page: Int,
         pageSize: Int
     ): Result<List<FeedListItemResponse>> {
         return call {
-            api.nearby(longitude, latitude, page, pageSize)
+            api.favorsOfUser(id, page, pageSize)
+        }
+    }
+
+    suspend fun bookmarksOfUser(
+        id: String,
+        page: Int,
+        pageSize: Int
+    ): Result<List<FeedListItemResponse>> {
+        return call {
+            api.bookmarksOfUser(id, page, pageSize)
+        }
+    }
+
+    suspend fun poiFeeds(
+        id: String,
+        page: Int,
+        pageSize: Int
+    ): Result<List<FeedListItemResponse>> {
+        return call {
+            api.poiFeeds(id, page, pageSize)
         }
     }
 

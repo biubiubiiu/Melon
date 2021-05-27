@@ -63,9 +63,12 @@ class FeedRepository @Inject constructor(
         )
     }
 
+    /**
+     * Requires locale storage
+     */
     fun getFeedList(timestamp: String, @FeedPageType queryType: Int): Flow<PagingData<FeedAndAuthor>> {
         return Pager(
-            config = PAGING_CONFIG,
+            config = DEFAULT_PAGING_CONFIG,
             remoteMediator = FeedRemoteMediator(
                 timestamp,
                 queryType,
@@ -81,28 +84,68 @@ class FeedRepository @Inject constructor(
         }
     }
 
-    fun getFeedsFromUser(uid: String): Flow<PagingData<FeedAndAuthor>> {
+    fun getFeedsFromUser(uid: String, isAnonymous: Boolean): Flow<PagingData<FeedAndAuthor>> {
         return Pager(
-            config = PAGING_CONFIG,
+            config = DEFAULT_PAGING_CONFIG,
             pagingSourceFactory = {
                 FeedPagingSource(
-                    fetcher = { page -> feedApiService.feedsFromUser(uid, page, PAGING_CONFIG.pageSize) },
-                    pageSize = PAGING_CONFIG.pageSize,
+                    fetcher = { page ->
+                        feedApiService.feedsFromUser(
+                            uid,
+                            page,
+                            DEFAULT_PAGING_CONFIG.pageSize,
+                            isAnonymous
+                        )
+                    },
+                    pageSize = DEFAULT_PAGING_CONFIG.pageSize,
                     listItemMapper = itemMapper
                 )
             }
         ).flow
     }
 
-    fun getNearbyFeeds(longitude: Double, latitude: Double): Flow<PagingData<FeedAndAuthor>> {
+    fun getFavorsOfUser(uid: String, config: PagingConfig? = null): Flow<PagingData<FeedAndAuthor>> {
+        val pagingConfig = config ?: DEFAULT_PAGING_CONFIG
         return Pager(
-            config = PAGING_CONFIG,
+            config = pagingConfig,
             pagingSourceFactory = {
                 FeedPagingSource(
                     fetcher = { page ->
-                        feedApiService.nearby(longitude, latitude, page, PAGING_CONFIG.pageSize)
+                        feedApiService.favorsOfUser(uid, page, pagingConfig.pageSize)
                     },
-                    pageSize = PAGING_CONFIG.pageSize,
+                    pageSize = pagingConfig.pageSize,
+                    listItemMapper = itemMapper
+                )
+            }
+        ).flow
+    }
+
+    fun getBookmarksOfUser(uid: String, config: PagingConfig? = null): Flow<PagingData<FeedAndAuthor>> {
+        val pagingConfig = config ?: DEFAULT_PAGING_CONFIG
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = {
+                FeedPagingSource(
+                    fetcher = { page ->
+                        feedApiService.bookmarksOfUser(uid, page, pagingConfig.pageSize)
+                    },
+                    pageSize = pagingConfig.pageSize,
+                    listItemMapper = itemMapper
+                )
+            }
+        ).flow
+    }
+
+    fun getPoiFeeds(id: String, config: PagingConfig? = null): Flow<PagingData<FeedAndAuthor>> {
+        val pagingConfig = config ?: DEFAULT_PAGING_CONFIG
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = {
+                FeedPagingSource(
+                    fetcher = { page ->
+                        feedApiService.poiFeeds(id, page, pagingConfig.pageSize)
+                    },
+                    pageSize = pagingConfig.pageSize,
                     listItemMapper = itemMapper
                 )
             }
@@ -130,7 +173,7 @@ class FeedRepository @Inject constructor(
     }
 
     private companion object {
-        val PAGING_CONFIG = PagingConfig(
+        val DEFAULT_PAGING_CONFIG = PagingConfig(
             pageSize = 10,
             initialLoadSize = 15,
             prefetchDistance = 3,

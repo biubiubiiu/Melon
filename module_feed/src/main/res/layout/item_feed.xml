@@ -39,7 +39,8 @@
             android:layout_toEndOf="@id/feed_username"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/Melon.TextAppearance.Info"
+            android:textColor="@color/TextSecondary"
+            android:textSize="16sp"
             tools:text="\@Sandor_Clegane" />
 
         <TextView
@@ -71,6 +72,7 @@
         android:layout_alignStart="@id/feed_title_content_container"
         android:layout_marginTop="@dimen/spacing_small"
         android:ellipsize="end"
+        android:lineSpacingMultiplier="1.1"
         android:maxLines="5"
         android:textAppearance="@style/Melon.TextAppearance.Content"
         tools:text="A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text." />

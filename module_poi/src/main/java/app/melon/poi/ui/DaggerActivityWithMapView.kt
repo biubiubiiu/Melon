@@ -59,10 +59,11 @@ internal abstract class DaggerActivityWithMapView : DaggerAppCompatActivity() {
     }
 
     protected fun updateCameraPosition(myLocation: SimplifiedLocation, destLocation: SimplifiedLocation) {
-        val cameraUpdate = CameraUpdateFactory.newLatLngBounds(
-            LatLngBounds(destLocation.toLatLng(), myLocation.toLatLng()),
-            48.dpInt
-        )
+        val bound = LatLngBounds.Builder()
+            .include(myLocation.toLatLng())
+            .include(destLocation.toLatLng())
+            .build()
+        val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bound, 48.dpInt)
         aMap.moveCamera(cameraUpdate)
     }
 }

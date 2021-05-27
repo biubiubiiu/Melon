@@ -16,7 +16,7 @@ internal class UpdateUserFeeds @Inject constructor(
     override fun createObservable(
         params: Params
     ): Flow<PagingData<FeedAndAuthor>> {
-        return repository.getFeedsFromUser(params.uid)
+        return repository.getFeedsFromUser(params.uid, isAnonymous = false)
     }
 
     internal data class Params(

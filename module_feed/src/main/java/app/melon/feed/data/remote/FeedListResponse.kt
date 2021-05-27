@@ -8,14 +8,13 @@ data class FeedListItemResponse(
     @SerializedName("user") val user: FeedListUserStruct? = null,
     @SerializedName("title") val title: String? = null,
     @SerializedName("text") val content: String? = null,
-    @SerializedName("fileUrlList") val photos: List<String> = emptyList(),
+    @SerializedName("photos") val photos: List<String>? = null,
     @SerializedName("location") val location: LocationStruct? = null,
-    @SerializedName("likeNum") val favorCount: Long? = null,
-    @SerializedName("remarkNum") val replyCount: Long? = null,
+    @SerializedName("favorCount") val favorCount: Long? = null,
+    @SerializedName("commentCount") val replyCount: Long? = null,
     @SerializedName("isCollected") val isCollected: Boolean = false,
-    @SerializedName("like") val isFavor: Boolean = false,
-    @SerializedName("postTimestamp") val postTime: String? = null,
-    @SerializedName("lastUpdateTimestamp") val lastUpdateTime: String? = null
+    @SerializedName("isFavored") val isFavor: Boolean = false,
+    @SerializedName("postTime") val postTime: String? = null
 )
 
 data class FeedListUserStruct(
@@ -25,7 +24,5 @@ data class FeedListUserStruct(
     @SerializedName("avatarUrl") val avatarUrl: String? = null,
     @SerializedName("school") val school: String? = null,
     @SerializedName("age") val age: Int? = null,
-    @SerializedName("gender") val gender: String? = null,
-    @SerializedName("email") val email: String? = null,
-    @SerializedName("lastLocation") val lastLocation: LocationStruct? = null
+    @SerializedName("gender") val gender: String? = null
 )

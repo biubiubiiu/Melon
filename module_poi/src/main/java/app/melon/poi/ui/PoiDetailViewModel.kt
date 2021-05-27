@@ -27,7 +27,7 @@ internal class PoiDetailViewModel @AssistedInject constructor(
     private val shareRoute: ShareRoute
 ) : ReduxViewModel<PoiDetailViewState>(initialState) {
 
-    val feedsPagingData = updatePoiFeeds.observe()
+    internal val feedsPagingData = updatePoiFeeds.observe()
 
     init {
         viewModelScope.launch {
@@ -67,9 +67,6 @@ internal class PoiDetailViewModel @AssistedInject constructor(
         viewModelScope.launch {
             selectSubscribeDistinct(PoiDetailViewState::location).collectLatest { location ->
                 location ?: return@collectLatest
-                if (location.destination != null) {
-                    updatePoiFeeds(UpdatePoiFeeds.Params(location.destination))
-                }
                 if (location.origin != null && location.destination != null) {
                     updateAndObserveWalkRoute(location.origin, location.destination)
                     updateAndObserveDriveRoute(location.origin, location.destination)
@@ -79,6 +76,7 @@ internal class PoiDetailViewModel @AssistedInject constructor(
         viewModelScope.launch {
             selectSubscribeDistinct(PoiDetailViewState::poiId).collectLatest { id ->
                 updatePoiDetail(UpdatePoiDetail.Params(id))
+                updatePoiFeeds(UpdatePoiFeeds.Params(id))
             }
         }
     }

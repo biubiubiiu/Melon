@@ -24,13 +24,17 @@ import java.net.SocketTimeoutException
 abstract class BasePagingController<T : Any>(
     protected val context: Context,
     @Suppress("UNCHECKED_CAST")
-    sameItemIndicator: (T, T) -> Boolean = { oldItem, newItem -> oldItem == newItem }
+    sameItemIndicator: (T, T) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+    sameContentIndicator: (T, T) -> Boolean = { oldItem, newItem -> oldItem == newItem }
 ) : PagingDataEpoxyController<T>(
     modelBuildingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler(),
     diffingHandler = EpoxyAsyncUtil.getAsyncBackgroundHandler(),
     itemDiffCallback = object : DiffUtil.ItemCallback<T>() {
-        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = sameItemIndicator.invoke(oldItem, newItem)
-        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
+        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean =
+            sameItemIndicator.invoke(oldItem, newItem)
+
+        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
+            sameContentIndicator.invoke(oldItem, newItem)
     }
 ) {
 
@@ -43,6 +47,8 @@ abstract class BasePagingController<T : Any>(
             retryListener { retry() }
         }
 
+    private var isFirst = true
+
     init {
         addLoadStateListener {
             loadState = it
@@ -52,7 +58,14 @@ abstract class BasePagingController<T : Any>(
     protected var loadState: CombinedLoadStates? = null
         set(value) {
             field = value
-            requestModelBuild()
+
+            // loadState would be set right after addLoadStateListener
+            // We're trying to skip first time model build
+            if (!isFirst) {
+                requestModelBuild()
+                return
+            }
+            isFirst = false
         }
 
     val isRefreshing get() = loadState?.refresh is LoadState.Loading

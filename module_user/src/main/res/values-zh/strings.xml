@@ -15,6 +15,13 @@
     <string name="basic_info">基本信息</string>
     <string name="user_interest">兴趣</string>
 
+    <string name="user_no_post_title">你还没有发过动态</string>
+    <string name="user_no_post_subtitle">当你发布动态后，就出现在这里</string>
+    <string name="user_no_anonymous_post_title">你还没有发过帖子</string>
+    <string name="user_no_anonymous_post_subtitle">当你发贴后，就出现在这里</string>
+    <string name="user_no_favor_title">你还没有点赞的内容</string>
+    <string name="user_no_favor_subtitle">当你点赞内容后，就出现在这里</string>
+
     <string name="take_from_camera">拍摄照片</string>
     <string name="select_from_album">选择已有照片</string>
 

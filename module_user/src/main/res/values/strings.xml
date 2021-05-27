@@ -16,6 +16,13 @@
 
     <string name="user_custom_id" translatable="false">\@%s</string>
 
+    <string name="user_no_post_title">TODO</string>
+    <string name="user_no_post_subtitle">TODO</string>
+    <string name="user_no_anonymous_post_title">TODO</string>
+    <string name="user_no_anonymous_post_subtitle">TODO</string>
+    <string name="user_no_favor_title">TODO</string>
+    <string name="user_no_favor_subtitle">TODO</string>
+
     <string name="take_from_camera">TODO</string>
     <string name="select_from_album">TODO</string>
 

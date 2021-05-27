@@ -72,7 +72,7 @@ internal class UserRepository @Inject constructor(
 
     @WorkerThread
     internal suspend fun getFirstPageUserFeeds(uid: String): Result<List<FeedAndAuthor>> {
-        return feedApiService.feedsFromUser(uid, 0, 5).fold(
+        return feedApiService.feedsFromUser(uid, 0, 5, isAnonymous = false).fold(
             onSuccess = {
                 // At here, we don't need to store feeds and user information,
                 // so we just return what we got from remote

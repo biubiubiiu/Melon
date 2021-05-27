@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import app.melon.base.databinding.FragmentEpoxyListBinding
 import app.melon.base.event.TabReselectEvent
 import app.melon.base.framework.BasePagingListFragment
-import app.melon.data.constants.FeedPageType
 import app.melon.feed.FeedPageConfig
 import app.melon.feed.R
+import app.melon.feed.ui.controller.FeedControllerDelegate
 import app.melon.feed.ui.controller.FeedPageController
 import app.melon.util.extensions.getDrawableCompat
 import app.melon.util.extensions.showToast
@@ -21,6 +21,8 @@ import javax.inject.Inject
 
 class CommonFeedFragment : BasePagingListFragment() {
 
+    private val pageConfig get() = requireArguments().getSerializable(KEY_PAGE_CONFIG) as FeedPageConfig
+
     private val pageType get() = arguments?.getInt(KEY_FEED_PAGE_TYPE, -1) ?: -1
     private val mPageName get() = arguments?.getString(KEY_PAGE_NAME)
     private val itemIdPrefix get() = arguments?.getString(KEY_ID_PREFIX) ?: ""
@@ -30,11 +32,12 @@ class CommonFeedFragment : BasePagingListFragment() {
 
     private var tabReselectEvent: TabReselectEvent? = null
 
-    @Inject internal lateinit var controllerFactory: FeedPageController.Factory
+    @Inject internal lateinit var delegateProvider: FeedControllerDelegate.Factory
     override val controller by lazy {
-        controllerFactory.create(
+        FeedPageController(
             context = requireContext(),
-            idProvider = { _, position -> "${itemIdPrefix}_$position" },
+            config = pageConfig,
+            factory = delegateProvider,
             type = if (isAnonymousFeed) FeedPageController.Type.ANONYMOUS else FeedPageController.Type.NORMAL
         )
     }
@@ -99,6 +102,7 @@ class CommonFeedFragment : BasePagingListFragment() {
     }
 
     companion object {
+        private const val KEY_PAGE_CONFIG = "KEY_PAGE_CONFIG"
         private const val KEY_PAGE_NAME = "KEY_PAGE_NAME"
         private const val KEY_FEED_PAGE_TYPE = "KEY_FEED_PAGE_TYPE"
         private const val KEY_ID_PREFIX = "KEY_ID_PREFIX"
@@ -109,26 +113,13 @@ class CommonFeedFragment : BasePagingListFragment() {
             pageName: String,
             config: FeedPageConfig,
             extraParams: Bundle? = null
-        ) = newInstance(
-            pageName,
-            config.pageType,
-            config.idPrefix,
-            config.isAnonymousFeed,
-            extraParams
-        )
-
-        fun newInstance(
-            pageName: String,
-            @FeedPageType pageType: Int,
-            idPrefix: String,
-            isAnonymousFeed: Boolean,
-            extraParams: Bundle? = null
         ) = CommonFeedFragment().apply {
             arguments = Bundle().apply {
+                putSerializable(KEY_PAGE_CONFIG, config)
                 putString(KEY_PAGE_NAME, pageName)
-                putInt(KEY_FEED_PAGE_TYPE, pageType)
-                putString(KEY_ID_PREFIX, idPrefix)
-                putBoolean(KEY_IS_ANONYMOUS, isAnonymousFeed)
+                putInt(KEY_FEED_PAGE_TYPE, config.pageType)
+                putString(KEY_ID_PREFIX, config.idPrefix)
+                putBoolean(KEY_IS_ANONYMOUS, config.isAnonymousFeed)
                 putBundle(KEY_EXTRA_PARAM, extraParams)
             }
         }

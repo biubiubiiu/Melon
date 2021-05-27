@@ -3,7 +3,6 @@ package app.melon.feed.data.mapper
 import app.melon.data.entities.Feed
 import app.melon.data.entities.User
 import app.melon.data.entities.isValidGender
-import app.melon.data.remote.toLocation
 import app.melon.data.remote.toPoiInfo
 import app.melon.feed.data.remote.FeedDetailResponse
 import app.melon.util.mappers.Mapper
@@ -17,14 +16,15 @@ class RemoteFeedDetailToFeedAndAuthor @Inject constructor() : Mapper<FeedDetailR
         val feed = Feed(
             id = from.id,
             authorUid = from.user?.id,
+            title = from.title,
             content = from.content,
-            photos = from.photos,
+            photos = from.photos ?: emptyList(),
             poiInfo = from.location?.toPoiInfo(),
             isFavored = from.isFavor,
             isCollected = from.isCollected,
             postTime = from.postTime,
             replyCount = from.replyCount,
-            favouriteCount = from.favouriteCount
+            favouriteCount = from.favorCount
         )
         val user = User(
             id = from.user?.id ?: "",
@@ -33,7 +33,6 @@ class RemoteFeedDetailToFeedAndAuthor @Inject constructor() : Mapper<FeedDetailR
             gender = if (from.user?.gender?.isValidGender() == true) from.user.gender else null,
             age = from.user?.age,
             school = from.user?.school,
-            location = from.user?.lastLocation.toLocation(),
             avatarUrl = from.user?.avatarUrl
         )
         return feed to user

@@ -28,6 +28,7 @@ import app.melon.poi.ui.PoiDetailViewState
 import app.melon.poi.ui.controller.PoiPageController
 import app.melon.poi.ui.create
 import app.melon.poi.ui.overlay.DrivingRouteOverLay
+import app.melon.poi.ui.overlay.RouteOverlay
 import app.melon.poi.ui.overlay.WalkRouteOverlay
 import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.dpInt
@@ -54,6 +55,8 @@ internal class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowA
     private val info get() = intent.getSerializableExtra(KEY_INFO) as PoiInfo
 
     override val mapView: MapView get() = binding.mapView
+    private var walkRouteOverlay: RouteOverlay? = null
+    private var drivingRouteOverlay: RouteOverlay? = null
 
     @Inject internal lateinit var factory: PoiPageController.Factory
     private val controller by lazy { factory.create(this, ::shareRoute) }
@@ -168,6 +171,7 @@ internal class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowA
                     view.isSelected = true
                     binding.driveDuration.isSelected = false
                     showWalkPathOverlay(it)
+                    hideDrivePathOverlay()
                 }
             }
         })
@@ -180,6 +184,7 @@ internal class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowA
                     view.isSelected = true
                     binding.walkDuration.isSelected = false
                     showDrivePathOverlay(it)
+                    hideWalkPathOverlay()
                 }
             }
         })
@@ -196,33 +201,40 @@ internal class PoiDetailActivity : DaggerActivityWithMapView(), AMap.InfoWindowA
     private fun showWalkPathOverlay(walkPath: WalkPath) {
         val (myLocation, poiLocation) = viewModel.currentState().location ?: return
         if (myLocation != null && poiLocation != null) {
-            val walkRouteOverlay = WalkRouteOverlay(
+            walkRouteOverlay = WalkRouteOverlay(
                 aMap,
                 walkPath,
                 myLocation.toLatLonPoint(),
                 poiLocation.toLatLonPoint()
             )
-            walkRouteOverlay.removeFromMap()
-            walkRouteOverlay.addToMap()
-            walkRouteOverlay.zoomToSpan()
+            walkRouteOverlay?.removeFromMap()
+            walkRouteOverlay?.addToMap()
+            walkRouteOverlay?.zoomToSpan()
         }
+    }
+
+    private fun hideWalkPathOverlay() {
+        walkRouteOverlay?.removeFromMap()
     }
 
     private fun showDrivePathOverlay(drivePath: DrivePath) {
         val (myLocation, poiLocation) = viewModel.currentState().location ?: return
         if (myLocation != null && poiLocation != null) {
-            val drivingRouteOverlay = DrivingRouteOverLay(
+            drivingRouteOverlay = DrivingRouteOverLay(
                 aMap,
                 drivePath,
                 myLocation.toLatLonPoint(),
                 poiLocation.toLatLonPoint()
             )
-            drivingRouteOverlay.setNodeIconVisibility(false)
-            drivingRouteOverlay.isColorFullLine = false
-            drivingRouteOverlay.removeFromMap()
-            drivingRouteOverlay.addToMap()
-            drivingRouteOverlay.zoomToSpan()
+            drivingRouteOverlay?.setNodeIconVisibility(false)
+            drivingRouteOverlay?.removeFromMap()
+            drivingRouteOverlay?.addToMap()
+            drivingRouteOverlay?.zoomToSpan()
         }
+    }
+
+    private fun hideDrivePathOverlay() {
+        drivingRouteOverlay?.removeFromMap()
     }
 
     private fun shareRoute(location: SimplifiedLocation) {

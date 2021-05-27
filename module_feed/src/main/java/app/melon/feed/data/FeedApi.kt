@@ -31,13 +31,27 @@ interface FeedApi {
     suspend fun feedsFromUser(
         @Path("id") id: String,
         @Query("page") page: Int,
+        @Query("page_size") pageSize: Int,
+        @Query("type") type: Int
+    ): Response<BaseApiResponse<List<FeedListItemResponse>>>
+
+    @GET("user/{id}/favors")
+    suspend fun favorsOfUser(
+        @Path("id") id: String,
+        @Query("page") page: Int,
         @Query("page_size") pageSize: Int
     ): Response<BaseApiResponse<List<FeedListItemResponse>>>
 
-    @GET("feed/list/nearby")
-    suspend fun nearby(
-        @Query("longitude") longitude: Double,
-        @Query("latitude") latitude: Double,
+    @GET("user/{id}/bookmarks")
+    suspend fun bookmarksOfUser(
+        @Path("id") id: String,
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Response<BaseApiResponse<List<FeedListItemResponse>>>
+
+    @GET("feed/poi")
+    suspend fun poiFeeds(
+        @Query("poi_id") id: String,
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
     ): Response<BaseApiResponse<List<FeedListItemResponse>>>

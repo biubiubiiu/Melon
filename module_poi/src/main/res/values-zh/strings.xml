@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="poi_locate">前往</string>
-    <string name="poi_all_posts">全部动态（%d）</string>
+    <string name="poi_all_posts">全部动态</string>
 
     <string name="walk_route_duration">步行%s</string>
     <string name="drive_route_duration">驾车%s</string>

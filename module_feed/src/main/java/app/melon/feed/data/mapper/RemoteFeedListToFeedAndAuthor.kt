@@ -3,7 +3,6 @@ package app.melon.feed.data.mapper
 import app.melon.data.entities.Feed
 import app.melon.data.entities.User
 import app.melon.data.entities.isValidGender
-import app.melon.data.remote.toLocation
 import app.melon.data.remote.toPoiInfo
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.data.remote.FeedListItemResponse
@@ -20,7 +19,7 @@ class RemoteFeedListToFeedAndAuthor @Inject constructor() : Mapper<FeedListItemR
             authorUid = from.user?.id,
             title = from.title,
             content = from.content,
-            photos = from.photos,
+            photos = from.photos ?: emptyList(),
             poiInfo = from.location?.toPoiInfo(),
             isFavored = from.isFavor,
             isCollected = from.isCollected,
@@ -35,7 +34,6 @@ class RemoteFeedListToFeedAndAuthor @Inject constructor() : Mapper<FeedListItemR
             gender = if (from.user?.gender?.isValidGender() == true) from.user.gender else null,
             age = from.user?.age,
             school = from.user?.school,
-            location = from.user?.lastLocation.toLocation(),
             avatarUrl = from.user?.avatarUrl
         )
         return FeedAndAuthor(feed, user)

@@ -2,7 +2,6 @@ package app.melon.base.lazyload
 
 import androidx.viewbinding.ViewBinding
 import app.melon.base.framework.BaseDaggerFragment
-import app.melon.base.framework.BaseFragment
 import app.melon.base.framework.lifecycle.FragmentLifecycleObserver
 
 

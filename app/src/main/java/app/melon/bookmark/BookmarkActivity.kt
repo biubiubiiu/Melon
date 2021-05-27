@@ -53,7 +53,9 @@ class BookmarkActivity : ComposerEntryActivity() {
                         config = FeedPageConfig(
                             pageType = BOOKMARK_FEEDS,
                             idPrefix = "bookmark",
-                            isAnonymousFeed = false
+                            isAnonymousFeed = false,
+                            emptyViewTitleRes = R.string.bookmark_empty_title,
+                            emptyViewSubtitleRes = R.string.bookmark_empty_subtitle
                         )
                     ),
                     FRAGMENT_TAG
