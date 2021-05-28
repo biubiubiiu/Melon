@@ -4,6 +4,8 @@
     <string name="feed_explore">Explore</string>
     <string name="feed_trending">Trending</string>
 
+    <string name="feed_detail_title">TODO</string>
+    <string name="anonymous_feed_detail_title">TODO</string>
     <string name="feed_repost_count">TODO</string>
     <string name="feed_like_count">TODO</string>
     <string name="feed_add_to_collection">TODO</string>

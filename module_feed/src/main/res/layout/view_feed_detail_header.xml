@@ -41,6 +41,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/Melon.TextAppearance.Info"
+            android:textSize="16sp"
             tools:text="\@Sandor_Clegane" />
 
         <ImageView
@@ -61,8 +62,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/feed_title_content_container"
         android:layout_alignStart="@id/feed_title_content_container"
+        android:layout_marginTop="@dimen/spacing_micro"
         android:layout_toEndOf="@id/feed_user_avatar"
         android:textAppearance="@style/Melon.TextAppearance.Info"
+        android:textSize="15sp"
         tools:text="Kings Landing" />
 
     <TextView
@@ -71,10 +74,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/feed_user_school"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:ellipsize="end"
-        android:maxLines="5"
-        android:textAppearance="@style/Melon.TextAppearance.Content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:lineSpacingMultiplier="1.1"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="20sp"
         tools:text="A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text." />
 
     <app.melon.base.ui.ShapedFourPhotoView

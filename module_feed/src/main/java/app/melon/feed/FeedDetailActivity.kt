@@ -30,6 +30,11 @@ class FeedDetailActivity : ComposerEntryActivity() {
     }
 
     private fun setupToolbar() {
+        if (true) { // TODO check feed is anonymous
+            binding.toolbar.setTitle(R.string.feed_detail_title)
+        } else {
+            binding.toolbar.setTitle(R.string.anonymous_feed_detail_title)
+        }
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)

@@ -4,6 +4,8 @@
     <string name="feed_explore">广场</string>
     <string name="feed_trending">热门</string>
 
+    <string name="feed_detail_title">动态</string>
+    <string name="anonymous_feed_detail_title">帖子</string>
     <string name="feed_repost_count">转发</string>
     <string name="feed_like_count">喜欢</string>
     <string name="feed_add_to_collection">收藏</string>
