@@ -19,7 +19,8 @@ import javax.inject.Singleton
     includes = [
         DateTimeFormatterModule::class,
         TimeRemoteServiceModule::class,
-        StorageModule::class
+        StorageModule::class,
+        NetworkModule::class
     ]
 )
 class UtilModule

@@ -9,8 +9,8 @@ import app.melon.composer.di.ComposerModule
 import app.melon.data.di.DatabaseModule
 import app.melon.event.di.EventModule
 import app.melon.feed.di.FeedModule
+import app.melon.framework.di.FrameworkModule
 import app.melon.group.di.GroupBuilder
-import app.melon.home.di.HomeBuilder
 import app.melon.home.di.HomeModule
 import app.melon.im.di.IMModule
 import app.melon.poi.di.PoiModule
@@ -48,7 +48,8 @@ import javax.inject.Singleton
         PoiModule::class,
         GroupBuilder::class,
         SettingsModule::class,
-        UtilModule::class
+        UtilModule::class,
+        FrameworkModule::class
     ]
 )
 interface AppComponent : AndroidInjector<MelonApplication> {

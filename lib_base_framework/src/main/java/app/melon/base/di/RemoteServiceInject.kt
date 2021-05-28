@@ -1,6 +1,6 @@
 package app.melon.base.di
 
-import app.melon.util.network.TokenManager
+import app.melon.base.network.NetworkInterceptors
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -35,9 +35,13 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(tokenManager: TokenManager): OkHttpClient {
+    fun provideOkHttpClient(interceptors: NetworkInterceptors): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(tokenManager.provideInterceptor())
+            .also { builder ->
+                interceptors.forEach {
+                    builder.addInterceptor(it)
+                }
+            }
             .readTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)

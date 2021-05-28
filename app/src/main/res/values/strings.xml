@@ -11,7 +11,7 @@
 
     <string name="bookmark_label">Bookmark</string>
     <string name="bookmark_empty_title">Nothing saved yet.</string>
-    <string name="bookmark_empty_subtitle">All the posts and items you've saved will show up here.</string>
+    <string name="bookmark_empty_subtitle">All the posts and items you\'ve saved will show up here.</string>
 
     <string name="home_tab_recommend">For You</string>
     <string name="home_tab_following">Follow</string>
