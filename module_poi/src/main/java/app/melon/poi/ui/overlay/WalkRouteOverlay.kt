@@ -1,7 +1,8 @@
 package app.melon.poi.ui.overlay
 
-import android.graphics.Color
 import app.melon.location.toLatLng
+import app.melon.poi.R
+import app.melon.util.extensions.getResourceColor
 import com.amap.api.maps2d.AMap
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.WalkPath
@@ -19,7 +20,7 @@ internal class WalkRouteOverlay constructor(
     override val endPoint = end.toLatLng()
 
     override val routeWidth = 12f
-    override val routeColor = Color.parseColor("#6db74d")
+    override val routeColor = getResourceColor(R.color.route_overlay)
 
     override fun addToMap() {
         try {

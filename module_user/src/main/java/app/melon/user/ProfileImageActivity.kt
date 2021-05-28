@@ -30,7 +30,6 @@ import app.melon.util.delegates.viewBinding
 import app.melon.util.extensions.getColorCompat
 import app.melon.util.extensions.showToast
 import app.melon.util.savestate.withFactory
-import app.melon.util.storage.StorageHandler
 import coil.load
 import coil.size.OriginalSize
 import coil.size.Precision
@@ -59,8 +58,6 @@ internal class ProfileImageActivity : DaggerAppCompatActivity() {
     private val viewModel: ProfileImageViewModel by viewModels {
         withFactory(viewModelFactory)
     }
-
-    @Inject internal lateinit var storageHandler: StorageHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -170,10 +167,7 @@ internal class ProfileImageActivity : DaggerAppCompatActivity() {
         viewModel.updateResult.observe(this, Observer {
             it.onSuccess { url ->
                 lifecycleScope.launch {
-                    viewModel.syncAvatarUpdateToLocal(
-                        uid,
-                        url
-                    )
+                    viewModel.syncAvatarUpdateToLocal(uid, url)
                 }
             }.onFailure {
                 showToast(R.string.update_profile_fail)
@@ -238,8 +232,7 @@ internal class ProfileImageActivity : DaggerAppCompatActivity() {
     private fun handleCropResult(result: Intent) {
         val resultUri = UCrop.getOutput(result)
         if (resultUri != null) {
-            val avatar = storageHandler.copyFileToCacheDir(resultUri, filename = AVATAR_CACHE_FILENAME)
-            viewModel.updateAvatar(avatar)
+            viewModel.updateAvatar(resultUri)
         } else {
             showToast(R.string.toast_cannot_retrieve_cropped_image)
         }
@@ -255,7 +248,6 @@ internal class ProfileImageActivity : DaggerAppCompatActivity() {
         private const val KEY_URL = "KEY_URL"
         private const val KEY_USER_ID = "KEY_USER_ID"
 
-        private const val AVATAR_CACHE_FILENAME = "updated_avatar"
         private const val CROPPED_IMAGE_NAME = "cropped_avatar"
 
         internal fun start(context: Context, url: String, uid: String) {

@@ -175,7 +175,7 @@ class FeedRepository @Inject constructor(
     private companion object {
         val DEFAULT_PAGING_CONFIG = PagingConfig(
             pageSize = 10,
-            initialLoadSize = 15,
+            initialLoadSize = 30,
             prefetchDistance = 3,
             enablePlaceholders = false
         )

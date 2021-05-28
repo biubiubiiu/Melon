@@ -10,7 +10,6 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import app.melon.base.ui.BaseEpoxyHolder
 import app.melon.base.ui.NinePhotoView
-import app.melon.base.ui.TagView
 import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.feed.FeedActions
 import app.melon.feed.R
@@ -54,7 +53,10 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
             usernameView.text = "Random name"
             userSchoolView.text = item.author.school
             postTimeView.text = formatter.formatShortRelativeTime(item.feed.postTime)
+
+            titleView.isVisible = !item.feed.title.isNullOrBlank()
             titleView.text = item.feed.title
+
             contentView.text = item.feed.content
             commentView.text = numberFormatter.format(item.feed.replyCount)
 
@@ -109,14 +111,11 @@ abstract class AnonymousFeedItem : EpoxyModelWithHolder<AnonymousFeedItem.Holder
         internal val containerView: ViewGroup by bind(R.id.feed_container)
         internal val avatarView: ImageView by bind(R.id.feed_user_avatar)
         internal val usernameView: TextView by bind(R.id.feed_username)
-        internal val userIdView: TextView by bind(R.id.feed_user_id)
         internal val userSchoolView: TextView by bind(R.id.feed_user_school)
         internal val postTimeView: TextView by bind(R.id.feed_post_time)
         internal val titleView: TextView by bind(R.id.feed_title)
         internal val contentView: TextView by bind(R.id.feed_content)
         internal val photoView: NinePhotoView by bind(R.id.feed_photos)
-        internal val locationTag: TagView by bind(R.id.feed_location_tag)
-        internal val typeTag: TagView by bind(R.id.feed_type_tag)
         internal val shareView: TextView by bind(R.id.feed_share)
         internal val commentView: TextView by bind(R.id.feed_comment)
         internal val favorContainer: View by bind(R.id.favor_container)

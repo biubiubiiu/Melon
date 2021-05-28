@@ -31,9 +31,9 @@ class FeedRemoteMediator(
         const val STARTING_PAGE_INDEX = 0
     }
 
-    override suspend fun initialize(): InitializeAction {
-        return InitializeAction.SKIP_INITIAL_REFRESH
-    }
+//    override suspend fun initialize(): InitializeAction {
+//        return InitializeAction.SKIP_INITIAL_REFRESH
+//    }
 
     override suspend fun load(
         loadType: LoadType,

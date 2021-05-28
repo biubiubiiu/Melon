@@ -27,21 +27,15 @@
             android:id="@+id/feed_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:textAppearance="@style/Melon.TextAppearance.Title"
             tools:text="Sandor Clegane" />
 
-        <TextView
-            android:id="@+id/feed_user_id"
-            android:layout_width="wrap_content"
+        <Space
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/spacing_micro"
             android:layout_toStartOf="@id/feed_post_time"
-            android:layout_toEndOf="@id/feed_username"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="@style/Melon.TextAppearance.Info"
-            tools:text="\@Sandor_Clegane" />
+            android:layout_toEndOf="@id/feed_username" />
 
         <TextView
             android:id="@+id/feed_post_time"
@@ -72,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/feed_user_avatar"
-        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_conventional"
         android:ellipsize="end"
         android:maxLines="5"
         android:textAppearance="@style/Melon.TextAppearance.Title"
@@ -85,6 +79,7 @@
         android:layout_below="@id/feed_title"
         android:layout_marginTop="@dimen/spacing_small"
         android:ellipsize="end"
+        android:lineSpacingMultiplier="1.1"
         android:maxLines="5"
         android:textAppearance="@style/Melon.TextAppearance.Content"
         tools:text="A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text. A Long Long Text." />
@@ -97,31 +92,11 @@
         android:layout_marginTop="@dimen/spacing_small"
         android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/feed_tag_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/feed_photos"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:orientation="horizontal">
-
-        <ViewStub
-            android:id="@+id/feed_location_tag_stub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ViewStub
-            android:id="@+id/feed_type_tag_stub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
     <include
         layout="@layout/feed_bottom_operations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/feed_tag_container"
+        android:layout_below="@id/feed_photos"
         android:layout_marginTop="@dimen/spacing_conventional" />
 
 </RelativeLayout>

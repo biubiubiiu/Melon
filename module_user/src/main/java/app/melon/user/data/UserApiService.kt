@@ -12,15 +12,16 @@ import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
 @Singleton
 internal class UserApiService @Inject constructor(
     private val api: UserApi
 ) : MelonApiService() {
 
     internal suspend fun nearby(
-       longitude: Double,
+        longitude: Double,
         latitude: Double,
-       page: Int,
+        page: Int,
         pageSize: Int
     ): Result<List<NearbyUserStruct>> {
         return call {
@@ -44,7 +45,7 @@ internal class UserApiService @Inject constructor(
             .addFormDataPart(
                 name = "file",
                 filename = file.name,
-                body = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+                body = file.asRequestBody("image/jpg".toMediaTypeOrNull())
             )
             .build()
         return call {

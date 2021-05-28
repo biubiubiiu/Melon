@@ -15,12 +15,12 @@ import app.melon.account.api.UserManager
 import app.melon.base.framework.SingleEvent
 import app.melon.user.interactor.SyncAvatarUpdate
 import app.melon.user.interactor.UpdateAvatar
+import app.melon.util.storage.StorageHandler
 import kotlinx.coroutines.Dispatchers
 import kotlin.Result
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -31,6 +31,7 @@ internal class ProfileImageViewModel constructor(
     private val savedStateHandle: SavedStateHandle,
     private val updateAvatar: UpdateAvatar,
     private val syncAvatarChange: SyncAvatarUpdate,
+    private val storageHandler: StorageHandler,
     private val userManager: UserManager
 ) : AndroidViewModel(application) {
 
@@ -109,10 +110,15 @@ internal class ProfileImageViewModel constructor(
         _syncResult.postValue(Unit)
     }
 
-    internal fun updateAvatar(file: File) {
+    internal fun updateAvatar(uri: Uri) {
+        val avatar = storageHandler.copyFileToCacheDir(uri, filename = AVATAR_CACHE_FILENAME)
         viewModelScope.launch {
-            updateAvatar(UpdateAvatar.Params(file))
+            updateAvatar(UpdateAvatar.Params(avatar))
         }
+    }
+
+    companion object {
+        private const val AVATAR_CACHE_FILENAME = "updated_avatar"
     }
 }
 

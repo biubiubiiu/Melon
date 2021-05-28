@@ -13,7 +13,7 @@ internal class UpdateAvatar @Inject constructor(
     private val repo: UserRepository
 ) : SuspendingWorkInteractor<UpdateAvatar.Params, Result<String>>() {
 
-    val loadingState = ObservableLoadingCounter()
+    internal val loadingState = ObservableLoadingCounter()
 
     override suspend fun doWork(params: Params): Result<String> {
         loadingState.addLoader()
