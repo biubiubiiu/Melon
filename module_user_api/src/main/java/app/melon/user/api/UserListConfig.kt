@@ -16,14 +16,12 @@ object NearbyUserList: UserListConfig() {
 }
 
 class FollowingUserList(
-    val listItemIdPrefix: String,
     val uid: String
 ) : UserListConfig() {
     override val pageType: Int = FOLLOWING_USER
 }
 
 class FollowerUserList(
-    val listItemIdPrefix: String,
     val uid: String
 ) : UserListConfig() {
     override val pageType: Int = FOLLOWERS_USER

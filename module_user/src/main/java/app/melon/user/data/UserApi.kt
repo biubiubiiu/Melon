@@ -1,7 +1,7 @@
 package app.melon.user.data
 
 import app.melon.data.dto.BaseApiResponse
-import app.melon.user.data.remote.NearbyUserStruct
+import app.melon.user.data.remote.UserListResponse
 import app.melon.user.data.remote.UpdateAvatarResponse
 import app.melon.user.data.remote.UserDetailResponse
 import okhttp3.MultipartBody
@@ -22,12 +22,26 @@ internal interface UserApi {
         @Query("latitude") latitude: Double,
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
-    ): Response<BaseApiResponse<List<NearbyUserStruct>>>
+    ): Response<BaseApiResponse<List<UserListResponse>>>
 
     @GET("user/{id}/detail")
     suspend fun detail(
         @Path("id") id: String
     ): Response<BaseApiResponse<UserDetailResponse>>
+
+    @GET("user/{id}/followers")
+    suspend fun followers(
+        @Path("id") id: String,
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Response<BaseApiResponse<List<UserListResponse>>>
+
+    @GET("user/{id}/followings")
+    suspend fun followings(
+        @Path("id") id: String,
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Response<BaseApiResponse<List<UserListResponse>>>
 
     @Multipart
     @POST("update/avatar")

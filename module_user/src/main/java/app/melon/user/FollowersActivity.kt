@@ -32,7 +32,6 @@ internal class FollowersActivity : DaggerAppCompatActivity() {
                     R.id.fragment_container,
                     userService.buildUserListFragment(
                         FollowerUserList(
-                            listItemIdPrefix = "nearby_user",
                             uid = uid
                         )
                     )

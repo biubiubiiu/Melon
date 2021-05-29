@@ -10,7 +10,7 @@ import app.melon.data.resultentities.FeedAndAuthor
 import app.melon.data.util.mergeUser
 import app.melon.feed.data.FeedApiService
 import app.melon.feed.data.mapper.RemoteFeedListToFeedAndAuthor
-import app.melon.user.data.mapper.RemoteNearbyUserToUser
+import app.melon.user.data.mapper.RemoteUserToUser
 import app.melon.user.data.mapper.RemoteUserDetailToUser
 import app.melon.util.mappers.toListMapper
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +29,7 @@ internal class UserRepository @Inject constructor(
     private val database: MelonDatabase,
     private val listItemMapper: RemoteFeedListToFeedAndAuthor,
     private val detailItemMapper: RemoteUserDetailToUser,
-    private val userListItemMapper: RemoteNearbyUserToUser
+    private val userListItemMapper: RemoteUserToUser
 ) {
 
     @WorkerThread
@@ -55,16 +55,49 @@ internal class UserRepository @Inject constructor(
         )
     }
 
-    internal fun getNearbyUser(longitude: Double, latitude: Double): Flow<PagingData<User>> {
+    internal fun getFollowers(uid: String, pagingConfig: PagingConfig? = null): Flow<PagingData<User>> {
+        val pageConfig = pagingConfig ?: DEFAULT_PAGING_CONFIG
         return Pager(
-            config = PAGING_CONFIG,
+            config = pageConfig,
             pagingSourceFactory = {
-                NearbyUserPagingSource(
-                    longitude,
-                    latitude,
-                    userApiService,
-                    PAGING_CONFIG.pageSize,
-                    userListItemMapper
+                UserPagingSource(
+                    fetcher = { page ->
+                        userApiService.followers(uid, page, pageConfig.pageSize)
+                    },
+                    pageSize = pageConfig.pageSize,
+                    listItemMapper = userListItemMapper
+                )
+            }
+        ).flow
+    }
+
+    internal fun getFollowing(uid: String, pagingConfig: PagingConfig? = null): Flow<PagingData<User>> {
+        val pageConfig = pagingConfig ?: DEFAULT_PAGING_CONFIG
+        return Pager(
+            config = pageConfig,
+            pagingSourceFactory = {
+                UserPagingSource(
+                    fetcher = { page ->
+                        userApiService.followings(uid, page, pageConfig.pageSize)
+                    },
+                    pageSize = pageConfig.pageSize,
+                    listItemMapper = userListItemMapper
+                )
+            }
+        ).flow
+    }
+
+    internal fun getNearbyUser(longitude: Double, latitude: Double): Flow<PagingData<User>> {
+        val pageConfig = DEFAULT_PAGING_CONFIG
+        return Pager(
+            config = pageConfig,
+            pagingSourceFactory = {
+                UserPagingSource(
+                    fetcher = { page ->
+                        userApiService.nearby(longitude, latitude, page, pageConfig.pageSize)
+                    },
+                    pageSize = pageConfig.pageSize,
+                    listItemMapper = userListItemMapper
                 )
             }
         ).flow
@@ -102,9 +135,9 @@ internal class UserRepository @Inject constructor(
     }
 
     private companion object {
-        val PAGING_CONFIG = PagingConfig(
+        val DEFAULT_PAGING_CONFIG = PagingConfig(
             pageSize = 10,
-            initialLoadSize = 15,
+            initialLoadSize = 30,
             prefetchDistance = 3,
             enablePlaceholders = false
         )

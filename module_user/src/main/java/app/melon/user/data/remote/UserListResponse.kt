@@ -3,7 +3,7 @@ package app.melon.user.data.remote
 import app.melon.data.remote.LocationStruct
 import com.google.gson.annotations.SerializedName
 
-internal data class NearbyUserStruct(
+internal data class UserListResponse(
     @SerializedName("id") val id: String = "",
     @SerializedName("username") val username: String = "",
     @SerializedName("customId") val customId: String? = null,

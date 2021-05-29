@@ -15,6 +15,7 @@ class FeedPagingSource constructor(
     private val pageSize: Int,
     private val listItemMapper: RemoteFeedListToFeedAndAuthor
 ) : PagingSource<Int, FeedAndAuthor>() {
+
     override fun getRefreshKey(state: PagingState<Int, FeedAndAuthor>): Int? = null
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, FeedAndAuthor> {

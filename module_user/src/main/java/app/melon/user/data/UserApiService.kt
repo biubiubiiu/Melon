@@ -2,7 +2,7 @@ package app.melon.user.data
 
 import app.melon.base.network.ApiBaseException
 import app.melon.base.network.MelonApiService
-import app.melon.user.data.remote.NearbyUserStruct
+import app.melon.user.data.remote.UserListResponse
 import app.melon.user.data.remote.UpdateAvatarResponse
 import app.melon.user.data.remote.UserDetailResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -23,7 +23,7 @@ internal class UserApiService @Inject constructor(
         latitude: Double,
         page: Int,
         pageSize: Int
-    ): Result<List<NearbyUserStruct>> {
+    ): Result<List<UserListResponse>> {
         return call {
             api.nearby(longitude, latitude, page, pageSize)
         }
@@ -34,6 +34,26 @@ internal class UserApiService @Inject constructor(
     ): Result<UserDetailResponse> {
         return call {
             api.detail(id)
+        }
+    }
+
+    internal suspend fun followers(
+        uid: String,
+        page: Int,
+        pageSize: Int
+    ): Result<List<UserListResponse>> {
+        return call {
+            api.followers(uid, page, pageSize)
+        }
+    }
+
+    internal suspend fun followings(
+        uid: String,
+        page: Int,
+        pageSize: Int
+    ): Result<List<UserListResponse>> {
+        return call {
+            api.followings(uid, page, pageSize)
         }
     }
 

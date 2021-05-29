@@ -2,6 +2,7 @@ package app.melon.feed.ui
 
 import android.content.Context
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import app.melon.base.databinding.FragmentEpoxyListBinding
@@ -88,6 +89,12 @@ class CommonFeedFragment : BasePagingListFragment() {
             viewModel.pagingData.collectLatest {
                 controller.submitData(it)
             }
+        }
+        lifecycleScope.launch {
+            viewModel.selectObserve(FeedListViewState::error).observe(viewLifecycleOwner, Observer { throwable ->
+                val message = throwable?.message ?: return@Observer
+                binding.root.context.showToast(message)
+            })
         }
     }
 
