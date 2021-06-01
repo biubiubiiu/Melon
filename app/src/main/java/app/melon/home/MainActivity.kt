@@ -1,11 +1,10 @@
 package app.melon.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
-import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.LiveData
@@ -15,9 +14,11 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import app.melon.R
 import app.melon.account.api.IAccountService
+import app.melon.account.api.UserManager
 import app.melon.base.ui.navigation.setupWithNavController
 import app.melon.bookmark.BookmarkActivity
 import app.melon.databinding.ActivityMainBinding
+import app.melon.databinding.HomeNavDrawerHeaderBinding
 import app.melon.event.api.IEventService
 import app.melon.framework.ComposerEntryActivity
 import app.melon.im.IIMService
@@ -25,10 +26,13 @@ import app.melon.location.LocationHelper
 import app.melon.settings.SettingsActivity
 import app.melon.user.api.IUserService
 import app.melon.util.extensions.reverse
+import coil.load
+import coil.transform.CircleCropTransformation
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,6 +55,7 @@ class MainActivity : ComposerEntryActivity(), HasAndroidInjector {
     @Inject internal lateinit var eventService: IEventService
     @Inject internal lateinit var imService: IIMService
 
+    @Inject internal lateinit var userManager: UserManager
     @Inject internal lateinit var locationHelper: LocationHelper
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector!!
@@ -130,27 +135,40 @@ class MainActivity : ComposerEntryActivity(), HasAndroidInjector {
         currentNavController = controller
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupDrawerHeader() {
         val headerView = binding.homeNavView.getHeaderView(0)
-        val navViewHeader: View = headerView.findViewById(R.id.home_nav_header_root)
-        val expandMoreIcon: ImageView = headerView.findViewById(R.id.home_nav_expand_more_icon)
-        val followingEntry: View = headerView.findViewById(R.id.following_entry)
-        val followerEntry: View = headerView.findViewById(R.id.followers_entry)
-        followingEntry.setOnClickListener {
-            userService.navigateToFollowingList(this, "fake_uid")
-        }
-        followerEntry.setOnClickListener {
-            userService.navigateToFollowersList(this, "fake_uid")
-        }
-        navViewHeader.setOnClickListener {
+        val headerBinding = HomeNavDrawerHeaderBinding.bind(headerView)
+
+        headerBinding.homeNavHeaderRoot.setOnClickListener {
             viewModel.drawerMenuChanged()
+        }
+
+        lifecycleScope.launch {
+            userManager.observeUser().collectLatest { user ->
+                user ?: return@collectLatest
+                headerBinding.homeNavHeaderAvatar.load(user.avatarUrl) {
+                    transformations(CircleCropTransformation())
+                }
+                headerBinding.homeNavHeaderUsername.text = user.username
+                headerBinding.homeNavHeaderUserId.text = "@${user.customId}"
+                headerBinding.homeNavHeaderFollowerCount.text = (user.followerCount ?: 0L).toString()
+                headerBinding.homeNavHeaderFollowingCount.text = (user.followingCount ?: 0L).toString()
+
+                headerBinding.followingEntry.setOnClickListener {
+                    userService.navigateToFollowingList(it.context, user.id)
+                }
+                headerBinding.followersEntry.setOnClickListener {
+                    userService.navigateToFollowersList(it.context, user.id)
+                }
+            }
         }
         viewModel.drawerMode.observe(this, Observer {
             binding.homeNavView.menu.setGroupVisible(R.id.home_nav_drawer_group_operations, it)
             binding.homeNavView.menu.setGroupVisible(R.id.home_nav_drawer_group_setting, it)
             binding.homeNavView.menu.setGroupVisible(R.id.home_nav_drawer_group_account, it.reverse())
 
-            expandMoreIcon.rotation = if (it) 0f else 180f
+            headerBinding.homeNavExpandMoreIcon.rotation = if (it) 0f else 180f
         })
     }
 
