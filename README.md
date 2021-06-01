@@ -82,7 +82,7 @@ You need to supply API / client keys for various services the app uses:
 
 You can find information about how to gain access via the relevant links.
 
-Once you obtain the keys, you need to set them in your `local.properties'`
+Once you obtain the keys, you need to set them in your `local.properties`
 
 ```
 # Get this from amap
